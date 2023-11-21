@@ -1,0 +1,9 @@
+.grid-theme-alpine {
+  height: 600px;
+  margin: 0 auto;
+}
+
+.app-header {
+  font-family: Arial;
+  background-color: #ac6770;
+}
