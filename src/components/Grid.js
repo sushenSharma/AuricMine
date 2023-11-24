@@ -9,7 +9,6 @@ import { AgGridReact } from "ag-grid-react";
 import "ag-grid-community/styles/ag-grid.css";
 import "ag-grid-community/styles/ag-theme-alpine.css";
 import { createClient } from "@supabase/supabase-js";
-
 import "../assets/styles/Grid.css";
 import { columns } from "../constants.js";
 
@@ -21,6 +20,22 @@ const apiKey = process.env.REACT_APP_OPENAI_API_KEY;
 const apiUrl = process.env.REACT_APP_OPENAI_URL;
 const promptText = process.env.REACT_APP_OPENAI_API_PROMPT;
 const tableName = process.env.REACT_APP_SUPABASE_TABLE_NAME;
+
+const ExpandCollapseCellRenderer = ({ data, node, api }) => {
+  const [open, setOpen] = useState(false);
+
+  const toggleDetail = () => {
+    setOpen(!open);
+    node.setRowHeight(open ? 25 : 150); // Adjust as needed for your detail row height
+    api.onRowHeightChanged();
+  };
+
+  return (
+    <button onClick={toggleDetail}>
+      {open ? 'Collapse' : 'Expand'}
+    </button>
+  );
+};
 
 export default function Grid({ userId }) {
   
@@ -36,6 +51,11 @@ export default function Grid({ userId }) {
       flex: 1,
       minWidth: 100,
       sortable: true,
+      field: 'expand',
+      cellRenderer: 'expandCollapseCellRenderer',
+      cellRendererParams: {
+        innerRenderer: 'simpleCellRenderer'
+      }
     };
   }, []);
 
@@ -157,12 +177,16 @@ export default function Grid({ userId }) {
           ref={gridRef}
           rowData={rowData}
           columnDefs={columnDefs}
-          defaultColDef={defaultColDef}
+          frameworkComponents={{
+            expandCollapseCellRenderer: ExpandCollapseCellRenderer
+          }}
           animateRows={true}
           rowSelection="single"
+          getRowHeight={params => params.node.rowHeight}
           
         />
       </div>
+      
       <div className="buttons">
         <button onClick={handleGetInsights}>Get Insights</button>
       </div>
