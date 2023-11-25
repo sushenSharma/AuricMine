@@ -1,9 +1,61 @@
-.grid-theme-alpine {
-  height: 600px;
-  margin: 0 auto;
+/* Grid.css */
+.app-header {
+  padding: 1rem;
+  background-color: #f8f9fa;
+  margin-bottom: 1rem;
+  border-bottom: 1px solid #e9ecef;
 }
 
-.app-header {
-  font-family: Arial;
-  background-color: #ac6770;
+.buttons {
+  margin-bottom: 1rem;
 }
+
+button {
+  background-color: #007bff;
+  color: #fff;
+  border: 1px solid #007bff;
+  padding: 0.375rem 0.75rem;
+  border-radius: 0.25rem;
+  cursor: pointer;
+  line-height: 1.5;
+  transition: color 0.15s ease-in-out, background-color 0.15s ease-in-out,
+    border-color 0.15s ease-in-out, box-shadow 0.15s ease-in-out;
+}
+
+button:hover {
+  background-color: #0056b3;
+  border-color: #0056b3;
+}
+
+.ag-theme-alpine {
+  height: 500px; /* Adjust the height as needed */
+  width: 100%;
+}
+
+.ag-header-cell {
+  background-color: #e8e8e8;
+  color: #000;
+}
+
+.ag-header-cell-text {
+  font-weight: bold;
+}
+
+.ag-row {
+  font-size: 0.875rem; /* Adjust the font size as needed */
+}
+
+.ag-row:hover {
+  background-color: #f4f4f4;
+}
+
+.ag-cell {
+  padding: 0.5rem; /* Adjust the padding for cell spacing */
+  border-right: 1px solid #ccc;
+}
+
+.ag-cell:last-child {
+  border-right: none;
+}
+
+/* ... additional custom styles ... */
