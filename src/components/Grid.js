@@ -167,10 +167,10 @@ export default function Grid({ userId }) {
 
   return (
     <div className="App app-header">
-      <div className="buttons">
-        <button onClick={handleAddRow}>Add Row</button>
-        <button onClick={handleRemoveRow}>Delete Row</button>
-        <button onClick={handleSaveChanges}>Save Changes</button>
+      <div className="buttons-container">
+        <button className="button" onClick={handleAddRow}>Add Row</button>
+        <button className="button" onClick={handleRemoveRow}>Delete Row</button>
+        <button className="button" onClick={handleSaveChanges}>Save Changes</button>
       </div>
       <div className="ag-theme-alpine grid-theme-alpine">
         <AgGridReact
