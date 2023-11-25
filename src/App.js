@@ -45,19 +45,23 @@ const App = () => {
     
   };
 
+ 
   if (!session) {
     return (
-      <div style={{ width: "100vw", height: "100vh", display: "flex", justifyContent: "center", alignItems: "center" }}>
-        <div>
-          <Auth supabaseClient={supabase} appearance={{ theme: ThemeSupa }} providers={["google"]} />
+      <div className="login-container">
+        <div className="auth-box">
+          <h2>Welcome Back</h2>
+          <Auth supabaseClient={supabase} providers={["google"]} />
         </div>
       </div>
     );
   } else {
     return (
-      <div>
-        <div>Logged in as User : {session.user.id}</div>
-        <button onClick={() => supabase.auth.signOut()}>Sign out</button>
+      <div className="main-container">
+        <div className="user-info">Logged in as User: {session.user.id}</div>
+        <button className="sign-out-btn" onClick={() => supabase.auth.signOut()}>
+          Sign out
+        </button>
         <TabBar userId={session.user.id} />
       </div>
     );
