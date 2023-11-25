@@ -166,7 +166,7 @@ export default function Grid({ userId }) {
   };
 
   return (
-    <div className="App app-header">
+    <div>
        <div className="action-buttons-container">
     <button className="action-button" onClick={handleAddRow}>Add Row</button>
     <button className="action-button" onClick={handleRemoveRow}>Delete Row</button>
