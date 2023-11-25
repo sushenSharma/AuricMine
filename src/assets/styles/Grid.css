@@ -11,7 +11,6 @@ body, html {
   padding: 1rem;
   background-color: #ffffff; /* White background for a clean look */
   box-shadow: 0 2px 4px rgba(0,0,0,0.1); /* Soft shadow for depth */
-  margin-bottom: 1rem;
   display: flex;
   justify-content: space-between; /* Align user info and sign out button */
   align-items: center;
@@ -22,7 +21,6 @@ body, html {
 .user-info {
   color: #333; /* Dark grey for better readability */
   font-weight: 600; /* Slightly bolder font for emphasis */
-  margin-left: 1rem;
 }
 
 /* Sign out button */
@@ -33,65 +31,46 @@ body, html {
   border: none;
   border-radius: 4px;
   cursor: pointer;
-  margin-right: 1rem;
+  margin-left: auto; /* Push the sign out button to the right */
+  order: 2; /* Ensure sign out is last item in the flex container */
 }
 
-.sign-out-btn:hover {
-  background-color: #ff1744; /* Darker red on hover */
+/* Container for user info and sign out */
+.user-info-container {
+  display: flex;
+  align-items: center;
+  flex-grow: 1; /* User info container takes up the remaining space */
+  order: 1; /* Ensure user info comes first in the flex container */
 }
 
-/* Grid container */
-.ag-theme-alpine {
-  height: 60vh; /* Adjust the height as needed */
-  width: 90%; /* Adjust the width as needed */
-  margin: auto; /* Center the grid */
-  border: none; /* Remove default border */
+/* Main buttons container */
+.buttons-container {
+  display: flex;
+  justify-content: start; /* Align buttons to the start */
+  gap: 10px; /* Spacing between buttons */
+  padding: 10px 0;
+  flex-wrap: wrap; /* Wrap buttons to the next line on small screens */
+  order: 3; /* Ensure buttons come after the user info */
 }
 
-/* Grid header styling */
-.ag-header-cell {
-  background-color: #f7f9fc; /* Very light grey for headers */
-  color: #333; /* Dark grey for header text */
-  border-bottom: 2px solid #d1d8e0; /* Solid line for separation */
-}
-
-/* Grid row styling */
-.ag-row {
-  background-color: #fff; /* White background for rows for contrast */
-  color: #333; /* Uniform text color */
-  border-bottom: 1px solid #d1d8e0; /* Light line to separate rows */
-}
-
-.ag-row:nth-child(even) {
-  background-color: #f7f9fc; /* Zebra striping for rows */
-}
-
-.ag-row:hover {
-  background-color: #dde1e7; /* Slightly darker on hover for interactivity */
-}
-
-/* Button styling */
-button {
-  background-color: #3498db; /* Consistent blue color for buttons */
-  color: #fff;
+/* Individual button styling */
+.button {
+  background-color: #3498db; /* Button color */
+  color: white;
   border: none;
   border-radius: 4px;
-  padding: 0.5rem 1rem;
-  margin: 0.5rem;
+  padding: 10px 20px;
   cursor: pointer;
   transition: background-color 0.3s;
+  min-width: 100px; /* Ensure all buttons have at least the same minimum width */
 }
 
-button:hover {
-  background-color: #2980b9; /* Darker blue on hover */
+.button:hover {
+  background-color: #2980b9;
 }
 
 /* Responsive design */
 @media (max-width: 768px) {
-  .ag-theme-alpine {
-    width: 100%; /* Full width on smaller screens */
-  }
-
   .app-header {
     flex-direction: column; /* Stack user info and sign out button */
     align-items: flex-start;
@@ -103,69 +82,86 @@ button:hover {
 
   .sign-out-btn {
     align-self: flex-end; /* Align sign out button to the end */
+    margin-bottom: 1rem; /* Space between sign out and tab buttons */
   }
-}
-
-.app-header {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  padding: 0.5rem;
-  background-color: #ffffff; /* Adjust to match your design */
-  border-bottom: 1px solid #d1d8e0;
-}
-
-/* Container for user info and sign out */
-.user-info-container {
-  display: flex;
-  align-items: center;
-}
-
-/* User info styling */
-.user-info {
-  margin-right: 1rem;
-  color: #333;
-  font-weight: bold;
-}
-
-/* Sign out button */
-.sign-out-btn {
-  background-color: #ff5252;
-  color: #fff;
-  padding: 0.375rem 0.75rem;
-  border: none;
-  border-radius: 0.25rem;
-  cursor: pointer;
-}
-
-/* Main buttons container */
-.buttons-container {
-  display: flex;
-  justify-content: center; /* Center the buttons */
-  flex-wrap: wrap; /* Wrap buttons to next line on small screens */
-  gap: 1rem; /* Spacing between buttons */
-  margin-top: 1rem;
-}
-
-/* Individual button styling */
-.button {
-  background-color: #3498db; /* Button color */
-  color: white;
-  border: none;
-  border-radius: 4px;
-  padding: 0.5rem 1rem;
-  cursor: pointer;
-  transition: background-color 0.3s;
-  width: auto; /* Auto width to only be as wide as needed */
-}
-
-.button:hover {
-  background-color: #2980b9;
+  
+  .buttons-container {
+    justify-content: center; /* Center buttons on smaller screens */
+    order: 4; /* Move buttons below the content on small screens */
+  }
 }
 
 /* Grid container */
 .ag-theme-alpine {
-  height: 60vh;
-  width: auto; /* Auto width to only take up as much space as needed */
-  margin: auto;
+  height: 60vh; /* Adjust the height as needed */
+  width: 100%; /* Take up full width */
+  margin: auto; /* Center the grid */
+  order: 5; /* Grid comes last */
+}
+
+/* Adjustments for loading and response display */
+.loading, .response {
+  padding: 10px 20px;
+  order: 6; /* Ensure loading and response are at the very bottom */
+}
+
+.action-buttons-container {
+  display: flex;
+  justify-content: start; /* Align action buttons to the start */
+  padding: 10px 0;
+  gap: 10px; /* Spacing between buttons */
+  flex-wrap: wrap; /* Allow buttons to wrap on smaller screens */
+}
+/* Style for each action button */
+.action-button {
+  background-color: #3498db; /* Consistent blue color for action buttons */
+  color: #fff;
+  border: none;
+  border-radius: 4px;
+  padding: 10px 20px; /* Larger padding for a bigger button */
+  cursor: pointer;
+  transition: background-color 0.3s;
+  min-width: 100px; /* Minimum width for all action buttons to maintain uniformity */
+}
+
+/* Hover effect for action buttons */
+.action-button:hover {
+  background-color: #2980b9; /* Darker blue on hover */
+}
+
+/* Style for the 'Get Insights' button */
+.get-insights-btn {
+  background-color: #3498db; /* Consistent blue color for 'Get Insights' button */
+  color: #fff;
+  border: none;
+  border-radius: 4px;
+  padding: 10px 20px; /* Larger padding for a bigger button */
+  cursor: pointer;
+  transition: background-color 0.3s;
+  min-width: 100px; /* Minimum width for consistency */
+  position: absolute; /* Position it absolutely relative to its positioned parent */
+  bottom: 20px; /* 20px from the bottom */
+  right: 20px; /* 20px from the right */
+}
+
+/* Hover effect for the 'Get Insights' button */
+.get-insights-btn:hover {
+  background-color: #2980b9; /* Darker blue on hover */
+}
+
+/* Ensure the grid container allows space for the absolutely positioned button */
+.ag-theme-alpine {
+  /* ... existing styles ... */
+  margin-bottom: 70px; /* Add bottom margin to prevent overlap with 'Get Insights' button */
+}
+
+/* Responsive design adjustments */
+@media (max-width: 768px) {
+  /* ... existing responsive styles ... */
+
+  .get-insights-btn {
+    right: 10px; /* Adjust position for smaller screens */
+    bottom: 10px;
+    width: auto;
+  }
 }

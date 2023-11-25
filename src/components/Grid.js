@@ -167,11 +167,11 @@ export default function Grid({ userId }) {
 
   return (
     <div className="App app-header">
-      <div className="buttons-container">
-        <button className="button" onClick={handleAddRow}>Add Row</button>
-        <button className="button" onClick={handleRemoveRow}>Delete Row</button>
-        <button className="button" onClick={handleSaveChanges}>Save Changes</button>
-      </div>
+       <div className="action-buttons-container">
+    <button className="action-button" onClick={handleAddRow}>Add Row</button>
+    <button className="action-button" onClick={handleRemoveRow}>Delete Row</button>
+    <button className="action-button" onClick={handleSaveChanges}>Save Changes</button>
+  </div>
       <div className="ag-theme-alpine grid-theme-alpine">
         <AgGridReact
           ref={gridRef}
@@ -188,7 +188,7 @@ export default function Grid({ userId }) {
       </div>
       
       <div className="buttons">
-        <button onClick={handleGetInsights}>Get Insights</button>
+      <button className="get-insights-btn" onClick={handleGetInsights}>Get Insights</button>
       </div>
       {loading ? (
         <p>Loading...</p>

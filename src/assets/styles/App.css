@@ -117,3 +117,14 @@ button:hover {
 .login-container a:hover {
   text-decoration: underline;
 }
+
+.sign-out-btn {
+  margin-left: auto; /* Pushes the button to the right */
+  padding: 5px 15px;
+  background-color: #d9534f; /* Bootstrap's btn-danger background color */
+  color: white;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  width: auto;
+}

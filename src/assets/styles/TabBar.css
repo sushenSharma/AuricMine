@@ -1,13 +1,111 @@
+/* TabBar.css */
+
+/* Base styling for all tabs */
 .tab-button {
-  padding: 10px 20px;
-  margin: 5px;
-  font-size: 16px;
-  border-radius: 5px;
-  background: #007bff;
-  color: #fff;
+  background-color: #f1f1f1; /* Light grey background */
+  color: #333; /* Dark grey text */
+  padding: 10px 20px; /* Spacing inside the button */
+  border: none; /* No border */
+  outline: none; /* No outline */
+  cursor: pointer; /* Cursor indicates clickable item */
+  transition: background-color 0.3s, color 0.3s; /* Smooth transition for hover effect */
+  margin-right: 4px; /* Spacing between tabs */
+  border-radius: 4px; /* Slightly rounded corners for aesthetics */
+  margin-bottom: -1px; /* Aligns tab with the content box */
+  position: relative; /* For layering active tab over the border of content box */
+}
+
+/* Hover effect for tabs */
+.tab-button:hover {
+  background-color: #e2e2e2; /* Slightly darker background on hover */
+  color: #000; /* Black text on hover for better contrast */
+}
+
+/* Active tab styling */
+.tab-button.active {
+  background-color: #ffffff; /* White background for active tab */
+  color: #007bff; /* Blue text to indicate active state */
+  border-bottom: 2px solid #007bff; /* Blue bottom border to highlight active tab */
+  z-index: 1; /* Ensures the active tab overlaps the border of the content box */
+}
+
+/* Content styling below tabs */
+.tab-content {
+  border: 1px solid #ddd; /* Light grey border around the content area */
+  padding: 20px; /* Spacing inside the content box */
+  background-color: #ffffff; /* White background for content */
+  border-radius: 4px; /* Rounded corners for the content box */
+}
+
+/* Active content section styling */
+h2 {
+  color: #333; /* Dark grey text for headings */
+  font-size: 1.5rem; /* Larger font size for headings */
+  margin-top: 0; /* Remove default margin from top of headings */
+}
+
+/* TabBar.css */
+
+/* Container for the tab buttons */
+.tab-buttons-container {
+  display: flex;
+  justify-content: flex-start; /* Align tabs to the start of the container */
+  border-bottom: 1px solid #ccc; /* Bottom border for the entire tab bar */
+}
+
+/* Base styling for all tabs */
+.tab-button {
+  background-color: #f1f1f1; /* Neutral background */
+  color: #333; /* Dark text for contrast */
+  padding: 10px 15px; /* Padding inside the buttons */
+  border: 1px solid #ccc; /* Border to distinguish tabs */
+  border-bottom: none; /* Remove bottom border to merge with content area */
+  margin-right: 2px; /* Small gap between tabs */
+  cursor: pointer;
+  transition: background-color 0.2s, color 0.2s;
+  border-top-left-radius: 5px; /* Rounded corners for the top of tabs */
+  border-top-right-radius: 5px;
+}
+
+/* Styling for the active tab */
+.tab-button.active {
+  background-color: #fff; /* White background for active tab */
+  color: #007bff; /* Highlight color for active tab */
+  border-color: #ccc #ccc transparent; /* Borders on the sides and top */
+  position: relative; /* Ensure the tab overlaps the border below */
+}
+
+/* Content area styling */
+.tab-content {
+  border: 1px solid #ccc; /* Border around the content area */
+  padding: 20px; /* Padding inside the content area */
+  background-color: #fff; /* White background for content */
+}
+
+.header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 10px;
+  background-color: #f3f3f3; /* Adjust the color to fit your design */
+}
+
+.user-info {
+  font-size: 1rem;
+}
+
+.sign-out-btn {
+  padding: 5px 15px;
+  background-color: #d9534f; /* Bootstrap's btn-danger background color */
+  color: white;
+  border: none;
+  border-radius: 4px;
   cursor: pointer;
 }
 
-.tab-button.active {
-  background: #5cb85c;
+.tab-buttons-container {
+  display: flex;
+  justify-content: flex-start;
+  background-color: #f9f9f9; /* Slightly different background to distinguish from header */
+  border-bottom: 1px solid #ccc;
 }
