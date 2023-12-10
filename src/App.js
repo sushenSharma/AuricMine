@@ -1,18 +1,14 @@
 import React, { useEffect, useState } from "react";
 import "./assets/styles/App.css";
 import TabBar from "./components/TabBar";
-import { createClient } from '@supabase/supabase-js';
 import { Auth } from '@supabase/auth-ui-react';
 import { ThemeSupa } from '@supabase/auth-ui-shared';
+import { supabase, userIdKey } from "./constants";
 
-const supabase = createClient(
-  process.env.REACT_APP_SUPABASE_URL,
-  process.env.REACT_APP_SUPABASE_ANON_KEY
-);
 
 const App = () => {
   const [session, setSession] = useState(null);
-
+  
   useEffect(() => {
     supabase.auth.getSession().then(({ data: { session } }) => {
       setSession(session);
@@ -45,25 +41,19 @@ const App = () => {
     
   };
 
- 
   if (!session) {
     return (
-      <div className="login-container">
-        <div className="auth-box">
-          <h2>Welcome Back</h2>
-          <Auth supabaseClient={supabase} providers={["google"]} />
+      <div style={{ width: "100vw", height: "100vh", display: "flex", justifyContent: "center", alignItems: "center" }}>
+        <div>
+          <Auth supabaseClient={supabase} appearance={{ theme: ThemeSupa }} providers={["google"]} />
         </div>
       </div>
     );
   } else {
+    localStorage.setItem(userIdKey, session.user.id);
     return (
-      <div className="main-container">
-        <div className="user-info">Logged in as User: {session.user.id}</div>
-        <button className="sign-out-btn" onClick={() => supabase.auth.signOut()}>
-          Sign out
-        </button>
-        <TabBar userId={session.user.id} />
-      </div>
+       
+        <TabBar sessionObj={session} />
     );
   }
 };

@@ -9,8 +9,10 @@ import { AgGridReact } from "ag-grid-react";
 import "ag-grid-community/styles/ag-grid.css";
 import "ag-grid-community/styles/ag-theme-alpine.css";
 import { createClient } from "@supabase/supabase-js";
+
 import "../assets/styles/Grid.css";
-import { columns } from "../constants.js";
+
+import { columns, userIdKey } from "../constants.js";
 
 const supabase = createClient(
   process.env.REACT_APP_SUPABASE_URL,
@@ -21,71 +23,71 @@ const apiUrl = process.env.REACT_APP_OPENAI_URL;
 const promptText = process.env.REACT_APP_OPENAI_API_PROMPT;
 const tableName = process.env.REACT_APP_SUPABASE_TABLE_NAME;
 
-const ExpandCollapseCellRenderer = ({ data, node, api }) => {
-  const [open, setOpen] = useState(false);
-
-  const toggleDetail = () => {
-    setOpen(!open);
-    node.setRowHeight(open ? 25 : 150); // Adjust as needed for your detail row height
-    api.onRowHeightChanged();
-  };
-
-  return (
-    <button onClick={toggleDetail}>
-      {open ? 'Collapse' : 'Expand'}
-    </button>
-  );
-};
-
-export default function Grid({ userId }) {
-  
-
+export default function Grid() {
   const gridRef = useRef(null);
   const [rowData, setRowData] = useState([]);
   const [response, setResponse] = useState("");
   const [loading, setLoading] = useState(false);
   const [columnDefs, setColumnDefs] = useState([]);
 
+  //Umashankar
   const defaultColDef = useMemo(() => {
     return {
       flex: 1,
-      minWidth: 100,
-      sortable: true,
-      field: 'expand',
-      cellRenderer: 'expandCollapseCellRenderer',
-      cellRendererParams: {
-        innerRenderer: 'simpleCellRenderer'
-      }
+      minWidth: 115,
+      sortable: true,      
+      resizable: true,
+      wrapText: true,
+      autoHeight: true,
+      wrapHeaderText: true,
+      autoHeaderHeight: true
     };
   }, []);
 
+  //Umashankar1
+  // const [session, setSession] = useState(null);
+  // useEffect(() => {
+  //   supabase.auth.getSession().then(({ data: { session } }) => {
+  //     setSession(session);
+  //   });
+  
+  //   });
+
+  const userUUID = localStorage.getItem(userIdKey);
+  
   useEffect(() => {
     setColumnDefs(columns);
     async function getData() {
       try {
-        const { data, error } = await supabase.from(tableName).select().eq('user_id', userId);
+        const { data, error } = await supabase.from(tableName).select()
+        .eq("user_id", userUUID) //Umashankar
+        .order("buy_date", { ascending: true }); //Umashankar
 
         if (error) {
           throw error;
         }
+
         setRowData(data);
       } catch (error) {
         console.error(error);
       }
     }
     getData();
-  }, [userId]);
-
+  }, []);
+ 
   const handleAddRow = async () => {
     try {
-      const { data, error } = await supabase.from(tableName).insert({ user_id: userId }).single();
+      const { data, error } = await supabase
+        .from(tableName)
+        .insert({user_id : userUUID})
+        .select();
 
       if (error) {
         throw error;
       }
-
-      const { id } = data[0];
-      gridRef.current.api.applyTransaction({ add: [{ id, user_id: userId }] });
+   
+      const { id, user_id } = data[0]; //Umashankar
+      gridRef.current.api.applyTransaction({ add: [{ id, user_id }] }); //Umashankar
     } catch (error) {
       console.error(error);
     }
@@ -99,7 +101,7 @@ export default function Grid({ userId }) {
     const { id } = selectedData[0];
 
     try {
-      const { error } = await supabase.from(tableName).delete().eq("id", id).and('user_id', userId);
+      const { error } = await supabase.from(tableName).delete().eq("id", id);
 
       if (error) {
         throw error;
@@ -108,20 +110,27 @@ export default function Grid({ userId }) {
       gridRef.current.api.applyTransaction({ remove: selectedData });
     } catch (error) {
       console.error(error);
-    } 
-  }, [userId]);
+    }
+  }, []);
 
   const handleSaveChanges = async () => {
-    console.log("USER ID IS:",userId);
     const displayedRows = [];
 
     gridRef.current.api.forEachNodeAfterFilterAndSort(function (rowNode) {
-      const rowData = { ...rowNode.data, user_id: userId };
+      const rowData = rowNode.data;
+      //console.log("rowData")
+      //console.log(rowData)
       displayedRows.push(rowData);
     });
 
     try {
-      const { data, error } = await supabase.from(tableName).upsert(displayedRows).select();
+      
+      // console.log("displayedRows")
+      // console.log(displayedRows)
+      const { data, error } = await supabase
+        .from(tableName)
+        .upsert(displayedRows)
+        .select();
 
       if (error) {
         throw error;
@@ -165,30 +174,35 @@ export default function Grid({ userId }) {
     }
   };
 
+  // const frameworkComponents = {
+  //   agDateInput: CustomDateComponent,
+  //   customEditor: CustomEditorComponent
+  // };
+
   return (
-    <div>
-       <div className="action-buttons-container">
-    <button className="action-button" onClick={handleAddRow}>Add Row</button>
-    <button className="action-button" onClick={handleRemoveRow}>Delete Row</button>
-    <button className="action-button" onClick={handleSaveChanges}>Save Changes</button>
-  </div>
-      <div className="ag-theme-alpine grid-theme-alpine">
+    <>
+    <div style={{padding: '10px 10px',
+  backgroundColor: 'ghostwhite'}}>
+        <button className="btn btn-outline-primary btn-sm m-1" onClick={handleAddRow}>Add Row</button>
+        <button className="btn btn-outline-danger btn-sm m-1" onClick={handleRemoveRow}>Delete Row</button>
+        <button className="btn btn-outline-success btn-sm m-1" onClick={handleSaveChanges}>Save Changes</button>
+      </div>
+    <div className="App ">
+      
+      <div className="ag-theme-alpine grid-theme-alpine" style={{height: '525px'}}>
         <AgGridReact
           ref={gridRef}
           rowData={rowData}
           columnDefs={columnDefs}
-          frameworkComponents={{
-            expandCollapseCellRenderer: ExpandCollapseCellRenderer
-          }}
+          defaultColDef={defaultColDef}
           animateRows={true}
           rowSelection="single"
-          getRowHeight={params => params.node.rowHeight}
-          
-        />
+          // Components={frameworkComponents}
+        >
+          </AgGridReact>
       </div>
-      
       <div className="buttons">
-      <button className="get-insights-btn" onClick={handleGetInsights}>Get Insights</button>
+        <button className="btn btn-outline-primary m-1" onClick={handleGetInsights}>Get Insights with AI</button>
       </div>
       {loading ? (
         <p>Loading...</p>
@@ -198,5 +212,6 @@ export default function Grid({ userId }) {
         </ul>
       )}
     </div>
+    </>
   );
 }
