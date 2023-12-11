@@ -15,6 +15,15 @@
     padding: 1rem 2rem;
     background-color: #395947; /* Dark background for the top navigation */
   }
+  .top-nav .h1  {
+    font-size: 3rem; /* Large font size */
+    color: #fff; /* White text color */
+    margin: 0; /* Reset default margin */
+    padding-right: 20px; /* Adjust as needed */
+    flex-grow: 1; /* Allows the button to be pushed to the right */
+    font-family: 'Roboto', sans-serif;
+  }
+  
   
   .auth-button {
     padding: 1rem 2rem;
@@ -49,12 +58,7 @@
     padding-right: 2rem;
   }
   
-  .text-content h1 {
-    font-size: 3rem;
-    color: #101010; /* Light text color for dark theme */
-    margin-bottom: 1rem;
-  }
-  
+ 
   .text-content p {
     color: #101010; /* Slightly lighter grey text for contrast */
     margin-bottom: 2rem;
@@ -85,7 +89,7 @@
   }
   
   .trading-image {
-    max-width: 100%;
+    max-width: 90%;
     height: auto;
     border-radius: 8px; /* Optional, for rounded corners */
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Drop shadow effect */
