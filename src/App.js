@@ -4,10 +4,12 @@ import TabBar from "./components/TabBar";
 import { Auth } from '@supabase/auth-ui-react';
 import { ThemeSupa } from '@supabase/auth-ui-shared';
 import { supabase, userIdKey } from "./constants";
+import LandingPage from "./components/LandingPage";
 
 
 const App = () => {
   const [session, setSession] = useState(null);
+  const [showAuth, setShowAuth] = useState(false);
   
   useEffect(() => {
     supabase.auth.getSession().then(({ data: { session } }) => {
@@ -40,22 +42,24 @@ const App = () => {
     }
     
   };
-
+  const handleLogin = () => {
+    setShowAuth(true); // Show the authentication component
+  };
+  
   if (!session) {
-    return (
-      <div style={{ width: "100vw", height: "100vh", display: "flex", justifyContent: "center", alignItems: "center" }}>
-        <div>
+    if (showAuth) {
+      return (
+        <div style={{ width: "100vw", height: "100vh", display: "flex", justifyContent: "center", alignItems: "center" }}>
           <Auth supabaseClient={supabase} appearance={{ theme: ThemeSupa }} providers={["google"]} />
         </div>
-      </div>
-    );
+      );
+    }
+    return <LandingPage onLogin={handleLogin} />;
   } else {
     localStorage.setItem(userIdKey, session.user.id);
-    return (
-       
-        <TabBar sessionObj={session} />
-    );
+    return <TabBar sessionObj={session} />;
   }
 };
+
 
 export default App;
