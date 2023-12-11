@@ -1,7 +1,11 @@
+@import url('https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap');
+
+
 .landing-page {
     background: linear-gradient(to right, #fffacd, #ffd700); /* gradient from light yellow to a more saturated yellow */
-    color: #333; /* Dark text for contrast */
+    color: #44526F; /* Dark text for contrast */
     transition: background-color 0.3s;
+    font-family: 'Roboto', sans-serif;
   }
   
   .top-nav {
@@ -9,22 +13,26 @@
     justify-content: flex-end;
     align-items: center;
     padding: 1rem 2rem;
-    background-color: #333; /* Dark background for the top navigation */
+    background-color: #395947; /* Dark background for the top navigation */
   }
   
   .auth-button {
-    padding: 0.5rem 1rem;
-    border: none;
-    background-color: #6dd5ed; /* Button fill color that stands out on dark bg */
-    color: #fff;
+    padding: 1rem 2rem;
+    background-color: #395947; /* Button fill color */
+    color: #fff; /* Text color */
+    border: 5px solid #fff; /* White border */
     cursor: pointer;
+    font-size: 1rem;
     font-weight: bold;
-    transition: background-color 0.3s ease;
-    border-radius: 4px; /* Rounded corners */
+    transition: all 0.3s ease;
+    border-radius: 30px; /* Oval shape */
+    outline: none; /* Remove default focus outline */
+    text-decoration: none; /* Remove default text decoration */
+    display: inline-block; 
   }
   
   .auth-button:hover {
-    background-color: #5bc0de; /* Slightly lighter color on hover */
+    background-color: #395947; /* Slightly lighter color on hover */
   }
   
   .split-layout {
@@ -33,7 +41,7 @@
     justify-content: center;
     height: calc(100vh - 50px); /* Adjust based on nav height */
     padding: 2rem;
-    background: #222; /* Dark background for the split layout */
+    background: #f5efdf; /* Dark background for the split layout */
   }
   
   .text-content {
@@ -43,27 +51,29 @@
   
   .text-content h1 {
     font-size: 3rem;
-    color: #f0f0f0; /* Light text color for dark theme */
+    color: #101010; /* Light text color for dark theme */
     margin-bottom: 1rem;
   }
   
   .text-content p {
-    color: #ccc; /* Slightly lighter grey text for contrast */
+    color: #101010; /* Slightly lighter grey text for contrast */
     margin-bottom: 2rem;
   }
   
   .cta-button {
     padding: 1rem 2rem;
-    background-color: #6dd5ed;
-    color: #fff;
-    border: none;
+    background-color: #395947; /* Button fill color */
+    color: #fff; /* Text color */
+    border: 5px solid #fff; /* White border */
     cursor: pointer;
     font-size: 1rem;
     font-weight: bold;
-    transition: background-color 0.3s;
-    border-radius: 4px; /* Rounded corners */
+    transition: all 0.3s ease;
+    border-radius: 30px; /* Oval shape */
+    outline: none; /* Remove default focus outline */
+    text-decoration: none; /* Remove default text decoration */
+    display: inline-block; /* Allows the use of padding and margin */
   }
-  
   .cta-button:hover {
     background-color: #5bc0de; /* Light grey for hover */
   }
@@ -78,6 +88,29 @@
     max-width: 100%;
     height: auto;
     border-radius: 8px; /* Optional, for rounded corners */
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Optional shadow for depth */
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Drop shadow effect */
   }
   
+  body {
+    font-family: 'Roboto', sans-serif;
+  }
+  
+  .features-list {
+    list-style: none; /* Remove default list styling */
+    padding: 0;
+    margin: 2rem 0; /* Add some space before and after the list */
+  }
+  .features-list li {
+    background: #f5efdf; /* White background for each list item */
+    margin-bottom: 1rem; /* Space between list items */
+    padding: 0.5rem 1rem; /* Padding inside list items */
+    font-family: 'Roboto', sans-serif;
+    border-left: 4px solid #395947; /* A colored bar on the left for visual accent */
+    border-radius: 2px; /* Slightly rounded corners for polish */
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); /* Subtle shadow for depth */
+    transition: transform 0.3s ease, box-shadow 0.3s ease; /* Smooth transitions for hover effects */
+  }
+  .features-list li:hover {
+    transform: translateY(-2px); /* Slightly raise the item */
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.15); /* Enhance shadow */
+  }
