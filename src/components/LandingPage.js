@@ -14,11 +14,13 @@ const LandingPage = ({ onLogin }) => {
   return (
     <div className="landing-page">
       <nav className="top-nav">
+      <h1 className="h1">Welcome to the Next Gen Trading Journal</h1>
         <button className="auth-button" onClick={onLogin}>Login / Sign Up</button>
       </nav>
       <div className="split-layout">
+     
         <div className="text-content">
-          <h1>Welcome to the Next Gen Trading Journal</h1>
+       
           <h2>Track and analyze your trades efficiently with the power of AI.</h2>
           <ul className="features-list">
             {features.map((feature, index) => (
