@@ -1,6 +1,7 @@
 import React from 'react';
 import '../style/landingPage.css'; // Import the CSS file for styling
-import TradingImage from './TradingJournal.png'; // Path to your image
+import TradingImage from './TradingJournal.jpg'; // Path to your image
+import Logo from './Logo.png'
 
 const features = [
   "Smart Analytics: Dive into your trading performance with charts and metrics powered by AI.",
@@ -14,14 +15,16 @@ const LandingPage = ({ onLogin }) => {
   return (
     <div className="landing-page">
       <nav className="top-nav">
-      <h1 className="h1">Welcome to the Next Gen Trading Journal</h1>
+        <img src={Logo} alt="Logo" className="logo" /> {/* Logo added here */}
+        <a href="#services" className="nav-link">Services</a> {/* Tab for Services */}
+        <a href="#about" className="nav-link">About</a>     {/* Tab for About */}
+        <a href="#contact" className="nav-link">Contact</a> {/* Tab for Contact */}
         <button className="auth-button" onClick={onLogin}>Login / Sign Up</button>
       </nav>
       <div className="split-layout">
      
         <div className="text-content">
-       
-          <h2>Track and analyze your trades efficiently with the power of AI.</h2>
+        <h1 className="h1">Trading Made Easy with Trading Ledger</h1>
           <ul className="features-list">
             {features.map((feature, index) => (
               <li key={index}>{feature}</li>
