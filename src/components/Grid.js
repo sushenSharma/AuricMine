@@ -5,25 +5,19 @@ import React, {
   useMemo,
   useCallback,
 } from "react";
-import { AgGridReact } from "ag-grid-react";
-import "ag-grid-community/styles/ag-grid.css";
-import "ag-grid-community/styles/ag-theme-alpine.css";
 import { createClient } from "@supabase/supabase-js";
 import "../assets/styles/Grid.css";
 import { columns, userIdKey } from "../constants.js";
 import "pikaday/css/pikaday.css";
 import "../assets/styles/styles.css";
 import { HotTable, HotColumn } from "@handsontable/react";
-import { data } from "../components/constants.ts";
-// import { ProgressBarRenderer } from "../renderers/ProgressBar.tsx";
-// import { StarsRenderer } from "../renderers/Stars.tsx";
-// import {
-//   drawCheckboxInRowHeaders,
-//   addClassesToRows,
-//   changeCheckboxCell,
-//   alignHeaders
-// } from "./hooksCallbacks.ts";
-import "handsontable/dist/handsontable.min.css";
+import { CheckboxCellType, DateCellType, DropdownCellType, NumericCellType } from "handsontable/cellTypes";
+import { CheckboxEditor,  NumericEditor } from "handsontable/editors";
+import { NUMERIC_VALIDATOR } from "handsontable/validators";
+import Handsontable from "handsontable";
+import 'handsontable/dist/handsontable.full.min.css';
+import { EDITOR_TYPE } from "handsontable/editors/dateEditor";
+import { VALIDATOR_TYPE } from "handsontable/validators/dateValidator";
 
 const supabase = createClient(
   process.env.REACT_APP_SUPABASE_URL,
@@ -35,11 +29,40 @@ const promptText = process.env.REACT_APP_OPENAI_API_PROMPT;
 const tableName = process.env.REACT_APP_SUPABASE_TABLE_NAME;
 
 export default function Grid() {
+  
   const gridRef = useRef(null);
   const [rowData, setRowData] = useState([]);
   const [response, setResponse] = useState("");
   const [loading, setLoading] = useState(false);
   const [columnDefs, setColumnDefs] = useState([]);
+  const [columnWidths, setColumnWidths] = useState([]);
+
+  const customHeaderRenderer = (instance, column, colIndex) => {
+    const columnTitle = column.getColHeader(colIndex);
+    const headerElement = document.createElement('div');
+    
+    // Create title element
+    const titleElement = document.createElement('span');
+    titleElement.textContent = columnTitle;
+    headerElement.appendChild(titleElement);
+
+    // Add a spacer
+    const spacerElement = document.createElement('span');
+    spacerElement.style.marginLeft = '5px'; // Adjust the space here
+    headerElement.appendChild(spacerElement);
+
+    return headerElement;
+  };
+
+  const calculateColumnWidths = () => {
+    // Example: Adjust column widths based on screen width
+    const screenWidth = window.innerWidth;
+    const numberOfColumns = 13; // Adjust this based on your number of columns
+    const baseWidth = screenWidth / numberOfColumns;
+
+    const newWidths = new Array(numberOfColumns).fill(baseWidth);
+    setColumnWidths(newWidths);
+  };
 
   //Umashankar
   const defaultColDef = useMemo(() => {
@@ -58,6 +81,12 @@ export default function Grid() {
   const userUUID = localStorage.getItem(userIdKey);
   
   useEffect(() => {
+    calculateColumnWidths();
+
+    // Re-calculate on window resize
+    window.addEventListener('resize', calculateColumnWidths);
+
+    
     setColumnDefs(columns);
     async function getData() {
       try {
@@ -170,6 +199,7 @@ export default function Grid() {
       console.error("Error:", error);
     }
   };
+  const handsontable = Handsontable.helper.createEmptySpreadsheetData(15,13)
 
   return (
     <>
@@ -183,10 +213,10 @@ export default function Grid() {
       
       <div className="ag-theme-alpine grid-theme-alpine" style={{height: '525px'}}>
 
-<HotTable
-      data={rowData}
+      <HotTable
+      data={handsontable}
       height={450}
-      colWidths={[140,140, 126, 192, 100, 100, 90, 90, 110, 97,110,110,110]}
+      colWidths={columnWidths}
       colHeaders={[
         "Stock Name",
         "Buy Price",
@@ -202,38 +232,32 @@ export default function Grid() {
         "ROCE",
         "Annual Return Generated"
       ]}
+      
       dropdownMenu={true}
-      hiddenColumns={{
-        indicators: true
-      }}
       contextMenu={true}
       multiColumnSorting={true}
       filters={true}
       rowHeaders={true}
-      // afterGetColHeader={alignHeaders}
-      // beforeRenderer={addClassesToRows}
-      // afterGetRowHeader={drawCheckboxInRowHeaders}
-      // afterOnCellMouseDown={changeCheckboxCell}
+      collapsibleColumns={true}
       manualRowMove={true}
       licenseKey="non-commercial-and-evaluation"
+      columns={[
+        {},
+        {type:NumericCellType,editor:NumericEditor,validator:NUMERIC_VALIDATOR,columnHeaderRenderer: customHeaderRenderer},
+        {type:DateCellType, editor: EDITOR_TYPE,validator:VALIDATOR_TYPE,columnHeaderRenderer: customHeaderRenderer},
+        {type:NumericCellType,editor:NumericEditor,validator:NUMERIC_VALIDATOR,columnHeaderRenderer: customHeaderRenderer},
+        {type:NumericCellType,editor:NumericEditor,validator:NUMERIC_VALIDATOR,columnHeaderRenderer: customHeaderRenderer},
+        {type:DateCellType, editor: EDITOR_TYPE,validator:VALIDATOR_TYPE,columnHeaderRenderer: customHeaderRenderer},
+        {readOnly:true,columnHeaderRenderer: customHeaderRenderer},
+        {readOnly:true,columnHeaderRenderer: customHeaderRenderer},
+        {columnHeaderRenderer: customHeaderRenderer},
+        {type:CheckboxCellType,editor:CheckboxEditor,columnHeaderRenderer: customHeaderRenderer},
+        {readOnly:true,columnHeaderRenderer: customHeaderRenderer},
+        {readOnly:true,columnHeaderRenderer: customHeaderRenderer},
+        {readOnly:true,columnHeaderRenderer: customHeaderRenderer},
+      ]}
     >
-      <HotColumn data={1} />
-      <HotColumn data={2} />
-      <HotColumn data={3} />
-      <HotColumn data={4} type="date"/>
-      <HotColumn data={5} />
-      <HotColumn data={6}/>
-      <HotColumn data={7} />
-      <HotColumn data={8}/>
-      {/* <HotColumn data={7} type="numeric" /> */}
-      {/* <HotColumn data={8} readOnly={true} className="htMiddle"> */}
-        {/* @ts-ignore Element inherits some props. It's hard to type it. */}
-        {/* <ProgressBarRenderer hot-renderer /> */}
       
-      <HotColumn data={10} readOnly={true} className="htCenter">
-        {/* @ts-ignore Element inherits some props. It's hard to type it. */}
-        {/* <StarsRenderer hot-renderer /> */}
-      </HotColumn>
     </HotTable>
       </div>
       <div className="buttons">
