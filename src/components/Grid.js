@@ -9,10 +9,21 @@ import { AgGridReact } from "ag-grid-react";
 import "ag-grid-community/styles/ag-grid.css";
 import "ag-grid-community/styles/ag-theme-alpine.css";
 import { createClient } from "@supabase/supabase-js";
-
 import "../assets/styles/Grid.css";
-
 import { columns, userIdKey } from "../constants.js";
+import "pikaday/css/pikaday.css";
+import "../assets/styles/styles.css";
+import { HotTable, HotColumn } from "@handsontable/react";
+import { data } from "../components/constants.ts";
+// import { ProgressBarRenderer } from "../renderers/ProgressBar.tsx";
+// import { StarsRenderer } from "../renderers/Stars.tsx";
+// import {
+//   drawCheckboxInRowHeaders,
+//   addClassesToRows,
+//   changeCheckboxCell,
+//   alignHeaders
+// } from "./hooksCallbacks.ts";
+import "handsontable/dist/handsontable.min.css";
 
 const supabase = createClient(
   process.env.REACT_APP_SUPABASE_URL,
@@ -43,15 +54,6 @@ export default function Grid() {
       autoHeaderHeight: true
     };
   }, []);
-
-  //Umashankar1
-  // const [session, setSession] = useState(null);
-  // useEffect(() => {
-  //   supabase.auth.getSession().then(({ data: { session } }) => {
-  //     setSession(session);
-  //   });
-  
-  //   });
 
   const userUUID = localStorage.getItem(userIdKey);
   
@@ -118,15 +120,10 @@ export default function Grid() {
 
     gridRef.current.api.forEachNodeAfterFilterAndSort(function (rowNode) {
       const rowData = rowNode.data;
-      //console.log("rowData")
-      //console.log(rowData)
       displayedRows.push(rowData);
     });
 
     try {
-      
-      // console.log("displayedRows")
-      // console.log(displayedRows)
       const { data, error } = await supabase
         .from(tableName)
         .upsert(displayedRows)
@@ -174,11 +171,6 @@ export default function Grid() {
     }
   };
 
-  // const frameworkComponents = {
-  //   agDateInput: CustomDateComponent,
-  //   customEditor: CustomEditorComponent
-  // };
-
   return (
     <>
     <div style={{padding: '10px 10px',
@@ -190,16 +182,59 @@ export default function Grid() {
     <div className="App ">
       
       <div className="ag-theme-alpine grid-theme-alpine" style={{height: '525px'}}>
-        <AgGridReact
-          ref={gridRef}
-          rowData={rowData}
-          columnDefs={columnDefs}
-          defaultColDef={defaultColDef}
-          animateRows={true}
-          rowSelection="single"
-          // Components={frameworkComponents}
-        >
-          </AgGridReact>
+
+<HotTable
+      data={rowData}
+      height={450}
+      colWidths={[140,140, 126, 192, 100, 100, 90, 90, 110, 97,110,110,110]}
+      colHeaders={[
+        "Stock Name",
+        "Buy Price",
+        "Buy Date",
+        "Amount Invested",
+        "Sell Price",
+        "Sell Date",
+        "Brokerage",
+        "Days Hold",
+        "Reason to Buy",
+        "GTT Enabled",
+        "Profit / Loss",
+        "ROCE",
+        "Annual Return Generated"
+      ]}
+      dropdownMenu={true}
+      hiddenColumns={{
+        indicators: true
+      }}
+      contextMenu={true}
+      multiColumnSorting={true}
+      filters={true}
+      rowHeaders={true}
+      // afterGetColHeader={alignHeaders}
+      // beforeRenderer={addClassesToRows}
+      // afterGetRowHeader={drawCheckboxInRowHeaders}
+      // afterOnCellMouseDown={changeCheckboxCell}
+      manualRowMove={true}
+      licenseKey="non-commercial-and-evaluation"
+    >
+      <HotColumn data={1} />
+      <HotColumn data={2} />
+      <HotColumn data={3} />
+      <HotColumn data={4} type="date"/>
+      <HotColumn data={5} />
+      <HotColumn data={6}/>
+      <HotColumn data={7} />
+      <HotColumn data={8}/>
+      {/* <HotColumn data={7} type="numeric" /> */}
+      {/* <HotColumn data={8} readOnly={true} className="htMiddle"> */}
+        {/* @ts-ignore Element inherits some props. It's hard to type it. */}
+        {/* <ProgressBarRenderer hot-renderer /> */}
+      
+      <HotColumn data={10} readOnly={true} className="htCenter">
+        {/* @ts-ignore Element inherits some props. It's hard to type it. */}
+        {/* <StarsRenderer hot-renderer /> */}
+      </HotColumn>
+    </HotTable>
       </div>
       <div className="buttons">
         <button className="btn btn-outline-primary m-1" onClick={handleGetInsights}>Get Insights with AI</button>
