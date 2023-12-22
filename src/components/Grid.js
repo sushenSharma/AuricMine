@@ -11,13 +11,14 @@ import { columns, userIdKey } from "../constants.js";
 import "pikaday/css/pikaday.css";
 import "../assets/styles/styles.css";
 import { HotTable, HotColumn } from "@handsontable/react";
-import { CheckboxCellType, DateCellType, DropdownCellType, NumericCellType } from "handsontable/cellTypes";
+import { AutocompleteCellType, CheckboxCellType, DateCellType, DropdownCellType, NumericCellType } from "handsontable/cellTypes";
 import { CheckboxEditor,  NumericEditor } from "handsontable/editors";
 import { NUMERIC_VALIDATOR } from "handsontable/validators";
 import Handsontable from "handsontable";
 import 'handsontable/dist/handsontable.full.min.css';
 import { EDITOR_TYPE } from "handsontable/editors/dateEditor";
 import { VALIDATOR_TYPE } from "handsontable/validators/dateValidator";
+import { stock_name } from "../StockList";
 
 const supabase = createClient(
   process.env.REACT_APP_SUPABASE_URL,
@@ -218,7 +219,7 @@ export default function Grid() {
       height={450}
       colWidths={columnWidths}
       colHeaders={[
-        "Stock Name",
+        "Stock Symbol",
         "Buy Price",
         "Buy Date",
         "Amount Invested",
@@ -242,7 +243,7 @@ export default function Grid() {
       manualRowMove={true}
       licenseKey="non-commercial-and-evaluation"
       columns={[
-        {},
+        {type:AutocompleteCellType,source:stock_name,strict:false},
         {type:NumericCellType,editor:NumericEditor,validator:NUMERIC_VALIDATOR,columnHeaderRenderer: customHeaderRenderer},
         {type:DateCellType, editor: EDITOR_TYPE,validator:VALIDATOR_TYPE,columnHeaderRenderer: customHeaderRenderer},
         {type:NumericCellType,editor:NumericEditor,validator:NUMERIC_VALIDATOR,columnHeaderRenderer: customHeaderRenderer},
