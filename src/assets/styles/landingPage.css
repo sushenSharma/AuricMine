@@ -161,3 +161,30 @@
     display: inline-block; /* To apply padding and margin */
     transition: color 0.3s ease, transform 0.3s ease; /* Smooth transition for hover effects */
 }
+
+#redbutton:hover
+{
+    background-color: #f02525;
+    border:hidden;
+    color: black;
+}
+#greenbutton:hover
+{
+    background-color: rgb(58, 233, 23);
+    border:hidden;
+    color: black;
+}
+#signup:hover
+{
+    color: white;
+}
+
+#head,#second
+{
+    background-color:rgb(25, 25, 25);
+}
+
+#card:hover
+{
+background-color:rgb(25, 25, 25) ;
+}
