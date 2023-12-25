@@ -10,8 +10,8 @@ import "../assets/styles/Grid.css";
 import { columns, userIdKey } from "../constants.js";
 import "pikaday/css/pikaday.css";
 import "../assets/styles/styles.css";
-import { HotTable, HotColumn } from "@handsontable/react";
-import { AutocompleteCellType, CheckboxCellType, DateCellType, DropdownCellType, NumericCellType } from "handsontable/cellTypes";
+import { HotTable } from "@handsontable/react";
+import { AutocompleteCellType, CheckboxCellType, DateCellType, NumericCellType } from "handsontable/cellTypes";
 import { CheckboxEditor,  NumericEditor } from "handsontable/editors";
 import { NUMERIC_VALIDATOR } from "handsontable/validators";
 import Handsontable from "handsontable";
@@ -19,6 +19,7 @@ import 'handsontable/dist/handsontable.full.min.css';
 import { EDITOR_TYPE } from "handsontable/editors/dateEditor";
 import { VALIDATOR_TYPE } from "handsontable/validators/dateValidator";
 import { stock_name } from "../StockList";
+import { HyperFormula } from 'hyperformula';
 
 const supabase = createClient(
   process.env.REACT_APP_SUPABASE_URL,
@@ -201,6 +202,9 @@ export default function Grid() {
     }
   };
   const handsontable = Handsontable.helper.createEmptySpreadsheetData(15,13)
+  const hyperformulaInstance = HyperFormula.buildEmpty({
+    licenseKey: 'internal-use-in-handsontable',
+  });
 
   return (
     <>
@@ -241,22 +245,27 @@ export default function Grid() {
       rowHeaders={true}
       collapsibleColumns={true}
       manualRowMove={true}
+      manualColumnMove={false}
       licenseKey="non-commercial-and-evaluation"
       columns={[
         {type:AutocompleteCellType,source:stock_name,strict:false},
-        {type:NumericCellType,editor:NumericEditor,validator:NUMERIC_VALIDATOR,columnHeaderRenderer: customHeaderRenderer},
-        {type:DateCellType, editor: EDITOR_TYPE,validator:VALIDATOR_TYPE,columnHeaderRenderer: customHeaderRenderer},
-        {type:NumericCellType,editor:NumericEditor,validator:NUMERIC_VALIDATOR,columnHeaderRenderer: customHeaderRenderer},
-        {type:NumericCellType,editor:NumericEditor,validator:NUMERIC_VALIDATOR,columnHeaderRenderer: customHeaderRenderer},
-        {type:DateCellType, editor: EDITOR_TYPE,validator:VALIDATOR_TYPE,columnHeaderRenderer: customHeaderRenderer},
-        {readOnly:true,columnHeaderRenderer: customHeaderRenderer},
-        {readOnly:true,columnHeaderRenderer: customHeaderRenderer},
-        {columnHeaderRenderer: customHeaderRenderer},
-        {type:CheckboxCellType,editor:CheckboxEditor,columnHeaderRenderer: customHeaderRenderer},
-        {readOnly:true,columnHeaderRenderer: customHeaderRenderer},
-        {readOnly:true,columnHeaderRenderer: customHeaderRenderer},
-        {readOnly:true,columnHeaderRenderer: customHeaderRenderer},
+        {type:NumericCellType,editor:NumericEditor,validator:NUMERIC_VALIDATOR},
+        {type:DateCellType, editor: EDITOR_TYPE,validator:VALIDATOR_TYPE},
+        {type:NumericCellType,editor:NumericEditor,validator:NUMERIC_VALIDATOR},
+        {type:NumericCellType,editor:NumericEditor,validator:NUMERIC_VALIDATOR},
+        {type:DateCellType, editor: EDITOR_TYPE,validator:VALIDATOR_TYPE},
+        {readOnly:true},
+        {readOnly:true},
+        {},
+        {type:CheckboxCellType,editor:CheckboxEditor},
+        {readOnly:true},
+        {readOnly:true},
+        {readOnly:true},
       ]}
+      formulas={{
+        engine: hyperformulaInstance,
+        sheetName: 'Sheet1',
+      }}
     >
       
     </HotTable>
