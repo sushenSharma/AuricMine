@@ -4,10 +4,6 @@ import TradingImage from '../assets/resources/tradingBanner.png'; // Path to you
 import Logo from '../assets/resources/nav_image.png' // Path to your logo image
 
 const LandingPage = ({ onLogin }) => {
-  const handleLoginClick = () => {
-    // Call the function from grid.js
-    openGrid();
-  };
   return (
     
     <div className="wrapper  overflow-x-hidden overflow-y-scroll w-[100vw] h-[100vh]">
@@ -33,8 +29,8 @@ const LandingPage = ({ onLogin }) => {
         </li>
     </ul>
     <div className="flex gap-x-1">
-        <button onClick={handleLoginClick}  className="font-mullish py-2 px-4 text-xl font-bold border-2 border-white bg-black rounded-full text-white transition duration-200 hover:bg-white hover:text-black" id="redbutton">Log In</button>
-        <button className="font-mullish py-2 px-4 text-xl font-bold border-2 border-white bg-black rounded-full text-white transition duration-200 hover:bg-white hover:text-black" id="greenbutton">Sign Up</button>
+        <button onClick={onLogin}  className="font-mullish py-2 px-4 text-xl font-bold border-2 border-white bg-black rounded-full text-white transition duration-200 hover:bg-white hover:text-black" id="redbutton">Log In</button>
+        <button onClick={onLogin} className="font-mullish py-2 px-4 text-xl font-bold border-2 border-white bg-black rounded-full text-white transition duration-200 hover:bg-white hover:text-black" id="greenbutton">Sign Up</button>
     </div>
 </nav>
 
