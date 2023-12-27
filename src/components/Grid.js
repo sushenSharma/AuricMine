@@ -38,6 +38,8 @@ export default function Grid() {
   const [loading, setLoading] = useState(false);
   const [columnDefs, setColumnDefs] = useState([]);
   const [columnWidths, setColumnWidths] = useState([]);
+  const hotRef = useRef(null); // Reference to the Handsontable instance
+  const [data, setData] = useState(Handsontable.helper.createEmptySpreadsheetData(6, 10));
 
   const customHeaderRenderer = (instance, column, colIndex) => {
     const columnTitle = column.getColHeader(colIndex);
@@ -81,6 +83,13 @@ export default function Grid() {
   }, []);
 
   const userUUID = localStorage.getItem(userIdKey);
+  useEffect(() => {
+    // Load data from local storage on component mount
+    const savedData = JSON.parse(localStorage.getItem('handsontableData'));
+    if (savedData) {
+      setData(savedData);
+    }
+  }, []);
   
   useEffect(() => {
     calculateColumnWidths();
@@ -147,28 +156,50 @@ export default function Grid() {
   }, []);
 
   const handleSaveChanges = async () => {
-    const displayedRows = [];
-
-    gridRef.current.api.forEachNodeAfterFilterAndSort(function (rowNode) {
-      const rowData = rowNode.data;
-      displayedRows.push(rowData);
-    });
-
-    try {
-      const { data, error } = await supabase
-        .from(tableName)
-        .upsert(displayedRows)
-        .select();
-
-      if (error) {
-        throw error;
+    if (hotRef.current) {
+      // Get the 2D array data from Handsontable
+      const hotData = hotRef.current.hotInstance.getData();
+      console.log(hotData)
+  
+      // Transform the 2D array into an array of objects
+      const transformedRows = hotData.map(rowArray => {
+        const buyDate = new Date(rowArray[2]);
+        const sellDate = new Date(rowArray[5]);
+        return {
+          stock_name: rowArray[0],
+        buy_price: parseFloat(rowArray[1]),
+        buy_date: isNaN(buyDate.getTime()) ? null : buyDate.toISOString().split('T')[0],
+        amount_invested: parseFloat(rowArray[3]),
+        sell_price: parseFloat(rowArray[4]),
+        sell_date: isNaN(sellDate.getTime()) ? null : sellDate.toISOString().split('T')[0],
+        brokerage: parseFloat(rowArray[6]),
+        days_hold: parseInt(rowArray[7], 10), // Assuming days_hold is an integer
+        reason_to_buy: rowArray[8],
+        gtt_enabled: rowArray[9], // Assuming gtt_enabled is a boolean or string
+        profit_loss: parseFloat(rowArray[10]),
+        roce: parseFloat(rowArray[11]),
+        annual_return_generated: parseFloat(rowArray[12])
+        };
+      });
+  
+      try {
+        const { data, error } = await supabase
+          .from(tableName)
+          .upsert(transformedRows, { returning: "minimal" });
+  
+        if (error) {
+          throw error;
+        }
+  
+        setRowData(data);
+      } catch (error) {
+        console.error(error);
       }
-
-      setRowData(data);
-    } catch (error) {
-      console.error(error);
+    } else {
+      console.log('Handsontable instance is not yet available.');
     }
   };
+  
 
   const handleGetInsights = async () => {
     setLoading(true);
@@ -205,7 +236,32 @@ export default function Grid() {
   const hyperformulaInstance = HyperFormula.buildEmpty({
     licenseKey: 'internal-use-in-handsontable',
   });
+  
 
+  useEffect(() => {
+    // Load data from local storage on component mount
+    const savedData = JSON.parse(localStorage.getItem('handsontableData'));
+    if (savedData) {
+      setData(savedData);
+    }
+  }, []);
+
+  const handleAfterChange = (changes, source) => {
+    if (source !== 'loadData') {
+      // Save data to local storage after each change
+      localStorage.setItem('handsontableData', JSON.stringify(data));
+    }
+  };
+
+  const logData = () => {
+    if (hotRef.current) {
+      const hotData = hotRef.current.hotInstance.getData();
+      const jsonData = JSON.stringify(hotData);
+      console.log(jsonData);
+    } else {
+      console.log('Handsontable instance is not yet available.');
+    }
+  };
   return (
     <>
     <div style={{padding: '10px 10px',
@@ -219,6 +275,8 @@ export default function Grid() {
       <div className="ag-theme-alpine grid-theme-alpine" style={{height: '525px'}}>
 
       <HotTable
+      ref={hotRef}
+      id="hot"
       data={handsontable}
       height={450}
       colWidths={columnWidths}
@@ -246,6 +304,7 @@ export default function Grid() {
       collapsibleColumns={true}
       manualRowMove={true}
       manualColumnMove={false}
+      afterChange={handleAfterChange}
       licenseKey="non-commercial-and-evaluation"
       columns={[
         {type:AutocompleteCellType,source:stock_name,strict:false},
@@ -266,13 +325,16 @@ export default function Grid() {
         engine: hyperformulaInstance,
         sheetName: 'Sheet1',
       }}
+     
     >
       
     </HotTable>
       </div>
+     
       <div className="buttons">
         <button className="btn btn-outline-primary m-1" onClick={handleGetInsights}>Get Insights with AI</button>
       </div>
+      <button onClick={logData}>Log Data to Console</button>
       {loading ? (
         <p>Loading...</p>
       ) : (
