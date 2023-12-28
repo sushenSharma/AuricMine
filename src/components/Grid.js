@@ -40,6 +40,7 @@ export default function Grid() {
   const [columnWidths, setColumnWidths] = useState([]);
   const hotRef = useRef(null); // Reference to the Handsontable instance
   const [data, setData] = useState(Handsontable.helper.createEmptySpreadsheetData(6, 10));
+  const [handsontableData, setHandsontableData] = useState([]);
 
   const customHeaderRenderer = (instance, column, colIndex) => {
     const columnTitle = column.getColHeader(colIndex);
@@ -102,14 +103,31 @@ export default function Grid() {
     async function getData() {
       try {
         const { data, error } = await supabase.from(tableName).select()
-        .eq("user_id", userUUID) //Umashankar
-        .order("buy_date", { ascending: true }); //Umashankar
-
+          .eq("user_id", userUUID)
+          .order("buy_date", { ascending: true });
+    
         if (error) {
           throw error;
         }
-
-        setRowData(data);
+    
+        // Transform data from array of objects to array of arrays
+        const transformedData = data.map(item => [
+          item.stock_name,
+          item.buy_price,
+          item.buy_date ? new Date(item.buy_date).toLocaleDateString() : '',
+          item.amount_invested,
+          item.sell_price,
+          item.sell_date ? new Date(item.sell_date).toLocaleDateString() : '',
+          item.brokerage,
+          item.days_hold,
+          item.reason_to_buy,
+          item.gtt_enabled, // Ensure this is formatted correctly for a checkbox
+          item.profit_loss,
+          item.roce,
+          item.annual_return_generated
+        ]);
+    
+        setHandsontableData(transformedData); 
       } catch (error) {
         console.error(error);
       }
@@ -160,9 +178,10 @@ export default function Grid() {
       // Get the 2D array data from Handsontable
       const hotData = hotRef.current.hotInstance.getData();
       console.log(hotData)
-  
+      console.log(userUUID);
+      const filteredData = hotData.filter(row => row.some(cell => cell !== "" && cell !== null));
       // Transform the 2D array into an array of objects
-      const transformedRows = hotData.map(rowArray => {
+      const transformedRows = filteredData.map(rowArray => {
         const buyDate = new Date(rowArray[2]);
         const sellDate = new Date(rowArray[5]);
         return {
@@ -178,14 +197,15 @@ export default function Grid() {
         gtt_enabled: rowArray[9], // Assuming gtt_enabled is a boolean or string
         profit_loss: parseFloat(rowArray[10]),
         roce: parseFloat(rowArray[11]),
-        annual_return_generated: parseFloat(rowArray[12])
+        annual_return_generated: parseFloat(rowArray[12]),
+        user_id: userUUID
         };
       });
   
       try {
         const { data, error } = await supabase
           .from(tableName)
-          .upsert(transformedRows, { returning: "minimal" });
+          .upsert(transformedRows, {returning: "minimal" });
   
         if (error) {
           throw error;
@@ -232,7 +252,7 @@ export default function Grid() {
       console.error("Error:", error);
     }
   };
-  const handsontable = Handsontable.helper.createEmptySpreadsheetData(15,13)
+  // const handsontable = Handsontable.helper.createEmptySpreadsheetData(15,13)
   const hyperformulaInstance = HyperFormula.buildEmpty({
     licenseKey: 'internal-use-in-handsontable',
   });
@@ -277,7 +297,7 @@ export default function Grid() {
       <HotTable
       ref={hotRef}
       id="hot"
-      data={handsontable}
+      data={handsontableData}
       height={450}
       colWidths={columnWidths}
       colHeaders={[
