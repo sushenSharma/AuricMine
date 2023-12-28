@@ -20,6 +20,7 @@ import { EDITOR_TYPE } from "handsontable/editors/dateEditor";
 import { VALIDATOR_TYPE } from "handsontable/validators/dateValidator";
 import { stock_name } from "../StockList";
 import { HyperFormula } from 'hyperformula';
+import Swal from 'sweetalert2';
 
 const supabase = createClient(
   process.env.REACT_APP_SUPABASE_URL,
@@ -212,8 +213,19 @@ export default function Grid() {
         }
   
         setRowData(data);
+        Swal.fire({
+          title: 'Success!',
+          text: 'Data saved successfully!',
+          icon: 'success',
+          confirmButtonText: 'OK'
+        });
       } catch (error) {
-        console.error(error);
+        Swal.fire({
+          title: 'Error!',
+          text: 'Failed to save data: ' + error.message,
+          icon: 'error',
+          confirmButtonText: 'OK'
+        });
       }
     } else {
       console.log('Handsontable instance is not yet available.');
