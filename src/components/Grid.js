@@ -111,6 +111,7 @@ export default function Grid() {
           throw error;
         }
     
+        console.log("value of data ",data)
         // Transform data from array of objects to array of arrays
         const transformedData = data.map(item => [
           item.stock_name,
@@ -125,7 +126,8 @@ export default function Grid() {
           item.gtt_enabled, // Ensure this is formatted correctly for a checkbox
           item.profit_loss,
           item.roce,
-          item.annual_return_generated
+          item.annual_return_generated,
+          item.id
         ]);
     
         setHandsontableData(transformedData); 
@@ -185,8 +187,12 @@ export default function Grid() {
       const transformedRows = filteredData.map(rowArray => {
         const buyDate = new Date(rowArray[2]);
         const sellDate = new Date(rowArray[5]);
-        return {
-          stock_name: rowArray[0],
+        let vaar= null;
+        console.log("value is ", rowArray);
+        if(rowArray[13]==null)
+        {
+          vaar ={
+            stock_name: rowArray[0],
         buy_price: parseFloat(rowArray[1]),
         buy_date: isNaN(buyDate.getTime()) ? null : buyDate.toISOString().split('T')[0],
         amount_invested: parseFloat(rowArray[3]),
@@ -200,14 +206,55 @@ export default function Grid() {
         roce: parseFloat(rowArray[11]),
         annual_return_generated: parseFloat(rowArray[12]),
         user_id: userUUID
-        };
+          }
+        }else
+          {
+            vaar = {
+              stock_name: rowArray[0],
+        buy_price: parseFloat(rowArray[1]),
+        buy_date: isNaN(buyDate.getTime()) ? null : buyDate.toISOString().split('T')[0],
+        amount_invested: parseFloat(rowArray[3]),
+        sell_price: parseFloat(rowArray[4]),
+        sell_date: isNaN(sellDate.getTime()) ? null : sellDate.toISOString().split('T')[0],
+        brokerage: parseFloat(rowArray[6]),
+        days_hold: parseInt(rowArray[7], 10), // Assuming days_hold is an integer
+        reason_to_buy: rowArray[8],
+        gtt_enabled: rowArray[9], // Assuming gtt_enabled is a boolean or string
+        profit_loss: parseFloat(rowArray[10]),
+        roce: parseFloat(rowArray[11]),
+        annual_return_generated: parseFloat(rowArray[12]),
+        id:rowArray[13]==null?0:rowArray[13],
+        user_id: userUUID
+            }
+
+          }
+        
+
+        
+        return vaar
+        //   stock_name: rowArray[0],
+        // buy_price: parseFloat(rowArray[1]),
+        // buy_date: isNaN(buyDate.getTime()) ? null : buyDate.toISOString().split('T')[0],
+        // amount_invested: parseFloat(rowArray[3]),
+        // sell_price: parseFloat(rowArray[4]),
+        // sell_date: isNaN(sellDate.getTime()) ? null : sellDate.toISOString().split('T')[0],
+        // brokerage: parseFloat(rowArray[6]),
+        // days_hold: parseInt(rowArray[7], 10), // Assuming days_hold is an integer
+        // reason_to_buy: rowArray[8],
+        // gtt_enabled: rowArray[9], // Assuming gtt_enabled is a boolean or string
+        // profit_loss: parseFloat(rowArray[10]),
+        // roce: parseFloat(rowArray[11]),
+        // annual_return_generated: parseFloat(rowArray[12]),
+        // id:rowArray[13]==null?0:rowArray[13],
+        // user_id: userUUID
+
+      
       });
   
       try {
         const { data, error } = await supabase
           .from(tableName)
-          .upsert(transformedRows, {returning: "minimal" });
-  
+          .upsert(transformedRows);
         if (error) {
           throw error;
         }
@@ -325,7 +372,8 @@ export default function Grid() {
         "GTT Enabled",
         "Profit / Loss",
         "ROCE",
-        "Annual Return Generated"
+        "Annual Return Generated",
+        "id"
       ]}
       
       dropdownMenu={true}
@@ -352,6 +400,7 @@ export default function Grid() {
         {readOnly:true},
         {readOnly:true},
         {readOnly:true},
+        {readOnly:true}
       ]}
       formulas={{
         engine: hyperformulaInstance,
