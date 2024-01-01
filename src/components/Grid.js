@@ -92,49 +92,48 @@ export default function Grid() {
       setData(savedData);
     }
   }, []);
+
+  async function getData() {
+    try {
+      const { data, error } = await supabase.from(tableName).select()
+        .eq("user_id", userUUID)
+        .order("buy_date", { ascending: true });
+  
+      if (error) {
+        throw error;
+      }
+  
+      console.log("value of data ",data)
+      // Transform data from array of objects to array of arrays
+      const transformedData = data.map(item => [
+        item.stock_name,
+        item.buy_price,
+        item.buy_date ? new Date(item.buy_date).toLocaleDateString() : '',
+        item.amount_invested,
+        item.sell_price,
+        item.sell_date ? new Date(item.sell_date).toLocaleDateString() : '',
+        item.brokerage,
+        item.days_hold,
+        item.reason_to_buy,
+        item.gtt_enabled, // Ensure this is formatted correctly for a checkbox
+        item.profit_loss,
+        item.roce,
+        item.annual_return_generated,
+        item.id
+      ]);
+  
+      setHandsontableData(transformedData); 
+    } catch (error) {
+      console.error(error);
+    }
+  }
   
   useEffect(() => {
     calculateColumnWidths();
 
     // Re-calculate on window resize
     window.addEventListener('resize', calculateColumnWidths);
-
-    
     setColumnDefs(columns);
-    async function getData() {
-      try {
-        const { data, error } = await supabase.from(tableName).select()
-          .eq("user_id", userUUID)
-          .order("buy_date", { ascending: true });
-    
-        if (error) {
-          throw error;
-        }
-    
-        console.log("value of data ",data)
-        // Transform data from array of objects to array of arrays
-        const transformedData = data.map(item => [
-          item.stock_name,
-          item.buy_price,
-          item.buy_date ? new Date(item.buy_date).toLocaleDateString() : '',
-          item.amount_invested,
-          item.sell_price,
-          item.sell_date ? new Date(item.sell_date).toLocaleDateString() : '',
-          item.brokerage,
-          item.days_hold,
-          item.reason_to_buy,
-          item.gtt_enabled, // Ensure this is formatted correctly for a checkbox
-          item.profit_loss,
-          item.roce,
-          item.annual_return_generated,
-          item.id
-        ]);
-    
-        setHandsontableData(transformedData); 
-      } catch (error) {
-        console.error(error);
-      }
-    }
     getData();
   }, []);
  
@@ -178,94 +177,73 @@ export default function Grid() {
 
   const handleSaveChanges = async () => {
     if (hotRef.current) {
-      // Get the 2D array data from Handsontable
       const hotData = hotRef.current.hotInstance.getData();
-      console.log(hotData)
+      console.log(hotData);
       console.log(userUUID);
-      const filteredData = hotData.filter(row => row.some(cell => cell !== "" && cell !== null));
-      // Transform the 2D array into an array of objects
-      const transformedRows = filteredData.map(rowArray => {
-        const buyDate = new Date(rowArray[2]);
-        const sellDate = new Date(rowArray[5]);
-        let vaar= null;
-        console.log("value is ", rowArray);
-        if(rowArray[13]==null)
-        {
-          vaar ={
-            stock_name: rowArray[0],
-        buy_price: parseFloat(rowArray[1]),
-        buy_date: isNaN(buyDate.getTime()) ? null : buyDate.toISOString().split('T')[0],
-        amount_invested: parseFloat(rowArray[3]),
-        sell_price: parseFloat(rowArray[4]),
-        sell_date: isNaN(sellDate.getTime()) ? null : sellDate.toISOString().split('T')[0],
-        brokerage: parseFloat(rowArray[6]),
-        days_hold: parseInt(rowArray[7], 10), // Assuming days_hold is an integer
-        reason_to_buy: rowArray[8],
-        gtt_enabled: rowArray[9], // Assuming gtt_enabled is a boolean or string
-        profit_loss: parseFloat(rowArray[10]),
-        roce: parseFloat(rowArray[11]),
-        annual_return_generated: parseFloat(rowArray[12]),
-        user_id: userUUID
-          }
-        }else
-          {
-            vaar = {
-              stock_name: rowArray[0],
-        buy_price: parseFloat(rowArray[1]),
-        buy_date: isNaN(buyDate.getTime()) ? null : buyDate.toISOString().split('T')[0],
-        amount_invested: parseFloat(rowArray[3]),
-        sell_price: parseFloat(rowArray[4]),
-        sell_date: isNaN(sellDate.getTime()) ? null : sellDate.toISOString().split('T')[0],
-        brokerage: parseFloat(rowArray[6]),
-        days_hold: parseInt(rowArray[7], 10), // Assuming days_hold is an integer
-        reason_to_buy: rowArray[8],
-        gtt_enabled: rowArray[9], // Assuming gtt_enabled is a boolean or string
-        profit_loss: parseFloat(rowArray[10]),
-        roce: parseFloat(rowArray[11]),
-        annual_return_generated: parseFloat(rowArray[12]),
-        id:rowArray[13]==null?0:rowArray[13],
-        user_id: userUUID
-            }
-
-          }
-        
-
-        
-        return vaar
-        //   stock_name: rowArray[0],
-        // buy_price: parseFloat(rowArray[1]),
-        // buy_date: isNaN(buyDate.getTime()) ? null : buyDate.toISOString().split('T')[0],
-        // amount_invested: parseFloat(rowArray[3]),
-        // sell_price: parseFloat(rowArray[4]),
-        // sell_date: isNaN(sellDate.getTime()) ? null : sellDate.toISOString().split('T')[0],
-        // brokerage: parseFloat(rowArray[6]),
-        // days_hold: parseInt(rowArray[7], 10), // Assuming days_hold is an integer
-        // reason_to_buy: rowArray[8],
-        // gtt_enabled: rowArray[9], // Assuming gtt_enabled is a boolean or string
-        // profit_loss: parseFloat(rowArray[10]),
-        // roce: parseFloat(rowArray[11]),
-        // annual_return_generated: parseFloat(rowArray[12]),
-        // id:rowArray[13]==null?0:rowArray[13],
-        // user_id: userUUID
-
       
-      });
+      const inserts = [];
+      const updates = [];
+      
+      hotData.filter(row => row.some(cell => cell !== "" && cell !== null))
+        .forEach(rowArray => {
+          const buyDate = new Date(rowArray[2]);
+          const sellDate = new Date(rowArray[5]);
+          
+          let record = {
+            stock_name: rowArray[0],
+            buy_price: parseFloat(rowArray[1]),
+            buy_date: isNaN(buyDate.getTime()) ? null : buyDate.toISOString().split('T')[0],
+            amount_invested: parseFloat(rowArray[3]),
+            sell_price: parseFloat(rowArray[4]),
+            sell_date: isNaN(sellDate.getTime()) ? null : sellDate.toISOString().split('T')[0],
+            brokerage: parseFloat(rowArray[6]),
+            days_hold: parseInt(rowArray[7], 10),
+            reason_to_buy: rowArray[8],
+            gtt_enabled: rowArray[9],
+            profit_loss: parseFloat(rowArray[10]),
+            roce: parseFloat(rowArray[11]),
+            annual_return_generated: parseFloat(rowArray[12]),
+            user_id: userUUID
+          };
+  
+          if (rowArray[13] !== null && rowArray[13] !== undefined && rowArray[13] !== "") {
+            record.id = parseInt(rowArray[13], 10);
+            updates.push(record);
+          } else {
+            inserts.push(record);
+          }
+        });
   
       try {
-        const { data, error } = await supabase
-          .from(tableName)
-          .upsert(transformedRows);
-        if (error) {
-          throw error;
+        // Handle updates
+        if (updates.length > 0) {
+          const { error: updateError } = await supabase
+            .from(tableName)
+            .upsert(updates, { onConflict: 'id' });
+          
+          if (updateError) {
+            throw updateError;
+          }
         }
   
-        setRowData(data);
+        // Handle inserts
+        if (inserts.length > 0) {
+          const { error: insertError } = await supabase
+            .from(tableName)
+            .insert(inserts);
+          
+          if (insertError) {
+            throw insertError;
+          }
+        }
+  
         Swal.fire({
           title: 'Success!',
           text: 'Data saved successfully!',
           icon: 'success',
           confirmButtonText: 'OK'
         });
+        await getData();
       } catch (error) {
         Swal.fire({
           title: 'Error!',
