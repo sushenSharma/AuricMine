@@ -46,7 +46,7 @@ const LandingPage = ({ onLogin }) => {
                 </h1>
                 <div className="w-6 h-1 bg-red-600 m-2"></div>
                 <p className="text-white text-lg lg:text-xl font-sans leading-normal lg:leading-relaxed">
-                    Your ultimate App for intelligent and efficient trading! Experts or beginners, our platform enhances every trading journey for all.
+                    Your ultimate destination for intelligent and efficient trading! Experts or beginners, our platform enhances every trading journey for all.
                     <strong>Welcome to a Smarter Way to Trade</strong>
                 </p>
                 <button 
