@@ -62,59 +62,53 @@ const LandingPage = ({ onLogin }) => {
 </div>
 
 <div className="feature -z-40" id="features">
-<section className="w-full max-w-[1080px] mx-auto pt-4 -z-20">
-    <div className="w-full grid grid-cols-3 grid-rows-2 gap-y-16 gap-x-20 py-10 h-fit pt-20">
+  <section className="w-[100%] max-w-[1080px] mx-auto pt-4 -z-20">
+    <h2 className="font-mullish pt-28 text-black font-extrabold text-deepBlueHead my-auto text-4xl leading-[3.375rem] ml-64 z-[5]">
+      Why You Should Choose Us?
+    </h2>
+    <div className="w-[700px] mx-[15%] h-2 bg-gradient-to-r from-green-600 via-black to-red-600"></div>
+    <div className="w-full grid grid-cols-2 grid-rows-2 gap-y-16 gap-x-20 py-10 h-fit pt-20">
+      
       {/* CARD 1 */}
-      <div className="p-4 rounded-xl flex flex-col bg-white border-4 border-black w-full cursor-pointer bg-cover bg-no-repeat hover:scale-105 transition-all duration-200 group overflow-hidden" id="card1">
+      <div className="p-6 px-20 rounded-xl flex-col bg-white border-4 border-black w-full max-h-[300px] cursor-pointer bg-cover bg-no-repeat hover:scale-105 transition-all duration-200 group" id="card">
         <i className="fa-solid fa-chart-line group-hover:hidden"></i>
-        <h3 className="font-mullish font-bold text-black text-lg pt-2 group-hover:text-red-600">Smart Analytics</h3>
-        <p className="font-mullish text-gray-600 text-base font-bold leading-snug py-2 group-hover:text-white">
-          Dive into your trading performance with charts and metrics powered by AI.
-        </p>
-        <div className="flex flex-row gap-x-2 items-center group">
-          <a href="#" className="font-mullish text-lightBlue500 font-bold text-lg group-hover:text-green-600 transition-all duration-200">Know More</a>
-          <i className="fa-solid fa-angles-right"></i>
-        </div>
-      </div>
-
-      {/* CARD 2 */}
-      <div className="p-4 rounded-xl flex flex-col bg-white border-4 border-black w-full cursor-pointer bg-cover bg-no-repeat hover:scale-105 transition-all duration-200 group overflow-hidden" id="card1">
-        <i className="fa-solid fa-chart-line group-hover:hidden"></i>
-        <h3 className="font-mullish font-bold text-black text-lg pt-2 group-hover:text-red-600">Real-Time Data</h3>
-        <p className="font-mullish text-gray-600 text-base font-bold leading-snug py-2 group-hover:text-white">
-        Get up-to-the-minute market data to stay ahead of the curve.
-        </p>
-        <div className="flex flex-row gap-x-2 items-center group">
-          <a href="#" className="font-mullish text-lightBlue500 font-bold text-lg group-hover:text-green-600 transition-all duration-200">Know More</a>
-          <i className="fa-solid fa-angles-right"></i>
-        </div>
-      </div>
-
-      {/* CARD 3 */}
-      <div className="p-4 rounded-xl flex flex-col bg-white border-4 border-black w-full cursor-pointer bg-cover bg-no-repeat hover:scale-105 transition-all duration-200 group overflow-hidden" id="card1">
-        <i className="fa-solid fa-chart-line group-hover:hidden"></i>
-        <h3 className="font-mullish font-bold text-black text-lg pt-2 group-hover:text-red-600">Journaling Made Easy</h3>
-        <p className="font-mullish text-gray-600 text-base font-bold leading-snug py-2 group-hover:text-white">
-        Log your trades with a user-friendly interface and review your history anytime.
-        </p>
-        <div className="flex flex-row gap-x-2 items-center group">
-          <a href="#" className="font-mullish text-lightBlue500 font-bold text-lg group-hover:text-green-600 transition-all duration-200">Know More</a>
-          <i className="fa-solid fa-angles-right"></i>
-        </div>
-      </div>
-      {/* CARD 4 */}
-      <div className="p-6 rounded-xl flex flex-col bg-white border-4 border-black w-full max-h-[300px] cursor-pointer bg-cover bg-no-repeat hover:scale-105 transition-all duration-200 group" id="card4">
-        <i className="fa-solid fa-mobile group-hover:hidden"></i>
-        <h3 className="font-mullish font-bold text-black text-xl pt-4 group-hover:text-red-600">Mobile Access</h3>
+        <h3 className="font-mullish font-bold text-black text-xl pt-4 group-hover:text-red-600">Smart Analytics</h3>
         <p className="font-mullish text-grayText text-xl font-bold leading-normal py-3 group-hover:text-white">
-          Monitor your portfolio on the go with our fully integrated mobile app.
+          Dive into your trading performance with charts and metrics powered by AI.
         </p>
         <div className="flex flex-row gap-x-2 items-center group">
           <a href="#" className="font-mullish text-lightBlue500 font-bold text-2xl group-hover:text-green-600 transition-all duration-200">Know More</a>
           <i className="fa-solid fa-angles-right"></i>
         </div>
       </div>
-      {/* CARD 5 */}
+      
+      {/* CARD 2 */}
+      <div className="border-4 border-black rounded-xl flex-col bg-white p-6 px-20 shadow w-full max-h-[300px] cursor-pointer bg-cover bg-no-repeat hover:scale-105 transition-all duration-200 group" id="card">
+        <i className="fa-regular fa-clock group-hover:hidden"></i>
+        <h3 className="font-mullish font-bold text-black text-xl pt-4 group-hover:text-red-600">Real-Time Data</h3>
+        <p className="font-mullish text-grayText text-xl font-bold leading-normal py-3 group-hover:text-white">
+          Get up-to-the-minute market data to stay ahead of the curve.
+        </p>
+        <div className="flex flex-row gap-x-2 items-center group">
+          <a href="#" className="font-mullish text-lightBlue500 font-bold text-2xl group-hover:text-green-600 transition-all duration-200">Know More</a>
+          <i className="fa-solid fa-angles-right"></i>
+        </div>
+      </div>
+
+      {/* CARD 3 */}
+      <div className="border-black border-4 rounded-xl flex-col bg-white p-6 px-20 shadow w-full max-h-[300px] cursor-pointer bg-cover bg-no-repeat hover:scale-105 transition-all duration-200 group" id="card">
+        <i className="fa-solid fa-book group-hover:hidden" style={{ height: '20px' }}></i>
+        <h3 className="font-mullish font-bold text-black text-xl pt-4 group-hover:text-red-600">Journaling Made Easy</h3>
+        <p className="font-mullish text-grayText text-xl font-bold leading-normal py-3 group-hover:text-white">
+          Log your trades with a user-friendly interface and review your history anytime.
+        </p>
+        <div className="flex flex-row gap-x-2 items-center group">
+          <a href="#" className="font-mullish text-lightBlue500 font-bold text-2xl group-hover:text-green-600 transition-all duration-200">Know More</a>
+          <i className="fa-solid fa-angles-right"></i>
+        </div>
+      </div>
+     
+      {/* CARD 4 */}
       <div className="p-6 rounded-xl flex flex-col bg-white border-4 border-black w-full max-h-[300px] cursor-pointer bg-cover bg-no-repeat hover:scale-105 transition-all duration-200 group" id="card4">
         <i className="fa-solid fa-mobile group-hover:hidden"></i>
         <h3 className="font-mullish font-bold text-black text-xl pt-4 group-hover:text-red-600">Secure & Private</h3>
@@ -128,6 +122,57 @@ const LandingPage = ({ onLogin }) => {
       </div>
     </div>
   </section>
+</div>
+<div className="testimonials relative flex flex-col gap-6  items-center border-t-4 border-b-4 py-32 border-black">
+<div className="heading relative">
+    <h2 className="text-4xl font-sans font-bold">Client Testimonials</h2>
+   <div className="slit flex flex-row gap-2 top-0">
+       <div className="w-80 h-2 bg-gradient-to-r from-red-600 via-black to-green-600 "></div>
+   </div>
+</div>
+
+<div className="swiper-container mySwiper relative flex flex-row gap-3">
+  <div className="swiper-wrapper"></div>
+ 
+<div className="swiper-slide">
+   {/* First Slide */}
+      <div className="swiper-slide flex flex-col gap-2 p-9 py-20 w-[36rem] mx-24 ml-10">
+        <div className="rating flex flex-row">
+          <i className="fa-solid fa-star"></i>
+          <i className="fa-solid fa-star"></i>
+          <i className="fa-solid fa-star"></i>
+          <i className="fa-solid fa-star"></i>
+        </div>
+        <p className="font-sans text-xl left-64 ml-6">
+          I was skeptical of AI-powered stock trading platforms but, Trading Ledger has exceeded my expectations. Their Trading Ledger and AI Insights have helped me make profitable trades that I wouldn't have made without their platform.
+        </p>
+        <div className="name flex flex-row gap-4 justify-center items-center">
+          <img src="thispersondoesnotexist8.jpeg" className="border-4 border-black rounded-full" style={{ height: '120px', width: '100px' }} alt="" />
+          <h2 className="font-bold text-xl font-serif">SARAH THOMPSON</h2>
+        </div>
+      </div>
+</div>
+{/* Second Slide */}
+<div className="swiper-slide">
+      <div className="swiper-slide flex flex-col gap-2 p-9 py-20 w-[36rem] mx-24 ml-10">
+        <div className="rating flex flex-row">
+          <i className="fa-solid fa-star"></i>
+          <i className="fa-solid fa-star"></i>
+          <i className="fa-solid fa-star"></i>
+          <i className="fa-solid fa-star"></i>
+        </div>
+        <p className="font-sans text-xl left-64 ml-6">
+        Initially, I had doubts about stock trading platforms powered by AI. However, Trading Ledger has surpassed what I anticipated. The Trading Ledger and AI Insights they offer have assisted me in executing profitable trades, which I likely wouldn't have achieved without using their platform.
+        </p>
+        <div className="name flex flex-row gap-4 justify-center items-center">
+          <img src="thispersondoesnotexist8.jpeg" className="border-4 border-black rounded-full" style={{ height: '120px', width: '100px' }} alt="" />
+          <h2 className="font-bold text-xl font-serif">ROB MUIR</h2>
+        </div>
+      </div>
+</div>
+
+    <div className="swiper-pagination"></div>
+</div>
 </div>
 
 <footer className="foot flex flex-col lg:flex-row justify-around border-t-4 border-b-4 border-black bg-black text-white text-center lg:text-left">
