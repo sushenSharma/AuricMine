@@ -20,6 +20,7 @@ import { EDITOR_TYPE } from "handsontable/editors/dateEditor";
 import { VALIDATOR_TYPE } from "handsontable/validators/dateValidator";
 import { stock_name } from "../StockList";
 import { HyperFormula } from 'hyperformula';
+import Swal from 'sweetalert2';
 
 const supabase = createClient(
   process.env.REACT_APP_SUPABASE_URL,
@@ -38,6 +39,9 @@ export default function Grid() {
   const [loading, setLoading] = useState(false);
   const [columnDefs, setColumnDefs] = useState([]);
   const [columnWidths, setColumnWidths] = useState([]);
+  const hotRef = useRef(null); // Reference to the Handsontable instance
+  const [data, setData] = useState(Handsontable.helper.createEmptySpreadsheetData(6, 10));
+  const [handsontableData, setHandsontableData] = useState([]);
 
   const customHeaderRenderer = (instance, column, colIndex) => {
     const columnTitle = column.getColHeader(colIndex);
@@ -81,30 +85,55 @@ export default function Grid() {
   }, []);
 
   const userUUID = localStorage.getItem(userIdKey);
+  useEffect(() => {
+    // Load data from local storage on component mount
+    const savedData = JSON.parse(localStorage.getItem('handsontableData'));
+    if (savedData) {
+      setData(savedData);
+    }
+  }, []);
+
+  async function getData() {
+    try {
+      const { data, error } = await supabase.from(tableName).select()
+        .eq("user_id", userUUID)
+        .order("buy_date", { ascending: true });
+  
+      if (error) {
+        throw error;
+      }
+  
+      console.log("value of data ",data)
+      // Transform data from array of objects to array of arrays
+      const transformedData = data.map(item => [
+        item.stock_name,
+        item.buy_price,
+        item.buy_date ? new Date(item.buy_date).toLocaleDateString() : '',
+        item.amount_invested,
+        item.sell_price,
+        item.sell_date ? new Date(item.sell_date).toLocaleDateString() : '',
+        item.brokerage,
+        item.days_hold,
+        item.reason_to_buy,
+        item.gtt_enabled, // Ensure this is formatted correctly for a checkbox
+        item.profit_loss,
+        item.roce,
+        item.annual_return_generated,
+        item.id
+      ]);
+  
+      setHandsontableData(transformedData); 
+    } catch (error) {
+      console.error(error);
+    }
+  }
   
   useEffect(() => {
     calculateColumnWidths();
 
     // Re-calculate on window resize
     window.addEventListener('resize', calculateColumnWidths);
-
-    
     setColumnDefs(columns);
-    async function getData() {
-      try {
-        const { data, error } = await supabase.from(tableName).select()
-        .eq("user_id", userUUID) //Umashankar
-        .order("buy_date", { ascending: true }); //Umashankar
-
-        if (error) {
-          throw error;
-        }
-
-        setRowData(data);
-      } catch (error) {
-        console.error(error);
-      }
-    }
     getData();
   }, []);
  
@@ -147,28 +176,87 @@ export default function Grid() {
   }, []);
 
   const handleSaveChanges = async () => {
-    const displayedRows = [];
-
-    gridRef.current.api.forEachNodeAfterFilterAndSort(function (rowNode) {
-      const rowData = rowNode.data;
-      displayedRows.push(rowData);
-    });
-
-    try {
-      const { data, error } = await supabase
-        .from(tableName)
-        .upsert(displayedRows)
-        .select();
-
-      if (error) {
-        throw error;
+    if (hotRef.current) {
+      const hotData = hotRef.current.hotInstance.getData();
+      console.log(hotData);
+      console.log(userUUID);
+      
+      const inserts = [];
+      const updates = [];
+      
+      hotData.filter(row => row.some(cell => cell !== "" && cell !== null))
+        .forEach(rowArray => {
+          const buyDate = new Date(rowArray[2]);
+          const sellDate = new Date(rowArray[5]);
+          
+          let record = {
+            stock_name: rowArray[0],
+            buy_price: parseFloat(rowArray[1]),
+            buy_date: isNaN(buyDate.getTime()) ? null : buyDate.toISOString().split('T')[0],
+            amount_invested: parseFloat(rowArray[3]),
+            sell_price: parseFloat(rowArray[4]),
+            sell_date: isNaN(sellDate.getTime()) ? null : sellDate.toISOString().split('T')[0],
+            brokerage: parseFloat(rowArray[6]),
+            days_hold: parseInt(rowArray[7], 10),
+            reason_to_buy: rowArray[8],
+            gtt_enabled: rowArray[9],
+            profit_loss: parseFloat(rowArray[10]),
+            roce: parseFloat(rowArray[11]),
+            annual_return_generated: parseFloat(rowArray[12]),
+            user_id: userUUID
+          };
+  
+          if (rowArray[13] !== null && rowArray[13] !== undefined && rowArray[13] !== "") {
+            record.id = parseInt(rowArray[13], 10);
+            updates.push(record);
+          } else {
+            inserts.push(record);
+          }
+        });
+  
+      try {
+        // Handle updates
+        if (updates.length > 0) {
+          const { error: updateError } = await supabase
+            .from(tableName)
+            .upsert(updates, { onConflict: 'id' });
+          
+          if (updateError) {
+            throw updateError;
+          }
+        }
+  
+        // Handle inserts
+        if (inserts.length > 0) {
+          const { error: insertError } = await supabase
+            .from(tableName)
+            .insert(inserts);
+          
+          if (insertError) {
+            throw insertError;
+          }
+        }
+  
+        Swal.fire({
+          title: 'Success!',
+          text: 'Data saved successfully!',
+          icon: 'success',
+          confirmButtonText: 'OK'
+        });
+        await getData();
+      } catch (error) {
+        Swal.fire({
+          title: 'Error!',
+          text: 'Failed to save data: ' + error.message,
+          icon: 'error',
+          confirmButtonText: 'OK'
+        });
       }
-
-      setRowData(data);
-    } catch (error) {
-      console.error(error);
+    } else {
+      console.log('Handsontable instance is not yet available.');
     }
   };
+  
 
   const handleGetInsights = async () => {
     setLoading(true);
@@ -201,11 +289,36 @@ export default function Grid() {
       console.error("Error:", error);
     }
   };
-  const handsontable = Handsontable.helper.createEmptySpreadsheetData(15,13)
+  // const handsontable = Handsontable.helper.createEmptySpreadsheetData(15,13)
   const hyperformulaInstance = HyperFormula.buildEmpty({
     licenseKey: 'internal-use-in-handsontable',
   });
+  
 
+  useEffect(() => {
+    // Load data from local storage on component mount
+    const savedData = JSON.parse(localStorage.getItem('handsontableData'));
+    if (savedData) {
+      setData(savedData);
+    }
+  }, []);
+
+  const handleAfterChange = (changes, source) => {
+    if (source !== 'loadData') {
+      // Save data to local storage after each change
+      localStorage.setItem('handsontableData', JSON.stringify(data));
+    }
+  };
+
+  const logData = () => {
+    if (hotRef.current) {
+      const hotData = hotRef.current.hotInstance.getData();
+      const jsonData = JSON.stringify(hotData);
+      console.log(jsonData);
+    } else {
+      console.log('Handsontable instance is not yet available.');
+    }
+  };
   return (
     <>
     <div style={{padding: '10px 10px',
@@ -219,7 +332,9 @@ export default function Grid() {
       <div className="ag-theme-alpine grid-theme-alpine" style={{height: '525px'}}>
 
       <HotTable
-      data={handsontable}
+      ref={hotRef}
+      id="hot"
+      data={handsontableData}
       height={450}
       colWidths={columnWidths}
       colHeaders={[
@@ -235,7 +350,8 @@ export default function Grid() {
         "GTT Enabled",
         "Profit / Loss",
         "ROCE",
-        "Annual Return Generated"
+        "Annual Return Generated",
+        "id"
       ]}
       
       dropdownMenu={true}
@@ -246,6 +362,7 @@ export default function Grid() {
       collapsibleColumns={true}
       manualRowMove={true}
       manualColumnMove={false}
+      afterChange={handleAfterChange}
       licenseKey="non-commercial-and-evaluation"
       columns={[
         {type:AutocompleteCellType,source:stock_name,strict:false},
@@ -261,18 +378,22 @@ export default function Grid() {
         {readOnly:true},
         {readOnly:true},
         {readOnly:true},
+        {readOnly:true}
       ]}
       formulas={{
         engine: hyperformulaInstance,
         sheetName: 'Sheet1',
       }}
+     
     >
       
     </HotTable>
       </div>
+     
       <div className="buttons">
         <button className="btn btn-outline-primary m-1" onClick={handleGetInsights}>Get Insights with AI</button>
       </div>
+      <button onClick={logData}>Log Data to Console</button>
       {loading ? (
         <p>Loading...</p>
       ) : (
