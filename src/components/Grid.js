@@ -175,6 +175,16 @@ export default function Grid() {
     }
   }, []);
 
+
+  function parseDate(dateString) {
+    var parts = dateString.split("/");
+    if (parts.length === 3) {
+        return new Date(parts[2], parts[1] - 1, parts[0]);
+    } else {
+        return null;
+    }
+}
+
   const handleSaveChanges = async () => {
     if (hotRef.current) {
       const hotData = hotRef.current.hotInstance.getData();
@@ -186,16 +196,19 @@ export default function Grid() {
       
       hotData.filter(row => row.some(cell => cell !== "" && cell !== null))
         .forEach(rowArray => {
-          const buyDate = new Date(rowArray[2]);
-          const sellDate = new Date(rowArray[5]);
-          
+          const buyDate = parseDate(rowArray[2]);
+          const sellDate = parseDate(rowArray[5]);
+          console.log("BuyDate: ",buyDate);
+          console.log("BuyDate Value: ",rowArray[2]);
+          console.log("sellDate Value: ",rowArray[5]);
+          console.log("SellData :",sellDate);
           let record = {
             stock_name: rowArray[0],
             buy_price: parseFloat(rowArray[1]),
-            buy_date: isNaN(buyDate.getTime()) ? null : buyDate.toISOString().split('T')[0],
+            buy_date: isNaN(buyDate) ? null : buyDate.toISOString().split('T')[0],
             amount_invested: parseFloat(rowArray[3]),
             sell_price: parseFloat(rowArray[4]),
-            sell_date: isNaN(sellDate.getTime()) ? null : sellDate.toISOString().split('T')[0],
+            sell_date: isNaN(sellDate) ? null : sellDate.toISOString().split('T')[0],
             brokerage: parseFloat(rowArray[6]),
             days_hold: parseInt(rowArray[7], 10),
             reason_to_buy: rowArray[8],
@@ -205,7 +218,7 @@ export default function Grid() {
             annual_return_generated: parseFloat(rowArray[12]),
             user_id: userUUID
           };
-  
+          console.log(record)
           if (rowArray[13] !== null && rowArray[13] !== undefined && rowArray[13] !== "") {
             record.id = parseInt(rowArray[13], 10);
             updates.push(record);
