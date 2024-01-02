@@ -105,7 +105,7 @@ export default function Grid() {
   
       console.log("value of data ",data)
       // Transform data from array of objects to array of arrays
-      const transformedData = data.map(item => [
+      const transformedData = data.map((item,index) => [
         item.stock_name,
         item.buy_price,
         item.buy_date ? new Date(item.buy_date).toLocaleDateString() : '',
@@ -113,10 +113,10 @@ export default function Grid() {
         item.sell_price,
         item.sell_date ? new Date(item.sell_date).toLocaleDateString() : '',
         item.brokerage,
-        item.days_hold,
+        `=(F${index + 1}-C${index + 1})`,
         item.reason_to_buy,
         item.gtt_enabled, // Ensure this is formatted correctly for a checkbox
-        item.profit_loss,
+        `=(E${index + 1}- B${index + 1})`,
         item.roce,
         item.annual_return_generated,
         item.id
