@@ -11,26 +11,26 @@ const LandingPage = ({ onLogin }) => {
       <nav className="flex items-center justify-between h-24 w-full sticky top-0 left-0 z-20" id="head">
     <img src={Logo} alt="logo" class="w-28"></img>
     <ul className="flex gap-8">
-        <li className="text-white text-xl font-bold font-mullish py-2 hover:text-red-600 cursor-pointer transition duration-200 relative">
-            <a href="#">Home</a>
+        <li className=" text-xl font-bold font-mullish py-2 group cursor-pointer transition duration-200 relative">
+            <a href="" className='text-grayText no-underline group-hover:text-red-700' >Home</a>
             <div className="absolute bottom-0 left-0 w-full h-1 bg-red-600 scale-0 group-hover:scale-100 transition duration-200"></div>
         </li>
-        <li className="text-white text-xl font-bold font-mullish py-2 hover:text-red-600 cursor-pointer transition duration-200 relative">
-            <a href="#">About</a>
+        <li className=" text-xl font-bold font-mullish py-2  group cursor-pointer transition duration-200 relative">
+            <a href="#" className='text-grayText no-underline group-hover:text-red-600'>About</a>
             <div className="absolute bottom-0 left-0 w-full h-1 bg-red-600 scale-0 group-hover:scale-100 transition duration-200"></div>
         </li>
-        <li className="text-white text-xl font-bold font-mullish py-2 hover:text-red-600 cursor-pointer transition duration-200 relative">
-            <a href="#">Services</a>
+        <li className=" text-xl font-bold font-mullish py-2 group cursor-pointer transition duration-200 relative">
+            <a href="#" className='text-grayText no-underline group-hover:text-red-600'>Services</a>
             <div className="absolute bottom-0 left-0 w-full h-1 bg-red-600 scale-0 group-hover:scale-100 transition duration-200"></div>
         </li>
-        <li className="text-white text-xl font-bold font-mullish py-2 hover:text-red-600 cursor-pointer transition duration-200 relative">
-            <a href="#">Contact Us</a>
+        <li className=" text-xl font-bold font-mullish py-2 group cursor-pointer transition duration-200 relative">
+            <a href="#" className='text-grayText  no-underline group-hover:text-red-600'>Contact Us</a>
             <div className="absolute bottom-0 left-0 w-full h-1 bg-red-600 scale-0 group-hover:scale-100 transition duration-200"></div>
         </li>
     </ul>
-    <div className="flex gap-x-1">
-        <button onClick={onLogin}  className="font-mullish py-2 px-4 text-xl font-bold border-2 border-white bg-black rounded-full text-white transition duration-200 hover:bg-white hover:text-black" id="redbutton">Log In</button>
-        <button onClick={onLogin} className="font-mullish py-2 px-4 text-xl font-bold border-2 border-white bg-black rounded-full text-white transition duration-200 hover:bg-white hover:text-black" id="greenbutton">Sign Up</button>
+    <div className="flex gap-x-8">
+        <button onClick={onLogin}  className="font-mullish py-2 px-4 text-xl font-bold border-2 border-white rounded-md text-grayText  transition duration-100 hover:text-red-500  bg-black "  >Log In</button>
+        <button onClick={onLogin} className="font-mullish py-2 px-4 text-xl font-bold border-2 border-white bg-black rounded-md mr-10 text-grayText group transition duration-100 hover:text-green-500 " >Sign Up</button>
     </div>
 </nav>
 
@@ -46,7 +46,7 @@ const LandingPage = ({ onLogin }) => {
                 </h1>
                 <div className="w-6 h-1 bg-red-600 m-2"></div>
                 <p className="text-white text-lg lg:text-xl font-sans leading-normal lg:leading-relaxed">
-                    Your ultimate destination for intelligent and efficient trading! Experts or beginners, our platform enhances every trading journey for all.
+                    Your ultimate destination for  and efficient trading! Experts or beginners, our platform enhances every trading journey for all.
                     <strong>Welcome to a Smarter Way to Trade</strong>
                 </p>
                 <button 
@@ -67,65 +67,62 @@ const LandingPage = ({ onLogin }) => {
       Why You Should Choose Us?
     </h2>
     <div className="w-[700px] mx-[15%] h-2 bg-gradient-to-r from-green-600 via-black to-red-600"></div>
-    <div className="w-full grid grid-cols-2 grid-rows-2 gap-y-16 gap-x-20 py-10 h-fit pt-20">
+    <div className="w-full flex flex-col gap-10 py-10  h-fit pt-20">
       
-      {/* CARD 1 */}
-      <div className="p-6 px-20 rounded-xl flex-col bg-white border-4 border-black w-full max-h-[300px] cursor-pointer bg-cover bg-no-repeat hover:scale-105 transition-all duration-200 group" id="card">
-        <i className="fa-solid fa-chart-line group-hover:hidden"></i>
-        <h3 className="font-mullish font-bold text-black text-xl pt-4 group-hover:text-red-600">Smart Analytics</h3>
-        <p className="font-mullish text-grayText text-xl font-bold leading-normal py-3 group-hover:text-white">
-          Dive into your trading performance with charts and metrics powered by AI.
-        </p>
-        <div className="flex flex-row gap-x-2 items-center group">
-          <a href="#" className="font-mullish text-lightBlue500 font-bold text-2xl group-hover:text-green-600 transition-all duration-200">Know More</a>
-          <i className="fa-solid fa-angles-right"></i>
+      <div className='flex flex-row gap-10'>
+        
+        {/* CARD 1 */}
+        <div className="p-3 px-20 rounded-xl  flex-col border-4 bg-white border-black w-[1300px] h-[220px] cursor-pointer   group hover:scale-105 transition-all duration-200 " >
+          <i className="fa-solid fa-chart-line "></i>
+          <h3 className="font-mullish font-bold text-grayText  text-xl pt-4  group-hover:text-green-600">Smart Analytics</h3>
+          <p className="font-mullish text-grayText text-xl   font-bold leading-normal py-3 group-hover:text-red-600">
+            Dive into your trading performance with charts and metrics powered by AI.
+          </p>
+        
         </div>
-      </div>
       
-      {/* CARD 2 */}
-      <div className="border-4 border-black rounded-xl flex-col bg-white p-6 px-20 shadow w-full max-h-[300px] cursor-pointer bg-cover bg-no-repeat hover:scale-105 transition-all duration-200 group" id="card">
-        <i className="fa-regular fa-clock group-hover:hidden"></i>
-        <h3 className="font-mullish font-bold text-black text-xl pt-4 group-hover:text-red-600">Real-Time Data</h3>
-        <p className="font-mullish text-grayText text-xl font-bold leading-normal py-3 group-hover:text-white">
-          Get up-to-the-minute market data to stay ahead of the curve.
-        </p>
-        <div className="flex flex-row gap-x-2 items-center group">
-          <a href="#" className="font-mullish text-lightBlue500 font-bold text-2xl group-hover:text-green-600 transition-all duration-200">Know More</a>
-          <i className="fa-solid fa-angles-right"></i>
+        {/* CARD 2 */}
+        <div className="border-4 border-black rounded-xl flex-col bg-white py-6 pl-6 pr-20  w-[1200px] h-[220px] cursor-pointer group hover:scale-105 transition-all duration-200  group-hover:bg-black" >
+          <i className="fa-regular fa-clock "></i>
+          <h3 className="font-mullish font-bold text-grayText text-xl pt-4 group-hover:text-red-600 ">Real-Time Data</h3>
+          <p className="font-mullish text-grayText text-xl font-bold leading-normal py-3 group-hover:text-green-600">
+            Get up-to-the-minute market data to stay ahead of the curve.
+          </p>
         </div>
       </div>
-
-      {/* CARD 3 */}
-      <div className="border-black border-4 rounded-xl flex-col bg-white p-6 px-20 shadow w-full max-h-[300px] cursor-pointer bg-cover bg-no-repeat hover:scale-105 transition-all duration-200 group" id="card">
-        <i className="fa-solid fa-book group-hover:hidden" style={{ height: '20px' }}></i>
-        <h3 className="font-mullish font-bold text-black text-xl pt-4 group-hover:text-red-600">Journaling Made Easy</h3>
-        <p className="font-mullish text-grayText text-xl font-bold leading-normal py-3 group-hover:text-white">
-          Log your trades with a user-friendly interface and review your history anytime.
-        </p>
-        <div className="flex flex-row gap-x-2 items-center group">
-          <a href="#" className="font-mullish text-lightBlue500 font-bold text-2xl group-hover:text-green-600 transition-all duration-200">Know More</a>
-          <i className="fa-solid fa-angles-right"></i>
+   
+      <div className='flex flex-row gap-10'>
+        
+        
+        {/* CARD 3 */}
+        <div className="p-3 px-20 rounded-xl  flex-col border-4 bg-white border-black w-[1200px] h-[220px] cursor-pointer   group hover:scale-105 transition-all duration-200" style={{backgroundColor:'black'}}>
+          <i className="fa-solid fa-book"></i>
+          <h3 className="font-mullish font-bold text-grayText text-xl pt-4 group-hover:text-green-600">Journaling Made Easy</h3>
+          <p className="font-mullish text-grayText text-xl font-bold leading-normal py-3 group-hover:text-red-600">
+            Log your trades with a user-friendly interface and review your history anytime.
+          </p>
+        
         </div>
-      </div>
      
-      {/* CARD 4 */}
-      <div className="p-6 rounded-xl flex flex-col bg-white border-4 border-black w-full max-h-[300px] cursor-pointer bg-cover bg-no-repeat hover:scale-105 transition-all duration-200 group" id="card4">
-        <i className="fa-solid fa-mobile group-hover:hidden"></i>
-        <h3 className="font-mullish font-bold text-black text-xl pt-4 group-hover:text-red-600">Secure & Private</h3>
-        <p className="font-mullish text-grayText text-xl font-bold leading-normal py-3 group-hover:text-white">
-        Your data is encrypted and kept private at all times.
-        </p>
-        <div className="flex flex-row gap-x-2 items-center group">
-          <a href="#" className="font-mullish text-lightBlue500 font-bold text-2xl group-hover:text-green-600 transition-all duration-200">Know More</a>
-          <i className="fa-solid fa-angles-right"></i>
+
+        {/* CARD 4 */}
+        <div className="p-6 rounded-xl flex flex-col bg-white border-4 border-black w-[1200px] h-[217px] cursor-pointer bg-cover bg-no-repeat hover:scale-105 transition-all duration-200 group" id="card4">
+          <i className="fa-solid fa-mobile " ></i>
+          <h3 className="font-mullish font-bold text-grayText text-xl pt-4  group-hover:text-red-600">Secure & Private</h3>
+          <p className="font-mullish text-grayText text-xl font-bold leading-normal py-3 group-hover:text-green-600">
+          Your data is encrypted and kept private at all times.
+          </p>
+         
         </div>
       </div>
+      
     </div>
+
   </section>
 </div>
 <div className="testimonials relative flex flex-col gap-6  items-center border-t-4 border-b-4 py-32 border-black">
 <div className="heading relative">
-    <h2 className="text-4xl font-sans font-bold">Client Testimonials</h2>
+    <h2 className="text-4xl font-sans font-bold text-black">Client Testimonials</h2>
    <div className="slit flex flex-row gap-2 top-0">
        <div className="w-80 h-2 bg-gradient-to-r from-red-600 via-black to-green-600 "></div>
    </div>
@@ -171,31 +168,31 @@ const LandingPage = ({ onLogin }) => {
       </div>
 </div>
 
-    <div className="swiper-pagination"></div>
+  <div className="swiper-pagination"></div>
 </div>
 </div>
 
 <footer className="foot flex flex-col lg:flex-row justify-around border-t-4 border-b-4 border-black bg-black text-white text-center lg:text-left">
-  <div className="info flex flex-col gap-5 py-8 px-4 lg:px-8">
-    <h3 className="font-serif font-bold text-xl lg:text-2xl">Trading Journal</h3>
-    <p className="text-sm lg:text-lg leading-relaxed max-w-md mx-auto lg:mx-0">
+  <div className="info flex flex-col items-start gap-4 py-8 pr-4 lg:px-8">
+    <h3 className="font-serif font-bold  text-2xl text-white cursor-pointer hover:underline ml-10">Trading Journal</h3>
+    <p className="w-80 font-sans   items-start text-white text-lg  ">
       At Trading Ledger, our mission is to empower our clients with the most accurate and up-to-date information on their stock portfolio. We are committed to providing the best possible service to our clients, and our AI-powered platform enables us to achieve this goal.
     </p>
   </div>
 
-  <div className="info flex flex-col gap-4 py-8 px-4 lg:px-8">
-    <h3 className="font-serif font-bold text-xl lg:text-2xl">Quick Links</h3>
-    <ul className="flex flex-col gap-2">
-      <li><a className="font-sans text-lg lg:text-xl cursor-pointer" href="#">About</a></li>
-      <li><a className="font-sans text-lg lg:text-xl cursor-pointer" href="#">Services</a></li>
-      <li><a className="font-sans text-lg lg:text-xl cursor-pointer" href="#">Contact Us</a></li>
+  <div className="info flex flex-col gap-1 items-start py-8">
+    <h3 className="font-serif font-bold text-white text-2xl  hover:underline cursor-pointer">Quick Links</h3>
+    <ul className="flex flex-col gap-1 items-start ">
+      <li><a className="font-sans text-xl cursor-pointer no-underline ml-0 justify-start  text-white hover:font-bold " href="">About</a></li>
+      <li><a className="font-sans text-xl cursor-pointer no-underline ml-0  text-white hover:font-bold " href="">Services</a></li>
+      <li><a className="font-sans text-xl cursor-pointer no-underline ml-0  text-white hover:font-bold " href="">Contact Us</a></li>
     </ul>
   </div>
 
-  <div className="info flex flex-col gap-4 py-8 px-4 lg:px-8">
-    <span className="font-serif font-bold text-xl lg:text-2xl">Contact Us</span>
-    <a className="font-sans text-lg lg:text-xl" href="mailto:tradingjournal@gmail.com">tradingjournal@gmail.com</a>
-    <div className="icons flex justify-center lg:justify-start flex-row gap-2">
+  <div className="info flex flex-col gap-4 py-8 pr-4 items-start lg:px-8 ">
+    <span className="font-serif font-bold text-xl  cursor-pointer ml-0 hover:underline  lg:text-2xl">Contact Us</span>
+    <a className="font-sans text-xl no-underline text-white " href="mailto:tradingjournal@gmail.com">tradingjournal@gmail.com</a>
+    <div className="icons flex justify-center lg:justify-start flex-row gap-6">
       <i className="fa-brands fa-facebook-square text-2xl"></i>
       <i className="fa-brands fa-twitter-square text-2xl"></i>
       <i className="fa-brands fa-linkedin text-2xl"></i>
