@@ -273,7 +273,7 @@ export default function Grid() {
 
   const handleGetInsights = async () => {
     setLoading(true);
-    const dataString = JSON.stringify(rowData);
+    const dataString = JSON.stringify(handsontableData);
 
     const requestBody = {
       prompt: `With json data ${JSON.stringify(dataString)}, ${promptText}`,
@@ -404,17 +404,27 @@ export default function Grid() {
       </div>
      
       <div className="buttons">
-        <button className="btn btn-outline-primary m-1" onClick={handleGetInsights}>Get Insights with AI</button>
-      </div>
-      <button onClick={logData}>Log Data to Console</button>
-      {loading ? (
-        <p>Loading...</p>
-      ) : (
-        <ul>
-          {response && response.map((item, i) => <li key={i}>{item}</li>)}
-        </ul>
-      )}
+  <button className="btn btn-outline-primary m-1" onClick={handleGetInsights}>Get Insights with AI</button>
+</div>
+{loading ? (
+  <div className="d-flex justify-content-center align-items-center" style={{ height: '100px' }}>
+    <div className="spinner-border text-primary" role="status">
+      <span className="sr-only">Loading...</span>
     </div>
+  </div>
+) : (
+  <div className="results">
+    {response && response.map((item, i) => (
+      <div className="card m-2" key={i} style={{ width: '50rem' }}>
+        <div className="card-body">
+          <h5 className="card-title">Insight {i + 1}</h5>
+          <p className="card-text">{item}</p>
+        </div>
+      </div>
+    ))}
+  </div>
+)}
+</div>
     </>
   );
 }
