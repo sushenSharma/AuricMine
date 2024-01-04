@@ -103,23 +103,25 @@ export default function Grid() {
         throw error;
       }
   
-      console.log("value of data ",data)
+    
+      let totalPercentageRate = 0.001 + 0.0000325 + 0.00000001 + 0.18 * (0.0000325 + 0.00000001) + 0.00015;
       // Transform data from array of objects to array of arrays
       const transformedData = data.map((item,index) => [
         item.stock_name,
         item.buy_price,
         item.buy_date ? new Date(item.buy_date).toLocaleDateString() : '',
-        item.amount_invested,
+        item.quantity,
         item.sell_price,
         item.sell_date ? new Date(item.sell_date).toLocaleDateString() : '',
-        item.brokerage,
+        `=((B${index + 1} * D${index + 1} + E${index + 1} * D${index + 1}) * ${totalPercentageRate}) + 15.93`,
         `=(F${index + 1}-C${index + 1})`,
         item.reason_to_buy,
         item.gtt_enabled, // Ensure this is formatted correctly for a checkbox
-        `=(E${index + 1}- B${index + 1})`,
-        item.roce,
-        item.annual_return_generated,
-        item.id
+        `=((E${index + 1} * D${index + 1})-(B${index + 1} * D${index + 1}))`,
+        `=((((E${index + 1} * D${index + 1})-(B${index + 1} * D${index + 1})) / (B${index + 1} * D${index + 1})) * 100) & "%"`,
+        `=(1+(((E${index + 1} * D${index + 1})-(B${index + 1} * D${index + 1}))/(B${index + 1}* D${index + 1})))^(365/(F${index + 1}-C${index + 1}))-1`,
+        item.id,
+        `=(B${index + 1}* D${index + 1})`,
       ]);
   
       setHandsontableData(transformedData); 
@@ -206,7 +208,7 @@ export default function Grid() {
             stock_name: rowArray[0],
             buy_price: parseFloat(rowArray[1]),
             buy_date: isNaN(buyDate) ? null : buyDate.toISOString().split('T')[0],
-            amount_invested: parseFloat(rowArray[3]),
+            quantity : parseFloat(rowArray[3]),
             sell_price: parseFloat(rowArray[4]),
             sell_date: isNaN(sellDate) ? null : sellDate.toISOString().split('T')[0],
             brokerage: parseFloat(rowArray[6]),
@@ -216,7 +218,8 @@ export default function Grid() {
             profit_loss: parseFloat(rowArray[10]),
             roce: parseFloat(rowArray[11]),
             annual_return_generated: parseFloat(rowArray[12]),
-            user_id: userUUID
+            user_id: userUUID,
+            Amount: parseFloat(rowArray[14])
           };
           console.log(record)
           if (rowArray[13] !== null && rowArray[13] !== undefined && rowArray[13] !== "") {
@@ -269,8 +272,6 @@ export default function Grid() {
       console.log('Handsontable instance is not yet available.');
     }
   };
-  
-
   const handleGetInsights = async () => {
     setLoading(true);
     const dataString = JSON.stringify(rowData);
@@ -354,7 +355,7 @@ export default function Grid() {
         "Stock Symbol",
         "Buy Price",
         "Buy Date",
-        "Amount Invested",
+        "Quantity",
         "Sell Price",
         "Sell Date",
         "Brokerage",
@@ -362,9 +363,10 @@ export default function Grid() {
         "Reason to Buy",
         "GTT Enabled",
         "Profit / Loss",
-        "ROCE",
-        "Annual Return Generated",
-        "id"
+        "Return %",
+        "Annualized ROI",
+        "id",
+        "Amount Invested"
       ]}
       
       dropdownMenu={true}
@@ -388,6 +390,7 @@ export default function Grid() {
         {readOnly:true},
         {},
         {type:CheckboxCellType,editor:CheckboxEditor},
+        {readOnly:true},
         {readOnly:true},
         {readOnly:true},
         {readOnly:true},
