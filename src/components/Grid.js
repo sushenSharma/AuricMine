@@ -42,6 +42,9 @@ export default function Grid() {
   const hotRef = useRef(null); // Reference to the Handsontable instance
   const [data, setData] = useState(Handsontable.helper.createEmptySpreadsheetData(6, 10));
   const [handsontableData, setHandsontableData] = useState([]);
+  let buttonClickCallback;
+
+  
 
   const customHeaderRenderer = (instance, column, colIndex) => {
     const columnTitle = column.getColHeader(colIndex);
@@ -63,7 +66,7 @@ export default function Grid() {
   const calculateColumnWidths = () => {
     // Example: Adjust column widths based on screen width
     const screenWidth = window.innerWidth;
-    const numberOfColumns = 13; // Adjust this based on your number of columns
+    const numberOfColumns = 15; // Adjust this based on your number of columns
     const baseWidth = screenWidth / numberOfColumns;
 
     const newWidths = new Array(numberOfColumns).fill(baseWidth);
@@ -103,23 +106,25 @@ export default function Grid() {
         throw error;
       }
   
-      console.log("value of data ",data)
+    
+      let totalPercentageRate = 0.001 + 0.0000325 + 0.00000001 + 0.18 * (0.0000325 + 0.00000001) + 0.00015;
       // Transform data from array of objects to array of arrays
-      const transformedData = data.map(item => [
+      const transformedData = data.map((item,index) => [
         item.stock_name,
         item.buy_price,
         item.buy_date ? new Date(item.buy_date).toLocaleDateString() : '',
-        item.amount_invested,
+        item.quantity,
         item.sell_price,
         item.sell_date ? new Date(item.sell_date).toLocaleDateString() : '',
-        item.brokerage,
-        item.days_hold,
+        `=((B${index + 1} * D${index + 1} + E${index + 1} * D${index + 1}) * ${totalPercentageRate}) + 15.93`,
+        `=(F${index + 1}-C${index + 1})`,
         item.reason_to_buy,
         item.gtt_enabled, // Ensure this is formatted correctly for a checkbox
-        item.profit_loss,
-        item.roce,
-        item.annual_return_generated,
-        item.id
+        `=((E${index + 1} * D${index + 1})-(B${index + 1} * D${index + 1}))`,
+        `=((((E${index + 1} * D${index + 1})-(B${index + 1} * D${index + 1})) / (B${index + 1} * D${index + 1})) * 100) & "%"`,
+        `=(1+(((E${index + 1} * D${index + 1})-(B${index + 1} * D${index + 1}))/(B${index + 1}* D${index + 1})))^(365/(F${index + 1}-C${index + 1}))-1`,
+        item.id,
+        `=(B${index + 1}* D${index + 1})`,
       ]);
   
       setHandsontableData(transformedData); 
@@ -175,6 +180,16 @@ export default function Grid() {
     }
   }, []);
 
+
+  function parseDate(dateString) {
+    var parts = dateString.split("/");
+    if (parts.length === 3) {
+        return new Date(parts[2], parts[1] - 1, parts[0]);
+    } else {
+        return null;
+    }
+}
+
   const handleSaveChanges = async () => {
     if (hotRef.current) {
       const hotData = hotRef.current.hotInstance.getData();
@@ -186,16 +201,15 @@ export default function Grid() {
       
       hotData.filter(row => row.some(cell => cell !== "" && cell !== null))
         .forEach(rowArray => {
-          const buyDate = new Date(rowArray[2]);
-          const sellDate = new Date(rowArray[5]);
-          
+          const buyDate = parseDate(rowArray[2]);
+          const sellDate = parseDate(rowArray[5]);
           let record = {
             stock_name: rowArray[0],
             buy_price: parseFloat(rowArray[1]),
-            buy_date: isNaN(buyDate.getTime()) ? null : buyDate.toISOString().split('T')[0],
-            amount_invested: parseFloat(rowArray[3]),
+            buy_date: isNaN(buyDate) ? null : buyDate.toISOString().split('T')[0],
+            quantity : parseFloat(rowArray[3]),
             sell_price: parseFloat(rowArray[4]),
-            sell_date: isNaN(sellDate.getTime()) ? null : sellDate.toISOString().split('T')[0],
+            sell_date: isNaN(sellDate) ? null : sellDate.toISOString().split('T')[0],
             brokerage: parseFloat(rowArray[6]),
             days_hold: parseInt(rowArray[7], 10),
             reason_to_buy: rowArray[8],
@@ -203,9 +217,10 @@ export default function Grid() {
             profit_loss: parseFloat(rowArray[10]),
             roce: parseFloat(rowArray[11]),
             annual_return_generated: parseFloat(rowArray[12]),
-            user_id: userUUID
+            user_id: userUUID,
+            Amount: parseFloat(rowArray[14])
           };
-  
+          console.log(record)
           if (rowArray[13] !== null && rowArray[13] !== undefined && rowArray[13] !== "") {
             record.id = parseInt(rowArray[13], 10);
             updates.push(record);
@@ -253,14 +268,12 @@ export default function Grid() {
         });
       }
     } else {
-      console.log('Handsontable instance is not yet available.');
+      console.log('Instance is not yet available.');
     }
   };
-  
-
   const handleGetInsights = async () => {
     setLoading(true);
-    const dataString = JSON.stringify(rowData);
+    const dataString = JSON.stringify(handsontableData);
 
     const requestBody = {
       prompt: `With json data ${JSON.stringify(dataString)}, ${promptText}`,
@@ -309,22 +322,33 @@ export default function Grid() {
       localStorage.setItem('handsontableData', JSON.stringify(data));
     }
   };
+  useEffect(() => {
+    const hot = hotRef.current.hotInstance;
 
-  const logData = () => {
-    if (hotRef.current) {
-      const hotData = hotRef.current.hotInstance.getData();
-      const jsonData = JSON.stringify(hotData);
-      console.log(jsonData);
-    } else {
-      console.log('Handsontable instance is not yet available.');
-    }
-  };
+    const exportPlugin = hot.getPlugin('exportFile');
+    buttonClickCallback = () => {
+      exportPlugin.downloadFile('csv', {
+        bom: false,
+        columnDelimiter: ',',
+        columnHeaders: true,
+        exportHiddenColumns: true,
+        exportHiddenRows: true,
+        fileExtension: 'csv',
+        filename: 'TradingLedger-CSV-file_[YYYY]-[MM]-[DD]',
+        mimeType: 'text/csv',
+        rowDelimiter: '\r\n',
+        rowHeaders: true
+      });
+    };
+  });
   return (
     <>
     <div style={{padding: '10px 10px',
   backgroundColor: 'ghostwhite'}}>
-        <button className="btn btn-outline-primary btn-sm m-1" onClick={handleAddRow}>Add Row</button>
-        <button className="btn btn-outline-danger btn-sm m-1" onClick={handleRemoveRow}>Delete Row</button>
+ 
+        <button className="btn btn-outline-primary btn-sm m-1" onClick={(...args) => buttonClickCallback(...args)}>Download CSV</button>
+        {/* <button className="btn btn-outline-primary btn-sm m-1" onClick={handleAddRow}>Add Row</button>
+        <button className="btn btn-outline-danger btn-sm m-1" onClick={handleRemoveRow}>Delete Row</button> */}
         <button className="btn btn-outline-success btn-sm m-1" onClick={handleSaveChanges}>Save Changes</button>
       </div>
     <div className="App ">
@@ -341,7 +365,7 @@ export default function Grid() {
         "Stock Symbol",
         "Buy Price",
         "Buy Date",
-        "Amount Invested",
+        "Quantity",
         "Sell Price",
         "Sell Date",
         "Brokerage",
@@ -349,11 +373,12 @@ export default function Grid() {
         "Reason to Buy",
         "GTT Enabled",
         "Profit / Loss",
-        "ROCE",
-        "Annual Return Generated",
-        "id"
+        "Return %",
+        "Annualized ROI",
+        "id",
+        "Amount Invested"
       ]}
-      
+      className="customFilterButtonExample1"
       dropdownMenu={true}
       contextMenu={true}
       multiColumnSorting={true}
@@ -378,6 +403,7 @@ export default function Grid() {
         {readOnly:true},
         {readOnly:true},
         {readOnly:true},
+        {readOnly:true},
         {readOnly:true}
       ]}
       formulas={{
@@ -386,22 +412,33 @@ export default function Grid() {
       }}
      
     >
-      
     </HotTable>
       </div>
-     
-      <div className="buttons">
-        <button className="btn btn-outline-primary m-1" onClick={handleGetInsights}>Get Insights with AI</button>
-      </div>
-      <button onClick={logData}>Log Data to Console</button>
-      {loading ? (
-        <p>Loading...</p>
-      ) : (
-        <ul>
-          {response && response.map((item, i) => <li key={i}>{item}</li>)}
-        </ul>
-      )}
+      
+      <div className="buttons" style={{ textAlign: 'center', margin: '20px' }}>
+    <button 
+      className="btn btn-outline-primary" 
+      style={{ margin: '10px', padding: '10px 20px', fontSize: '16px',backgroundColor:"#1a0201" }} 
+      onClick={handleGetInsights}
+    >
+      Get Insights with AI
+    </button>
+  </div>
+  <div style={{ textAlign: 'center' }}>
+  </div>
+  {loading ? (
+    <p style={{ textAlign: 'center', fontSize: '18px' }}>Loading...</p>
+  ) : (
+    <ul style={{ listStyleType: 'none', paddingLeft: '0' }}>
+      {response && response.map((item, index) => (
+        <li key={index} style={{ background: '#f9f9f9', margin: '5px', padding: '10px', borderRadius: '5px' }}>
+          {item}
+        </li>
+      ))}
+    </ul>
+  )}
     </div>
     </>
   );
 }
+
