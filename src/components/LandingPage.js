@@ -3,6 +3,7 @@ import '../assets/styles/landingPage.css'; // Import the CSS file for styling
 import TradingImage from '../assets/resources/tradingBanner.png'; // Path to your image
 import Logo from '../assets/resources/nav_image.png' // Path to your logo image
 
+
 const LandingPage = ({ onLogin }) => {
   return (
     
