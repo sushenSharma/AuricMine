@@ -2,7 +2,7 @@ import React from 'react';
 import '../assets/styles/landingPage.css'; // Import the CSS file for styling
 import TradingImage from '../assets/resources/tradingBanner.png'; // Path to your image
 import Logo from '../assets/resources/nav_image.png' // Path to your logo image
-
+import Clienttestimonials from './Clienttestimonials';
 const LandingPage = ({ onLogin }) => {
   return (
     
@@ -120,7 +120,7 @@ const LandingPage = ({ onLogin }) => {
 
   </section>
 </div>
-<div className="testimonials relative flex flex-col gap-6  items-center border-t-4 border-b-4 py-32 border-black">
+<div className="testimonials relative flex flex-col gap-6  items-center border-t-4 border-b-0 pt-32 border-black">
     <div className="heading relative">
         <h2 className="text-4xl font-sans font-bold text-black">Client Testimonials</h2>
       <div className="slit flex flex-row gap-2 top-0">
@@ -128,49 +128,10 @@ const LandingPage = ({ onLogin }) => {
       </div>
     </div>
 
-    <div className="swiper-container mySwiper relative flex flex-row gap-3">
-      <div className="swiper-wrapper"></div>
-    
-      <div className="swiper-slide">
-        {/* First Slide */}
-            <div className="swiper-slide flex flex-col gap-2 p-9 py-20 w-[36rem] mx-24 ml-10">
-              <div className="rating flex flex-row">
-                <i className="fa-solid fa-star"></i>
-                <i className="fa-solid fa-star"></i>
-                <i className="fa-solid fa-star"></i>
-                <i className="fa-solid fa-star"></i>
-              </div>
-              <p className="font-sans text-xl left-64 ml-6">
-                I was skeptical of AI-powered stock trading platforms but, Trading Ledger has exceeded my expectations. Their Trading Ledger and AI Insights have helped me make profitable trades that I wouldn't have made without their platform.
-              </p>
-              <div className="name flex flex-row gap-4 justify-center items-center">
-                <img src="thispersondoesnotexist8.jpeg" className="border-4 border-black rounded-full" style={{ height: '120px', width: '100px' }} alt="" />
-                <h2 className="font-bold text-xl font-serif">SARAH THOMPSON</h2>
-              </div>
-            </div>
-      </div>
-      {/* Second Slide */}
-      <div className="swiper-slide">
-            <div className="swiper-slide flex flex-col gap-2 p-9 py-20 w-[36rem] mx-24 ml-10">
-              <div className="rating flex flex-row">
-                <i className="fa-solid fa-star"></i>
-                <i className="fa-solid fa-star"></i>
-                <i className="fa-solid fa-star"></i>
-                <i className="fa-solid fa-star"></i>
-              </div>
-              <p className="font-sans text-xl left-64 ml-6">
-              Initially, I had doubts about stock trading platforms powered by AI. However, Trading Ledger has surpassed what I anticipated. The Trading Ledger and AI Insights they offer have assisted me in executing profitable trades, which I likely wouldn't have achieved without using their platform.
-              </p>
-              <div className="name flex flex-row gap-4 justify-center items-center">
-                <img src="thispersondoesnotexist8.jpeg" className="border-4 border-black rounded-full" style={{ height: '120px', width: '100px' }} alt="" />
-                <h2 className="font-bold text-xl font-serif">ROB MUIR</h2>
-              </div>
-            </div>
-      </div>
-
-      <div className="swiper-pagination"></div>
-    </div>
 </div>
+    <div>
+      <Clienttestimonials></Clienttestimonials>
+    </div>
 
 <footer className="foot flex flex-col lg:flex-row justify-around border-t-4 border-b-4 border-black bg-black text-white text-center lg:text-left">
   <div className="info flex flex-col items-start gap-4 py-8 pr-4 lg:px-8">
