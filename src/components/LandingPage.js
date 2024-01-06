@@ -12,25 +12,25 @@ const LandingPage = ({ onLogin }) => {
     <img src={Logo} alt="logo" class="w-28"></img>
     <ul className="flex gap-8">
         <li className=" text-xl font-bold font-mullish py-2 group cursor-pointer transition duration-200 relative">
-            <a href="" className='text-grayText no-underline group-hover:text-red-700' >Home</a>
+            <a href="" className=' no-underline group-hover:text-red-700 nav' >Home</a>
             <div className="absolute bottom-0 left-0 w-full h-1 bg-red-600 scale-0 group-hover:scale-100 transition duration-200"></div>
         </li>
         <li className=" text-xl font-bold font-mullish py-2  group cursor-pointer transition duration-200 relative">
-            <a href="#" className='text-grayText no-underline group-hover:text-red-600'>About</a>
+            <a href="#" className=' no-underline group-hover:text-red-600 nav'>About</a>
             <div className="absolute bottom-0 left-0 w-full h-1 bg-red-600 scale-0 group-hover:scale-100 transition duration-200"></div>
         </li>
         <li className=" text-xl font-bold font-mullish py-2 group cursor-pointer transition duration-200 relative">
-            <a href="#" className='text-grayText no-underline group-hover:text-red-600'>Services</a>
+            <a href="#" className=' no-underline group-hover:text-red-600 nav'>Services</a>
             <div className="absolute bottom-0 left-0 w-full h-1 bg-red-600 scale-0 group-hover:scale-100 transition duration-200"></div>
         </li>
         <li className=" text-xl font-bold font-mullish py-2 group cursor-pointer transition duration-200 relative">
-            <a href="#" className='text-grayText  no-underline group-hover:text-red-600'>Contact Us</a>
+            <a href="#" className='  no-underline group-hover:text-red-600 nav'>Contact Us</a>
             <div className="absolute bottom-0 left-0 w-full h-1 bg-red-600 scale-0 group-hover:scale-100 transition duration-200"></div>
         </li>
     </ul>
     <div className="flex gap-x-8">
-        <button onClick={onLogin}  className="font-mullish py-2 px-4 text-xl font-bold border-2 border-white rounded-md text-grayText  transition duration-100 hover:text-red-500  bg-black "  >Log In</button>
-        <button onClick={onLogin} className="font-mullish py-2 px-4 text-xl font-bold border-2 border-white bg-black rounded-md mr-10 text-grayText group transition duration-100 hover:text-green-500 " >Sign Up</button>
+        <button onClick={onLogin}  className=" group font-mullish py-2 px-4 text-xl font-bold border-2 border-white rounded-md   transition duration-100  " id='redbutton'>Log In</button>
+        <button onClick={onLogin} className="font-mullish py-2 px-4 text-xl font-bold border-2 border-white  rounded-md mr-10  group transition duration-100   " id='greenbutton' >Sign Up</button>
     </div>
 </nav>
 
@@ -72,7 +72,7 @@ const LandingPage = ({ onLogin }) => {
       <div className='flex flex-row gap-10'>
         
         {/* CARD 1 */}
-        <div className="p-3 px-20 rounded-xl  flex-col border-4 bg-white border-black w-[1300px] h-[220px] cursor-pointer   group hover:scale-105 transition-all duration-200 " >
+        <div className="p-3 px-20 rounded-xl  flex-col border-4 border-black w-[1300px] h-[220px] cursor-pointer   group hover:scale-105 transition-all duration-200 " id='card'>
           <i className="fa-solid fa-chart-line "></i>
           <h3 className="font-mullish font-bold text-grayText  text-xl pt-4  group-hover:text-green-600">Smart Analytics</h3>
           <p className="font-mullish text-grayText text-xl   font-bold leading-normal py-3 group-hover:text-red-600">
@@ -82,7 +82,7 @@ const LandingPage = ({ onLogin }) => {
         </div>
       
         {/* CARD 2 */}
-        <div className="border-4 border-black rounded-xl flex-col bg-white py-6 pl-6 pr-20  w-[1200px] h-[220px] cursor-pointer group hover:scale-105 transition-all duration-200  group-hover:bg-black" >
+        <div className="border-4 border-black rounded-xl flex-col  py-6 pl-6 pr-20  w-[1200px] h-[220px] cursor-pointer group hover:scale-105 transition-all duration-200  group-hover:bg-black" id='card'>
           <i className="fa-regular fa-clock "></i>
           <h3 className="font-mullish font-bold text-grayText text-xl pt-4 group-hover:text-red-600 ">Real-Time Data</h3>
           <p className="font-mullish text-grayText text-xl font-bold leading-normal py-3 group-hover:text-green-600">
@@ -95,7 +95,7 @@ const LandingPage = ({ onLogin }) => {
         
         
         {/* CARD 3 */}
-        <div className="p-3 px-20 rounded-xl  flex-col border-4 bg-white border-black w-[1200px] h-[220px] cursor-pointer   group hover:scale-105 transition-all duration-200" style={{backgroundColor:'black'}}>
+        <div className="p-3 px-20 rounded-xl  flex-col border-4  border-black w-[1200px] h-[220px] cursor-pointer   group hover:scale-105 transition-all duration-200" id='card'>
           <i className="fa-solid fa-book"></i>
           <h3 className="font-mullish font-bold text-grayText text-xl pt-4 group-hover:text-green-600">Journaling Made Easy</h3>
           <p className="font-mullish text-grayText text-xl font-bold leading-normal py-3 group-hover:text-red-600">
@@ -106,7 +106,7 @@ const LandingPage = ({ onLogin }) => {
      
 
         {/* CARD 4 */}
-        <div className="p-6 rounded-xl flex flex-col bg-white border-4 border-black w-[1200px] h-[217px] cursor-pointer bg-cover bg-no-repeat hover:scale-105 transition-all duration-200 group" id="card4">
+        <div className="p-6 rounded-xl flex flex-col border-4 border-black w-[1200px] h-[217px] cursor-pointer bg-cover bg-no-repeat hover:scale-105 transition-all duration-200 group" id="card">
           <i className="fa-solid fa-mobile " ></i>
           <h3 className="font-mullish font-bold text-grayText text-xl pt-4  group-hover:text-red-600">Secure & Private</h3>
           <p className="font-mullish text-grayText text-xl font-bold leading-normal py-3 group-hover:text-green-600">
@@ -121,55 +121,55 @@ const LandingPage = ({ onLogin }) => {
   </section>
 </div>
 <div className="testimonials relative flex flex-col gap-6  items-center border-t-4 border-b-4 py-32 border-black">
-<div className="heading relative">
-    <h2 className="text-4xl font-sans font-bold text-black">Client Testimonials</h2>
-   <div className="slit flex flex-row gap-2 top-0">
-       <div className="w-80 h-2 bg-gradient-to-r from-red-600 via-black to-green-600 "></div>
-   </div>
-</div>
-
-<div className="swiper-container mySwiper relative flex flex-row gap-3">
-  <div className="swiper-wrapper"></div>
- 
-<div className="swiper-slide">
-   {/* First Slide */}
-      <div className="swiper-slide flex flex-col gap-2 p-9 py-20 w-[36rem] mx-24 ml-10">
-        <div className="rating flex flex-row">
-          <i className="fa-solid fa-star"></i>
-          <i className="fa-solid fa-star"></i>
-          <i className="fa-solid fa-star"></i>
-          <i className="fa-solid fa-star"></i>
-        </div>
-        <p className="font-sans text-xl left-64 ml-6">
-          I was skeptical of AI-powered stock trading platforms but, Trading Ledger has exceeded my expectations. Their Trading Ledger and AI Insights have helped me make profitable trades that I wouldn't have made without their platform.
-        </p>
-        <div className="name flex flex-row gap-4 justify-center items-center">
-          <img src="thispersondoesnotexist8.jpeg" className="border-4 border-black rounded-full" style={{ height: '120px', width: '100px' }} alt="" />
-          <h2 className="font-bold text-xl font-serif">SARAH THOMPSON</h2>
-        </div>
+    <div className="heading relative">
+        <h2 className="text-4xl font-sans font-bold text-black">Client Testimonials</h2>
+      <div className="slit flex flex-row gap-2 top-0">
+          <div className="w-80 h-2 bg-gradient-to-r from-red-600 via-black to-green-600 "></div>
       </div>
-</div>
-{/* Second Slide */}
-<div className="swiper-slide">
-      <div className="swiper-slide flex flex-col gap-2 p-9 py-20 w-[36rem] mx-24 ml-10">
-        <div className="rating flex flex-row">
-          <i className="fa-solid fa-star"></i>
-          <i className="fa-solid fa-star"></i>
-          <i className="fa-solid fa-star"></i>
-          <i className="fa-solid fa-star"></i>
-        </div>
-        <p className="font-sans text-xl left-64 ml-6">
-        Initially, I had doubts about stock trading platforms powered by AI. However, Trading Ledger has surpassed what I anticipated. The Trading Ledger and AI Insights they offer have assisted me in executing profitable trades, which I likely wouldn't have achieved without using their platform.
-        </p>
-        <div className="name flex flex-row gap-4 justify-center items-center">
-          <img src="thispersondoesnotexist8.jpeg" className="border-4 border-black rounded-full" style={{ height: '120px', width: '100px' }} alt="" />
-          <h2 className="font-bold text-xl font-serif">ROB MUIR</h2>
-        </div>
-      </div>
-</div>
+    </div>
 
-  <div className="swiper-pagination"></div>
-</div>
+    <div className="swiper-container mySwiper relative flex flex-row gap-3">
+      <div className="swiper-wrapper"></div>
+    
+      <div className="swiper-slide">
+        {/* First Slide */}
+            <div className="swiper-slide flex flex-col gap-2 p-9 py-20 w-[36rem] mx-24 ml-10">
+              <div className="rating flex flex-row">
+                <i className="fa-solid fa-star"></i>
+                <i className="fa-solid fa-star"></i>
+                <i className="fa-solid fa-star"></i>
+                <i className="fa-solid fa-star"></i>
+              </div>
+              <p className="font-sans text-xl left-64 ml-6">
+                I was skeptical of AI-powered stock trading platforms but, Trading Ledger has exceeded my expectations. Their Trading Ledger and AI Insights have helped me make profitable trades that I wouldn't have made without their platform.
+              </p>
+              <div className="name flex flex-row gap-4 justify-center items-center">
+                <img src="thispersondoesnotexist8.jpeg" className="border-4 border-black rounded-full" style={{ height: '120px', width: '100px' }} alt="" />
+                <h2 className="font-bold text-xl font-serif">SARAH THOMPSON</h2>
+              </div>
+            </div>
+      </div>
+      {/* Second Slide */}
+      <div className="swiper-slide">
+            <div className="swiper-slide flex flex-col gap-2 p-9 py-20 w-[36rem] mx-24 ml-10">
+              <div className="rating flex flex-row">
+                <i className="fa-solid fa-star"></i>
+                <i className="fa-solid fa-star"></i>
+                <i className="fa-solid fa-star"></i>
+                <i className="fa-solid fa-star"></i>
+              </div>
+              <p className="font-sans text-xl left-64 ml-6">
+              Initially, I had doubts about stock trading platforms powered by AI. However, Trading Ledger has surpassed what I anticipated. The Trading Ledger and AI Insights they offer have assisted me in executing profitable trades, which I likely wouldn't have achieved without using their platform.
+              </p>
+              <div className="name flex flex-row gap-4 justify-center items-center">
+                <img src="thispersondoesnotexist8.jpeg" className="border-4 border-black rounded-full" style={{ height: '120px', width: '100px' }} alt="" />
+                <h2 className="font-bold text-xl font-serif">ROB MUIR</h2>
+              </div>
+            </div>
+      </div>
+
+      <div className="swiper-pagination"></div>
+    </div>
 </div>
 
 <footer className="foot flex flex-col lg:flex-row justify-around border-t-4 border-b-4 border-black bg-black text-white text-center lg:text-left">
