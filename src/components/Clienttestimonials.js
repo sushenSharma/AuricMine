@@ -9,7 +9,7 @@ import Person4 from '../assets/resources/person4.jpeg';
 import Person5 from '../assets/resources/person5.jpeg';
 import Person6 from '../assets/resources/person6.jpeg';
 import Person7 from '../assets/resources/person7.jpeg';
-import Person8 from '../assets/resources/person8.jpeg';
+
 export default function Clienttestimonials() {
     const boxRef = useRef(null);
 
@@ -28,7 +28,7 @@ export default function Clienttestimonials() {
         }
      
     };
-
+    
     return (
         <div className='product-slider'>
             <button className='prebtn' onClick={btnpressprev}><p>&lt;</p></button>
