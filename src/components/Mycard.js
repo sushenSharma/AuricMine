@@ -15,7 +15,7 @@ const Mycard = (props) => {
       </div>
       <div className='card-face '>
         {/* Example of a person's face - you can replace this with an image component */}
-        <img src={props.faceImage} alt="Person's face" className='personimage' />
+        {/* <img src={props.faceImage} alt="Person's face" className='personimage' /> */}
         <p className='person'>{props.personname}</p>
       </div>
     </div>
