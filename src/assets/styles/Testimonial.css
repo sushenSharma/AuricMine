@@ -1,0 +1,8 @@
+.testimonials-container {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: center;
+  gap: 10px; /* Adjust this value as needed for spacing between cards */
+  overflow-x: auto; /* Allows horizontal scrolling if there are many cards */
+}
