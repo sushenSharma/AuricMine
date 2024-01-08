@@ -379,7 +379,7 @@ export default function Grid() {
         "Amount Invested"
       ]}
       className="customFilterButtonExample1"
-      dropdownMenu={true}
+      dropdownMenu={false}
       contextMenu={true}
       multiColumnSorting={true}
       filters={true}
