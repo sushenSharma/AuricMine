@@ -162,15 +162,24 @@
     transition: color 0.3s ease, transform 0.3s ease; /* Smooth transition for hover effects */
 }
 
+#redbutton
+{
+  color: white;
+}
+#greenbutton
+{
+  color: white;
+}
+
 #redbutton:hover
 {
-    background-color: #f02525;
+    background-color: #b81111;
     border:hidden;
     color: black;
 }
 #greenbutton:hover
 {
-    background-color: rgb(58, 233, 23);
+    background-color: rgb(38, 152, 16);
     border:hidden;
     color: black;
 }
@@ -184,7 +193,18 @@
     background-color:rgb(25, 25, 25);
 }
 
+#card
+{
+  background-color: white;
+}
+
+.nav{
+  color: white;
+}
+
 #card:hover
 {
-background-color:rgb(25, 25, 25) ;
+  background-color:rgb(25, 25, 25) ;
 }
+
+

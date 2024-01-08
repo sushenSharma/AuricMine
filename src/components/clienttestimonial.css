@@ -1,0 +1,58 @@
+.product-slider{
+    position: relative;
+    overflow: hidden;
+    padding: 26px;  
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+    margin-bottom: 100px;
+}
+
+.product-container
+{
+    padding: 0 60px;
+    display: flex; 
+    overflow-x: hidden;
+    scroll-behavior: smooth;
+    margin-left: 50px;
+    margin-right: 50px;
+}
+
+.prebtn
+{
+    
+    width: 100px;
+    height:100%;  
+    position: absolute; 
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    
+}
+
+.postbtn{
+    
+    width: 100px;
+    height:100%;  
+    position: absolute; 
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    right: 10px;
+}
+
+.prebtn p
+{
+        font-size: 30px;
+        width: 50px;
+        border: 5px solid black;
+        border-radius: 100%;
+}
+
+.postbtn p
+{
+        font-size: 30px;
+        width: 50px;
+        border: 5px solid black;
+        border-radius: 100%;
+}
