@@ -5,45 +5,8 @@ import { Auth } from '@supabase/auth-ui-react';
 import { ThemeSupa } from '@supabase/auth-ui-shared';
 import { supabase, userIdKey } from "./constants";
 import LandingPage from "./components/LandingPage";
+import { customAuthTheme } from "./assets/styles/SupaBaseTheme";
 
-
-const customTheme = {
-  default: {
-    colors: {
-      brand: '#e76f51', // Orange button
-      brandAccent: '#f4a261', // Lighter orange for accents
-      brandButtonText: 'white',
-      inputBackground: '#333333', // Dark input fields background
-      inputBorder: 'transparent', // No border for input fields
-      text: 'white', // White text for inputs and buttons
-      link: '#f4a261', // Color for "Sign up" and "Forgot your password?" links
-      background: '#262626', // Dark background for the panel
-      buttonText: 'white', // Button text color
-      buttonBackground: '#e76f51', // Button background color
-      buttonBackgroundHover: '#f4a261', // Button background color on hover
-    },
-    radii: {
-      button: '20px', // Rounded buttons
-      input: '20px', // Rounded input fields
-      card: '8px', // Rounded corners for the card/panel
-    },
-    shadows: {
-      default: '0 4px 6px rgba(0,0,0,0.1)', // Subtle shadow for panels and inputs
-    },
-    space: {
-      small: '8px', // Small space for padding/margin
-      medium: '16px', // Medium space for padding/margin
-      large: '24px', // Large space for padding/margin
-    },
-    fonts: {
-      body: '"Open Sans", sans-serif', // Font for the body text
-    },
-  },
-  dark: {
-    // ... additional dark theme styles, if different from the default
-  },
-  // ... more theme variations if needed
-};
 
 const App = () => {
   const [session, setSession] = useState(null);
@@ -87,21 +50,33 @@ const App = () => {
   if (!session) {
     if (showAuth) {
       return (
-        <div style={{ width: "100vw", height: "100vh", display: "flex", justifyContent: "center", alignItems: "center" }}>
+        <div style={{ 
+        width: "100vw", 
+        height: "100vh", 
+        display: "flex", 
+        justifyContent: "center", 
+        alignItems: "center",
+        backgroundColor: "#121212" }}>
+          <div style={{ background: "#222d30", // Semi-transparent dark panel 
+                      padding: "2rem", // Space inside the panel
+                      borderRadius: "1rem", // Rounded corners of the panel
+                      boxShadow: "0 4px 8px rgba(0, 0, 0, 0.5)" // Shadow for the panel
+           }}>
           <Auth 
           supabaseClient={supabase} 
           appearance={{ 
-            theme: customTheme,
+            theme: ThemeSupa,
             variables: {
               default: {
                 colors: {
-                  brand: 'red',
-                  brandAccent: 'darkred',
+                  brand: 'green',
+                  brandAccent: 'green',
                 },
               },
             },
            }} 
           providers={["google"]} />
+          </div>
         </div>
       );
     }
