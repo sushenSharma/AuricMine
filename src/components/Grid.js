@@ -42,6 +42,9 @@ export default function Grid() {
   const hotRef = useRef(null); // Reference to the Handsontable instance
   const [data, setData] = useState(Handsontable.helper.createEmptySpreadsheetData(6, 10));
   const [handsontableData, setHandsontableData] = useState([]);
+  let buttonClickCallback;
+
+  
 
   const customHeaderRenderer = (instance, column, colIndex) => {
     const columnTitle = column.getColHeader(colIndex);
@@ -63,7 +66,7 @@ export default function Grid() {
   const calculateColumnWidths = () => {
     // Example: Adjust column widths based on screen width
     const screenWidth = window.innerWidth;
-    const numberOfColumns = 13; // Adjust this based on your number of columns
+    const numberOfColumns = 15; // Adjust this based on your number of columns
     const baseWidth = screenWidth / numberOfColumns;
 
     const newWidths = new Array(numberOfColumns).fill(baseWidth);
@@ -200,10 +203,6 @@ export default function Grid() {
         .forEach(rowArray => {
           const buyDate = parseDate(rowArray[2]);
           const sellDate = parseDate(rowArray[5]);
-          console.log("BuyDate: ",buyDate);
-          console.log("BuyDate Value: ",rowArray[2]);
-          console.log("sellDate Value: ",rowArray[5]);
-          console.log("SellData :",sellDate);
           let record = {
             stock_name: rowArray[0],
             buy_price: parseFloat(rowArray[1]),
@@ -269,12 +268,12 @@ export default function Grid() {
         });
       }
     } else {
-      console.log('Handsontable instance is not yet available.');
+      console.log('Instance is not yet available.');
     }
   };
   const handleGetInsights = async () => {
     setLoading(true);
-    const dataString = JSON.stringify(rowData);
+    const dataString = JSON.stringify(handsontableData);
 
     const requestBody = {
       prompt: `With json data ${JSON.stringify(dataString)}, ${promptText}`,
@@ -323,22 +322,33 @@ export default function Grid() {
       localStorage.setItem('handsontableData', JSON.stringify(data));
     }
   };
+  useEffect(() => {
+    const hot = hotRef.current.hotInstance;
 
-  const logData = () => {
-    if (hotRef.current) {
-      const hotData = hotRef.current.hotInstance.getData();
-      const jsonData = JSON.stringify(hotData);
-      console.log(jsonData);
-    } else {
-      console.log('Handsontable instance is not yet available.');
-    }
-  };
+    const exportPlugin = hot.getPlugin('exportFile');
+    buttonClickCallback = () => {
+      exportPlugin.downloadFile('csv', {
+        bom: false,
+        columnDelimiter: ',',
+        columnHeaders: true,
+        exportHiddenColumns: true,
+        exportHiddenRows: true,
+        fileExtension: 'csv',
+        filename: 'TradingLedger-CSV-file_[YYYY]-[MM]-[DD]',
+        mimeType: 'text/csv',
+        rowDelimiter: '\r\n',
+        rowHeaders: true
+      });
+    };
+  });
   return (
     <>
     <div style={{padding: '10px 10px',
   backgroundColor: 'ghostwhite'}}>
-        <button className="btn btn-outline-primary btn-sm m-1" onClick={handleAddRow}>Add Row</button>
-        <button className="btn btn-outline-danger btn-sm m-1" onClick={handleRemoveRow}>Delete Row</button>
+ 
+        <button className="btn btn-outline-primary btn-sm m-1" onClick={(...args) => buttonClickCallback(...args)}>Download CSV</button>
+        {/* <button className="btn btn-outline-primary btn-sm m-1" onClick={handleAddRow}>Add Row</button>
+        <button className="btn btn-outline-danger btn-sm m-1" onClick={handleRemoveRow}>Delete Row</button> */}
         <button className="btn btn-outline-success btn-sm m-1" onClick={handleSaveChanges}>Save Changes</button>
       </div>
     <div className="App ">
@@ -368,7 +378,7 @@ export default function Grid() {
         "id",
         "Amount Invested"
       ]}
-      
+      className="customFilterButtonExample1"
       dropdownMenu={true}
       contextMenu={true}
       multiColumnSorting={true}
@@ -402,22 +412,33 @@ export default function Grid() {
       }}
      
     >
-      
     </HotTable>
       </div>
-     
-      <div className="buttons">
-        <button className="btn btn-outline-primary m-1" onClick={handleGetInsights}>Get Insights with AI</button>
-      </div>
-      <button onClick={logData}>Log Data to Console</button>
-      {loading ? (
-        <p>Loading...</p>
-      ) : (
-        <ul>
-          {response && response.map((item, i) => <li key={i}>{item}</li>)}
-        </ul>
-      )}
+      
+      <div className="buttons" style={{ textAlign: 'center', margin: '20px' }}>
+    <button 
+      className="btn btn-outline-primary" 
+      style={{ margin: '10px', padding: '10px 20px', fontSize: '16px',backgroundColor:"#1a0201" }} 
+      onClick={handleGetInsights}
+    >
+      Get Insights with AI
+    </button>
+  </div>
+  <div style={{ textAlign: 'center' }}>
+  </div>
+  {loading ? (
+    <p style={{ textAlign: 'center', fontSize: '18px' }}>Loading...</p>
+  ) : (
+    <ul style={{ listStyleType: 'none', paddingLeft: '0' }}>
+      {response && response.map((item, index) => (
+        <li key={index} style={{ background: '#f9f9f9', margin: '5px', padding: '10px', borderRadius: '5px' }}>
+          {item}
+        </li>
+      ))}
+    </ul>
+  )}
     </div>
     </>
   );
 }
+
