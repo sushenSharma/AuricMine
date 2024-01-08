@@ -1,44 +1,39 @@
-import React from 'react'
-import Mycard from './Mycard'
-import './clienttestimonial.css'
+import React, { useRef } from 'react';
+import Testimonials from './Testimonial'; // Import the Testimonials component
+import './clienttestimonial.css';
+import Mycard from './Mycard';
+
 export default function Clienttestimonials() {
-    let box=document.querySelector('.product-container')
-    const btnpressprev =()=>{
-        let width = box.clientWidth;
-        box.scrollLeft = box.scrollLeft-width;
-    }
-    
-    const btnpressnext =()=>{
-        let width=box.clientWidth;
-        box.scrollLeft=box.scrollLeft+width;
-    }
+    const boxRef = useRef(null);
 
-  return (
-    <div className='product-slider'>
+    const btnpressprev = () => {
+        if (boxRef.current) {
+            const width = boxRef.current.clientWidth;
+            boxRef.current.scrollLeft =  boxRef.current.scrollLeft-width;
+        }
+   
+    };
 
-        
-        <button className='prebtn' onClick={btnpressprev}><p>&lt;</p></button>
-        <button className='postbtn' onClick={btnpressnext}><p>&gt;</p></button>
-        
+    const btnpressnext = () => {
+        if (boxRef.current) {
+            const width = boxRef.current.clientWidth;
+            boxRef.current.scrollLeft =   boxRef.current.scrollLeft+width;
+        }
+     
+    };
 
-        <div className='product-container'>
-
-            <Mycard cardno='1'/>
-
-            <Mycard cardno='2'/>
-
-            <Mycard cardno='3'/>
-            <Mycard cardno='4'/>
-            <Mycard cardno='5'/>
-            <Mycard cardno='6'/>
-            <Mycard cardno='7'/>
-            <Mycard cardno='8'/>
-            <Mycard cardno='9'/>
-            <Mycard cardno='10'/>
-            
+    return (
+        <div className='product-slider'>
+            <button className='prebtn' onClick={btnpressprev}><p>&lt;</p></button>
+            <button className='postbtn' onClick={btnpressnext}><p>&gt;</p></button>
+            <div className='product-container' ref={boxRef}>
+                <Mycard cardno="1"/>
+                <Mycard cardno="2"/>
+                <Mycard cardno="3"/>
+                <Mycard cardno="4"/>
+                <Mycard cardno="5"/>
+                <Mycard cardno="6"/>
+            </div>
         </div>
-
-    
-    </div>
-  )
+    );
 }
