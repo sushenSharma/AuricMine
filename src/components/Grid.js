@@ -281,6 +281,13 @@ export default function Grid() {
     };
 
     try {
+      Swal.fire({
+        title: 'Success!',
+        text: 'Insights getting Generated!  Please Scroll Down',
+        icon: 'success',
+        confirmButtonText: 'OK'
+      });
+
       const response = await fetch(apiUrl, {
         method: "POST",
         headers: {
@@ -291,6 +298,8 @@ export default function Grid() {
       });
 
       const data = await response.json();
+      
+
       const text = data.choices[0].text
         .replace("\n", "")
         .replace(".", ".")
@@ -343,14 +352,23 @@ export default function Grid() {
   });
   return (
     <>
-    <div style={{padding: '10px 10px',
-  backgroundColor: 'ghostwhite'}}>
- 
-        <button className="btn btn-outline-primary btn-sm m-1" onClick={(...args) => buttonClickCallback(...args)}>Download CSV</button>
-        {/* <button className="btn btn-outline-primary btn-sm m-1" onClick={handleAddRow}>Add Row</button>
-        <button className="btn btn-outline-danger btn-sm m-1" onClick={handleRemoveRow}>Delete Row</button> */}
-        <button className="btn btn-outline-success btn-sm m-1" onClick={handleSaveChanges}>Save Changes</button>
-      </div>
+<div style={{ display: 'flex', alignItems: 'center', padding: '10px 10px', backgroundColor: 'ghostwhite', justifyContent: 'space-between' }}>
+    <div>
+        <button className="btn btn-outline-primary btn-sm m-1" style={{ boxShadow: '3px 3px 5px rgba(0, 0, 0, 0.2)', border: '1px solid #007bff' }} onClick={(...args) => buttonClickCallback(...args)}>Download CSV</button>
+        {/* <button className="btn btn-outline-primary btn-sm m-1" style={{ boxShadow: '3px 3px 5px rgba(0, 0, 0, 0.2)', border: '1px solid #007bff' }} onClick={handleAddRow}>Add Row</button>
+        <button className="btn btn-outline-danger btn-sm m-1" style={{ boxShadow: '3px 3px 5px rgba(0, 0, 0, 0.2)', border: '1px solid #dc3545' }} onClick={handleRemoveRow}>Delete Row</button> */}
+        <button className="btn btn-outline-success btn-sm m-1" style={{ boxShadow: '3px 3px 5px rgba(0, 0, 0, 0.2)', border: '1px solid #28a745' }} onClick={handleSaveChanges}>Save Changes</button>
+    </div>
+    <button 
+        className="btn btn-outline-success btn-sm m-1" 
+        style={{ margin: '10px', padding: '10px 20px', fontSize: '16px', backgroundColor: 'lightred', color: 'black', boxShadow: '3px 3px 5px rgba(0, 0, 0, 0.2)', border: '1px solid #28a745' }} 
+        onClick={handleGetInsights}>
+        Get Insights with AI
+    </button>
+</div>
+
+
+
     <div className="App ">
       
       <div className="ag-theme-alpine grid-theme-alpine" style={{height: '525px'}}>
@@ -374,7 +392,7 @@ export default function Grid() {
         "GTT Enabled",
         "Profit / Loss",
         "Return %",
-        "Annualized ROI",
+        "Annual ROI",
         "id",
         "Amount Invested"
       ]}
@@ -416,27 +434,22 @@ export default function Grid() {
       </div>
       
       <div className="buttons" style={{ textAlign: 'center', margin: '20px' }}>
-    <button 
-      className="btn btn-outline-primary" 
-      style={{ margin: '10px', padding: '10px 20px', fontSize: '16px',backgroundColor:"#1a0201" }} 
-      onClick={handleGetInsights}
-    >
-      Get Insights with AI
-    </button>
+
   </div>
   <div style={{ textAlign: 'center' }}>
   </div>
   {loading ? (
-    <p style={{ textAlign: 'center', fontSize: '18px' }}>Loading...</p>
-  ) : (
-    <ul style={{ listStyleType: 'none', paddingLeft: '0' }}>
+    <p style={{ textAlign: 'center', fontSize: '20px', color: '#333', margin: '20px 0' }}>Loading...</p>
+) : (
+    <ul style={{ listStyleType: 'none', paddingLeft: '0', margin: '0', padding: '0' }}>
       {response && response.map((item, index) => (
-        <li key={index} style={{ background: '#f9f9f9', margin: '5px', padding: '10px', borderRadius: '5px' }}>
+        <li key={index} style={{ background: '#f9f9f9', margin: '10px 0', padding: '15px', borderRadius: '8px', boxShadow: '0 2px 4px rgba(0, 0, 0, 0.1)', fontSize: '16px', lineHeight: '1.6' }}>
           {item}
         </li>
       ))}
     </ul>
-  )}
+)}
+
     </div>
     </>
   );
