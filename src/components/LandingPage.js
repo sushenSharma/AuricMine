@@ -46,7 +46,7 @@ const LandingPage = ({ onLogin }) => {
                 </h1>
                 <div className="w-6 h-1 bg-red-600 m-2"></div>
                 <p className="text-white text-lg lg:text-xl font-sans leading-normal lg:leading-relaxed">
-                    Your ultimate destination for  and efficient trading! Experts or beginners, our platform enhances every trading journey for all.
+                Revolutionize your trades with our AI-driven journal app. Gain insights and track performance effortlessly on our cloud-based platform.
                     <strong>Welcome to a Smarter Way to Trade</strong>
                 </p>
                 <button 
@@ -76,7 +76,7 @@ const LandingPage = ({ onLogin }) => {
           <i className="fa-solid fa-chart-line "></i>
           <h3 className="font-mullish font-bold text-grayText  text-xl pt-4  group-hover:text-green-600">Smart Analytics</h3>
           <p className="font-mullish text-grayText text-xl   font-bold leading-normal py-3 group-hover:text-red-600">
-            Dive into your trading performance with charts and metrics powered by AI.
+          Uncover hidden patterns in your data with AI-driven insights, enhancing your trading strategy.
           </p>
         
         </div>
@@ -84,9 +84,9 @@ const LandingPage = ({ onLogin }) => {
         {/* CARD 2 */}
         <div className="border-4 border-black rounded-xl flex-col  py-6 pl-6 pr-20  w-[1200px] h-[220px] cursor-pointer group hover:scale-105 transition-all duration-200  group-hover:bg-black" id='card'>
           <i className="fa-regular fa-clock "></i>
-          <h3 className="font-mullish font-bold text-grayText text-xl pt-4 group-hover:text-red-600 ">Real-Time Data</h3>
+          <h3 className="font-mullish font-bold text-grayText text-xl pt-4 group-hover:text-red-600 ">Enhanced Performance Analytics</h3>
           <p className="font-mullish text-grayText text-xl font-bold leading-normal py-3 group-hover:text-green-600">
-            Get up-to-the-minute market data to stay ahead of the curve.
+          Unlock detailed insights into your trades with key performance metrics.
           </p>
         </div>
       </div>
