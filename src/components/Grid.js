@@ -109,24 +109,28 @@ export default function Grid() {
     
       let totalPercentageRate = 0.001 + 0.0000325 + 0.00000001 + 0.18 * (0.0000325 + 0.00000001) + 0.00015;
       // Transform data from array of objects to array of arrays
-      const transformedData = data.map((item,index) => [
-        item.stock_name,
-        item.buy_price,
-        item.buy_date ? new Date(item.buy_date).toLocaleDateString() : '',
-        item.quantity,
-        item.sell_price,
-        item.sell_date ? new Date(item.sell_date).toLocaleDateString() : '',
-        `=((B${index + 1} * D${index + 1} + E${index + 1} * D${index + 1}) * ${totalPercentageRate}) + 15.93`,
-        `=(F${index + 1}-C${index + 1})`,
-        item.reason_to_buy,
-        item.gtt_enabled, // Ensure this is formatted correctly for a checkbox
-        `=((E${index + 1} * D${index + 1})-(B${index + 1} * D${index + 1}))`,
-        `=((((E${index + 1} * D${index + 1})-(B${index + 1} * D${index + 1})) / (B${index + 1} * D${index + 1})) * 100) & "%"`,
-        `=(1+(((E${index + 1} * D${index + 1})-(B${index + 1} * D${index + 1}))/(B${index + 1}* D${index + 1})))^(365/(F${index + 1}-C${index + 1}))-1`,
-        item.id,
-        `=(B${index + 1}* D${index + 1})`,
-      ]);
-  
+      const transformedData = data.map((item, index) => {
+        // Check if sell_date is present and not empty
+        const sellDatePresent = item.sell_date !== null && item.sell_date.trim() !== '';
+        return [
+          item.stock_name,
+          item.buy_price,
+          item.buy_date ? new Date(item.buy_date).toLocaleDateString() : '',
+          item.quantity,
+          item.sell_price,
+          item.sell_date ? new Date(item.sell_date).toLocaleDateString() : '',
+          // Only include formula if sell date is present, otherwise set to empty string or appropriate default
+          sellDatePresent ? `=((B${index + 1} * D${index + 1} + E${index + 1} * D${index + 1}) * ${totalPercentageRate}) + 15.93` : '',
+          sellDatePresent ? `=(F${index + 1}-C${index + 1})` : '',
+          item.reason_to_buy,
+          item.gtt_enabled, // Ensure this is formatted correctly for a checkbox or boolean value
+          sellDatePresent ? `=((E${index + 1} * D${index + 1})-(B${index + 1} * D${index + 1}))` : '',
+          sellDatePresent ? `=((((E${index + 1} * D${index + 1})-(B${index + 1} * D${index + 1})) / (B${index + 1} * D${index + 1})) * 100) & "%" ` : '',
+          sellDatePresent ? `=(1+(((E${index + 1} * D${index + 1})-(B${index + 1} * D${index + 1}))/(B${index + 1}* D${index + 1})))^(365/(F${index + 1}-C${index + 1}))-1` : '',
+          item.id,
+          `=(B${index + 1}* D${index + 1})`,
+        ];
+      });
       setHandsontableData(transformedData); 
     } catch (error) {
       console.error(error);
@@ -193,23 +197,31 @@ export default function Grid() {
   const handleSaveChanges = async () => {
     if (hotRef.current) {
       const hotData = hotRef.current.hotInstance.getData();
-      console.log(hotData);
-      console.log(userUUID);
       
       const inserts = [];
       const updates = [];
-      
+      let emptyBuyDateFound = false;
+      let sellDateBeforeBuyDateFound = false;
       hotData.filter(row => row.some(cell => cell !== "" && cell !== null))
         .forEach(rowArray => {
+          if (!rowArray[2] || rowArray[2] === "") {
+            emptyBuyDateFound = true;
+            return; // Skip processing this row
+          }
           const buyDate = parseDate(rowArray[2]);
-          const sellDate = parseDate(rowArray[5]);
+          const sellDateRaw = rowArray[5];
+          const sellDate = sellDateRaw !== "" && sellDateRaw !== null ? parseDate(sellDateRaw) : null;
+          if (sellDate && buyDate && sellDate < buyDate) {
+            sellDateBeforeBuyDateFound = true;
+            return; // Skip further processing of this row
+        }
           let record = {
             stock_name: rowArray[0],
             buy_price: parseFloat(rowArray[1]),
             buy_date: isNaN(buyDate) ? null : buyDate.toISOString().split('T')[0],
             quantity : parseFloat(rowArray[3]),
             sell_price: parseFloat(rowArray[4]),
-            sell_date: isNaN(sellDate) ? null : sellDate.toISOString().split('T')[0],
+            sell_date: sellDate ? sellDate.toISOString().split('T')[0] : null,
             brokerage: parseFloat(rowArray[6]),
             days_hold: parseInt(rowArray[7], 10),
             reason_to_buy: rowArray[8],
@@ -220,7 +232,6 @@ export default function Grid() {
             user_id: userUUID,
             Amount: parseFloat(rowArray[14])
           };
-          console.log(record)
           if (rowArray[13] !== null && rowArray[13] !== undefined && rowArray[13] !== "") {
             record.id = parseInt(rowArray[13], 10);
             updates.push(record);
@@ -228,6 +239,24 @@ export default function Grid() {
             inserts.push(record);
           }
         });
+        if (emptyBuyDateFound) {
+          Swal.fire({
+            title: 'Error!',
+            text: 'Buy date cannot be empty.',
+            icon: 'error',
+            confirmButtonText: 'OK'
+          });
+          return; // Stop execution if any buy date is empty
+        }
+        if (sellDateBeforeBuyDateFound) {
+          Swal.fire({
+              title: 'Error!',
+              text: 'Sell date cannot be before the buy date.',
+              icon: 'error',
+              confirmButtonText: 'OK'
+          });
+          return; // Stop execution if sell date is before buy date
+      }
   
       try {
         // Handle updates
