@@ -4,6 +4,7 @@ import React, { useState, useRef, useEffect, useMemo,useCallback } from "react";
 // Supabase for data handling
 import { createClient } from "@supabase/supabase-js";
 
+
 // Constants and styles
 import "../assets/styles/Grid.css";
 import "../assets/styles/styles.css";
@@ -18,6 +19,13 @@ import { AutocompleteCellType, CheckboxCellType, DateCellType, NumericCellType }
 import { CheckboxEditor, NumericEditor } from "handsontable/editors";
 import { NUMERIC_VALIDATOR } from "handsontable/validators";
 import { EDITOR_TYPE, VALIDATOR_TYPE } from "handsontable/editors/dateEditor";
+
+//Material Table Import
+import {
+  MaterialReactTable,
+  useMaterialReactTable,
+} from 'material-react-table';
+
 
 // External Libraries
 import Swal from 'sweetalert2';
@@ -293,8 +301,6 @@ const handleAfterChange = (changes, source) => {
       <div style={{ display: 'flex', alignItems: 'center', padding: '10px 10px', backgroundColor: 'ghostwhite', justifyContent: 'space-between' }}>
     <div>
         <button className="btn btn-outline-primary btn-sm m-1" style={{ boxShadow: '3px 3px 5px rgba(0, 0, 0, 0.2)', border: '1px solid #007bff' }} onClick={(...args) => buttonClickCallback(...args)}>Download CSV</button>
-        {/* <button className="btn btn-outline-primary btn-sm m-1" style={{ boxShadow: '3px 3px 5px rgba(0, 0, 0, 0.2)', border: '1px solid #007bff' }} onClick={handleAddRow}>Add Row</button>
-        <button className="btn btn-outline-danger btn-sm m-1" style={{ boxShadow: '3px 3px 5px rgba(0, 0, 0, 0.2)', border: '1px solid #dc3545' }} onClick={handleRemoveRow}>Delete Row</button> */}
         <button className="btn btn-outline-success btn-sm m-1" style={{ boxShadow: '3px 3px 5px rgba(0, 0, 0, 0.2)', border: '1px solid #28a745' }} onClick={handleSaveChanges}>Save Changes</button>
     </div>
     <button 
