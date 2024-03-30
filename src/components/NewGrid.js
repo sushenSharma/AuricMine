@@ -310,7 +310,7 @@ export default function NewGrid() {
   ], []);
   const table = useMaterialReactTable({
     columns,
-    data, //data must be memoized or stable (useState, useMemo, defined outside of this component, etc.)
+    data:materialdata, //data must be memoized or stable (useState, useMemo, defined outside of this component, etc.)
      enableColumnFilterModes: true,
     enableColumnOrdering: true,
     enableGrouping: true,
@@ -338,9 +338,7 @@ export default function NewGrid() {
 
       <div className="grid-container">
     <MaterialReactTable table={table} />;
-
-
-      </div>
+     </div>
 
 <div className="response-container">
 <div className="ag-theme-alpine" style={styles.gridThemeAlpine}></div>
