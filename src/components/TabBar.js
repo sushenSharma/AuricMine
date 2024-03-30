@@ -5,6 +5,7 @@ import Posts from "./Posts";
 import "../assets/styles/TabBar.css";
 import { supabase, userIdKey } from "../constants";
 import ComingSoon from "./Coming-soon";
+import NewGrid from "./NewGrid";
 
 export default function TabBar(session) {
   console.log(session.sessionObj)
@@ -47,7 +48,7 @@ export default function TabBar(session) {
       </nav>
 
       <div>
-        {select === "Ledger" && <Grid></Grid>}
+        {select === "Ledger" && <NewGrid></NewGrid>}
         {select === "Risk Management" && <h2>Risk Management</h2>}
         {select === "Watchlist" && <h2>Watchlist</h2>}
         {select === "Blogposts" && <Posts />}
