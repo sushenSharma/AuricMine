@@ -4,6 +4,7 @@ import React, { useState, useRef, useEffect, useMemo,useCallback } from "react";
 // Supabase for data handling
 import { createClient } from "@supabase/supabase-js";
 
+
 // Constants and styles
 import "../assets/styles/Grid.css";
 import "../assets/styles/styles.css";
@@ -18,6 +19,13 @@ import { AutocompleteCellType, CheckboxCellType, DateCellType, NumericCellType }
 import { CheckboxEditor, NumericEditor } from "handsontable/editors";
 import { NUMERIC_VALIDATOR } from "handsontable/validators";
 import { EDITOR_TYPE, VALIDATOR_TYPE } from "handsontable/editors/dateEditor";
+
+//Material Table Import
+import {
+  MaterialReactTable,
+  useMaterialReactTable,
+} from 'material-react-table';
+
 
 // External Libraries
 import Swal from 'sweetalert2';
@@ -50,6 +58,10 @@ export default function NewGrid() {
     licenseKey: 'internal-use-in-handsontable',
   });
 
+
+  //Materialtable Declarations
+    const [materialdata, setMaterialData] = useState();
+
   // Utilize useMemo for static data like defaultColDef to avoid recalculations
   const defaultColDef = useMemo(() => ({
     flex: 1,
@@ -79,12 +91,7 @@ export default function NewGrid() {
         return null;
     }
 }
-const handleAfterChange = (changes, source) => {
-    if (source !== 'loadData') {
-      // Save data to local storage after each change
-      localStorage.setItem('handsontableData', JSON.stringify(data));
-    }
-  };
+
 
   // Fetch and process data from Supabase
   const getData = async () => {
@@ -100,29 +107,27 @@ const handleAfterChange = (changes, source) => {
 
       // Process and transform data here...
       let totalPercentageRate = 0.001 + 0.0000325 + 0.00000001 + 0.18 * (0.0000325 + 0.00000001) + 0.00015;
-      const transformedData = data.map((item, index) => {
-        // Check if sell_date is present and not empty
-        const sellDatePresent = item.sell_date !== null && item.sell_date.trim() !== '';
-        return [
-          item.stock_name,
-          item.buy_price,
-          item.buy_date ? new Date(item.buy_date).toLocaleDateString() : '',
-          item.quantity,
-          item.sell_price,
-          item.sell_date ? new Date(item.sell_date).toLocaleDateString() : '',
-          // Only include formula if sell date is present, otherwise set to empty string or appropriate default
-          sellDatePresent ? `=((B${index + 1} * D${index + 1} + E${index + 1} * D${index + 1}) * ${totalPercentageRate}) + 15.93` : '',
-          sellDatePresent ? `=(F${index + 1}-C${index + 1})` : '',
-          item.reason_to_buy,
-          item.gtt_enabled, // Ensure this is formatted correctly for a checkbox or boolean value
-          sellDatePresent ? `=((E${index + 1} * D${index + 1})-(B${index + 1} * D${index + 1}))` : '',
-          sellDatePresent ? `=((((E${index + 1} * D${index + 1})-(B${index + 1} * D${index + 1})) / (B${index + 1} * D${index + 1})) * 100) & "%" ` : '',
-          sellDatePresent ? `=(1+(((E${index + 1} * D${index + 1})-(B${index + 1} * D${index + 1}))/(B${index + 1}* D${index + 1})))^(365/(F${index + 1}-C${index + 1}))-1` : '',
-          item.id,
-          `=(B${index + 1}* D${index + 1})`,
-        ];
-      });
-      setHandsontableData(transformedData);
+   
+
+      const transformedDataForMaterialTable = data.map((item) => ({
+        stockSymbol: item.stock_name,
+        buyPrice: item.buy_price,
+        buyDate: item.buy_date ? new Date(item.buy_date).toLocaleDateString() : '',
+        quantity: item.quantity,
+        sellPrice: item.sell_price,
+        sellDate: item.sell_date ? new Date(item.sell_date).toLocaleDateString() : '',
+        brokerage: item.brokerage,
+        daysHold: item.days_hold,
+        reasonToBuy: item.reason_to_buy,
+        gttEnabled: item.gtt_enabled ? 'Yes' : 'No',
+        profitLoss: item.profit_loss,
+        returnPercent: item.return_percent,
+        annualROI: item.annual_roi,
+        id: item.id,
+        amountInvested: item.amount_invested,
+      }));
+   
+      setMaterialData(transformedDataForMaterialTable)
     } catch (error) {
       console.error(error);
     }
@@ -286,6 +291,33 @@ const handleAfterChange = (changes, source) => {
     }
   };
 
+  const columns = useMemo(() => [
+    { accessorKey: 'stockSymbol', header: 'Stock Symbol' },
+    { accessorKey: 'buyPrice', header: 'Buy Price' },
+    { accessorKey: 'buyDate', header: 'Buy Date' },
+    { accessorKey: 'quantity', header: 'Quantity' },
+    { accessorKey: 'sellPrice', header: 'Sell Price' },
+    { accessorKey: 'sellDate', header: 'Sell Date' },
+    { accessorKey: 'brokerage', header: 'Brokerage' },
+    { accessorKey: 'daysHold', header: 'Days Hold' },
+    { accessorKey: 'reasonToBuy', header: 'Reason to Buy' },
+    { accessorKey: 'gttEnabled', header: 'GTT Enabled', Cell: ({ value }) => value ? 'Yes' : 'No' }, // Assuming boolean value
+    { accessorKey: 'profitLoss', header: 'Profit / Loss' },
+    { accessorKey: 'returnPercent', header: 'Return %' },
+    { accessorKey: 'annualROI', header: 'Annual ROI' },
+    { accessorKey: 'id', header: 'ID' },
+    { accessorKey: 'amountInvested', header: 'Amount Invested' },
+  ], []);
+  const table = useMaterialReactTable({
+    columns,
+    data, //data must be memoized or stable (useState, useMemo, defined outside of this component, etc.)
+     enableColumnFilterModes: true,
+    enableColumnOrdering: true,
+    enableGrouping: true,
+    enableColumnPinning: true,
+    paginationDisplayMode: 'pages',
+    positionToolbarAlertBanner: 'bottom',
+  });
   // Render the component
   return (
     <>
@@ -293,8 +325,6 @@ const handleAfterChange = (changes, source) => {
       <div style={{ display: 'flex', alignItems: 'center', padding: '10px 10px', backgroundColor: 'ghostwhite', justifyContent: 'space-between' }}>
     <div>
         <button className="btn btn-outline-primary btn-sm m-1" style={{ boxShadow: '3px 3px 5px rgba(0, 0, 0, 0.2)', border: '1px solid #007bff' }} onClick={(...args) => buttonClickCallback(...args)}>Download CSV</button>
-        {/* <button className="btn btn-outline-primary btn-sm m-1" style={{ boxShadow: '3px 3px 5px rgba(0, 0, 0, 0.2)', border: '1px solid #007bff' }} onClick={handleAddRow}>Add Row</button>
-        <button className="btn btn-outline-danger btn-sm m-1" style={{ boxShadow: '3px 3px 5px rgba(0, 0, 0, 0.2)', border: '1px solid #dc3545' }} onClick={handleRemoveRow}>Delete Row</button> */}
         <button className="btn btn-outline-success btn-sm m-1" style={{ boxShadow: '3px 3px 5px rgba(0, 0, 0, 0.2)', border: '1px solid #28a745' }} onClick={handleSaveChanges}>Save Changes</button>
     </div>
     <button 
@@ -307,64 +337,9 @@ const handleAfterChange = (changes, source) => {
       </div>
 
       <div className="grid-container">
-      <HotTable
-      ref={hotRef}
-      id="hot"
-      data={handsontableData}
-      height={450}
-      colWidths={columnWidths}
-      colHeaders={[
-        "Stock Symbol",
-        "Buy Price",
-        "Buy Date",
-        "Quantity",
-        "Sell Price",
-        "Sell Date",
-        "Brokerage",
-        "Days Hold",
-        "Reason to Buy",
-        "GTT Enabled",
-        "Profit / Loss",
-        "Return %",
-        "Annual ROI",
-        "id",
-        "Amount Invested"
-      ]}
-      className="customFilterButtonExample1"
-      dropdownMenu={false}
-      contextMenu={true}
-      multiColumnSorting={true}
-      filters={true}
-      rowHeaders={true}
-      collapsibleColumns={true}
-      manualRowMove={true}
-      manualColumnMove={false}
-      afterChange={handleAfterChange}
-      licenseKey="non-commercial-and-evaluation"
-      columns={[
-        {type:AutocompleteCellType,source:stock_name,strict:false},
-        {type:NumericCellType,editor:NumericEditor,validator:NUMERIC_VALIDATOR},
-        {type:DateCellType, editor: EDITOR_TYPE,validator:VALIDATOR_TYPE},
-        {type:NumericCellType,editor:NumericEditor,validator:NUMERIC_VALIDATOR},
-        {type:NumericCellType,editor:NumericEditor,validator:NUMERIC_VALIDATOR},
-        {type:DateCellType, editor: EDITOR_TYPE,validator:VALIDATOR_TYPE},
-        {readOnly:true},
-        {readOnly:true},
-        {},
-        {type:CheckboxCellType,editor:CheckboxEditor},
-        {readOnly:true},
-        {readOnly:true},
-        {readOnly:true},
-        {readOnly:true},
-        {readOnly:true}
-      ]}
-      formulas={{
-        engine: hyperformulaInstance,
-        sheetName: 'Sheet1',
-      }}
-     
-    >
-    </HotTable>
+    <MaterialReactTable table={table} />;
+
+
       </div>
 
 <div className="response-container">
