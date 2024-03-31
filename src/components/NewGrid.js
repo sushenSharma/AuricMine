@@ -1,5 +1,5 @@
 // React and Hooks
-import React, { useState, useRef, useEffect, useMemo,useCallback } from "react";
+import React, { useState, useRef, useEffect, useMemo} from "react";
 
 // Supabase for data handling
 import { createClient } from "@supabase/supabase-js";
@@ -10,29 +10,16 @@ import "../assets/styles/Grid.css";
 import "../assets/styles/styles.css";
 import "pikaday/css/pikaday.css";
 import { columns, userIdKey } from "../constants.js";
-import 'handsontable/dist/handsontable.full.min.css';
-
-// Handsontable components and utilities
-import { HotTable } from "@handsontable/react";
-import Handsontable from "handsontable";
-import { AutocompleteCellType, CheckboxCellType, DateCellType, NumericCellType } from "handsontable/cellTypes";
-import { CheckboxEditor, NumericEditor } from "handsontable/editors";
-import { NUMERIC_VALIDATOR } from "handsontable/validators";
-import { EDITOR_TYPE, VALIDATOR_TYPE } from "handsontable/editors/dateEditor";
-
 //Material Table Import
 import {
   MaterialReactTable,
   useMaterialReactTable,
 } from 'material-react-table';
 
-
 // External Libraries
 import Swal from 'sweetalert2';
-import { HyperFormula } from 'hyperformula';
 
 // Data and Config
-import { stock_name } from "../StockList";
 import styles from '../assets/styles/Response.css';
 
 const supabase = createClient(
@@ -46,41 +33,13 @@ const tableName = process.env.REACT_APP_SUPABASE_TABLE_NAME;
 const userUUID = localStorage.getItem(userIdKey);
 
 export default function NewGrid() {
-  const gridRef = useRef(null);
   const hotRef = useRef(null); // Reference to Handsontable instance
-  const [handsontableData, setHandsontableData] = useState([]);
-  const [columnWidths, setColumnWidths] = useState([]);
   const [response, setResponse] = useState("");
   const [loading, setLoading] = useState(false);
-  const [data, setData] = useState(Handsontable.helper.createEmptySpreadsheetData(6, 10));
   let buttonClickCallback;
-  const hyperformulaInstance = HyperFormula.buildEmpty({
-    licenseKey: 'internal-use-in-handsontable',
-  });
-
 
   //Materialtable Declarations
-    const [materialdata, setMaterialData] = useState();
-
-  // Utilize useMemo for static data like defaultColDef to avoid recalculations
-  const defaultColDef = useMemo(() => ({
-    flex: 1,
-    minWidth: 115,
-    sortable: true,
-    resizable: true,
-    wrapText: true,
-    autoHeight: true,
-    wrapHeaderText: true,
-    autoHeaderHeight: true
-  }), []);
-
-  // Adjust column widths based on screen width
-  const calculateColumnWidths = useCallback(() => {
-    const screenWidth = window.innerWidth;
-    const numberOfColumns = 15;
-    const baseWidth = screenWidth / numberOfColumns;
-    setColumnWidths(new Array(numberOfColumns).fill(baseWidth));
-  }, []);
+    const [materialdata, setMaterialData] = useState([]);
 
   //ParseDate Function
   function parseDate(dateString) {
@@ -91,7 +50,6 @@ export default function NewGrid() {
         return null;
     }
 }
-
 
   // Fetch and process data from Supabase
   const getData = async () => {
@@ -104,11 +62,8 @@ export default function NewGrid() {
         .order("buy_date", { ascending: true });
 
       if (error) throw error;
-
       // Process and transform data here...
       let totalPercentageRate = 0.001 + 0.0000325 + 0.00000001 + 0.18 * (0.0000325 + 0.00000001) + 0.00015;
-   
-
       const transformedDataForMaterialTable = data.map((item) => ({
         stockSymbol: item.stock_name,
         buyPrice: item.buy_price,
@@ -126,8 +81,7 @@ export default function NewGrid() {
         id: item.id,
         amountInvested: item.amount_invested,
       }));
-   
-      setMaterialData(transformedDataForMaterialTable)
+      setMaterialData(transformedDataForMaterialTable);
     } catch (error) {
       console.error(error);
     }
@@ -135,13 +89,12 @@ export default function NewGrid() {
 
   // Initialize component and event listeners
   useEffect(() => {
-    calculateColumnWidths();
-    window.addEventListener('resize', calculateColumnWidths);
+    // Fetch data when the component mounts
     getData();
-
-    // Cleanup event listener on component unmount
-    return () => window.removeEventListener('resize', calculateColumnWidths);
-  }, [calculateColumnWidths]);
+    return () => {
+    };
+  }, []);
+  
 
   // Handlers for UI actions (simplified for brevity)
   const handleSaveChanges = async () => {
@@ -252,7 +205,7 @@ export default function NewGrid() {
   };
   const handleGetInsights = async () => {
     setLoading(true);
-    const dataString = JSON.stringify(handsontableData);
+    const dataString = JSON.stringify(materialdata);
 
     const requestBody = {
       prompt: `With json data ${JSON.stringify(dataString)}, ${promptText}`,
@@ -314,7 +267,7 @@ export default function NewGrid() {
      enableColumnFilterModes: true,
     enableColumnOrdering: true,
     enableGrouping: true,
-    enableColumnPinning: true,
+    enableColumnPinning: false,
     paginationDisplayMode: 'pages',
     positionToolbarAlertBanner: 'bottom',
   });
