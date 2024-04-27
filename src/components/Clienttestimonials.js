@@ -2,14 +2,6 @@ import React, { useRef } from 'react';
 import Testimonials from './Testimonial'; // Import the Testimonials component
 import './clienttestimonial.css';
 import Mycard from './Mycard';
-// import Person1 from '../assets/resources/person1.jpeg';
-// import Person2 from '../assets/resources/person2.jpeg';
-// import Person3 from '../assets/resources/person3.jpeg';
-// import Person4 from '../assets/resources/person4.jpeg';
-// import Person5 from '../assets/resources/person5.jpeg';
-// import Person6 from '../assets/resources/person6.jpeg';
-// import Person7 from '../assets/resources/person7.jpeg';
-
 export default function Clienttestimonials() {
     const boxRef = useRef(null);
 

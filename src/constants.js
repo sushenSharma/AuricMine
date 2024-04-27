@@ -22,12 +22,8 @@ export const columns = [
   {
     headerName: "Buy Date",
     field: "buy_date",
-    //Umashankar
-    // filter: "agDateColumnFilter",
     filter: true,
     editable: true,
-    // agDateInput: CustomDateComponent,
-    // customEditor: CustomEditorComponent
   },
   {
     headerName: "Amount Invested",
@@ -44,7 +40,6 @@ export const columns = [
   {
     headerName: "Sell Date",
     field: "sell_date",
-    // filter: "agDateColumnFilter",
     filter: true,
     editable: true,
   },

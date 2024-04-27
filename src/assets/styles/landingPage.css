@@ -207,4 +207,413 @@
   background-color:rgb(25, 25, 25) ;
 }
 
+.wrapper {
+  overflow-x: hidden;
+  overflow-y: scroll;
+  width: 100vw;
+  height: 100vh;
+}
+
+.nav-bar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  height: 96px; /* 24 * 4 = 96px */
+  width: 100%;
+  position: sticky;
+  top: 0;
+  left: 0;
+  z-index: 20;
+}
+
+.logo {
+  width: 112px; /* 28 * 4 = 112px */
+}
+
+.nav-items {
+  display: flex;
+  color: #fffffff7;
+  gap: 32px; /* 8 * 4 = 32px */
+}
+
+.nav-item {
+  font-size: 1.25rem; /* 20px / 16 = 1.25rem assuming default font size is 16px */
+  font-weight: bold;
+  font-family: 'Mullish', sans-serif;
+  padding: 8px 0;
+  cursor: pointer;
+  position: relative;
+}
+
+.nav-link {
+  text-decoration: none;
+  transition: color 200ms;
+}
+
+.nav-link:hover, .group:hover .nav-link {
+  color: #db4a39; /* Adjusted to a common hover color */
+}
+
+.nav-underline {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  height: 4px;
+  background-color: #db4a39;
+  transform: scaleX(0);
+  transition: transform 200ms;
+}
+
+.nav-item:hover .nav-underline {
+  transform: scaleX(1);
+}
+
+.auth-buttons {
+  display: flex;
+  gap: 32px;
+}
+
+.auth-button {
+  font-family: 'Mullish', sans-serif;
+  padding: 8px 16px;
+  font-size: 1.25rem;
+  font-weight: bold;
+  border: 2px solid white;
+  border-radius: 4px;
+  transition: background-color 100ms, color 100ms;
+}
+
+.auth-button-right {
+  margin-right: 40px;
+}
+
+.main-section {
+  /* Additional styling can be placed here if necessary */
+}
+
+.banner {
+  padding: 2rem 0; /* 8px per rem assuming base font size is 16px */
+}
+
+.banner .left-content {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  margin: auto;
+  align-items: center;
+  width: 83.33%; /* 10/12 as percentage */
+}
+
+@media (min-width: 1024px) { /* Represents 'lg:' breakpoint in Tailwind */
+  .banner {
+    padding: 8rem 0;
+  }
+  .banner .left-content {
+    flex-direction: row;
+  }
+}
+
+.content-space {
+  gap: 1rem;
+  display: flex;
+  flex-direction: column;
+}
+
+.main-heading {
+  color: white;
+  font-family: 'Mullish', sans-serif;
+  font-weight: bold;
+  font-size: 2.5rem; /* 4xl size */
+  line-height: normal;
+}
+
+@media (min-width: 1024px) {
+  .main-heading {
+    font-size: 3.125rem; /* 5xl size */
+    line-height: relaxed;
+  }
+}
+
+.text-highlight-red {
+  color: #ef4444; /* Tailwind's red-700 */
+}
+
+.text-highlight-green {
+  color: #22c55e; /* Tailwind's green-600 */
+}
+
+.divider {
+  width: 1.5rem;
+  height: 0.25rem;
+  background-color: #ef4444;
+  margin: 0.5rem;
+}
+
+.description {
+  color: white;
+  font-size: 1.125rem; /* text-lg size */
+  font-family: 'sans-serif';
+  line-height: normal;
+}
+
+@media (min-width: 1024px) {
+  .description {
+    font-size: 1.25rem; /* text-xl size */
+    line-height: relaxed;
+  }
+}
+
+.signup-button {
+  background-color: #ef4444;
+  padding: 0.75rem 1rem;
+  color: black;
+  font-weight: bold;
+  font-size: 1.125rem;
+  border-radius: 0.375rem;
+  font-family: 'Mullish', sans-serif;
+  transition: background-color 200ms ease-in-out;
+}
+
+.signup-button:hover {
+  background-color: #22c55e;
+}
+
+.hero-banner {
+  width: 100%;
+  max-width: 40rem; /* max-w-xl size */
+  margin-top: 1rem;
+}
+
+@media (min-width: 1024px) {
+  .hero-banner {
+    margin-top: 0;
+  }
+}
+.feature {
+  z-index: -40;
+}
+
+.feature-section {
+  width: 100%;
+  max-width: 1080px;
+  margin: auto;
+  padding-top: 1rem;
+  z-index: -20;
+}
+
+.feature-title {
+  font-family: 'Mullish', sans-serif;
+  padding-top: 7rem;
+  color: #000080; /* Deep blue color, replace with the exact color used in 'text-deepBlueHead' */
+  font-weight: 800;
+  font-size: 2.5rem;
+  line-height: 3.375rem;
+  margin-left: 16rem;
+  z-index: 5;
+}
+
+.divider-gradient {
+  width: 700px;
+  margin: auto;
+  height: 2px;
+  background: linear-gradient(to right, #10b981, #000000, #dc2626); /* Tailwind CSS green-600, black, red-600 */
+}
+
+.cards-container {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  gap: 2.5rem;
+  padding: 5rem 0;
+}
+
+.card-row {
+  display: flex;
+  gap: 2.5rem;
+}
+
+.feature-card {
+  padding: 0.75rem 5rem;
+  border-radius: 0.5rem;
+  display: flex;
+  flex-direction: column;
+  border: 4px solid black;
+  width: 1200px;
+  height: 220px;
+  cursor: pointer;
+  transition: transform 200ms;
+}
+
+.feature-card:hover {
+  transform: scale(1.05);
+}
+
+.card-background {
+  background-color: transparent;
+}
+
+.card-background:hover {
+  background-color: black;
+}
+
+.card-title {
+  font-family: 'Mullish', sans-serif;
+  font-weight: bold;
+  color: #4b5563; /* Tailwind CSS grayText */
+  font-size: 1.25rem;
+  padding-top: 1rem;
+}
+
+.card-title:hover {
+  color: #10b981; /* green-600 */
+}
+
+.card-description {
+  font-family: 'Mullish', sans-serif;
+  color: #4b5563; /* Tailwind CSS grayText */
+  font-size: 1.25rem;
+  font-weight: bold;
+  line-height: normal;
+  padding: 0.75rem 0;
+}
+
+.card-description:hover {
+  color: #dc2626; /* red-600 */
+}
+.testimonials {
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem; /* 6 pixels converted to rem, assuming 16px base font size */
+  align-items: center;
+  border-top: 4px solid black;
+  border-bottom: 0;
+  padding-top: 8rem; /* 32 pixels converted to rem */
+  position: relative;
+}
+
+.heading {
+  position: relative;
+}
+
+.testimonial-title {
+  font-size: 2.5rem; /* 4xl size assuming 1rem is 16px */
+  font-family: 'sans-serif';
+  font-weight: bold;
+  color: black;
+}
+
+.slit {
+  display: flex;
+  flex-direction: row;
+  gap: 0.125rem; /* 2 pixels converted to rem */
+  top: 0;
+  position: relative;
+}
+
+.gradient-bar {
+  width: 20rem; /* 80 pixels converted to rem */
+  height: 0.125rem; /* 2 pixels converted to rem */
+  background: linear-gradient(to right, #ef4444, #000000, #22c55e); /* Tailwind CSS red-600, black, green-600 */
+}
+
+.footer {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-around;
+  border-top: 4px solid black;
+  border-bottom: 4px solid black;
+  background-color: black;
+  color: white;
+  text-align: center;
+}
+
+@media (min-width: 1024px) { /* Tailwind 'lg' breakpoint */
+  .footer {
+    flex-direction: row;
+    text-align: left;
+  }
+}
+
+.info-section {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem; /* Adjust based on design preference */
+  padding: 2rem;
+  padding-right: 1rem;
+}
+
+.main-info {
+  margin-left: 2.5rem; /* Adjust based on design preference */
+}
+
+.section-title {
+  font-family: 'serif';
+  font-weight: bold;
+  font-size: 2rem; /* 2xl size */
+  cursor: pointer;
+  transition: text-decoration 0.3s;
+}
+
+.section-title:hover {
+  text-decoration: underline;
+}
+
+.section-description {
+  width: 20rem; /* 80px, adjusted if necessary */
+  font-family: 'sans-serif';
+  font-size: 1.125rem; /* Approximate to 'lg' size in Tailwind */
+}
+
+.link-list {
+  display: flex;
+  flex-direction: column;
+  gap: 0.25rem;
+}
+
+.link-item {
+  font-family: 'sans-serif';
+  font-size: 1.25rem; /* Approximate to 'xl' size in Tailwind */
+  cursor: pointer;
+  color: white;
+  text-decoration: none;
+  transition: font-weight 0.3s;
+}
+
+.link-item:hover {
+  font-weight: bold;
+}
+
+.contact-title {
+  font-family: 'serif';
+  font-size: 1.25rem; /* 'xl' size at smaller screens and '2xl' at larger screens */
+  cursor: pointer;
+  transition: text-decoration 0.3s;
+}
+
+.contact-title:hover {
+  text-decoration: underline;
+}
+
+.email-link {
+  font-family: 'sans-serif';
+  font-size: 1.25rem;
+  color: white;
+  text-decoration: none;
+}
+
+.social-icons {
+  display: flex;
+  justify-content: center;
+  gap: 1.5rem;
+  font-size: 2rem;
+}
+
+@media (min-width: 1024px) { /* Tailwind 'lg' breakpoint */
+  .social-icons {
+    justify-content: start;
+  }
+}
+
+
 

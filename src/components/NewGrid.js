@@ -18,7 +18,7 @@ import Swal from 'sweetalert2';
 import styles from '../assets/styles/Response.css';
 import { supabase,openAIConfig} from "../config/index_supabase.js";
 import { useCustomHook } from "../hooks/customHooks.js";
-import * as HomepageStyle from "../styles/styles.js";
+import * as LedgerTableStyle from "../assets/styles/styles.js";
 
 
 
@@ -90,7 +90,6 @@ export default function NewGrid() {
         icon: 'success',
         confirmButtonText: 'OK'
       });
-
       const response = await fetch(openAIConfig.apiUrl, {
         method: "POST",
         headers: {
@@ -99,10 +98,7 @@ export default function NewGrid() {
         },
         body: JSON.stringify(requestBody),
       });
-
       const data = await response.json();
-      
-
       const text = data.choices[0].text
         .replace("\n", "")
         .replace(".", ".")
@@ -135,8 +131,9 @@ export default function NewGrid() {
   const { handleSaveChanges } = useCustomHook();
   const table = useMaterialReactTable({
     columns,
-    data:materialdata, //data must be memoized or stable (useState, useMemo, defined outside of this component, etc.)
-     enableColumnFilterModes: true,
+    data:materialdata,
+    enableColumnFilterModes: true,
+    initialState:{density:'compact'},
     enableColumnOrdering: true,
     enableGrouping: true,
     enableColumnPinning: false,
@@ -148,12 +145,12 @@ export default function NewGrid() {
     <>
       <div className="toolbar" style={styles.toolbarStyles}>
         <div>
-          <button className="btn btn-outline-primary btn-sm m-1" style={HomepageStyle.buttonStyles} onClick={buttonClickCallback}>Download CSV</button>
-          <button className="btn btn-outline-success btn-sm m-1" style={HomepageStyle.buttonStyles} onClick={handleSaveChanges}>Save Changes</button>
+          <button className="btn btn-outline-primary btn-sm m-1" style={LedgerTableStyle.buttonStyles} onClick={buttonClickCallback}>Download CSV</button>
+          <button className="btn btn-outline-success btn-sm m-1" style={LedgerTableStyle.buttonStyles} onClick={handleSaveChanges}>Save Changes</button>
         </div>
         <button
           className="btn btn-outline-success btn-sm m-1"
-          style={HomepageStyle.insightButtonStyles}
+          style={LedgerTableStyle.insightButtonStyles}
           onClick={handleGetInsights}>
           Get Insights with AI
         </button>
@@ -168,11 +165,11 @@ export default function NewGrid() {
         <div></div>
         <div></div>
         {loading ? (
-          <p style={HomepageStyle.loadingTextStyles}>Loading...</p>
+          <p style={LedgerTableStyle.loadingTextStyles}>Loading...</p>
         ) : (
-          <ul style={HomepageStyle.listStyles}>
+          <ul style={LedgerTableStyle.listStyles}>
             {response && response.map((item, index) => (
-              <li key={index} style={HomepageStyle.listItemStyles}>
+              <li key={index} style={LedgerTableStyle.listItemStyles}>
                 {item}
               </li>
             ))}
