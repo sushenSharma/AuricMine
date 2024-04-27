@@ -1,97 +1,34 @@
 // React and Hooks
-import React, { useState, useRef, useEffect, useMemo,useCallback } from "react";
-
-// Supabase for data handling
-import { createClient } from "@supabase/supabase-js";
-
-
+import React, { useState,useEffect, useMemo} from "react";
 // Constants and styles
 import "../assets/styles/Grid.css";
 import "../assets/styles/styles.css";
 import "pikaday/css/pikaday.css";
-import { columns, userIdKey } from "../constants.js";
-import 'handsontable/dist/handsontable.full.min.css';
-
-// Handsontable components and utilities
-import { HotTable } from "@handsontable/react";
-import Handsontable from "handsontable";
-import { AutocompleteCellType, CheckboxCellType, DateCellType, NumericCellType } from "handsontable/cellTypes";
-import { CheckboxEditor, NumericEditor } from "handsontable/editors";
-import { NUMERIC_VALIDATOR } from "handsontable/validators";
-import { EDITOR_TYPE, VALIDATOR_TYPE } from "handsontable/editors/dateEditor";
-
+import {userIdKey } from "../constants.js";
 //Material Table Import
 import {
   MaterialReactTable,
   useMaterialReactTable,
 } from 'material-react-table';
 
-
 // External Libraries
 import Swal from 'sweetalert2';
-import { HyperFormula } from 'hyperformula';
 
 // Data and Config
-import { stock_name } from "../StockList";
 import styles from '../assets/styles/Response.css';
+import { supabase,openAIConfig} from "../config/index_supabase.js";
+import { useCustomHook } from "../hooks/customHooks.js";
+import * as HomepageStyle from "../styles/styles.js";
 
-const supabase = createClient(
-  process.env.REACT_APP_SUPABASE_URL,
-  process.env.REACT_APP_SUPABASE_ANON_KEY
-);
-const apiKey = process.env.REACT_APP_OPENAI_API_KEY;
-const apiUrl = process.env.REACT_APP_OPENAI_URL;
-const promptText = process.env.REACT_APP_OPENAI_API_PROMPT;
-const tableName = process.env.REACT_APP_SUPABASE_TABLE_NAME;
-const userUUID = localStorage.getItem(userIdKey);
+
 
 export default function NewGrid() {
-  const gridRef = useRef(null);
-  const hotRef = useRef(null); // Reference to Handsontable instance
-  const [handsontableData, setHandsontableData] = useState([]);
-  const [columnWidths, setColumnWidths] = useState([]);
   const [response, setResponse] = useState("");
   const [loading, setLoading] = useState(false);
-  const [data, setData] = useState(Handsontable.helper.createEmptySpreadsheetData(6, 10));
   let buttonClickCallback;
-  const hyperformulaInstance = HyperFormula.buildEmpty({
-    licenseKey: 'internal-use-in-handsontable',
-  });
-
 
   //Materialtable Declarations
-    const [materialdata, setMaterialData] = useState();
-
-  // Utilize useMemo for static data like defaultColDef to avoid recalculations
-  const defaultColDef = useMemo(() => ({
-    flex: 1,
-    minWidth: 115,
-    sortable: true,
-    resizable: true,
-    wrapText: true,
-    autoHeight: true,
-    wrapHeaderText: true,
-    autoHeaderHeight: true
-  }), []);
-
-  // Adjust column widths based on screen width
-  const calculateColumnWidths = useCallback(() => {
-    const screenWidth = window.innerWidth;
-    const numberOfColumns = 15;
-    const baseWidth = screenWidth / numberOfColumns;
-    setColumnWidths(new Array(numberOfColumns).fill(baseWidth));
-  }, []);
-
-  //ParseDate Function
-  function parseDate(dateString) {
-    var parts = dateString.split("/");
-    if (parts.length === 3) {
-        return new Date(parts[2], parts[1] - 1, parts[0]);
-    } else {
-        return null;
-    }
-}
-
+    const [materialdata, setMaterialData] = useState([]);
 
   // Fetch and process data from Supabase
   const getData = async () => {
@@ -104,11 +41,8 @@ export default function NewGrid() {
         .order("buy_date", { ascending: true });
 
       if (error) throw error;
-
       // Process and transform data here...
       let totalPercentageRate = 0.001 + 0.0000325 + 0.00000001 + 0.18 * (0.0000325 + 0.00000001) + 0.00015;
-   
-
       const transformedDataForMaterialTable = data.map((item) => ({
         stockSymbol: item.stock_name,
         buyPrice: item.buy_price,
@@ -126,8 +60,7 @@ export default function NewGrid() {
         id: item.id,
         amountInvested: item.amount_invested,
       }));
-   
-      setMaterialData(transformedDataForMaterialTable)
+      setMaterialData(transformedDataForMaterialTable);
     } catch (error) {
       console.error(error);
     }
@@ -135,127 +68,18 @@ export default function NewGrid() {
 
   // Initialize component and event listeners
   useEffect(() => {
-    calculateColumnWidths();
-    window.addEventListener('resize', calculateColumnWidths);
+    // Fetch data when the component mounts
     getData();
-
-    // Cleanup event listener on component unmount
-    return () => window.removeEventListener('resize', calculateColumnWidths);
-  }, [calculateColumnWidths]);
-
-  // Handlers for UI actions (simplified for brevity)
-  const handleSaveChanges = async () => {
-    if (hotRef.current) {
-      const hotData = hotRef.current.hotInstance.getData();
-      
-      const inserts = [];
-      const updates = [];
-      let emptyBuyDateFound = false;
-      let sellDateBeforeBuyDateFound = false;
-      hotData.filter(row => row.some(cell => cell !== "" && cell !== null))
-        .forEach(rowArray => {
-          if (!rowArray[2] || rowArray[2] === "") {
-            emptyBuyDateFound = true;
-            return; // Skip processing this row
-          }
-          const buyDate = parseDate(rowArray[2]);
-          const sellDateRaw = rowArray[5];
-          const sellDate = sellDateRaw !== "" && sellDateRaw !== null ? parseDate(sellDateRaw) : null;
-          if (sellDate && buyDate && sellDate < buyDate) {
-            sellDateBeforeBuyDateFound = true;
-            return; // Skip further processing of this row
-        }
-          let record = {
-            stock_name: rowArray[0],
-            buy_price: parseFloat(rowArray[1]),
-            buy_date: isNaN(buyDate) ? null : buyDate.toISOString().split('T')[0],
-            quantity : parseFloat(rowArray[3]),
-            sell_price: parseFloat(rowArray[4]),
-            sell_date: sellDate ? sellDate.toISOString().split('T')[0] : null,
-            brokerage: parseFloat(rowArray[6]),
-            days_hold: parseInt(rowArray[7], 10),
-            reason_to_buy: rowArray[8],
-            gtt_enabled: rowArray[9],
-            profit_loss: parseFloat(rowArray[10]),
-            roce: parseFloat(rowArray[11]),
-            annual_return_generated: parseFloat(rowArray[12]),
-            user_id: userUUID,
-            Amount: parseFloat(rowArray[14])
-          };
-          if (rowArray[13] !== null && rowArray[13] !== undefined && rowArray[13] !== "") {
-            record.id = parseInt(rowArray[13], 10);
-            updates.push(record);
-          } else {
-            inserts.push(record);
-          }
-        });
-        if (emptyBuyDateFound) {
-          Swal.fire({
-            title: 'Error!',
-            text: 'Buy date cannot be empty.',
-            icon: 'error',
-            confirmButtonText: 'OK'
-          });
-          return; // Stop execution if any buy date is empty
-        }
-        if (sellDateBeforeBuyDateFound) {
-          Swal.fire({
-              title: 'Error!',
-              text: 'Sell date cannot be before the buy date.',
-              icon: 'error',
-              confirmButtonText: 'OK'
-          });
-          return; // Stop execution if sell date is before buy date
-      }
+    return () => {
+    };
+  }, []);
   
-      try {
-        // Handle updates
-        if (updates.length > 0) {
-          const { error: updateError } = await supabase
-            .from(tableName)
-            .upsert(updates, { onConflict: 'id' });
-          
-          if (updateError) {
-            throw updateError;
-          }
-        }
-  
-        // Handle inserts
-        if (inserts.length > 0) {
-          const { error: insertError } = await supabase
-            .from(tableName)
-            .insert(inserts);
-          
-          if (insertError) {
-            throw insertError;
-          }
-        }
-  
-        Swal.fire({
-          title: 'Success!',
-          text: 'Data saved successfully!',
-          icon: 'success',
-          confirmButtonText: 'OK'
-        });
-        await getData();
-      } catch (error) {
-        Swal.fire({
-          title: 'Error!',
-          text: 'Failed to save data: ' + error.message,
-          icon: 'error',
-          confirmButtonText: 'OK'
-        });
-      }
-    } else {
-      console.log('Instance is not yet available.');
-    }
-  };
   const handleGetInsights = async () => {
     setLoading(true);
-    const dataString = JSON.stringify(handsontableData);
+    const dataString = JSON.stringify(materialdata);
 
     const requestBody = {
-      prompt: `With json data ${JSON.stringify(dataString)}, ${promptText}`,
+      prompt: `With json data ${JSON.stringify(dataString)}, ${openAIConfig.promptText}`,
       max_tokens: Math.min(dataString.length, 1000),
     };
 
@@ -267,11 +91,11 @@ export default function NewGrid() {
         confirmButtonText: 'OK'
       });
 
-      const response = await fetch(apiUrl, {
+      const response = await fetch(openAIConfig.apiUrl, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
-          "api-key": apiKey,
+          "api-key": openAIConfig.apiKey,
         },
         body: JSON.stringify(requestBody),
       });
@@ -308,58 +132,53 @@ export default function NewGrid() {
     { accessorKey: 'id', header: 'ID' },
     { accessorKey: 'amountInvested', header: 'Amount Invested' },
   ], []);
+  const { handleSaveChanges } = useCustomHook();
   const table = useMaterialReactTable({
     columns,
-    data, //data must be memoized or stable (useState, useMemo, defined outside of this component, etc.)
+    data:materialdata, //data must be memoized or stable (useState, useMemo, defined outside of this component, etc.)
      enableColumnFilterModes: true,
     enableColumnOrdering: true,
     enableGrouping: true,
-    enableColumnPinning: true,
+    enableColumnPinning: false,
     paginationDisplayMode: 'pages',
     positionToolbarAlertBanner: 'bottom',
   });
-  // Render the component
+  
   return (
     <>
-      <div className="toolbar">
-      <div style={{ display: 'flex', alignItems: 'center', padding: '10px 10px', backgroundColor: 'ghostwhite', justifyContent: 'space-between' }}>
-    <div>
-        <button className="btn btn-outline-primary btn-sm m-1" style={{ boxShadow: '3px 3px 5px rgba(0, 0, 0, 0.2)', border: '1px solid #007bff' }} onClick={(...args) => buttonClickCallback(...args)}>Download CSV</button>
-        <button className="btn btn-outline-success btn-sm m-1" style={{ boxShadow: '3px 3px 5px rgba(0, 0, 0, 0.2)', border: '1px solid #28a745' }} onClick={handleSaveChanges}>Save Changes</button>
-    </div>
-    <button 
-        className="btn btn-outline-success btn-sm m-1" 
-        style={{ margin: '10px', padding: '10px 20px', fontSize: '16px', backgroundColor: 'lightred', color: 'black', boxShadow: '3px 3px 5px rgba(0, 0, 0, 0.2)', border: '1px solid #28a745' }} 
-        onClick={handleGetInsights}>
-        Get Insights with AI
-    </button>
-</div>
+      <div className="toolbar" style={styles.toolbarStyles}>
+        <div>
+          <button className="btn btn-outline-primary btn-sm m-1" style={HomepageStyle.buttonStyles} onClick={buttonClickCallback}>Download CSV</button>
+          <button className="btn btn-outline-success btn-sm m-1" style={HomepageStyle.buttonStyles} onClick={handleSaveChanges}>Save Changes</button>
+        </div>
+        <button
+          className="btn btn-outline-success btn-sm m-1"
+          style={HomepageStyle.insightButtonStyles}
+          onClick={handleGetInsights}>
+          Get Insights with AI
+        </button>
       </div>
 
       <div className="grid-container">
-    <MaterialReactTable table={table} />;
-
-
+        <MaterialReactTable table={table} />
       </div>
 
-<div className="response-container">
-<div className="ag-theme-alpine" style={styles.gridThemeAlpine}></div>
-    <div style={styles.buttons}></div>
-    <div style={styles.centerText}></div>
-    {loading ? (
-      <p style={styles.loadingText}>Loading...</p>
-    ) : (
-      <ul style={styles.list}>
-        {response && response.map((item, index) => (
-          <li key={index} style={styles.listItem}>
-            {item}
-          </li>
-        ))}
-      </ul>
-    )}
-   
-</div>
-
+      <div className="response-container">
+        <div className="ag-theme-alpine"></div>
+        <div></div>
+        <div></div>
+        {loading ? (
+          <p style={HomepageStyle.loadingTextStyles}>Loading...</p>
+        ) : (
+          <ul style={HomepageStyle.listStyles}>
+            {response && response.map((item, index) => (
+              <li key={index} style={HomepageStyle.listItemStyles}>
+                {item}
+              </li>
+            ))}
+          </ul>
+        )}
+      </div>
     </>
   );
 }
