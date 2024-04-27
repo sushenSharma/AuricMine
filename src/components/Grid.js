@@ -21,18 +21,8 @@ import { VALIDATOR_TYPE } from "handsontable/validators/dateValidator";
 import { stock_name } from "../StockList";
 import { HyperFormula } from 'hyperformula';
 import Swal from 'sweetalert2';
-
-const supabase = createClient(
-  process.env.REACT_APP_SUPABASE_URL,
-  process.env.REACT_APP_SUPABASE_ANON_KEY
-);
-const apiKey = process.env.REACT_APP_OPENAI_API_KEY;
-const apiUrl = process.env.REACT_APP_OPENAI_URL;
-const promptText = process.env.REACT_APP_OPENAI_API_PROMPT;
-const tableName = process.env.REACT_APP_SUPABASE_TABLE_NAME;
-
+import { supabase,openAIConfig,tableName } from "../config/index_supabase.js";
 export default function Grid() {
-  
   const gridRef = useRef(null);
   const [rowData, setRowData] = useState([]);
   const [response, setResponse] = useState("");
@@ -43,26 +33,6 @@ export default function Grid() {
   const [data, setData] = useState(Handsontable.helper.createEmptySpreadsheetData(6, 10));
   const [handsontableData, setHandsontableData] = useState([]);
   let buttonClickCallback;
-
-  
-
-  const customHeaderRenderer = (instance, column, colIndex) => {
-    const columnTitle = column.getColHeader(colIndex);
-    const headerElement = document.createElement('div');
-    
-    // Create title element
-    const titleElement = document.createElement('span');
-    titleElement.textContent = columnTitle;
-    headerElement.appendChild(titleElement);
-
-    // Add a spacer
-    const spacerElement = document.createElement('span');
-    spacerElement.style.marginLeft = '5px'; // Adjust the space here
-    headerElement.appendChild(spacerElement);
-
-    return headerElement;
-  };
-
   const calculateColumnWidths = () => {
     // Example: Adjust column widths based on screen width
     const screenWidth = window.innerWidth;
@@ -72,20 +42,6 @@ export default function Grid() {
     const newWidths = new Array(numberOfColumns).fill(baseWidth);
     setColumnWidths(newWidths);
   };
-
-  //Umashankar
-  const defaultColDef = useMemo(() => {
-    return {
-      flex: 1,
-      minWidth: 115,
-      sortable: true,      
-      resizable: true,
-      wrapText: true,
-      autoHeight: true,
-      wrapHeaderText: true,
-      autoHeaderHeight: true
-    };
-  }, []);
 
   const userUUID = localStorage.getItem(userIdKey);
   useEffect(() => {
@@ -145,45 +101,6 @@ export default function Grid() {
     setColumnDefs(columns);
     getData();
   }, []);
- 
-  const handleAddRow = async () => {
-    try {
-      const { data, error } = await supabase
-        .from(tableName)
-        .insert({user_id : userUUID})
-        .select();
-
-      if (error) {
-        throw error;
-      }
-   
-      const { id, user_id } = data[0]; //Umashankar
-      gridRef.current.api.applyTransaction({ add: [{ id, user_id }] }); //Umashankar
-    } catch (error) {
-      console.error(error);
-    }
-  };
-
-  const handleRemoveRow = useCallback(async () => {
-    const confirmation = window.confirm("Are you sure?");
-    if (!confirmation) return;
-
-    const selectedData = gridRef.current.api.getSelectedRows();
-    const { id } = selectedData[0];
-
-    try {
-      const { error } = await supabase.from(tableName).delete().eq("id", id);
-
-      if (error) {
-        throw error;
-      }
-
-      gridRef.current.api.applyTransaction({ remove: selectedData });
-    } catch (error) {
-      console.error(error);
-    }
-  }, []);
-
 
   function parseDate(dateString) {
     var parts = dateString.split("/");
@@ -305,7 +222,7 @@ export default function Grid() {
     const dataString = JSON.stringify(handsontableData);
 
     const requestBody = {
-      prompt: `With json data ${JSON.stringify(dataString)}, ${promptText}`,
+      prompt: `With json data ${JSON.stringify(dataString)}, ${openAIConfig.promptText}`,
       max_tokens: Math.min(dataString.length, 1000),
     };
 
@@ -317,11 +234,11 @@ export default function Grid() {
         confirmButtonText: 'OK'
       });
 
-      const response = await fetch(apiUrl, {
+      const response = await fetch(openAIConfig.apiUrl, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
-          "api-key": apiKey,
+          "api-key": openAIConfig.apiKey,
         },
         body: JSON.stringify(requestBody),
       });
