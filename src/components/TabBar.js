@@ -1,6 +1,4 @@
 import React, { useState } from "react";
-
-import Grid from "./Grid";
 import Posts from "./Posts";
 import "../assets/styles/TabBar.css";
 import { supabase, userIdKey } from "../constants";
@@ -15,7 +13,6 @@ export default function TabBar(session) {
 
 
     <>
-    {/* Umashankar */}
       <nav className="navbar navbar-expand-lg navbar-dark bg-dark" style={{ backgroundColor: '#395947',height: '58px', width: 'auto', padding: '0px 0px 0px 15px' }}>
         <span className="navbar-brand" >TradingJournal.ai</span>
         <ul className="navbar-nav"style={{width:'100%'}}>

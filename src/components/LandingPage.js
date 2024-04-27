@@ -5,162 +5,141 @@ import Logo from '../assets/resources/nav_image.png' // Path to your logo image
 import Clienttestimonials from './Clienttestimonials';
 const LandingPage = ({ onLogin }) => {
   return (
-    
-    <div className="wrapper  overflow-x-hidden overflow-y-scroll w-[100vw] h-[100vh]">
-      
-      <nav className="flex items-center justify-between h-24 w-full sticky top-0 left-0 z-20" id="head">
-    <img src={Logo} alt="logo" class="w-28"></img>
-    <ul className="flex gap-8">
-        <li className=" text-xl font-bold font-mullish py-2 group cursor-pointer transition duration-200 relative">
-            <a href="" className=' no-underline group-hover:text-red-700 nav' >Home</a>
-            <div className="absolute bottom-0 left-0 w-full h-1 bg-red-600 scale-0 group-hover:scale-100 transition duration-200"></div>
-        </li>
-        <li className=" text-xl font-bold font-mullish py-2  group cursor-pointer transition duration-200 relative">
-            <a href="#" className=' no-underline group-hover:text-red-600 nav'>About</a>
-            <div className="absolute bottom-0 left-0 w-full h-1 bg-red-600 scale-0 group-hover:scale-100 transition duration-200"></div>
-        </li>
-        <li className=" text-xl font-bold font-mullish py-2 group cursor-pointer transition duration-200 relative">
-            <a href="#" className=' no-underline group-hover:text-red-600 nav'>Services</a>
-            <div className="absolute bottom-0 left-0 w-full h-1 bg-red-600 scale-0 group-hover:scale-100 transition duration-200"></div>
-        </li>
-        <li className=" text-xl font-bold font-mullish py-2 group cursor-pointer transition duration-200 relative">
-            <a href="#" className='  no-underline group-hover:text-red-600 nav'>Contact Us</a>
-            <div className="absolute bottom-0 left-0 w-full h-1 bg-red-600 scale-0 group-hover:scale-100 transition duration-200"></div>
-        </li>
-    </ul>
-    <div className="flex gap-x-8">
-        <button onClick={onLogin}  className=" group font-mullish py-2 px-4 text-xl font-bold border-2 border-white rounded-md   transition duration-100  " id='redbutton'>Log In</button>
-        <button onClick={onLogin} className="font-mullish py-2 px-4 text-xl font-bold border-2 border-white  rounded-md mr-10  group transition duration-100   " id='greenbutton' >Sign Up</button>
-    </div>
-</nav>
+    <div className="wrapper">
+    <nav className="nav-bar" id="head">
+      <img src={Logo} alt="logo" class="logo"></img>
+      <ul className="nav-items">
+          <li className="nav-item">
+              <a href="" className='nav-link'>Home</a>
+              <div className="nav-underline"></div>
+          </li>
+          <li className="nav-item">
+              <a href="#" className='nav-link'>About</a>
+              <div className="nav-underline"></div>
+          </li>
+          <li className="nav-item">
+              <a href="#" className='nav-link'>Services</a>
+              <div className="nav-underline"></div>
+          </li>
+          <li className="nav-item">
+              <a href="#" className='nav-link'>Contact Us</a>
+              <div className="nav-underline"></div>
+          </li>
+      </ul>
+      <div className="auth-buttons">
+          <button onClick={onLogin} className="auth-button" id='redbutton'>Log In</button>
+          <button onClick={onLogin} className="auth-button auth-button-right" id='greenbutton'>Sign Up</button>
+      </div>
+  </nav>
 
-
-
-<div className="main-section" id="second">
-    <section className="banner py-8 lg:py-32">
-        <div className="left-content flex flex-col justify-between mx-auto items-center w-10/12 lg:flex-row">
-            <div className="space-y-4">
-                <h1 className="text-white font-mullish font-bold text-4xl lg:text-5xl leading-normal lg:leading-relaxed">
+  <div className="main-section" id="second">
+    <section className="banner">
+        <div className="left-content">
+            <div className="content-space">
+                <h1 className="main-heading">
                     Trading Made Easy,<br />
-                    with <span className="text-red-700">Trading</span> <span className="text-green-600">Journal</span>.
+                    with <span className="text-highlight-red">Trading</span> <span className="text-highlight-green">Journal</span>.
                 </h1>
-                <div className="w-6 h-1 bg-red-600 m-2"></div>
-                <p className="text-white text-lg lg:text-xl font-sans leading-normal lg:leading-relaxed">
-                Revolutionize your trades with our AI-driven journal app. Gain insights and track performance effortlessly on our cloud-based platform.
+                <div className="divider"></div>
+                <p className="description">
+                    Revolutionize your trades with our AI-driven journal app. Gain insights and track performance effortlessly on our cloud-based platform.
                     <strong>Welcome to a Smarter Way to Trade</strong>
                 </p>
-                <button 
-                    className="bg-red-600 py-3 px-4 text-black font-bold text-lg rounded-md font-mullish hover:bg-green-500 transition duration-200 ease-in-out" 
-                    id="signup" 
-                    onClick={onLogin}
-                >  Sign Up Now
-                </button>
+                <button className="signup-button" id="signup" onClick={onLogin}>Sign Up Now</button>
             </div>
-            <img src={TradingImage} alt="Trading Office Scene" className="hero-banner w-full max-w-xl mt-4 lg:mt-0" />
+            <img src={TradingImage} alt="Trading Office Scene" className="hero-banner" />
         </div>
     </section>
 </div>
 
-<div className="feature -z-40" id="features">
-  <section className="w-[100%] max-w-[1080px] mx-auto pt-4 -z-20">
-    <h2 className="font-mullish pt-28 text-black font-extrabold text-deepBlueHead my-auto text-4xl leading-[3.375rem] ml-64 z-[5]">
+<div className="feature" id="features">
+  <section className="feature-section">
+    <h2 className="feature-title">
       Why You Should Choose Us?
     </h2>
-    <div className="w-[700px] mx-[15%] h-2 bg-gradient-to-r from-green-600 via-black to-red-600"></div>
-    <div className="w-full flex flex-col gap-10 py-10  h-fit pt-20">
-      
-      <div className='flex flex-row gap-10'>
-        
+    <div className="divider-gradient"></div>
+    <div className="cards-container">
+      <div className="card-row">
         {/* CARD 1 */}
-        <div className="p-3 px-20 rounded-xl  flex-col border-4 border-black w-[1300px] h-[220px] cursor-pointer   group hover:scale-105 transition-all duration-200 " id='card'>
+        <div className="feature-card" id='card1'>
           <i className="fa-solid fa-chart-line "></i>
-          <h3 className="font-mullish font-bold text-grayText  text-xl pt-4  group-hover:text-green-600">Smart Analytics</h3>
-          <p className="font-mullish text-grayText text-xl   font-bold leading-normal py-3 group-hover:text-red-600">
-          Uncover hidden patterns in your data with AI-driven insights, enhancing your trading strategy.
+          <h3 className="card-title">Smart Analytics</h3>
+          <p className="card-description">
+            Uncover hidden patterns in your data with AI-driven insights, enhancing your trading strategy.
           </p>
-        
         </div>
-      
         {/* CARD 2 */}
-        <div className="border-4 border-black rounded-xl flex-col  py-6 pl-6 pr-20  w-[1200px] h-[220px] cursor-pointer group hover:scale-105 transition-all duration-200  group-hover:bg-black" id='card'>
+        <div className="feature-card card-background" id='card2'>
           <i className="fa-regular fa-clock "></i>
-          <h3 className="font-mullish font-bold text-grayText text-xl pt-4 group-hover:text-red-600 ">Enhanced Performance Analytics</h3>
-          <p className="font-mullish text-grayText text-xl font-bold leading-normal py-3 group-hover:text-green-600">
-          Unlock detailed insights into your trades with key performance metrics.
+          <h3 className="card-title">Enhanced Performance Analytics</h3>
+          <p className="card-description">
+            Unlock detailed insights into your trades with key performance metrics.
           </p>
         </div>
       </div>
-   
-      <div className='flex flex-row gap-10'>
-        
-        
+      <div className="card-row">
         {/* CARD 3 */}
-        <div className="p-3 px-20 rounded-xl  flex-col border-4  border-black w-[1200px] h-[220px] cursor-pointer   group hover:scale-105 transition-all duration-200" id='card'>
+        <div className="feature-card" id='card3'>
           <i className="fa-solid fa-book"></i>
-          <h3 className="font-mullish font-bold text-grayText text-xl pt-4 group-hover:text-green-600">Journaling Made Easy</h3>
-          <p className="font-mullish text-grayText text-xl font-bold leading-normal py-3 group-hover:text-red-600">
+          <h3 className="card-title">Journaling Made Easy</h3>
+          <p className="card-description">
             Log your trades with a user-friendly interface and review your history anytime.
           </p>
-        
         </div>
-     
-
         {/* CARD 4 */}
-        <div className="p-6 rounded-xl flex flex-col border-4 border-black w-[1200px] h-[217px] cursor-pointer bg-cover bg-no-repeat hover:scale-105 transition-all duration-200 group" id="card">
+        <div className="feature-card card-background" id="card4">
           <i className="fa-solid fa-mobile " ></i>
-          <h3 className="font-mullish font-bold text-grayText text-xl pt-4  group-hover:text-red-600">Secure & Private</h3>
-          <p className="font-mullish text-grayText text-xl font-bold leading-normal py-3 group-hover:text-green-600">
-          Your data is encrypted and kept private at all times.
+          <h3 className="card-title">Secure & Private</h3>
+          <p className="card-description">
+            Your data is encrypted and kept private at all times.
           </p>
-         
         </div>
       </div>
-      
     </div>
-
   </section>
 </div>
-<div className="testimonials relative flex flex-col gap-6  items-center border-t-4 border-b-0 pt-32 border-black">
-    <div className="heading relative">
-        <h2 className="text-4xl font-sans font-bold text-black">Client Testimonials</h2>
-      <div className="slit flex flex-row gap-2 top-0">
-          <div className="w-80 h-2 bg-gradient-to-r from-red-600 via-black to-green-600 "></div>
-      </div>
-    </div>
 
+<div className="testimonials">
+    <div className="heading">
+        <h2 className="testimonial-title">Client Testimonials</h2>
+        <div className="slit">
+            <div className="gradient-bar"></div>
+        </div>
+    </div>
 </div>
-    <div>
-      <Clienttestimonials></Clienttestimonials>
-    </div>
+<div>
+  <Clienttestimonials></Clienttestimonials>
+</div>
 
-<footer className="foot flex flex-col lg:flex-row justify-around border-t-4 border-b-4 border-black bg-black text-white text-center lg:text-left">
-  <div className="info flex flex-col items-start gap-4 py-8 pr-4 lg:px-8">
-    <h3 className="font-serif font-bold  text-2xl text-white cursor-pointer hover:underline ml-10">Trading Journal</h3>
-    <p className="w-80 font-sans   items-start text-white text-lg  ">
+<footer className="footer">
+  <div className="info-section main-info">
+    <h3 className="section-title">Trading Journal</h3>
+    <p className="section-description">
       At Trading Ledger, our mission is to empower our clients with the most accurate and up-to-date information on their stock portfolio. We are committed to providing the best possible service to our clients, and our AI-powered platform enables us to achieve this goal.
     </p>
   </div>
 
-  <div className="info flex flex-col gap-1 items-start py-8">
-    <h3 className="font-serif font-bold text-white text-2xl  hover:underline cursor-pointer">Quick Links</h3>
-    <ul className="flex flex-col gap-1 items-start ">
-      <li><a className="font-sans text-xl cursor-pointer no-underline ml-0 justify-start  text-white hover:font-bold " href="">About</a></li>
-      <li><a className="font-sans text-xl cursor-pointer no-underline ml-0  text-white hover:font-bold " href="">Services</a></li>
-      <li><a className="font-sans text-xl cursor-pointer no-underline ml-0  text-white hover:font-bold " href="">Contact Us</a></li>
+  <div className="info-section quick-links">
+    <h3 className="section-title">Quick Links</h3>
+    <ul className="link-list">
+      <li><a className="link-item" href="">About</a></li>
+      <li><a className="link-item" href="">Services</a></li>
+      <li><a className="link-item" href="">Contact Us</a></li>
     </ul>
   </div>
 
-  <div className="info flex flex-col gap-4 py-8 pr-4 items-start lg:px-8 ">
-    <span className="font-serif font-bold text-xl  cursor-pointer ml-0 hover:underline  lg:text-2xl">Contact Us</span>
-    <a className="font-sans text-xl no-underline text-white " href="mailto:tradingjournal@gmail.com">tradingjournal@gmail.com</a>
-    <div className="icons flex justify-center lg:justify-start flex-row gap-6">
-      <i className="fa-brands fa-facebook-square text-2xl"></i>
-      <i className="fa-brands fa-twitter-square text-2xl"></i>
-      <i className="fa-brands fa-linkedin text-2xl"></i>
-      <i className="fa-brands fa-instagram-square text-2xl"></i>
+  <div className="info-section contact-info">
+    <span className="contact-title">Contact Us</span>
+    <a className="email-link" href="mailto:tradingjournal@gmail.com">tradingjournal@gmail.com</a>
+    <div className="social-icons">
+      <i className="fa-brands fa-facebook-square"></i>
+      <i className="fa-brands fa-twitter-square"></i>
+      <i className="fa-brands fa-linkedin"></i>
+      <i className="fa-brands fa-instagram-square"></i>
     </div>
   </div>
 </footer>
+
     </div>
   );
 };
