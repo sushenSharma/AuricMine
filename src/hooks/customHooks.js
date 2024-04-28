@@ -1,5 +1,5 @@
 // React and Hooks
-import { useRef } from "react";
+import { useRef, useState } from "react";
 import { supabase, openAIConfig, tableName } from "../config/index_supabase.js";
 import Swal from "sweetalert2";
 import { columns, userIdKey } from "../constants.js";
@@ -16,8 +16,11 @@ function parseDate(dateString) {
   }
 }
 
-export const useCustomHook = () => {
+export const useCustomHooks = (materialdata) => {
   const hotRef = useRef(null);
+  const [response, setResponse] = useState("");
+  const [loading, setLoading] = useState(false);
+
   const handleSaveChanges = async () => {
     if (hotRef.current) {
       const hotData = hotRef.current.hotInstance.getData();
@@ -134,7 +137,49 @@ export const useCustomHook = () => {
       console.log("Instance is not yet available.");
     }
   };
+
+  const handleGetInsights = async () => {
+    setLoading(true);
+    const dataString = JSON.stringify(materialdata);
+
+    const requestBody = {
+      prompt: `With json data ${JSON.stringify(dataString)}, ${
+        openAIConfig.promptText
+      }`,
+      max_tokens: Math.min(dataString.length, 1000),
+    };
+    try {
+      Swal.fire({
+        title: "Success!",
+        text: "Insights getting Generated!  Please Scroll Down",
+        icon: "success",
+        confirmButtonText: "OK",
+      });
+      const response = await fetch(openAIConfig.apiUrl, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+          "api-key": openAIConfig.apiKey,
+        },
+        body: JSON.stringify(requestBody),
+      });
+      const data = await response.json();
+      const text = data.choices[0].text
+        .replace("\n", "")
+        .replace(".", ".")
+        .trim()
+        .split("\n");
+      setResponse(text);
+      setLoading(false);
+    } catch (error) {
+      console.error("Error:", error);
+    }
+  };
+
   return {
     handleSaveChanges,
+    handleGetInsights,
+    response,
+    loading,
   };
 };

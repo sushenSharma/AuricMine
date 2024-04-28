@@ -16,15 +16,12 @@ import Swal from "sweetalert2";
 
 // Data and Config
 import styles from "../assets/styles/Response.css";
-import { supabase, openAIConfig } from "../config/index_supabase.js";
-import { useCustomHook } from "../hooks/customHooks.js";
+import { supabase } from "../config/index_supabase.js";
+import { useCustomHooks } from "../hooks/customHooks.js";
 import * as LedgerTableStyle from "../assets/styles/styles.js";
 
 export default function NewGrid() {
-  const [response, setResponse] = useState("");
-  const [loading, setLoading] = useState(false);
   let buttonClickCallback;
-
   //Materialtable Declarations
   const [materialdata, setMaterialData] = useState([]);
 
@@ -80,45 +77,6 @@ export default function NewGrid() {
     return () => {};
   }, []);
 
-  const handleGetInsights = async () => {
-    setLoading(true);
-    const dataString = JSON.stringify(materialdata);
-
-    const requestBody = {
-      prompt: `With json data ${JSON.stringify(dataString)}, ${
-        openAIConfig.promptText
-      }`,
-      max_tokens: Math.min(dataString.length, 1000),
-    };
-
-    try {
-      Swal.fire({
-        title: "Success!",
-        text: "Insights getting Generated!  Please Scroll Down",
-        icon: "success",
-        confirmButtonText: "OK",
-      });
-      const response = await fetch(openAIConfig.apiUrl, {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-          "api-key": openAIConfig.apiKey,
-        },
-        body: JSON.stringify(requestBody),
-      });
-      const data = await response.json();
-      const text = data.choices[0].text
-        .replace("\n", "")
-        .replace(".", ".")
-        .trim()
-        .split("\n");
-      setResponse(text);
-      setLoading(false);
-    } catch (error) {
-      console.error("Error:", error);
-    }
-  };
-
   const columns = useMemo(
     () => [
       { accessorKey: "stockSymbol", header: "Stock Symbol" },
@@ -143,7 +101,9 @@ export default function NewGrid() {
     ],
     []
   );
-  const { handleSaveChanges } = useCustomHook();
+
+  const { handleSaveChanges, handleGetInsights, response, loading } =
+    useCustomHooks(materialdata);
   const table = useMaterialReactTable({
     columns,
     data: materialdata,
@@ -154,6 +114,14 @@ export default function NewGrid() {
     enableColumnPinning: false,
     paginationDisplayMode: "pages",
     positionToolbarAlertBanner: "bottom",
+    muiTableBodyProps: {
+      sx: {
+        //stripe the rows, make odd rows a darker color
+        "& tr:nth-of-type(odd) > td": {
+          backgroundColor: "#7a8385",
+        },
+      },
+    },
   });
 
   return (

@@ -18,6 +18,7 @@
     "bootstrap": "^5.3.2",
     "handsontable": "^14.0.0",
     "hyperformula": "^2.6.0",
+    "material-react-table": "^2.13.0",
     "moment": "^2.29.4",
     "openai": "^3.2.1",
     "postcss": "^8.4.32",
