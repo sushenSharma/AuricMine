@@ -1,11 +1,13 @@
 import React, { useEffect, useState } from "react";
-import "./assets/styles/App.css";
-import TabBar from "./components/TabBar";
 import { Auth } from "@supabase/auth-ui-react";
 import { ThemeSupa } from "@supabase/auth-ui-shared";
 import { supabase, userIdKey } from "./constants";
+
+import TabBar from "./components/TabBar";
 import LandingPage from "./components/LandingPage";
-import { customAuthTheme } from "./assets/styles/SupaBaseTheme";
+
+import "./assets/styles/App.css";
+import "./ui-kit/typography/styles.css"
 
 const App = () => {
   const [session, setSession] = useState(null);
@@ -15,7 +17,6 @@ const App = () => {
     supabase.auth.getSession().then(({ data: { session } }) => {
       setSession(session);
       if (session) {
-        // User is already signed in when page loads
         addUserPosition(session.user.id);
       }
     });
@@ -25,7 +26,6 @@ const App = () => {
     } = supabase.auth.onAuthStateChange(async (event, session) => {
       setSession(session);
       if (event === "SIGNED_IN") {
-        // User explicitly signed in during this session
         await addUserPosition(session.user.id);
       }
     });
@@ -34,8 +34,8 @@ const App = () => {
   }, []);
 
   const addUserPosition = async (userId) => {
-    const randomPositionId = Math.floor(Math.random() * 1000); // Adjust the range as needed
-    const { data, error } = await supabase.from("users_positions").insert({
+    const randomPositionId = Math.floor(Math.random() * 1000);
+    const { error } = await supabase.from("users_positions").insert({
       user_id: userId,
       position_id: randomPositionId,
     });
@@ -44,7 +44,7 @@ const App = () => {
     }
   };
   const handleLogin = () => {
-    setShowAuth(true); // Show the authentication component
+    setShowAuth(true);
   };
 
   if (!session) {
@@ -62,10 +62,10 @@ const App = () => {
         >
           <div
             style={{
-              background: "#222d30", // Semi-transparent dark panel
-              padding: "2rem", // Space inside the panel
-              borderRadius: "1rem", // Rounded corners of the panel
-              boxShadow: "0 4px 8px rgba(0, 0, 0, 0.5)", // Shadow for the panel
+              background: "#222d30",
+              padding: "2rem",
+              borderRadius: "1rem",
+              boxShadow: "0 4px 8px rgba(0, 0, 0, 0.5)",
             }}
           >
             <Auth

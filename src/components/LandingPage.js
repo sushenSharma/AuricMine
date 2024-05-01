@@ -7,7 +7,7 @@ const LandingPage = ({ onLogin }) => {
   return (
     <div className="wrapper">
       <nav className="nav-bar" id="head">
-        <img src={Logo} alt="logo" class="logo"></img>
+        <img src={Logo} alt="logo" className="logo"></img>
         <ul className="nav-items">
           <li className="nav-item">
             <a href="" className="nav-link">

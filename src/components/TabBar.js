@@ -1,13 +1,12 @@
-import React, { useState } from "react";
+import React, { Fragment, useState } from "react";
 import Posts from "./Posts";
 import "../assets/styles/TabBar.css";
 import { supabase, userIdKey } from "../constants";
 import ComingSoon from "./Coming-soon";
 import NewGrid from "./NewGrid";
+import Ledgers from "../containers/Ledgers";
 
 export default function TabBar(session) {
-  console.log(session.sessionObj);
-
   const [select, setSelect] = useState("Ledger");
   return (
     <>
@@ -66,7 +65,12 @@ export default function TabBar(session) {
       </nav>
 
       <div>
-        {select === "Ledger" && <NewGrid></NewGrid>}
+        {select === "Ledger" && (
+          <Fragment>
+            <Ledgers />
+            <NewGrid />
+          </Fragment>
+        )}
         {select === "Risk Management" && <h2>Risk Management</h2>}
         {select === "Watchlist" && <h2>Watchlist</h2>}
         {select === "Blogposts" && <Posts />}
