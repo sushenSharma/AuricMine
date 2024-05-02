@@ -16,7 +16,6 @@ export default function Footer() {
           alignItems: "flex-end",
           paddingRight: "10rem",
           paddingBottom: "1rem",
-          border:"1px solid red",
 
         }}
       >

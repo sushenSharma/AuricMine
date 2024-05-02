@@ -3,7 +3,7 @@ import { Box, Button, Typography } from "@mui/material";
 import "../../assets/styles/landingPage.css"; // Import the CSS file for styling
 import lad from "../../assets/resources/landingImage.jpg";
 
-export default function SectionHome() {
+export default function SectionHome({onLogin}) {
   return (
     <Box
       sx={{
@@ -59,7 +59,7 @@ export default function SectionHome() {
             padding: "1rem 2rem",
             borderRadius: "20px"
           }}
-          onClick={()=>console.log("sign up button in section home")}
+          onClick={onLogin}
         >
           Sign Up
         </Button>
