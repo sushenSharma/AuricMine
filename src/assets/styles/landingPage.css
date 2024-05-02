@@ -140,7 +140,7 @@
   .logo {
     width: 150px; /* Adjust as needed for your layout */
     height: auto; /* Keeps the aspect ratio of the image */
-    margin: 0; /* Adjust margin as needed */
+    margin-bottom: 10px; /* Adjust margin as needed */
     padding: 10px; /* Adds some space around the logo */
     transition: transform 0.3s ease; /* Smooth transition for hover effects */
   }
@@ -609,6 +609,28 @@
   font-size: 2rem;
 }
 
+.loginStyle{
+  background-color: #ffffff;
+  padding: 5px 30px;
+  color: black; 
+  font-size: 15px;
+  border-radius: 8px;
+  cursor: pointer;
+  margin-right: 20px;
+  font-family: "inika";
+}
+
+.signUpStyle{
+  color: white; 
+  font-size: 20px;
+  cursor: pointer;
+}
+
+.gradientText {
+  background: linear-gradient(45deg,#FF4d4c, white);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
 @media (min-width: 1024px) { /* Tailwind 'lg' breakpoint */
   .social-icons {
     justify-content: start;
