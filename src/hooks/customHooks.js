@@ -29,6 +29,7 @@ export const useCustomHooks = (materialdata) => {
       const updates = [];
       let emptyBuyDateFound = false;
       let sellDateBeforeBuyDateFound = false;
+
       hotData
         .filter((row) => row.some((cell) => cell !== "" && cell !== null))
         .forEach((rowArray) => {

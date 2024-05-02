@@ -26,9 +26,14 @@ const LedgerProducts = () => {
     getLedgerProductList();
   }, []);
 
+  const onSubmitNewProduct = ({ values, table }) => {
+    console.log("values", values);
+    console.log("table", table);
+  };
+
   return (
     <div className="ledger-products-container">
-      <LPListing items={productList} />
+      <LPListing items={productList} onSubmit={onSubmitNewProduct} />
     </div>
   );
 };
