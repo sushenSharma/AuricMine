@@ -1,8 +1,17 @@
-import { Box, Divider, Typography } from "@mui/material";
+import {
+  Box,
+  Divider,
+  Typography,
+  useMediaQuery,
+  useTheme,
+} from "@mui/material";
 import React from "react";
 import { FaFacebookF, FaInstagram, FaLinkedinIn } from "react-icons/fa";
 
 export default function Footer() {
+  const theme = useTheme();
+  const isMobile = useMediaQuery(theme.breakpoints.down("sm"));
+
   return (
     <Box>
       <Divider
@@ -14,32 +23,38 @@ export default function Footer() {
           flexDirection: "column",
           justifyContent: "center",
           alignItems: "flex-end",
-          paddingRight: "10rem",
+          paddingRight: isMobile ? "1rem" : "10rem",
           paddingBottom: "1rem",
-
         }}
       >
         <Typography
-          fontSize={"20px"}
+          fontSize={isMobile ? "16px" : "20px"}
           fontFamily={"Jura"}
           fontWeight={400}
           color={"white"}
+          textAlign={isMobile ? "center" : "right"}
+          mb={isMobile ? "1rem" : "0"}
         >
           Contact Us
         </Typography>
         <Box
-          sx={{ display: "flex", width: "5%", justifyContent: "space-between" }}
+          sx={{
+            display: "flex",
+            width: "5%",
+            justifyContent: "space-between",
+            marginRight: isMobile ? "0" : "1rem",
+          }}
         >
           <FaInstagram color="white" />
           <FaLinkedinIn color="white" />
           <FaFacebookF color="white" />
         </Box>
         <Typography
-          fontSize={"20px"}
+          fontSize={isMobile ? "16px" : "20px"}
           fontFamily={"Jura"}
           fontWeight={400}
           color={"white"}
-
+          textAlign={isMobile ? "center" : "right"}
         >
           tradingjournal@gmail.com
         </Typography>

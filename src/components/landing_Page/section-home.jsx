@@ -1,25 +1,28 @@
 import React from "react";
-import { Box, Button, Typography } from "@mui/material";
+import { Box, Button, Typography, useMediaQuery, useTheme } from "@mui/material";
 import "../../assets/styles/landingPage.css"; // Import the CSS file for styling
-import lad from "../../assets/resources/landingImage.jpg";
+import lad from "../../assets/resources/landingpage.png";
 
-export default function SectionHome({onLogin}) {
+export default function SectionHome({ onLogin }) {
+  const theme=useTheme();
+  const isMobile = useMediaQuery(theme.breakpoints.down("sm"));
+
   return (
     <Box
-      sx={{
-        display: "flex",
-        color: "#ffffff",
-        position: "relative", // Set the container position to relative
-        paddingLeft: "5rem",
-      }}
+      className="homeSectionMain"
     >
       {/* Left container for text */}
-      <Box sx={{ zIndex: 1, paddingTop: "10rem" }}>
-        {" "}
+      <Box
+        sx={{
+          zIndex: 1,
+          padding: isMobile ? "2rem": "5rem",
+          width: "100%", // Full width
+        }}
+      >
         {/* Set a higher z-index to ensure text appears above the background */}
         <Typography
           sx={{
-            fontSize: "64px",
+            fontSize: "3rem", // Adjust font size for smaller screens
             fontWeight: "500",
             textTransform: "uppercase",
             fontFamily: "Jura",
@@ -29,11 +32,12 @@ export default function SectionHome({onLogin}) {
         </Typography>
         <Typography
           sx={{
-            fontSize: "48px",
+            fontSize: "2rem", // Adjust font size for smaller screens
             fontWeight: "400",
             fontFamily: "Jura",
-            paddingY: "5rem",
-            width: "75%",
+            paddingY: isMobile ? "2rem":"5rem",
+            width: isMobile ? null : "75%"
+            // padding: "2rem 0",
           }}
         >
           Revolutionize your trades with our AI-driven journal app. Gain
@@ -42,22 +46,22 @@ export default function SectionHome({onLogin}) {
         </Typography>
         <Typography
           sx={{
-            fontSize: "64px",
+            fontSize: "3rem", // Adjust font size for smaller screens
             fontFamily: "Jura",
           }}
         >
-          Welcome to a <span className="gradientText">Smater</span> way to trade
+          Welcome to a <span className="gradientText">Smarter</span> way to Trade
         </Typography>
         <Button
           type="button"
           sx={{
             backgroundColor: "#ffffff",
-            marginY: "5rem", 
-            fontSize: "32px",
+            margin: "2rem 0", // Adjust margin for smaller screens
+            fontSize: "1.5rem", // Adjust font size for smaller screens
             fontFamily: "Jura",
             color: "black",
             padding: "1rem 2rem",
-            borderRadius: "20px"
+            borderRadius: "20px",
           }}
           onClick={onLogin}
         >
@@ -71,12 +75,13 @@ export default function SectionHome({onLogin}) {
           top: 0,
           right: 0,
           bottom: 0,
-          left: 356,
+          left: isMobile? 0 : 356,
           zIndex: 0, // Set a lower z-index so the text appears above
           backgroundImage: `url(${lad})`,
           backgroundSize: "cover",
           backgroundPosition: "center",
-          height: "65%"
+          width: "100%",
+          height: isMobile ? "50vh" : "65%", // Adjust height as needed
         }}
       />
     </Box>

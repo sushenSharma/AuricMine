@@ -1,11 +1,14 @@
 import React from "react";
-import { Box, Divider, Typography } from "@mui/material";
+import { Box, Divider, Typography, useMediaQuery, useTheme } from "@mui/material";
 import "../../assets/styles/landingPage.css"; // Import the CSS file for styling
 import { BsFillClockFill, BsGraphUp } from "react-icons/bs";
 import { RiMap2Line } from "react-icons/ri";
 import { HiLockClosed } from "react-icons/hi";
 
 export default function SectionPlatform() {
+  const theme = useTheme();
+  const isMobile = useMediaQuery(theme.breakpoints.down("sm"));
+
   const dataArray = [
     {
       icon: BsGraphUp,
@@ -32,53 +35,68 @@ export default function SectionPlatform() {
         "Your data is encrypted and kept private at all time.",
     },
   ];
+
   return (
     <Box>
       <Box sx={{ display: "flex", alignItems: "center" }}>
         <Divider
-          sx={{ height: "2px", width: "37%", backgroundColor: "#ffffff" }}
+          sx={{ height: "2px", width:isMobile ? "25%": "37%", backgroundColor: "#ffffff" }}
         />
         <Typography
           sx={{
-            width: "26%",
+            width:isMobile ? "50%": "26%",
             textAlign: "center",
             color: "white",
-            fontSize: "48px",
+            fontSize: isMobile ? "22px" : "48px",
             fontFamily: "Jura",
           }}
         >
           Platform Features
         </Typography>
         <Divider
-          sx={{ height: "2px", width: "37%", backgroundColor: "#ffffff" }}
+          sx={{ height: "2px", width:isMobile ? "25%": "37%", backgroundColor: "#ffffff" }}
         />
       </Box>
-      <Box sx={{ padding: "2rem 8rem" }}>
+      <Box sx={{ padding: isMobile ? "1rem 2rem" : "2rem 8rem" }}>
         {dataArray.map((item, index) => {
           return (
-            <Box sx={{ display: "flex", alignItems: "center", marginBottom: "2rem" }} key={index}>
+            <Box
+              sx={{
+                display: "flex",
+                alignItems: "center",
+                flexDirection: isMobile ? "column" : "row",
+                marginBottom: "2rem",
+              }}
+              key={index}
+            >
               <Box
                 sx={{
                   background: "white",
                   width: "max-content",
                   padding: "1rem",
                   borderRadius: "10px",
+                  marginBottom: isMobile ? "1rem" : "0",
                 }}
               >
-                <item.icon fontSize={"3rem"}/>
+                <item.icon fontSize={isMobile ? "2rem" : "3rem"} />
               </Box>
               <Box
                 sx={{
                   fontFamily: "Jura",
-                  marginLeft: "20px",
+                  marginLeft: isMobile ? "0" : "20px",
                   marginBottom: "10px",
                   color: "white",
+                  textAlign: isMobile ? "center" : "left",
                 }}
               >
-                <Typography sx={{ fontSize: "24px", fontWeight: "600" }}>
+                <Typography
+                  sx={{ fontSize: isMobile ? "24px" : "24px", fontWeight: "600" }}
+                >
                   {item.name}
                 </Typography>
-                <Typography sx={{ fontSize: "16px", fontWeight: "400" }}>
+                <Typography
+                  sx={{ fontSize: isMobile ? "16px" : "16px", fontWeight: "400" }}
+                >
                   {item.content}
                 </Typography>
               </Box>

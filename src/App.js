@@ -4,8 +4,6 @@ import TabBar from "./components/TabBar";
 import { Auth } from "@supabase/auth-ui-react";
 import { ThemeSupa } from "@supabase/auth-ui-shared";
 import { supabase, userIdKey } from "./constants";
-// import LandingPage from "./components/LandingPage";
-import { customAuthTheme } from "./assets/styles/SupaBaseTheme";
 import LandingPage from "./components/landing_Page";
 import Header from "./components/header";
 const App = () => {
