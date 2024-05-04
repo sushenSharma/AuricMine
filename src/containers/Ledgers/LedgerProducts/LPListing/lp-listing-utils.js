@@ -82,14 +82,6 @@ export const prepareLedgerColumns = () => {
       },
     },
     {
-      accessorKey: "returnPercent",
-      header: "Return %",
-    },
-    {
-      accessorKey: "annualROI",
-      header: "Annual ROI",
-    },
-    {
       accessorKey: "amount",
       header: "Amount Invested",
       muiEditTextFieldProps: {

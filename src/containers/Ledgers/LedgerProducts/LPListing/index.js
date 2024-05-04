@@ -10,7 +10,7 @@ import {
 import EditIcon from "@mui/icons-material/Edit";
 import DeleteIcon from "@mui/icons-material/Delete";
 
-const LPListing = ({ items, onSubmit }) => {
+const LPListing = ({ items, onSubmit, onDelete, onEdit }) => {
   const [columnNames, setColumnNames] = useState([]);
   const [loading, setLoading] = useState(false);
 
@@ -31,7 +31,8 @@ const LPListing = ({ items, onSubmit }) => {
 
   const openDeleteConfirmModal = (row) => {
     if (window.confirm("Are you sure you want to delete this user?")) {
-      console.log("yess");
+      const { id } = row;
+      onDelete(id);
     }
   };
 
@@ -48,9 +49,9 @@ const LPListing = ({ items, onSubmit }) => {
       },
     },
     onCreatingRowCancel: () => console.log("onCreating Row Cancel"),
-    onCreatingRowSave: onSubmit,
+    onCreatingRowSave: ({ values }) => onSubmit(values, "insert"),
     onEditingRowCancel: () => console.log("on editing row cancel"),
-    onEditingRowSave: () => console.log("on editing row save"),
+    onEditingRowSave: ({ values }) => onEdit(values, "update"),
     renderRowActions: ({ row, table }) => (
       <Box sx={{ display: "flex", gap: "1rem" }}>
         <Tooltip title="Edit">
