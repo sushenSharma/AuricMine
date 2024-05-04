@@ -5,7 +5,7 @@ import { Auth } from "@supabase/auth-ui-react";
 import { ThemeSupa } from "@supabase/auth-ui-shared";
 import { supabase, userIdKey } from "./constants";
 import LandingPage from "./components/landing_Page";
-import Header from "./components/header";
+
 const App = () => {
   const [session, setSession] = useState(null);
   const [showAuth, setShowAuth] = useState(false);
@@ -46,7 +46,6 @@ const App = () => {
   };
   return (
     <div style={{ background: "#121212" }}>
-      <Header onLogin={handleLogin} />
       {!session ? (
         showAuth ? (
           <div
