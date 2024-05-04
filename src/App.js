@@ -1,23 +1,20 @@
 import React, { useEffect, useState } from "react";
+import "./assets/styles/App.css";
+import TabBar from "./components/TabBar";
 import { Auth } from "@supabase/auth-ui-react";
 import { ThemeSupa } from "@supabase/auth-ui-shared";
 import { supabase, userIdKey } from "./constants";
-
-import TabBar from "./components/TabBar";
-import LandingPage from "./components/LandingPage";
-
-import "./assets/styles/App.css";
-import "./ui-kit/typography/styles.css"
-
+import LandingPage from "./components/landing_Page";
+import Header from "./components/header";
 const App = () => {
   const [session, setSession] = useState(null);
   const [showAuth, setShowAuth] = useState(false);
-
   useEffect(() => {
     supabase.auth.getSession().then(({ data: { session } }) => {
       setSession(session);
       if (session) {
         addUserPosition(session.user.id);
+        localStorage.setItem(userIdKey, session.user.id); // Set user ID in local storage
       }
     });
 
@@ -27,6 +24,7 @@ const App = () => {
       setSession(session);
       if (event === "SIGNED_IN") {
         await addUserPosition(session.user.id);
+        localStorage.setItem(userIdKey, session.user.id); // Set user ID in local storage
       }
     });
 
@@ -34,8 +32,8 @@ const App = () => {
   }, []);
 
   const addUserPosition = async (userId) => {
-    const randomPositionId = Math.floor(Math.random() * 1000);
-    const { error } = await supabase.from("users_positions").insert({
+    const randomPositionId = Math.floor(Math.random() * 1000); // Adjust the range as needed
+    const { data, error } = await supabase.from("users_positions").insert({
       user_id: userId,
       position_id: randomPositionId,
     });
@@ -44,54 +42,56 @@ const App = () => {
     }
   };
   const handleLogin = () => {
-    setShowAuth(true);
+    setShowAuth(true); // Show the authentication component
   };
-
-  if (!session) {
-    if (showAuth) {
-      return (
-        <div
-          style={{
-            width: "100vw",
-            height: "100vh",
-            display: "flex",
-            justifyContent: "center",
-            alignItems: "center",
-            backgroundColor: "#121212",
-          }}
-        >
+  return (
+    <div style={{ background: "#121212" }}>
+      <Header onLogin={handleLogin} />
+      {!session ? (
+        showAuth ? (
           <div
             style={{
-              background: "#222d30",
-              padding: "2rem",
-              borderRadius: "1rem",
-              boxShadow: "0 4px 8px rgba(0, 0, 0, 0.5)",
+              width: "100vw",
+              height: "100vh",
+              display: "flex",
+              justifyContent: "center",
+              alignItems: "center",
+              backgroundColor: "#121212",
             }}
           >
-            <Auth
-              supabaseClient={supabase}
-              appearance={{
-                theme: ThemeSupa,
-                variables: {
-                  default: {
-                    colors: {
-                      brand: "green",
-                      brandAccent: "green",
+            <div
+              style={{
+                background: "#222d30",
+                padding: "2rem",
+                borderRadius: "1rem",
+                boxShadow: "0 4px 8px rgba(0, 0, 0, 0.5)",
+              }}
+            >
+              <Auth
+                supabaseClient={supabase}
+                appearance={{
+                  theme: ThemeSupa,
+                  variables: {
+                    default: {
+                      colors: {
+                        brand: "green",
+                        brandAccent: "green",
+                      },
                     },
                   },
-                },
-              }}
-              providers={["google"]}
-            />
+                }}
+                providers={["google"]}
+              />
+            </div>
           </div>
-        </div>
-      );
-    }
-    return <LandingPage onLogin={handleLogin} />;
-  } else {
-    localStorage.setItem(userIdKey, session.user.id);
-    return <TabBar sessionObj={session} />;
-  }
+        ) : (
+          <LandingPage onLogin={handleLogin} />
+        )
+      ) : (
+        <TabBar sessionObj={session} />
+      )}
+    </div>
+  );
 };
 
 export default App;
