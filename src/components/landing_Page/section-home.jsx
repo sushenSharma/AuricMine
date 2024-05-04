@@ -82,6 +82,7 @@ export default function SectionHome({ onLogin }) {
           backgroundPosition: "center",
           width: "100%",
           height: isMobile ? "50vh" : "65%", // Adjust height as needed
+          opacity: 0.3
         }}
       />
     </Box>
