@@ -4,19 +4,17 @@ import TabBar from "./components/TabBar";
 import { Auth } from "@supabase/auth-ui-react";
 import { ThemeSupa } from "@supabase/auth-ui-shared";
 import { supabase, userIdKey } from "./constants";
-import LandingPage from "./components/LandingPage";
-import { customAuthTheme } from "./assets/styles/SupaBaseTheme";
-
+import LandingPage from "./components/landing_Page";
+import Header from "./components/header";
 const App = () => {
   const [session, setSession] = useState(null);
   const [showAuth, setShowAuth] = useState(false);
-
   useEffect(() => {
     supabase.auth.getSession().then(({ data: { session } }) => {
       setSession(session);
       if (session) {
-        // User is already signed in when page loads
         addUserPosition(session.user.id);
+        localStorage.setItem(userIdKey, session.user.id); // Set user ID in local storage
       }
     });
 
@@ -25,8 +23,8 @@ const App = () => {
     } = supabase.auth.onAuthStateChange(async (event, session) => {
       setSession(session);
       if (event === "SIGNED_IN") {
-        // User explicitly signed in during this session
         await addUserPosition(session.user.id);
+        localStorage.setItem(userIdKey, session.user.id); // Set user ID in local storage
       }
     });
 
@@ -46,52 +44,54 @@ const App = () => {
   const handleLogin = () => {
     setShowAuth(true); // Show the authentication component
   };
-
-  if (!session) {
-    if (showAuth) {
-      return (
-        <div
-          style={{
-            width: "100vw",
-            height: "100vh",
-            display: "flex",
-            justifyContent: "center",
-            alignItems: "center",
-            backgroundColor: "#121212",
-          }}
-        >
+  return (
+    <div style={{background:"#121212"}}>
+      <Header onLogin={handleLogin} />
+      {!session ? (
+        showAuth ? (
           <div
             style={{
-              background: "#222d30", // Semi-transparent dark panel
-              padding: "2rem", // Space inside the panel
-              borderRadius: "1rem", // Rounded corners of the panel
-              boxShadow: "0 4px 8px rgba(0, 0, 0, 0.5)", // Shadow for the panel
+              width: "100vw",
+              height: "100vh",
+              display: "flex",
+              justifyContent: "center",
+              alignItems: "center",
+              backgroundColor: "#121212",
             }}
           >
-            <Auth
-              supabaseClient={supabase}
-              appearance={{
-                theme: ThemeSupa,
-                variables: {
-                  default: {
-                    colors: {
-                      brand: "green",
-                      brandAccent: "green",
+            <div
+              style={{
+                background: "#222d30",
+                padding: "2rem",
+                borderRadius: "1rem",
+                boxShadow: "0 4px 8px rgba(0, 0, 0, 0.5)",
+              }}
+            >
+              <Auth
+                supabaseClient={supabase}
+                appearance={{
+                  theme: ThemeSupa,
+                  variables: {
+                    default: {
+                      colors: {
+                        brand: "green",
+                        brandAccent: "green",
+                      },
                     },
                   },
-                },
-              }}
-              providers={["google"]}
-            />
+                }}
+                providers={["google"]}
+              />
+            </div>
           </div>
-        </div>
-      );
-    }
-    return <LandingPage onLogin={handleLogin} />;
-  } else {
-    localStorage.setItem(userIdKey, session.user.id);
-    return <TabBar sessionObj={session} />;
-  }
+        ) : (
+          <LandingPage onLogin={handleLogin} />
+        )
+      ) : (
+        <TabBar sessionObj={session} />
+      )}
+    </div>
+  );
 };
 
 export default App;

@@ -1,619 +1,69 @@
-@import url('https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap');
-
-
-.landing-page {
-    background: linear-gradient(to right, #fffacd, #ffd700); /* gradient from light yellow to a more saturated yellow */
-    color: #44526F; /* Dark text for contrast */
-    transition: background-color 0.3s;
-    font-family: 'Roboto', sans-serif;
-  }
-  
-  .top-nav {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    padding: 1rem 2rem;
-    background-color: #f0f2f1;
-}
-.top-nav a:hover {
-  color: #2370e2; /* Highlight color on hover */
-}
-
-.top-nav > * {
-    margin: 0 10px; /* Add spacing between elements */
-    white-space: nowrap; /* Prevents text from wrapping */
-}
-  .top-nav .h1  {
-    font-size: 3rem; /* Large font size */
-    color: #212121; /* White text color */
-    margin: 0; /* Reset default margin */
-    padding-right: 20px; /* Adjust as needed */
-    flex-grow: 1; /* Allows the button to be pushed to the right */
-    font-family: 'Playfair Display', sans-serif;
-  }
-  
-  
-  .auth-button {
-    padding: 1rem 2rem;
-    background-color: #2370e2; /* Button fill color */
-    color: #fff; /* Text color */
-    border: 5px solid #fff; /* White border */
-    cursor: pointer;
-    font-size: 1rem;
-    font-weight: bold;
-    transition: all 0.3s ease;
-    border-radius: 30px; /* Oval shape */
-    outline: none; /* Remove default focus outline */
-    text-decoration: none; /* Remove default text decoration */
-    display: inline-block; 
-  }
-  
-  .auth-button:hover {
-    background-color: #395947; /* Slightly lighter color on hover */
-  }
-  
-  .split-layout {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    height: calc(100vh - 50px); /* Adjust based on nav height */
-    padding: 2rem;
-    background: #f4f8fc; /* Dark background for the split layout */
-  }
-  
-  .text-content {
-    flex-basis: 50%;
-    padding-right: 2rem;
-  }
-  
- 
-  .text-content p {
-    color: #101010; /* Slightly lighter grey text for contrast */
-    margin-bottom: 2rem;
-  }
-  
-  .cta-button {
-    padding: 1rem 2rem;
-    background-color: #2370e2; /* Button fill color */
-    color: #fff; /* Text color */
-    border: 5px solid #fff; /* White border */
-    cursor: pointer;
-    font-size: 1rem;
-    font-weight: bold;
-    transition: all 0.3s ease;
-    border-radius: 30px; /* Oval shape */
-    outline: none; /* Remove default focus outline */
-    text-decoration: none; /* Remove default text decoration */
-    display: inline-block; /* Allows the use of padding and margin */
-  }
-  .cta-button:hover {
-    background-color: #5bc0de; /* Light grey for hover */
-  }
-  
-  .image-content {
-    flex-basis: 50%;
-    display: flex;
-    justify-content: center;
-  }
-  
-  .trading-image {
-    width: 100%; /* Responsive width */
-    height: auto; /* Maintain aspect ratio */
-    object-fit: contain; /* Ensures the image is fully visible */
-    object-position: center; /* Center the image within its container */
-    border-radius: 8px; /* Rounded corners */
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Drop shadow effect */
-    margin: 0 auto; /* Center the image horizontally if needed */
-}
-/* Media Query for smaller screens */
-@media (max-width: 768px) {
-    .trading-image {
-        max-width: 95vw; /* Adjust the width on smaller screens */
-    }
-}
-
-  
-  body {
-    font-family: 'Roboto', sans-serif;
-  }
-  
-  .features-list {
-    list-style: none; /* Remove default list styling */
-    padding: 0;
-    margin: 2rem 0; /* Add some space before and after the list */
-  }
-  .features-list li {
-    background: #f4f8fc;
-    margin-bottom: 1rem; /* Space between list items */
-    padding: 0.5rem 1rem; /* Padding inside list items */
-    font-family: 'Roboto', sans-serif;
-    border-left: 4px solid #395947; /* A colored bar on the left for visual accent */
-    border-radius: 2px; /* Slightly rounded corners for polish */
-    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); /* Subtle shadow for depth */
-    transition: transform 0.3s ease, box-shadow 0.3s ease; /* Smooth transitions for hover effects */
-  }
-  .features-list li:hover {
-    transform: translateY(-2px); /* Slightly raise the item */
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.15); /* Enhance shadow */
-  }
-
-  .logo {
-    width: 150px; /* Adjust as needed for your layout */
-    height: auto; /* Keeps the aspect ratio of the image */
-    margin: 0; /* Adjust margin as needed */
-    padding: 10px; /* Adds some space around the logo */
-    transition: transform 0.3s ease; /* Smooth transition for hover effects */
-  }
-  
-  .logo:hover {
-    transform: scale(1.05); /* Slightly enlarges the logo on hover */
-  }
-
-  .top-nav > *:first-child {
-    margin-right: auto;
-  }
-
-  .nav-link {
-    font-size: 3.2rem; /* Increase the font size */
-    font-weight: 700; /* Make the font weight bold */
-    margin: 0 15px; /* Increase spacing between the links */
-    padding: 10px 0; /* Add vertical padding for better clickability */
-    display: inline-block; /* To apply padding and margin */
-    transition: color 0.3s ease, transform 0.3s ease; /* Smooth transition for hover effects */
-}
-
-#redbutton
-{
-  color: white;
-}
-#greenbutton
-{
-  color: white;
-}
-
-#redbutton:hover
-{
-    background-color: #b81111;
-    border:hidden;
-    color: black;
-}
-#greenbutton:hover
-{
-    background-color: rgb(38, 152, 16);
-    border:hidden;
-    color: black;
-}
-#signup:hover
-{
-    color: white;
-}
-
-#head,#second
-{
-    background-color:rgb(25, 25, 25);
-}
-
-#card
-{
-  background-color: white;
-}
-
-.nav{
-  color: white;
-}
-
-#card:hover
-{
-  background-color:rgb(25, 25, 25) ;
-}
-
-.wrapper {
-  overflow-x: hidden;
-  overflow-y: scroll;
-  width: 100vw;
-  height: 100vh;
-}
-
-.nav-bar {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  height: 96px; /* 24 * 4 = 96px */
-  width: 100%;
-  position: sticky;
-  top: 0;
-  left: 0;
-  z-index: 20;
-}
+@import url("https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap");
 
 .logo {
-  width: 112px; /* 28 * 4 = 112px */
+  width: 112px; /* Adjust as needed for your layout */
+  height: auto; /* Keeps the aspect ratio of the image */
+  margin-bottom: 10px; /* Adjust margin as needed */
+  padding: 10px; /* Adds some space around the logo */
+  transition: transform 0.3s ease; /* Smooth transition for hover effects */
 }
 
-.nav-items {
-  display: flex;
-  color: #fffffff7;
-  gap: 32px; /* 8 * 4 = 32px */
+.logo:hover {
+  transform: scale(1.05); /* Slightly enlarges the logo on hover */
 }
 
-.nav-item {
-  font-size: 1.25rem; /* 20px / 16 = 1.25rem assuming default font size is 16px */
-  font-weight: bold;
-  font-family: 'Mullish', sans-serif;
-  padding: 8px 0;
-  cursor: pointer;
-  position: relative;
-}
 
-.nav-link {
-  text-decoration: none;
-  transition: color 200ms;
-}
 
-.nav-link:hover, .group:hover .nav-link {
-  color: #db4a39; /* Adjusted to a common hover color */
-}
-
-.nav-underline {
-  position: absolute;
-  bottom: 0;
-  left: 0;
-  width: 100%;
-  height: 4px;
-  background-color: #db4a39;
-  transform: scaleX(0);
-  transition: transform 200ms;
-}
-
-.nav-item:hover .nav-underline {
-  transform: scaleX(1);
-}
-
-.auth-buttons {
-  display: flex;
-  gap: 32px;
-}
-
-.auth-button {
-  font-family: 'Mullish', sans-serif;
-  padding: 8px 16px;
-  font-size: 1.25rem;
-  font-weight: bold;
-  border: 2px solid white;
-  border-radius: 4px;
-  transition: background-color 100ms, color 100ms;
-}
-
-.auth-button-right {
-  margin-right: 40px;
-}
-
-.main-section {
-  /* Additional styling can be placed here if necessary */
-}
-
-.banner {
-  padding: 2rem 0; /* 8px per rem assuming base font size is 16px */
-}
-
-.banner .left-content {
-  display: flex;
-  flex-direction: column;
-  justify-content: space-between;
-  margin: auto;
-  align-items: center;
-  width: 83.33%; /* 10/12 as percentage */
-}
-
-@media (min-width: 1024px) { /* Represents 'lg:' breakpoint in Tailwind */
-  .banner {
-    padding: 8rem 0;
-  }
-  .banner .left-content {
-    flex-direction: row;
-  }
-}
-
-.content-space {
-  gap: 1rem;
-  display: flex;
-  flex-direction: column;
-}
-
-.main-heading {
-  color: white;
-  font-family: 'Mullish', sans-serif;
-  font-weight: bold;
-  font-size: 2.5rem; /* 4xl size */
-  line-height: normal;
-}
-
-@media (min-width: 1024px) {
-  .main-heading {
-    font-size: 3.125rem; /* 5xl size */
-    line-height: relaxed;
-  }
-}
-
-.text-highlight-red {
-  color: #ef4444; /* Tailwind's red-700 */
-}
-
-.text-highlight-green {
-  color: #22c55e; /* Tailwind's green-600 */
-}
-
-.divider {
-  width: 1.5rem;
-  height: 0.25rem;
-  background-color: #ef4444;
-  margin: 0.5rem;
-}
-
-.description {
-  color: white;
-  font-size: 1.125rem; /* text-lg size */
-  font-family: 'sans-serif';
-  line-height: normal;
-}
-
-@media (min-width: 1024px) {
-  .description {
-    font-size: 1.25rem; /* text-xl size */
-    line-height: relaxed;
-  }
-}
-
-.signup-button {
-  background-color: #ef4444;
-  padding: 0.75rem 1rem;
+.loginStyle {
+  background-color: #ffffff;
+  padding: 5px 30px;
   color: black;
-  font-weight: bold;
-  font-size: 1.125rem;
-  border-radius: 0.375rem;
-  font-family: 'Mullish', sans-serif;
-  transition: background-color 200ms ease-in-out;
+  font-size: 15px;
+  border-radius: 8px;
+  cursor: pointer;
+  margin-right: 20px;
+  font-family: "inika";
+}
+.homeSectionMain {
+  display: flex;
+  color: #ffffff;
+  position: relative;
+  padding-left: 5rem;
 }
 
-.signup-button:hover {
-  background-color: #22c55e;
+.gradientText {
+  background: linear-gradient(45deg, #ff4d4c, white);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
 }
 
-.hero-banner {
-  width: 100%;
-  max-width: 40rem; /* max-w-xl size */
-  margin-top: 1rem;
-}
 
-@media (min-width: 1024px) {
-  .hero-banner {
-    margin-top: 0;
+@media (min-width: 300px) and (max-width: 600px) {
+  /* Tailwind 'lg' breakpoint */
+
+  .logo {
+    width: 50px; /* Adjust as needed for your layout */
+    height: auto; /* Keeps the aspect ratio of the image */
+    margin-bottom: 5px; /* Adjust margin as needed */
+    padding: 0px; /* Adds some space around the logo */
+    transition: transform 0.3s ease; /* Smooth transition for hover effects */
+  }
+
+  .loginStyle {
+    padding: 5px;
+    color: black;
+    font-size: 10px;
+    border-radius: 8px;
+    cursor: pointer;
+    margin-right: 20px;
+    font-family: "inika";
+  }
+
+  .homeSectionMain {
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+  padding-left: 0rem;
+
   }
 }
-.feature {
-  z-index: -40;
-}
-
-.feature-section {
-  width: 100%;
-  max-width: 1080px;
-  margin: auto;
-  padding-top: 1rem;
-  z-index: -20;
-}
-
-.feature-title {
-  font-family: 'Mullish', sans-serif;
-  padding-top: 7rem;
-  color: #000080; /* Deep blue color, replace with the exact color used in 'text-deepBlueHead' */
-  font-weight: 800;
-  font-size: 2.5rem;
-  line-height: 3.375rem;
-  margin-left: 16rem;
-  z-index: 5;
-}
-
-.divider-gradient {
-  width: 700px;
-  margin: auto;
-  height: 2px;
-  background: linear-gradient(to right, #10b981, #000000, #dc2626); /* Tailwind CSS green-600, black, red-600 */
-}
-
-.cards-container {
-  width: 100%;
-  display: flex;
-  flex-direction: column;
-  gap: 2.5rem;
-  padding: 5rem 0;
-}
-
-.card-row {
-  display: flex;
-  gap: 2.5rem;
-}
-
-.feature-card {
-  padding: 0.75rem 5rem;
-  border-radius: 0.5rem;
-  display: flex;
-  flex-direction: column;
-  border: 4px solid black;
-  width: 1200px;
-  height: 220px;
-  cursor: pointer;
-  transition: transform 200ms;
-}
-
-.feature-card:hover {
-  transform: scale(1.05);
-}
-
-.card-background {
-  background-color: transparent;
-}
-
-.card-background:hover {
-  background-color: black;
-}
-
-.card-title {
-  font-family: 'Mullish', sans-serif;
-  font-weight: bold;
-  color: #4b5563; /* Tailwind CSS grayText */
-  font-size: 1.25rem;
-  padding-top: 1rem;
-}
-
-.card-title:hover {
-  color: #10b981; /* green-600 */
-}
-
-.card-description {
-  font-family: 'Mullish', sans-serif;
-  color: #4b5563; /* Tailwind CSS grayText */
-  font-size: 1.25rem;
-  font-weight: bold;
-  line-height: normal;
-  padding: 0.75rem 0;
-}
-
-.card-description:hover {
-  color: #dc2626; /* red-600 */
-}
-.testimonials {
-  display: flex;
-  flex-direction: column;
-  gap: 1.5rem; /* 6 pixels converted to rem, assuming 16px base font size */
-  align-items: center;
-  border-top: 4px solid black;
-  border-bottom: 0;
-  padding-top: 8rem; /* 32 pixels converted to rem */
-  position: relative;
-}
-
-.heading {
-  position: relative;
-}
-
-.testimonial-title {
-  font-size: 2.5rem; /* 4xl size assuming 1rem is 16px */
-  font-family: 'sans-serif';
-  font-weight: bold;
-  color: black;
-}
-
-.slit {
-  display: flex;
-  flex-direction: row;
-  gap: 0.125rem; /* 2 pixels converted to rem */
-  top: 0;
-  position: relative;
-}
-
-.gradient-bar {
-  width: 20rem; /* 80 pixels converted to rem */
-  height: 0.125rem; /* 2 pixels converted to rem */
-  background: linear-gradient(to right, #ef4444, #000000, #22c55e); /* Tailwind CSS red-600, black, green-600 */
-}
-
-.footer {
-  display: flex;
-  flex-direction: column;
-  justify-content: space-around;
-  border-top: 4px solid black;
-  border-bottom: 4px solid black;
-  background-color: black;
-  color: white;
-  text-align: center;
-}
-
-@media (min-width: 1024px) { /* Tailwind 'lg' breakpoint */
-  .footer {
-    flex-direction: row;
-    text-align: left;
-  }
-}
-
-.info-section {
-  display: flex;
-  flex-direction: column;
-  gap: 1rem; /* Adjust based on design preference */
-  padding: 2rem;
-  padding-right: 1rem;
-}
-
-.main-info {
-  margin-left: 2.5rem; /* Adjust based on design preference */
-}
-
-.section-title {
-  font-family: 'serif';
-  font-weight: bold;
-  font-size: 2rem; /* 2xl size */
-  cursor: pointer;
-  transition: text-decoration 0.3s;
-}
-
-.section-title:hover {
-  text-decoration: underline;
-}
-
-.section-description {
-  width: 20rem; /* 80px, adjusted if necessary */
-  font-family: 'sans-serif';
-  font-size: 1.125rem; /* Approximate to 'lg' size in Tailwind */
-}
-
-.link-list {
-  display: flex;
-  flex-direction: column;
-  gap: 0.25rem;
-}
-
-.link-item {
-  font-family: 'sans-serif';
-  font-size: 1.25rem; /* Approximate to 'xl' size in Tailwind */
-  cursor: pointer;
-  color: white;
-  text-decoration: none;
-  transition: font-weight 0.3s;
-}
-
-.link-item:hover {
-  font-weight: bold;
-}
-
-.contact-title {
-  font-family: 'serif';
-  font-size: 1.25rem; /* 'xl' size at smaller screens and '2xl' at larger screens */
-  cursor: pointer;
-  transition: text-decoration 0.3s;
-}
-
-.contact-title:hover {
-  text-decoration: underline;
-}
-
-.email-link {
-  font-family: 'sans-serif';
-  font-size: 1.25rem;
-  color: white;
-  text-decoration: none;
-}
-
-.social-icons {
-  display: flex;
-  justify-content: center;
-  gap: 1.5rem;
-  font-size: 2rem;
-}
-
-@media (min-width: 1024px) { /* Tailwind 'lg' breakpoint */
-  .social-icons {
-    justify-content: start;
-  }
-}
-
-
-
