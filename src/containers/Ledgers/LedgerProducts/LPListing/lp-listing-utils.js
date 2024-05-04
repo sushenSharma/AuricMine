@@ -9,10 +9,16 @@ export const prepareLedgerColumns = () => {
     {
       accessorKey: "stockSymbol",
       header: "Stock Symbol",
+      muiEditTextFieldProps: {
+        type: "string",
+      },
     },
     {
       accessorKey: "buyPrice",
       header: "Buy Price",
+      muiEditTextFieldProps: {
+        type: "number",
+      },
     },
     {
       accessorKey: "buyDate",
@@ -24,10 +30,16 @@ export const prepareLedgerColumns = () => {
     {
       accessorKey: "quantity",
       header: "Quantity",
+      muiEditTextFieldProps: {
+        type: "number",
+      },
     },
     {
       accessorKey: "sellPrice",
       header: "Sell Price",
+      muiEditTextFieldProps: {
+        type: "number",
+      },
     },
     {
       accessorKey: "sellDate",
@@ -39,14 +51,23 @@ export const prepareLedgerColumns = () => {
     {
       accessorKey: "brokerage",
       header: "Brokerage",
+      muiEditTextFieldProps: {
+        type: "number",
+      },
     },
     {
       accessorKey: "daysHold",
       header: "Days Hold",
+      muiEditTextFieldProps: {
+        type: "string",
+      },
     },
     {
       accessorKey: "reasonToBuy",
       header: "Reason to Buy",
+      muiEditTextFieldProps: {
+        type: "string",
+      },
     },
     {
       accessorKey: "gttEnabled",
@@ -56,6 +77,9 @@ export const prepareLedgerColumns = () => {
     {
       accessorKey: "profitLoss",
       header: "Profit / Loss",
+      muiEditTextFieldProps: {
+        type: "number",
+      },
     },
     {
       accessorKey: "returnPercent",
@@ -68,14 +92,23 @@ export const prepareLedgerColumns = () => {
     {
       accessorKey: "amount",
       header: "Amount Invested",
+      muiEditTextFieldProps: {
+        type: "number",
+      },
     },
     {
       accessorKey: "annualReturnGenerated",
       header: "Annual Return Generated",
+      muiEditTextFieldProps: {
+        type: "number",
+      },
     },
     {
       accessorKey: "roce",
       header: "Roce",
+      muiEditTextFieldProps: {
+        type: "number",
+      },
     },
   ];
 };
