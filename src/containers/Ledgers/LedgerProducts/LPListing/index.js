@@ -61,6 +61,7 @@ const LPListing = ({ items, onSubmit, onDelete, onEdit }) => {
     createDisplayMode: "row",
     editDisplayMode: "row",
     enableEditing: true,
+    initialState: { density: "compact" },
     getRowId: (row) => row.id,
     muiTableContainerProps: {
       sx: {
