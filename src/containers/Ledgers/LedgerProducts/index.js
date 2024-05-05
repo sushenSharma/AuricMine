@@ -13,11 +13,14 @@ import {
 } from "./lib/api.js";
 
 import LPListing from "./LPListing";
+import { dateValidations } from "./ledger-validations.js";
 
 const LedgerProducts = () => {
   const user_uuid = getStorageStringItem(userIdKey);
   const [productList, setProductList] = useState([]);
   const { userUUID } = useSelector((state) => state.public);
+  const [validSellDate, setValidSellDate] = useState(false);
+
   const [userID, setUserID] = useState("");
 
   useEffect(() => {
@@ -25,51 +28,59 @@ const LedgerProducts = () => {
   }, [userUUID, user_uuid]);
 
   useEffect(() => {
-    const getLedgerProductList = async () => {
-      fetchUserLedgerData(userID).then(({ data, error }) => {
-        if (error) {
-          console.log(error);
-          return;
-        }
-
-        const preparedData = prepareUserLedgerData(data);
-        setProductList(preparedData);
-      });
-    };
-    if (userID) getLedgerProductList();
+    if (userID) getLedgerProductList(userID);
   }, [userID]);
 
+  const getLedgerProductList = async (userID) => {
+    fetchUserLedgerData(userID).then(({ data, error }) => {
+      if (error) {
+        console.log(error);
+        return;
+      }
+
+      const preparedData = prepareUserLedgerData(data);
+      setProductList(preparedData);
+    });
+  };
   const onDeleteHandler = async (dataID) => {
     try {
       await deleteUserLedgerData(dataID);
       setProductList((currentList) =>
         currentList.filter((item) => item.id !== dataID)
       );
-      console.log("Deleted successfully");
     } catch (error) {
       console.error("Error deleting data:", error);
     }
   };
 
-  const onFinishHandler = (values, action) => {
+  const onFinishHandler = (values, action, table) => {
     const { id } = values;
     const rowData = getSubmissionData(values, user_uuid);
     if (!_.isEmpty(rowData)) {
-      action === "insert" && onSubmit(rowData);
-      action === "update" && onUpdate(id, rowData);
+      action === "insert" && onSubmit(rowData, table);
+      action === "update" && onUpdate(id, rowData, table);
     }
   };
 
-  const onSubmit = async (rowData) => {
-    const { data, error } = await postUserLedgerData(rowData);
-    console.log("data", data);
-    console.log("error", error);
+  const onSubmit = async (rowData, table) => {
+    const valid = dateValidations(rowData[0]);
+
+    if (valid) {
+      postUserLedgerData(rowData)
+        .then((response) => {
+          table.setCreatingRow(null);
+          getLedgerProductList(userID);
+        })
+        .catch((error) => console.error);
+    } else {
+      setValidSellDate(true);
+    }
   };
 
-  const onUpdate = (dataID, updatedData) => {
+  const onUpdate = (dataID, updatedData, table) => {
     updateUserLedgerData(dataID, updatedData)
       .then((response) => {
-        console.log("Update successful:", response);
+        table.setEditingRow(null);
       })
       .catch((error) => {
         console.error("Error updating data:", error);
@@ -83,6 +94,8 @@ const LedgerProducts = () => {
         onSubmit={onFinishHandler}
         onDelete={onDeleteHandler}
         onEdit={onFinishHandler}
+        invalidSellDate={validSellDate}
+        sellDateFocused={() => setValidSellDate(false)}
       />
     </div>
   );

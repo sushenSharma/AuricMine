@@ -13,4 +13,5 @@ export const errorMessage = {
   amount: "Amount is Required",
   annualReturnGenerated: "Annual Return Generated is Required",
   roce: "Roce is Required",
+  lessSellDate: "Sell date cannot be less than buy date.",
 };

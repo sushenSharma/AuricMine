@@ -1,6 +1,4 @@
-import { TextField } from "@mui/material";
-
-export const prepareLedgerColumns = (validationErrors) => {
+export const prepareLedgerColumns = (validationErrors, onColumnFocus) => {
   return [
     {
       accessorKey: "id",
@@ -16,6 +14,11 @@ export const prepareLedgerColumns = (validationErrors) => {
         required: true,
         error: !!validationErrors?.stockSymbol,
         helperText: validationErrors?.stockSymbol,
+        onFocus: () =>
+          onColumnFocus({
+            ...validationErrors,
+            stockSymbol: undefined,
+          }),
       },
     },
     {
@@ -27,7 +30,11 @@ export const prepareLedgerColumns = (validationErrors) => {
         inputProps: { min: 0 },
         error: !!validationErrors?.buyPrice,
         helperText: validationErrors?.buyPrice,
-        min: 0,
+        onFocus: () =>
+          onColumnFocus({
+            ...validationErrors,
+            buyPrice: undefined,
+          }),
       },
     },
     {
@@ -38,6 +45,11 @@ export const prepareLedgerColumns = (validationErrors) => {
         required: true,
         error: !!validationErrors?.buyDate,
         helperText: validationErrors?.buyDate,
+        onFocus: () =>
+          onColumnFocus({
+            ...validationErrors,
+            buyDate: undefined,
+          }),
       },
     },
     {
@@ -49,6 +61,11 @@ export const prepareLedgerColumns = (validationErrors) => {
         inputProps: { min: 0 },
         error: !!validationErrors?.quantity,
         helperText: validationErrors?.quantity,
+        onFocus: () =>
+          onColumnFocus({
+            ...validationErrors,
+            quantity: undefined,
+          }),
       },
     },
     {
@@ -60,6 +77,11 @@ export const prepareLedgerColumns = (validationErrors) => {
         inputProps: { min: 0 },
         error: !!validationErrors?.sellPrice,
         helperText: validationErrors?.sellPrice,
+        onFocus: () =>
+          onColumnFocus({
+            ...validationErrors,
+            sellPrice: undefined,
+          }),
       },
     },
     {
@@ -70,6 +92,14 @@ export const prepareLedgerColumns = (validationErrors) => {
         required: true,
         error: !!validationErrors?.sellDate,
         helperText: validationErrors?.sellDate,
+        onFocus: () =>
+          onColumnFocus(
+            {
+              ...validationErrors,
+              sellDate: undefined,
+            },
+            "sellDate"
+          ),
       },
     },
     {
@@ -96,35 +126,27 @@ export const prepareLedgerColumns = (validationErrors) => {
         required: true,
         error: !!validationErrors?.reasonToBuy,
         helperText: validationErrors?.reasonToBuy,
+        onFocus: () =>
+          onColumnFocus({
+            ...validationErrors,
+            reasonToBuy: undefined,
+          }),
       },
     },
     {
       accessorKey: "gttEnabled",
       header: "GTT Enabled",
+      editVariant: "select",
+      editSelectOptions: ["yes", "no"],
       muiEditTextFieldProps: {
-        select: true, // This should be 'select', not 'type'
-        required: true,
-        SelectProps: {
-          // Specify the SelectProps for dropdown specific properties
-          native: true, // Use native select options
-        },
+        select: true,
         error: !!validationErrors?.gttEnabled,
         helperText: validationErrors?.gttEnabled,
-      },
-      Cell: ({ value }) => (value ? "Yes" : "No"),
-      CellEdit: (props) => {
-        return (
-          <TextField
-            {...props}
-            select
-            SelectProps={{ native: true }}
-            error={!!validationErrors?.gttEnabled}
-            helperText={validationErrors?.gttEnabled || "Select Yes or No"}
-          >
-            <option value={true}>Yes</option>
-            <option value={false}>No</option>
-          </TextField>
-        );
+        onFocus: () =>
+          onColumnFocus({
+            ...validationErrors,
+            gttEnabled: undefined,
+          }),
       },
     },
     {

@@ -11,18 +11,20 @@ export const ledgerProdcutValidation = (product) => {
     quantity: !validateRequired(product.quantity) && errorMessage.quantity,
     sellPrice: !validateRequired(product.sellPrice) && errorMessage.sellPrice,
     sellDate: !validateRequired(product.sellDate) && errorMessage.sellDate,
-    brokerage: !validateRequired(product.brokerage) && errorMessage.brokerage,
-    daysHold: !validateRequired(product.daysHold) && errorMessage.daysHold,
     reasonToBuy:
       !validateRequired(product.reasonToBuy) && errorMessage.reasonToBuy,
     gttEnabled:
       !validateRequired(product.gttEnabled) && errorMessage.gttEnabled,
-    profitLoss:
-      !validateRequired(product.profitLoss) && errorMessage.profitLoss,
-    amount: !validateRequired(product.amount) && errorMessage.amount,
-    annualReturnGenerated:
-      !validateRequired(product.annualReturnGenerated) &&
-      errorMessage.annualReturnGenerated,
-    roce: !validateRequired(product.roce) && errorMessage.roce,
   };
+};
+
+export const dateValidations = ({ buy_date, sell_date }) => {
+  const buyDate = new Date(buy_date);
+  const sellDate = new Date(sell_date);
+
+  if (buyDate > sellDate) {
+    return false;
+  }
+  
+  return true;
 };

@@ -1,20 +1,36 @@
 import _ from "lodash";
+import { Button } from "@mui/material";
 import { useEffect, useMemo, useState } from "react";
 import { prepareLedgerColumns } from "./lp-listing-utils";
-import { Box, Button, IconButton, Tooltip } from "@mui/material";
+import { errorMessage } from "../../../../utils/validation";
+import { ledgerProdcutValidation } from "../ledger-validations";
 import {
   MaterialReactTable,
   useMaterialReactTable,
 } from "material-react-table";
 
-import EditIcon from "@mui/icons-material/Edit";
-import DeleteIcon from "@mui/icons-material/Delete";
-import { ledgerProdcutValidation } from "../ledger-validations";
+import TableActions from "./TableActions";
 
-const LPListing = ({ items, onSubmit, onDelete, onEdit }) => {
+const LPListing = ({
+  items,
+  onSubmit,
+  onDelete,
+  onEdit,
+  invalidSellDate,
+  sellDateFocused,
+}) => {
   const [errors, setErrors] = useState({});
   const [columnNames, setColumnNames] = useState([]);
   const [loading, setLoading] = useState(false);
+
+  useEffect(() => {
+    if (invalidSellDate) {
+      setErrors({
+        ...errors,
+        sellDate: errorMessage.lessSellDate,
+      });
+    }
+  }, [invalidSellDate, errors]);
 
   useEffect(() => {
     if (_.isEmpty(columnNames)) {
@@ -22,30 +38,49 @@ const LPListing = ({ items, onSubmit, onDelete, onEdit }) => {
 
       tableColumns(errors);
     }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [columnNames, errors]);
 
   useEffect(() => {
     if (!_.isEmpty(errors)) {
       tableColumns(errors);
     }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [errors]);
 
+  const onColumnFocusHandler = (validationErrors, focusedColumn = "") => {
+    setErrors({
+      ...validationErrors,
+    });
+
+    if (focusedColumn === "sellDate" && invalidSellDate) {
+      sellDateFocused();
+      setErrors({
+        ...validationErrors,
+        sellDate: undefined,
+      });
+    }
+  };
+
   const tableColumns = (validationErrors) => {
-    const preparedColumns = prepareLedgerColumns(validationErrors);
+    const preparedColumns = prepareLedgerColumns(
+      validationErrors,
+      onColumnFocusHandler
+    );
     setColumnNames(preparedColumns);
     setLoading(false);
   };
 
   const columns = useMemo(() => columnNames, [columnNames]);
 
-  const handleCreateProduct = (values) => {
+  const handleCreateProduct = (values, table) => {
     const newValidationErrors = ledgerProdcutValidation(values);
     if (Object.values(newValidationErrors).some((error) => error)) {
       setErrors(newValidationErrors);
       return;
     }
     setErrors({});
-    onSubmit(values, "insert");
+    onSubmit(values, "insert", table);
   };
 
   const openDeleteConfirmModal = (row) => {
@@ -68,23 +103,17 @@ const LPListing = ({ items, onSubmit, onDelete, onEdit }) => {
         minHeight: "500px",
       },
     },
-    onCreatingRowCancel: () => console.log("onCreating Row Cancel"),
-    onCreatingRowSave: ({ values }) => handleCreateProduct(values),
-    onEditingRowCancel: () => console.log("on editing row cancel"),
-    onEditingRowSave: ({ values }) => onEdit(values, "update"),
+    onCreatingRowCancel: () => setErrors({}),
+    onCreatingRowSave: ({ values, table }) =>
+      handleCreateProduct(values, table),
+    onEditingRowCancel: () => setErrors({}),
+    onEditingRowSave: ({ values, table }) => onEdit(values, "update", table),
     renderRowActions: ({ row, table }) => (
-      <Box sx={{ display: "flex", gap: "1rem" }}>
-        <Tooltip title="Edit">
-          <IconButton onClick={() => table.setEditingRow(row)}>
-            <EditIcon />
-          </IconButton>
-        </Tooltip>
-        <Tooltip title="Delete">
-          <IconButton color="error" onClick={() => openDeleteConfirmModal(row)}>
-            <DeleteIcon />
-          </IconButton>
-        </Tooltip>
-      </Box>
+      <TableActions
+        table={table}
+        row={row}
+        openModal={openDeleteConfirmModal}
+      />
     ),
     renderTopToolbarCustomActions: ({ table }) => (
       <Button
