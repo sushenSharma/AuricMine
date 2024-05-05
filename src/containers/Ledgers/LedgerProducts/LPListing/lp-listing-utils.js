@@ -1,3 +1,5 @@
+import { TextField } from "@mui/material";
+
 export const prepareLedgerColumns = (validationErrors) => {
   return [
     {
@@ -22,8 +24,10 @@ export const prepareLedgerColumns = (validationErrors) => {
       muiEditTextFieldProps: {
         type: "number",
         required: true,
+        inputProps: { min: 0 },
         error: !!validationErrors?.buyPrice,
         helperText: validationErrors?.buyPrice,
+        min: 0,
       },
     },
     {
@@ -42,6 +46,7 @@ export const prepareLedgerColumns = (validationErrors) => {
       muiEditTextFieldProps: {
         type: "number",
         required: true,
+        inputProps: { min: 0 },
         error: !!validationErrors?.quantity,
         helperText: validationErrors?.quantity,
       },
@@ -52,6 +57,7 @@ export const prepareLedgerColumns = (validationErrors) => {
       muiEditTextFieldProps: {
         type: "number",
         required: true,
+        inputProps: { min: 0 },
         error: !!validationErrors?.sellPrice,
         helperText: validationErrors?.sellPrice,
       },
@@ -71,9 +77,7 @@ export const prepareLedgerColumns = (validationErrors) => {
       header: "Brokerage",
       muiEditTextFieldProps: {
         type: "number",
-        required: true,
-        error: !!validationErrors?.brokerage,
-        helperText: validationErrors?.brokerage,
+        disabled: true,
       },
     },
     {
@@ -81,9 +85,7 @@ export const prepareLedgerColumns = (validationErrors) => {
       header: "Days Hold",
       muiEditTextFieldProps: {
         type: "string",
-        required: true,
-        error: !!validationErrors?.daysHold,
-        helperText: validationErrors?.daysHold,
+        disabled: true,
       },
     },
     {
@@ -100,21 +102,37 @@ export const prepareLedgerColumns = (validationErrors) => {
       accessorKey: "gttEnabled",
       header: "GTT Enabled",
       muiEditTextFieldProps: {
-        type: "select",
-        requird: true,
+        select: true, // This should be 'select', not 'type'
+        required: true,
+        SelectProps: {
+          // Specify the SelectProps for dropdown specific properties
+          native: true, // Use native select options
+        },
         error: !!validationErrors?.gttEnabled,
         helperText: validationErrors?.gttEnabled,
       },
       Cell: ({ value }) => (value ? "Yes" : "No"),
+      CellEdit: (props) => {
+        return (
+          <TextField
+            {...props}
+            select
+            SelectProps={{ native: true }}
+            error={!!validationErrors?.gttEnabled}
+            helperText={validationErrors?.gttEnabled || "Select Yes or No"}
+          >
+            <option value={true}>Yes</option>
+            <option value={false}>No</option>
+          </TextField>
+        );
+      },
     },
     {
       accessorKey: "profitLoss",
       header: "Profit / Loss",
       muiEditTextFieldProps: {
         type: "number",
-        requird: true,
-        error: !!validationErrors?.profitLoss,
-        helperText: validationErrors?.profitLoss,
+        disabled: true,
       },
     },
     {
@@ -122,9 +140,7 @@ export const prepareLedgerColumns = (validationErrors) => {
       header: "Amount Invested",
       muiEditTextFieldProps: {
         type: "number",
-        requird: true,
-        error: !!validationErrors?.amount,
-        helperText: validationErrors?.amount,
+        disabled: true,
       },
     },
     {
@@ -132,9 +148,7 @@ export const prepareLedgerColumns = (validationErrors) => {
       header: "Annual Return Generated",
       muiEditTextFieldProps: {
         type: "number",
-        requird: true,
-        error: !!validationErrors?.annualReturnGenerated,
-        helperText: validationErrors?.annualReturnGenerated,
+        disabled: true,
       },
     },
     {
@@ -142,9 +156,7 @@ export const prepareLedgerColumns = (validationErrors) => {
       header: "Roce",
       muiEditTextFieldProps: {
         type: "number",
-        requird: true,
-        error: !!validationErrors?.roce,
-        helperText: validationErrors?.roce,
+        disabled: true,
       },
     },
   ];
