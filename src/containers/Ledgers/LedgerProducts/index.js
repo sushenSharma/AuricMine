@@ -1,25 +1,32 @@
 import _ from "lodash";
 import { useEffect, useState } from "react";
 import { userIdKey } from "../../../constants.js";
+import { getSubmissionData } from "./hooks.js";
+import { useSelector } from "react-redux";
+import { prepareUserLedgerData } from "./ledger-products-utils.js";
 import { getStorageStringItem } from "../../../utils/common-utils.js";
-
-import LPListing from "./LPListing";
 import {
   deleteUserLedgerData,
   fetchUserLedgerData,
   postUserLedgerData,
   updateUserLedgerData,
 } from "./lib/api.js";
-import { prepareUserLedgerData } from "./ledger-products-utils.js";
-import { getSubmissionData } from "./hooks.js";
+
+import LPListing from "./LPListing";
 
 const LedgerProducts = () => {
   const user_uuid = getStorageStringItem(userIdKey);
   const [productList, setProductList] = useState([]);
+  const { userUUID } = useSelector((state) => state.public);
+  const [userID, setUserID] = useState("");
 
   useEffect(() => {
-    const getLedgerProductList = () => {
-      fetchUserLedgerData(user_uuid).then(({ data, error }) => {
+    if (userUUID || user_uuid) setUserID(userUUID || user_uuid);
+  }, [userUUID, user_uuid]);
+
+  useEffect(() => {
+    const getLedgerProductList = async () => {
+      fetchUserLedgerData(userID).then(({ data, error }) => {
         if (error) {
           console.log(error);
           return;
@@ -29,9 +36,8 @@ const LedgerProducts = () => {
         setProductList(preparedData);
       });
     };
-
-    getLedgerProductList();
-  }, [user_uuid]);
+    if (userID) getLedgerProductList();
+  }, [userID]);
 
   const onDeleteHandler = async (dataID) => {
     deleteUserLedgerData(dataID)

@@ -9,25 +9,44 @@ import {
 
 import EditIcon from "@mui/icons-material/Edit";
 import DeleteIcon from "@mui/icons-material/Delete";
+import { ledgerProdcutValidation } from "../ledger-validations";
 
 const LPListing = ({ items, onSubmit, onDelete, onEdit }) => {
+  const [errors, setErrors] = useState({});
   const [columnNames, setColumnNames] = useState([]);
   const [loading, setLoading] = useState(false);
 
   useEffect(() => {
     if (_.isEmpty(columnNames)) {
       setLoading(true);
-      tableColumns();
-    }
-  }, [columnNames]);
 
-  const tableColumns = () => {
-    const preparedColumns = prepareLedgerColumns();
+      tableColumns(errors);
+    }
+  }, [columnNames, errors]);
+
+  useEffect(() => {
+    if (!_.isEmpty(errors)) {
+      tableColumns(errors);
+    }
+  }, [errors]);
+
+  const tableColumns = (validationErrors) => {
+    const preparedColumns = prepareLedgerColumns(validationErrors);
     setColumnNames(preparedColumns);
     setLoading(false);
   };
 
   const columns = useMemo(() => columnNames, [columnNames]);
+
+  const handleCreateProduct = (values) => {
+    const newValidationErrors = ledgerProdcutValidation(values);
+    if (Object.values(newValidationErrors).some((error) => error)) {
+      setErrors(newValidationErrors);
+      return;
+    }
+    setErrors({});
+    onSubmit(values, "insert");
+  };
 
   const openDeleteConfirmModal = (row) => {
     if (window.confirm("Are you sure you want to delete this user?")) {
@@ -49,7 +68,7 @@ const LPListing = ({ items, onSubmit, onDelete, onEdit }) => {
       },
     },
     onCreatingRowCancel: () => console.log("onCreating Row Cancel"),
-    onCreatingRowSave: ({ values }) => onSubmit(values, "insert"),
+    onCreatingRowSave: ({ values }) => handleCreateProduct(values),
     onEditingRowCancel: () => console.log("on editing row cancel"),
     onEditingRowSave: ({ values }) => onEdit(values, "update"),
     renderRowActions: ({ row, table }) => (

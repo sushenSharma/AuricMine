@@ -1,4 +1,4 @@
-export const prepareLedgerColumns = () => {
+export const prepareLedgerColumns = (validationErrors) => {
   return [
     {
       accessorKey: "id",
@@ -11,6 +11,9 @@ export const prepareLedgerColumns = () => {
       header: "Stock Symbol",
       muiEditTextFieldProps: {
         type: "string",
+        required: true,
+        error: !!validationErrors?.stockSymbol,
+        helperText: validationErrors?.stockSymbol,
       },
     },
     {
@@ -18,6 +21,9 @@ export const prepareLedgerColumns = () => {
       header: "Buy Price",
       muiEditTextFieldProps: {
         type: "number",
+        required: true,
+        error: !!validationErrors?.buyPrice,
+        helperText: validationErrors?.buyPrice,
       },
     },
     {
@@ -25,6 +31,9 @@ export const prepareLedgerColumns = () => {
       header: "Buy Date",
       muiEditTextFieldProps: {
         type: "date",
+        required: true,
+        error: !!validationErrors?.buyDate,
+        helperText: validationErrors?.buyDate,
       },
     },
     {
@@ -32,6 +41,9 @@ export const prepareLedgerColumns = () => {
       header: "Quantity",
       muiEditTextFieldProps: {
         type: "number",
+        required: true,
+        error: !!validationErrors?.quantity,
+        helperText: validationErrors?.quantity,
       },
     },
     {
@@ -39,6 +51,9 @@ export const prepareLedgerColumns = () => {
       header: "Sell Price",
       muiEditTextFieldProps: {
         type: "number",
+        required: true,
+        error: !!validationErrors?.sellPrice,
+        helperText: validationErrors?.sellPrice,
       },
     },
     {
@@ -46,6 +61,9 @@ export const prepareLedgerColumns = () => {
       header: "Sell Date",
       muiEditTextFieldProps: {
         type: "date",
+        required: true,
+        error: !!validationErrors?.sellDate,
+        helperText: validationErrors?.sellDate,
       },
     },
     {
@@ -53,6 +71,9 @@ export const prepareLedgerColumns = () => {
       header: "Brokerage",
       muiEditTextFieldProps: {
         type: "number",
+        required: true,
+        error: !!validationErrors?.brokerage,
+        helperText: validationErrors?.brokerage,
       },
     },
     {
@@ -60,6 +81,9 @@ export const prepareLedgerColumns = () => {
       header: "Days Hold",
       muiEditTextFieldProps: {
         type: "string",
+        required: true,
+        error: !!validationErrors?.daysHold,
+        helperText: validationErrors?.daysHold,
       },
     },
     {
@@ -67,11 +91,20 @@ export const prepareLedgerColumns = () => {
       header: "Reason to Buy",
       muiEditTextFieldProps: {
         type: "string",
+        required: true,
+        error: !!validationErrors?.reasonToBuy,
+        helperText: validationErrors?.reasonToBuy,
       },
     },
     {
       accessorKey: "gttEnabled",
       header: "GTT Enabled",
+      muiEditTextFieldProps: {
+        type: "select",
+        requird: true,
+        error: !!validationErrors?.gttEnabled,
+        helperText: validationErrors?.gttEnabled,
+      },
       Cell: ({ value }) => (value ? "Yes" : "No"),
     },
     {
@@ -79,6 +112,9 @@ export const prepareLedgerColumns = () => {
       header: "Profit / Loss",
       muiEditTextFieldProps: {
         type: "number",
+        requird: true,
+        error: !!validationErrors?.profitLoss,
+        helperText: validationErrors?.profitLoss,
       },
     },
     {
@@ -86,6 +122,9 @@ export const prepareLedgerColumns = () => {
       header: "Amount Invested",
       muiEditTextFieldProps: {
         type: "number",
+        requird: true,
+        error: !!validationErrors?.amount,
+        helperText: validationErrors?.amount,
       },
     },
     {
@@ -93,6 +132,9 @@ export const prepareLedgerColumns = () => {
       header: "Annual Return Generated",
       muiEditTextFieldProps: {
         type: "number",
+        requird: true,
+        error: !!validationErrors?.annualReturnGenerated,
+        helperText: validationErrors?.annualReturnGenerated,
       },
     },
     {
@@ -100,6 +142,9 @@ export const prepareLedgerColumns = () => {
       header: "Roce",
       muiEditTextFieldProps: {
         type: "number",
+        requird: true,
+        error: !!validationErrors?.roce,
+        helperText: validationErrors?.roce,
       },
     },
   ];

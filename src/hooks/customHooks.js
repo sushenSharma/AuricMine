@@ -161,6 +161,7 @@ export const useCustomHooks = (materialdata) => {
         headers: {
           "Content-Type": "application/json",
           "api-key": openAIConfig.apiKey,
+          "Cache-Control": "no-cache",
         },
         body: JSON.stringify(requestBody),
       });

@@ -68,7 +68,7 @@ export default function TabBar(session) {
         {select === "Ledger" && (
           <Fragment>
             <Ledgers />
-            <NewGrid />
+            {/*<NewGrid />*/}
           </Fragment>
         )}
         {select === "Risk Management" && <h2>Risk Management</h2>}

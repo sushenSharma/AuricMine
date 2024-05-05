@@ -1,0 +1,16 @@
+export const errorMessage = {
+  stockSymbol: "Stock name is Required",
+  buyPrice: "Buying price is Required",
+  buyDate: "Buy date is Required",
+  quantity: "Quantity is Require",
+  sellPrice: "Sell price is Require",
+  sellDate: "Sell date is Required",
+  brokerage: "Brokerage is Required",
+  daysHold: "Days hold is Required",
+  reasonToBuy: "Reason to buy is Required",
+  gttEnabled: "GTT enabled is Required",
+  profitLoss: "Profit Loss is Required",
+  amount: "Amount is Required",
+  annualReturnGenerated: "Annual Return Generated is Required",
+  roce: "Roce is Required",
+};
