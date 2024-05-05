@@ -40,13 +40,15 @@ const LedgerProducts = () => {
   }, [userID]);
 
   const onDeleteHandler = async (dataID) => {
-    deleteUserLedgerData(dataID)
-      .then((response) => {
-        console.log("Deleted successfully:", response);
-      })
-      .catch((error) => {
-        console.error("Error deleting data:", error);
-      });
+    try {
+      await deleteUserLedgerData(dataID);
+      setProductList((currentList) =>
+        currentList.filter((item) => item.id !== dataID)
+      );
+      console.log("Deleted successfully");
+    } catch (error) {
+      console.error("Error deleting data:", error);
+    }
   };
 
   const onFinishHandler = (values, action) => {
