@@ -10,7 +10,7 @@ export const getSubmissionData = (fieldData, userUUID) => {
       brokerage: parseFloat(fieldData.brokerage) || 564,
       days_hold: Number(fieldData.daysHold) || 18,
       reason_to_buy: fieldData.reasonToBuy,
-      gtt_enabled: fieldData.gtt_enabled || "NO",
+      gtt_enabled: fieldData.gttEnabled,
       profit_loss: parseFloat(fieldData.profitLoss) || 90000,
       roce: parseFloat(fieldData.roce) || 16.6666666666667,
       annual_return_generated:

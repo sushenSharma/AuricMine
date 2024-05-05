@@ -12,7 +12,9 @@ import {
   updateUserLedgerData,
 } from "./lib/api.js";
 
+import Swal from "sweetalert2";
 import LPListing from "./LPListing";
+
 import { dateValidations } from "./ledger-validations.js";
 
 const LedgerProducts = () => {
@@ -48,6 +50,12 @@ const LedgerProducts = () => {
       setProductList((currentList) =>
         currentList.filter((item) => item.id !== dataID)
       );
+      Swal.fire({
+        title: "Success!",
+        text: "Data deleted successfully!",
+        icon: "success",
+        confirmButtonText: "OK",
+      });
     } catch (error) {
       console.error("Error deleting data:", error);
     }
@@ -70,6 +78,12 @@ const LedgerProducts = () => {
         .then((response) => {
           table.setCreatingRow(null);
           getLedgerProductList(userID);
+          Swal.fire({
+            title: "Success!",
+            text: "Data saved successfully!",
+            icon: "success",
+            confirmButtonText: "OK",
+          });
         })
         .catch((error) => console.error);
     } else {
@@ -81,6 +95,12 @@ const LedgerProducts = () => {
     updateUserLedgerData(dataID, updatedData)
       .then((response) => {
         table.setEditingRow(null);
+        Swal.fire({
+          title: "Success!",
+          text: "Data saved successfully!",
+          icon: "success",
+          confirmButtonText: "OK",
+        });
       })
       .catch((error) => {
         console.error("Error updating data:", error);

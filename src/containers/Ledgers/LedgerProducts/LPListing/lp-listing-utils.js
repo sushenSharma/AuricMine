@@ -137,7 +137,7 @@ export const prepareLedgerColumns = (validationErrors, onColumnFocus) => {
       accessorKey: "gttEnabled",
       header: "GTT Enabled",
       editVariant: "select",
-      editSelectOptions: ["yes", "no"],
+      editSelectOptions: ["YES", "NO"],
       muiEditTextFieldProps: {
         select: true,
         error: !!validationErrors?.gttEnabled,

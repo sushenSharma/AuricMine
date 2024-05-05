@@ -84,7 +84,7 @@ const LPListing = ({
   };
 
   const openDeleteConfirmModal = (row) => {
-    if (window.confirm("Are you sure you want to delete this user?")) {
+    if (window.confirm("Are you sure you want to delete this product?")) {
       const { id } = row;
       onDelete(id);
     }
