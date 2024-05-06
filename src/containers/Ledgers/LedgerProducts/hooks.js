@@ -16,8 +16,7 @@ export const getSubmissionData = (fieldData, userUUID) => {
       gtt_enabled: fieldData.gttEnabled,
       profit_loss: setProfitLoss(fieldData),
       roce: parseFloat(setRoce(fieldData)).toFixed(2),
-      annual_return_generated:
-        parseFloat(fieldData.annualReturnGenerated) || 1132.56721533624,
+      annual_return_generated: parseFloat(fieldData.annualReturnGenerated),
       Amount: setAmountInvested(fieldData),
       user_id: userUUID,
     },

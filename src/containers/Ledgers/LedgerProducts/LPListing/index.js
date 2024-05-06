@@ -8,6 +8,7 @@ import {
   MaterialReactTable,
   useMaterialReactTable,
 } from "material-react-table";
+import Swal from "sweetalert2";
 
 import TableActions from "./TableActions";
 
@@ -84,10 +85,21 @@ const LPListing = ({
   };
 
   const openDeleteConfirmModal = (row) => {
-    if (window.confirm("Are you sure you want to delete this product?")) {
-      const { id } = row;
-      onDelete(id);
-    }
+    Swal.fire({
+      title: "Are you sure?",
+      text: "You won't be able to revert this!",
+      icon: "warning",
+      showCancelButton: true,
+      confirmButtonColor: "#3085d6",
+      cancelButtonColor: "#d33",
+      confirmButtonText: "Yes, delete it!",
+    }).then((result) => {
+      if (result.isConfirmed) {
+        const { id } = row;
+        onDelete(id);
+        Swal.fire("Deleted!", "The product has been deleted.", "success");
+      }
+    });
   };
 
   const table = useMaterialReactTable({
@@ -122,7 +134,7 @@ const LPListing = ({
           table.setCreatingRow(true);
         }}
       >
-        Create New Product
+        INSERT NEW ROW
       </Button>
     ),
   });
