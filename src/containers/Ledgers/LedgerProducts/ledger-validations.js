@@ -25,6 +25,6 @@ export const dateValidations = ({ buy_date, sell_date }) => {
   if (buyDate > sellDate) {
     return false;
   }
-  
+
   return true;
 };
