@@ -97,7 +97,6 @@ const LPListing = ({
       if (result.isConfirmed) {
         const { id } = row;
         onDelete(id);
-        Swal.fire("Deleted!", "The product has been deleted.", "success");
       }
     });
   };
