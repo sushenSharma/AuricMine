@@ -1,20 +1,27 @@
 import React, { useEffect, useState } from "react";
-import "./assets/styles/App.css";
-import TabBar from "./components/TabBar";
 import { Auth } from "@supabase/auth-ui-react";
 import { ThemeSupa } from "@supabase/auth-ui-shared";
 import { supabase, userIdKey } from "./constants";
+import { useDispatch,useSelector } from "react-redux";
+import { getUserUUID } from "./redux/reducers/public/public-action";
+
+import TabBar from "./components/TabBar";
 import LandingPage from "./components/landing_Page";
-import Header from "./components/header";
+
+import "./assets/styles/App.css";
+
 const App = () => {
+  const dispatch = useDispatch();
+
   const [session, setSession] = useState(null);
   const [showAuth, setShowAuth] = useState(false);
+
   useEffect(() => {
     supabase.auth.getSession().then(({ data: { session } }) => {
       setSession(session);
       if (session) {
         addUserPosition(session.user.id);
-        localStorage.setItem(userIdKey, session.user.id); // Set user ID in local storage
+        localStorage.setItem(userIdKey, session.user.id);
       }
     });
 
@@ -23,8 +30,9 @@ const App = () => {
     } = supabase.auth.onAuthStateChange(async (event, session) => {
       setSession(session);
       if (event === "SIGNED_IN") {
-        await addUserPosition(session.user.id);
-        localStorage.setItem(userIdKey, session.user.id); // Set user ID in local storage
+        // await addUserPosition(session.user.id);
+        localStorage.setItem(userIdKey, session.user.id);
+        dispatch(getUserUUID(session.user.id));
       }
     });
 
@@ -44,9 +52,9 @@ const App = () => {
   const handleLogin = () => {
     setShowAuth(true); // Show the authentication component
   };
+
   return (
-    <div style={{background:"#121212"}}>
-      <Header onLogin={handleLogin} />
+    <div style={{ background: "#121212" }}>
       {!session ? (
         showAuth ? (
           <div

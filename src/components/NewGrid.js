@@ -1,31 +1,22 @@
-// React and Hooks
 import React, { useState, useEffect, useMemo } from "react";
-// Constants and styles
-import "../assets/styles/Grid.css";
-import "../assets/styles/styles.css";
-import "pikaday/css/pikaday.css";
+import styles from "../assets/styles/Response.css";
+import { supabase } from "../config/index_supabase.js";
+import { useCustomHooks } from "../hooks/customHooks.js";
+import * as LedgerTableStyle from "../assets/styles/styles.js";
 import { userIdKey } from "../constants.js";
-//Material Table Import
 import {
   MaterialReactTable,
   useMaterialReactTable,
 } from "material-react-table";
 
-// External Libraries
-import Swal from "sweetalert2";
-
-// Data and Config
-import styles from "../assets/styles/Response.css";
-import { supabase } from "../config/index_supabase.js";
-import { useCustomHooks } from "../hooks/customHooks.js";
-import * as LedgerTableStyle from "../assets/styles/styles.js";
+import "../assets/styles/Grid.css";
+import "../assets/styles/styles.css";
+import "pikaday/css/pikaday.css";
 
 export default function NewGrid() {
   let buttonClickCallback;
-  //Materialtable Declarations
   const [materialdata, setMaterialData] = useState([]);
 
-  // Fetch and process data from Supabase
   const getData = async () => {
     try {
       const userUUID = localStorage.getItem(userIdKey);
@@ -92,7 +83,7 @@ export default function NewGrid() {
         accessorKey: "gttEnabled",
         header: "GTT Enabled",
         Cell: ({ value }) => (value ? "Yes" : "No"),
-      }, // Assuming boolean value
+      },
       { accessorKey: "profitLoss", header: "Profit / Loss" },
       { accessorKey: "returnPercent", header: "Return %" },
       { accessorKey: "annualROI", header: "Annual ROI" },
@@ -107,6 +98,7 @@ export default function NewGrid() {
   const table = useMaterialReactTable({
     columns,
     data: materialdata,
+    editDisplayMode: true,
     enableColumnFilterModes: true,
     initialState: { density: "compact" },
     enableColumnOrdering: true,
