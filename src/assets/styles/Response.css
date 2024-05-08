@@ -1,0 +1,37 @@
+  .gridThemeAlpine {
+    height: 525px;
+  }
+  
+  .buttons {
+    text-align: center;
+    margin: 20px;
+  }
+  
+  .centerText {
+    text-align: center;
+  }
+  
+  .loadingText {
+    text-align: center;
+    font-size: 20px;
+    color: #333;
+    margin: 20px 0;
+  }
+  
+  .list {
+    list-style-type: none;
+    padding-left: 0;
+    margin: 0;
+    padding: 0;
+  }
+  
+  .listItem {
+    background: #f9f9f9;
+    margin: 10px 0;
+    padding: 15px;
+    border-radius: 8px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    font-size: 16px;
+    line-height: 1.6;
+  }
+  

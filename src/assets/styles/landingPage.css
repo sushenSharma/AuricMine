@@ -1,210 +1,69 @@
-@import url('https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap');
+@import url("https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap");
 
-
-.landing-page {
-    background: linear-gradient(to right, #fffacd, #ffd700); /* gradient from light yellow to a more saturated yellow */
-    color: #44526F; /* Dark text for contrast */
-    transition: background-color 0.3s;
-    font-family: 'Roboto', sans-serif;
-  }
-  
-  .top-nav {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    padding: 1rem 2rem;
-    background-color: #f0f2f1;
-}
-.top-nav a:hover {
-  color: #2370e2; /* Highlight color on hover */
+.logo {
+  width: 112px; /* Adjust as needed for your layout */
+  height: auto; /* Keeps the aspect ratio of the image */
+  margin-bottom: 10px; /* Adjust margin as needed */
+  padding: 10px; /* Adds some space around the logo */
+  transition: transform 0.3s ease; /* Smooth transition for hover effects */
 }
 
-.top-nav > * {
-    margin: 0 10px; /* Add spacing between elements */
-    white-space: nowrap; /* Prevents text from wrapping */
-}
-  .top-nav .h1  {
-    font-size: 3rem; /* Large font size */
-    color: #212121; /* White text color */
-    margin: 0; /* Reset default margin */
-    padding-right: 20px; /* Adjust as needed */
-    flex-grow: 1; /* Allows the button to be pushed to the right */
-    font-family: 'Playfair Display', sans-serif;
-  }
-  
-  
-  .auth-button {
-    padding: 1rem 2rem;
-    background-color: #2370e2; /* Button fill color */
-    color: #fff; /* Text color */
-    border: 5px solid #fff; /* White border */
-    cursor: pointer;
-    font-size: 1rem;
-    font-weight: bold;
-    transition: all 0.3s ease;
-    border-radius: 30px; /* Oval shape */
-    outline: none; /* Remove default focus outline */
-    text-decoration: none; /* Remove default text decoration */
-    display: inline-block; 
-  }
-  
-  .auth-button:hover {
-    background-color: #395947; /* Slightly lighter color on hover */
-  }
-  
-  .split-layout {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    height: calc(100vh - 50px); /* Adjust based on nav height */
-    padding: 2rem;
-    background: #f4f8fc; /* Dark background for the split layout */
-  }
-  
-  .text-content {
-    flex-basis: 50%;
-    padding-right: 2rem;
-  }
-  
- 
-  .text-content p {
-    color: #101010; /* Slightly lighter grey text for contrast */
-    margin-bottom: 2rem;
-  }
-  
-  .cta-button {
-    padding: 1rem 2rem;
-    background-color: #2370e2; /* Button fill color */
-    color: #fff; /* Text color */
-    border: 5px solid #fff; /* White border */
-    cursor: pointer;
-    font-size: 1rem;
-    font-weight: bold;
-    transition: all 0.3s ease;
-    border-radius: 30px; /* Oval shape */
-    outline: none; /* Remove default focus outline */
-    text-decoration: none; /* Remove default text decoration */
-    display: inline-block; /* Allows the use of padding and margin */
-  }
-  .cta-button:hover {
-    background-color: #5bc0de; /* Light grey for hover */
-  }
-  
-  .image-content {
-    flex-basis: 50%;
-    display: flex;
-    justify-content: center;
-  }
-  
-  .trading-image {
-    width: 100%; /* Responsive width */
-    height: auto; /* Maintain aspect ratio */
-    object-fit: contain; /* Ensures the image is fully visible */
-    object-position: center; /* Center the image within its container */
-    border-radius: 8px; /* Rounded corners */
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Drop shadow effect */
-    margin: 0 auto; /* Center the image horizontally if needed */
-}
-/* Media Query for smaller screens */
-@media (max-width: 768px) {
-    .trading-image {
-        max-width: 95vw; /* Adjust the width on smaller screens */
-    }
+.logo:hover {
+  transform: scale(1.05); /* Slightly enlarges the logo on hover */
 }
 
-  
-  body {
-    font-family: 'Roboto', sans-serif;
-  }
-  
-  .features-list {
-    list-style: none; /* Remove default list styling */
-    padding: 0;
-    margin: 2rem 0; /* Add some space before and after the list */
-  }
-  .features-list li {
-    background: #f4f8fc;
-    margin-bottom: 1rem; /* Space between list items */
-    padding: 0.5rem 1rem; /* Padding inside list items */
-    font-family: 'Roboto', sans-serif;
-    border-left: 4px solid #395947; /* A colored bar on the left for visual accent */
-    border-radius: 2px; /* Slightly rounded corners for polish */
-    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); /* Subtle shadow for depth */
-    transition: transform 0.3s ease, box-shadow 0.3s ease; /* Smooth transitions for hover effects */
-  }
-  .features-list li:hover {
-    transform: translateY(-2px); /* Slightly raise the item */
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.15); /* Enhance shadow */
-  }
+
+
+.loginStyle {
+  background-color: #ffffff;
+  padding: 5px 30px;
+  color: black;
+  font-size: 15px;
+  border-radius: 8px;
+  cursor: pointer;
+  margin-right: 20px;
+  font-family: "inika";
+}
+.homeSectionMain {
+  display: flex;
+  color: #ffffff;
+  position: relative;
+  padding-left: 5rem;
+}
+
+.gradientText {
+  background: linear-gradient(45deg, #ff4d4c, white);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+
+@media (min-width: 300px) and (max-width: 600px) {
+  /* Tailwind 'lg' breakpoint */
 
   .logo {
-    width: 150px; /* Adjust as needed for your layout */
+    width: 50px; /* Adjust as needed for your layout */
     height: auto; /* Keeps the aspect ratio of the image */
-    margin: 0; /* Adjust margin as needed */
-    padding: 10px; /* Adds some space around the logo */
+    margin-bottom: 5px; /* Adjust margin as needed */
+    padding: 0px; /* Adds some space around the logo */
     transition: transform 0.3s ease; /* Smooth transition for hover effects */
   }
-  
-  .logo:hover {
-    transform: scale(1.05); /* Slightly enlarges the logo on hover */
+
+  .loginStyle {
+    padding: 5px;
+    color: black;
+    font-size: 10px;
+    border-radius: 8px;
+    cursor: pointer;
+    margin-right: 20px;
+    font-family: "inika";
   }
 
-  .top-nav > *:first-child {
-    margin-right: auto;
+  .homeSectionMain {
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+  padding-left: 0rem;
+
   }
-
-  .nav-link {
-    font-size: 3.2rem; /* Increase the font size */
-    font-weight: 700; /* Make the font weight bold */
-    margin: 0 15px; /* Increase spacing between the links */
-    padding: 10px 0; /* Add vertical padding for better clickability */
-    display: inline-block; /* To apply padding and margin */
-    transition: color 0.3s ease, transform 0.3s ease; /* Smooth transition for hover effects */
 }
-
-#redbutton
-{
-  color: white;
-}
-#greenbutton
-{
-  color: white;
-}
-
-#redbutton:hover
-{
-    background-color: #b81111;
-    border:hidden;
-    color: black;
-}
-#greenbutton:hover
-{
-    background-color: rgb(38, 152, 16);
-    border:hidden;
-    color: black;
-}
-#signup:hover
-{
-    color: white;
-}
-
-#head,#second
-{
-    background-color:rgb(25, 25, 25);
-}
-
-#card
-{
-  background-color: white;
-}
-
-.nav{
-  color: white;
-}
-
-#card:hover
-{
-  background-color:rgb(25, 25, 25) ;
-}
-
-

@@ -1,7 +1,6 @@
 import { createClient } from "@supabase/supabase-js";
 
-// Each Column Definition results in one Column.
-export const supabase = createClient( 
+export const supabase = createClient(
   process.env.REACT_APP_SUPABASE_URL,
   process.env.REACT_APP_SUPABASE_ANON_KEY
 );
@@ -22,12 +21,8 @@ export const columns = [
   {
     headerName: "Buy Date",
     field: "buy_date",
-    //Umashankar
-    // filter: "agDateColumnFilter",
     filter: true,
     editable: true,
-    // agDateInput: CustomDateComponent,
-    // customEditor: CustomEditorComponent
   },
   {
     headerName: "Amount Invested",
@@ -44,7 +39,6 @@ export const columns = [
   {
     headerName: "Sell Date",
     field: "sell_date",
-    // filter: "agDateColumnFilter",
     filter: true,
     editable: true,
   },
