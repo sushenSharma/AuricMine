@@ -2,11 +2,13 @@ import React from "react";
 import { Box, Button, Typography, useMediaQuery, useTheme } from "@mui/material";
 import "../../assets/styles/landingPage.css"; // Import the CSS file for styling
 import lad from "../../assets/resources/landingpage.png";
+import { useNavigate } from "react-router-dom";
+import { PATHS } from "../../constants/routerConstant";
 
-export default function SectionHome({ onLogin }) {
+export default function SectionHome() {
   const theme=useTheme();
   const isMobile = useMediaQuery(theme.breakpoints.down("sm"));
-
+  const navigator=useNavigate();
   return (
     <Box
       className="homeSectionMain"
@@ -63,7 +65,7 @@ export default function SectionHome({ onLogin }) {
             padding: "1rem 2rem",
             borderRadius: "20px",
           }}
-          onClick={onLogin}
+          onClick={()=>navigator(PATHS.DEFAULT_LOGIN)}
         >
           Sign Up
         </Button>

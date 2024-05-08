@@ -1,104 +1,29 @@
 import React, { useEffect, useState } from "react";
-import { Auth } from "@supabase/auth-ui-react";
-import { ThemeSupa } from "@supabase/auth-ui-shared";
-import { supabase, userIdKey } from "./constants";
+
 import { useDispatch,useSelector } from "react-redux";
-import { getUserUUID } from "./redux/reducers/public/public-action";
+import { Navigate, Route, Routes, useLocation } from 'react-router-dom';
 
 import TabBar from "./components/TabBar";
 import LandingPage from "./components/landing_Page";
 
 import "./assets/styles/App.css";
-
+import { PATHS } from "./constants/routerConstant";
+import AuthPage from "./components/login_page";
+import PrivateRoute from "./config/private_routing";
 const App = () => {
-  const dispatch = useDispatch();
-
-  const [session, setSession] = useState(null);
-  const [showAuth, setShowAuth] = useState(false);
-
-  useEffect(() => {
-    supabase.auth.getSession().then(({ data: { session } }) => {
-      setSession(session);
-      if (session) {
-        addUserPosition(session.user.id);
-        localStorage.setItem(userIdKey, session.user.id);
-      }
-    });
-
-    const {
-      data: { subscription },
-    } = supabase.auth.onAuthStateChange(async (event, session) => {
-      setSession(session);
-      if (event === "SIGNED_IN") {
-        // await addUserPosition(session.user.id);
-        localStorage.setItem(userIdKey, session.user.id);
-        dispatch(getUserUUID(session.user.id));
-      }
-    });
-
-    return () => subscription.unsubscribe();
-  }, []);
-
-  const addUserPosition = async (userId) => {
-    const randomPositionId = Math.floor(Math.random() * 1000); // Adjust the range as needed
-    const { data, error } = await supabase.from("users_positions").insert({
-      user_id: userId,
-      position_id: randomPositionId,
-    });
-    if (error) {
-      console.error("Error inserting data:", error);
-    }
-  };
-  const handleLogin = () => {
-    setShowAuth(true); // Show the authentication component
-  };
-
-  return (
-    <div style={{ background: "#121212" }}>
-      {!session ? (
-        showAuth ? (
-          <div
-            style={{
-              width: "100vw",
-              height: "100vh",
-              display: "flex",
-              justifyContent: "center",
-              alignItems: "center",
-              backgroundColor: "#121212",
-            }}
-          >
-            <div
-              style={{
-                background: "#222d30",
-                padding: "2rem",
-                borderRadius: "1rem",
-                boxShadow: "0 4px 8px rgba(0, 0, 0, 0.5)",
-              }}
-            >
-              <Auth
-                supabaseClient={supabase}
-                appearance={{
-                  theme: ThemeSupa,
-                  variables: {
-                    default: {
-                      colors: {
-                        brand: "green",
-                        brandAccent: "green",
-                      },
-                    },
-                  },
-                }}
-                providers={["google"]}
-              />
-            </div>
-          </div>
-        ) : (
-          <LandingPage onLogin={handleLogin} />
-        )
-      ) : (
-        <TabBar sessionObj={session} />
-      )}
-    </div>
+  return (  <Routes>
+    <Route exact path={PATHS.DEFAULT_LOGIN} element={<AuthPage />} />
+    <Route exact path={PATHS.DEFAULT_HOME} element={<LandingPage/>}/>
+    <Route
+          exact
+          path={PATHS.TABLE}
+          element={
+            <PrivateRoute>
+              <TabBar />
+            </PrivateRoute>
+          }
+        />
+  </Routes>
   );
 };
 

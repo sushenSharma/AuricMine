@@ -2,10 +2,13 @@ import React, { useState } from "react";
 import { Tab, Box, Tabs, useMediaQuery, useTheme } from "@mui/material";
 import Logo from "../assets/resources/nav_image.png"; // Path to your logo image
 import "../assets/styles/landingPage.css"; // Import the CSS file for styling
+import { useNavigate } from "react-router-dom";
+import { PATHS } from "../constants/routerConstant";
 
-export default function Header({ onLogin }) {
+export default function Header() {
   const [value, setValue] = useState("home");
   const theme = useTheme();
+  const navigator=useNavigate();
   const isMobile = useMediaQuery(theme.breakpoints.down("sm"));
 
   const handleChange = (event, newValue) => {
@@ -20,7 +23,7 @@ export default function Header({ onLogin }) {
           display: "flex",
           alignItems: "center",
           paddingTop: "20px",
-          height: "40px",
+          height: "80px",
           flexDirection: "row", // Stack items vertically on mobile
         }}
       >
@@ -54,8 +57,8 @@ export default function Header({ onLogin }) {
             <Box
               className="loginStyle"
               onClick={() => {
+                navigator(PATHS.DEFAULT_LOGIN)
                 setValue("login");
-                onLogin();
               }}
             >
               Login/Sign up

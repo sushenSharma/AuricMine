@@ -6,7 +6,7 @@ import ComingSoon from "./Coming-soon";
 import NewGrid from "./NewGrid";
 import Ledgers from "../containers/Ledgers";
 
-export default function TabBar(session) {
+export default function TabBar() {
   const [select, setSelect] = useState("Ledger");
   return (
     <>
@@ -48,7 +48,7 @@ export default function TabBar(session) {
             style={{ display: "block", marginLeft: "auto" }}
           >
             <strong>Welcome: </strong>
-            {session.sessionObj.user.email}
+            {/* {session.sessionObj.user.email} */}
           </li>
           <li className="nav-item" style={{ display: "block" }}>
             <button
