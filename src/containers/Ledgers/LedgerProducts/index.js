@@ -3,6 +3,8 @@ import { useEffect, useState } from "react";
 import { userIdKey } from "../../../constants.js";
 import { getSubmissionData } from "./hooks.js";
 import { useSelector } from "react-redux";
+import { getLabel } from "../../../hooks/ use-labels.js";
+import { dateValidations } from "./ledger-validations.js";
 import { prepareUserLedgerData } from "./ledger-products-utils.js";
 import { getStorageStringItem } from "../../../utils/common-utils.js";
 import {
@@ -12,10 +14,9 @@ import {
   updateUserLedgerData,
 } from "./lib/api.js";
 
-import Swal from "sweetalert2";
 import LPListing from "./LPListing";
 
-import { dateValidations } from "./ledger-validations.js";
+import SwalNotification from "../../../components/SwalNotification/index.js";
 
 const LedgerProducts = () => {
   const user_uuid = getStorageStringItem(userIdKey);
@@ -50,11 +51,12 @@ const LedgerProducts = () => {
       setProductList((currentList) =>
         currentList.filter((item) => item.id !== dataID)
       );
-      Swal.fire({
-        title: "Success!",
-        text: "Data deleted successfully!",
-        icon: "success",
-        confirmButtonText: "OK",
+
+      SwalNotification({
+        title: getLabel("successLabel"),
+        text: getLabel("deleteDateContent"),
+        iconType: "success",
+        btnLabel: getLabel("okLabel"),
       });
     } catch (error) {
       console.error("Error deleting data:", error);
@@ -79,11 +81,12 @@ const LedgerProducts = () => {
         .then((response) => {
           table.setCreatingRow(null);
           getLedgerProductList(userID);
-          Swal.fire({
-            title: "Success!",
-            text: "Data saved successfully!",
-            icon: "success",
-            confirmButtonText: "OK",
+
+          SwalNotification({
+            title: getLabel("successLabel"),
+            text: getLabel("saveDataContent"),
+            iconType: "success",
+            btnLabel: getLabel("okLabel"),
           });
         })
         .catch((error) => console.error);
@@ -95,12 +98,14 @@ const LedgerProducts = () => {
   const onUpdate = (dataID, updatedData, table) => {
     updateUserLedgerData(dataID, updatedData)
       .then((response) => {
+        getLedgerProductList(userID);
         table.setEditingRow(null);
-        Swal.fire({
-          title: "Success!",
-          text: "Data saved successfully!",
-          icon: "success",
-          confirmButtonText: "OK",
+
+        SwalNotification({
+          title: getLabel("successLabel"),
+          text: getLabel("saveDataContent"),
+          iconType: "success",
+          btnLabel: getLabel("okLabel"),
         });
       })
       .catch((error) => {
