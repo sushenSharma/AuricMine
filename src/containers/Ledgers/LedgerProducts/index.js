@@ -64,6 +64,7 @@ const LedgerProducts = () => {
   const onFinishHandler = (values, action, table) => {
     const { id } = values;
     const rowData = getSubmissionData(values, user_uuid);
+
     if (!_.isEmpty(rowData)) {
       action === "insert" && onSubmit(rowData, table);
       action === "update" && onUpdate(id, rowData, table);

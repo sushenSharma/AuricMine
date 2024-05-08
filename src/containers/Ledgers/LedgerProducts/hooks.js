@@ -24,19 +24,21 @@ export const getSubmissionData = (fieldData, userUUID) => {
 };
 
 const setProfitLoss = (fieldData) => {
-  const { quantity, sellPrice, buy_price } = fieldData;
+  const { quantity, sellPrice, buyPrice } = fieldData;
 
   const sellQty = sellPrice * quantity;
-  const buyQty = buy_price * quantity;
+  const buyQty = buyPrice * quantity;
 
-  return parseFloat(sellQty - buyQty).toFixed(2);
+  const profitLoss = (sellQty - buyQty).toFixed(2);
+
+  return profitLoss;
 };
 
 const setAmountInvested = (fieldData) => {
-  const { buy_price, quantity } = fieldData;
-  const buyQty = buy_price * quantity;
+  const { buyPrice, quantity } = fieldData;
+  const buyQty = buyPrice * quantity;
 
-  return parseFloat(buyQty).toFixed(2);
+  return buyQty.toFixed(2);
 };
 
 const setRoce = (fieldData) => {
@@ -44,17 +46,22 @@ const setRoce = (fieldData) => {
 };
 
 const setBrokerage = (fieldData) => {
-  const { buy_price, quantity, sell_price } = fieldData;
-  const buyQty = buy_price * quantity;
-  const sellQty = sell_price * quantity;
+  const { buyPrice, quantity, sellPrice } = fieldData;
+  const buyQty = buyPrice * quantity;
+  const sellQty = sellPrice * quantity;
 
   return buyQty + sellQty + totalPercentageRate + 15.93;
 };
 
 const setHoldDays = (fieldData) => {
-  const { buy_date, sell_date } = fieldData;
+  const { buyDate, sellDate } = fieldData;
 
-  const diffTime = Math.abs(sell_date - buy_date);
+  const buy = new Date(buyDate);
+  const sell = new Date(sellDate);
 
-  return diffTime;
+  const diffTime = Math.abs(sell - buy);
+
+  const diffDays = Math.ceil(diffTime / (1000 * 60 * 60 * 24));
+
+  return diffDays;
 };
