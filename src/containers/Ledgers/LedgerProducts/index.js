@@ -96,21 +96,27 @@ const LedgerProducts = () => {
   };
 
   const onUpdate = (dataID, updatedData, table) => {
-    updateUserLedgerData(dataID, updatedData)
-      .then((response) => {
-        getLedgerProductList(userID);
-        table.setEditingRow(null);
+    const valid = dateValidations(updatedData[0]);
 
-        SwalNotification({
-          title: getLabel("successLabel"),
-          text: getLabel("saveDataContent"),
-          iconType: "success",
-          btnLabel: getLabel("okLabel"),
+    if (valid) {
+      updateUserLedgerData(dataID, updatedData)
+        .then((response) => {
+          getLedgerProductList(userID);
+          table.setEditingRow(null);
+
+          SwalNotification({
+            title: getLabel("successLabel"),
+            text: getLabel("saveDataContent"),
+            iconType: "success",
+            btnLabel: getLabel("okLabel"),
+          });
+        })
+        .catch((error) => {
+          console.error("Error updating data:", error);
         });
-      })
-      .catch((error) => {
-        console.error("Error updating data:", error);
-      });
+    } else {
+      setValidSellDate(true);
+    }
   };
 
   return (
