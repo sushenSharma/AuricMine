@@ -12,9 +12,12 @@ import PrivateRoute from "./config/private_routing";
 const App = () => {
 
   return (  <Routes>
+
+    {/* for public routing */}
     <Route exact path={PATHS.DEFAULT_LOGIN} element={<AuthPage />} />
     <Route exact path={PATHS.DEFAULT_HOME} element={<LandingPage/>}/>
-    {/* <Route exact path={PATHS.TABLE} element={<TabBar/>}/> */}
+
+    {/* for private routing */}
     <Route
           exact
           path={PATHS.TABLE}
