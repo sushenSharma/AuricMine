@@ -2,7 +2,7 @@
 import { useRef, useState } from "react";
 import { supabase, openAIConfig, tableName } from "../config/index_supabase.js";
 import Swal from "sweetalert2";
-import { columns, userIdKey } from "../constants.js";
+import {  userIdKey } from "../constants.js";
 import { getData } from "./getData.js";
 const userUUID = localStorage.getItem(userIdKey);
 
