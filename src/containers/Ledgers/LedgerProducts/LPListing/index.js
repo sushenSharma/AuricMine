@@ -11,6 +11,7 @@ import {
 import Swal from "sweetalert2";
 
 import TableActions from "./TableActions";
+import { getLabel } from "../../../../hooks/ use-labels";
 
 const LPListing = ({
   items,
@@ -86,13 +87,13 @@ const LPListing = ({
 
   const openDeleteConfirmModal = (row) => {
     Swal.fire({
-      title: "Are you sure?",
-      text: "You won't be able to revert this!",
+      title: getLabel("areYouSureLabel"),
+      text: getLabel("cannotRevertLabel"),
       icon: "warning",
       showCancelButton: true,
       confirmButtonColor: "#3085d6",
       cancelButtonColor: "#d33",
-      confirmButtonText: "Yes, delete it!",
+      confirmButtonText: getLabel("deleteLabel"),
     }).then((result) => {
       if (result.isConfirmed) {
         const { id } = row;
@@ -133,7 +134,7 @@ const LPListing = ({
           table.setCreatingRow(true);
         }}
       >
-        INSERT NEW ROW
+        {getLabel("insertNewRowLabel")}
       </Button>
     ),
   });
