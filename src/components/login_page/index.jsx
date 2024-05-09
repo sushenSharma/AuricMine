@@ -1,11 +1,17 @@
-import React, {useEffect} from 'react'
+import React, { useEffect } from "react";
 import { Auth } from "@supabase/auth-ui-react";
 import { ThemeSupa } from "@supabase/auth-ui-shared";
-import { supabase, userIdKey } from '../../constants';
-import { useDispatch } from 'react-redux';
-import { getUserUUID } from '../../redux/reducers/public/public-action';
+import { supabase, userIdKey } from "../../constants";
+import { useDispatch } from "react-redux";
+import {
+  getUserDetails,
+  getUserUUID,
+} from "../../redux/reducers/public/public-action";
+import { useNavigate } from "react-router-dom";
+import { PATHS } from "../../constants/routerConstant";
 export default function AuthPage() {
-  const dispatch=useDispatch();
+  const dispatch = useDispatch();
+  const navigator = useNavigate();
   useEffect(() => {
     supabase.auth.getSession().then(({ data: { session } }) => {
       // setSession(session);
@@ -22,8 +28,10 @@ export default function AuthPage() {
       if (event === "SIGNED_IN") {
         // await addUserPosition(session.user.id);
         localStorage.setItem(userIdKey, session.user.id);
-        localStorage.setItem("token", session.access_token)
+        localStorage.setItem("token", session.access_token);
         dispatch(getUserUUID(session.user.id));
+        dispatch(getUserDetails(session.user));
+        navigator(PATHS.TABLE);
       }
     });
 
@@ -42,39 +50,39 @@ export default function AuthPage() {
   };
   return (
     <div
-            style={{
-              width: "100vw",
-              height: "100vh",
-              display: "flex",
-              justifyContent: "center",
-              alignItems: "center",
-              backgroundColor: "#121212",
-            }}
-          >
-            <div
-              style={{
-                background: "#222d30",
-                padding: "2rem",
-                borderRadius: "1rem",
-                boxShadow: "0 4px 8px rgba(0, 0, 0, 0.5)",
-              }}
-            >
-              <Auth
-                supabaseClient={supabase}
-                appearance={{
-                  theme: ThemeSupa,
-                  variables: {
-                    default: {
-                      colors: {
-                        brand: "green",
-                        brandAccent: "green",
-                      },
-                    },
-                  },
-                }}
-                providers={["google"]}
-              />
-            </div>
-          </div>
-  )
+      style={{
+        width: "100vw",
+        height: "100vh",
+        display: "flex",
+        justifyContent: "center",
+        alignItems: "center",
+        backgroundColor: "#121212",
+      }}
+    >
+      <div
+        style={{
+          background: "#222d30",
+          padding: "2rem",
+          borderRadius: "1rem",
+          boxShadow: "0 4px 8px rgba(0, 0, 0, 0.5)",
+        }}
+      >
+        <Auth
+          supabaseClient={supabase}
+          appearance={{
+            theme: ThemeSupa,
+            variables: {
+              default: {
+                colors: {
+                  brand: "green",
+                  brandAccent: "green",
+                },
+              },
+            },
+          }}
+          providers={["google"]}
+        />
+      </div>
+    </div>
+  );
 }
