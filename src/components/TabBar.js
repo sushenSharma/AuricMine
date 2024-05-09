@@ -3,11 +3,15 @@ import Posts from "./Posts";
 import "../assets/styles/TabBar.css";
 import { supabase, userIdKey } from "../constants";
 import ComingSoon from "./Coming-soon";
-import NewGrid from "./NewGrid";
 import Ledgers from "../containers/Ledgers";
+import { useSelector } from "react-redux";
+import { useNavigate } from "react-router-dom";
+import { PATHS } from "../constants/routerConstant";
 
-export default function TabBar(session) {
+export default function TabBar() {
   const [select, setSelect] = useState("Ledger");
+  const { userDetails } = useSelector((state) => state.public);
+  const navigator=useNavigate();
   return (
     <>
       <nav
@@ -48,7 +52,7 @@ export default function TabBar(session) {
             style={{ display: "block", marginLeft: "auto" }}
           >
             <strong>Welcome: </strong>
-            {session.sessionObj.user.email}
+            {userDetails.email}
           </li>
           <li className="nav-item" style={{ display: "block" }}>
             <button
@@ -56,6 +60,8 @@ export default function TabBar(session) {
               onClick={() => {
                 supabase.auth.signOut();
                 localStorage.removeItem(userIdKey);
+                localStorage.removeItem("token")
+                navigator(PATHS.DEFAULT_HOME)
               }}
             >
               Sign out

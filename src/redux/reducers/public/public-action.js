@@ -5,3 +5,9 @@ export const getUserUUID = (userUUID) => {
     dispatch(publicSliceActions.setUserUUID(userUUID));
   };
 };
+
+export const getUserDetails = (userDetails) => {
+  return (dispatch) => {
+    dispatch(publicSliceActions.setUserDetails(userDetails));
+  };
+};

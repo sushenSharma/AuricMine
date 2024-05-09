@@ -1,6 +1,6 @@
 // Fetch and process data from Supabase
-import { supabase, openAIConfig, tableName } from "../config/index_supabase.js";
-import { columns, userIdKey } from "../constants.js";
+import { supabase,  tableName } from "../config/index_supabase.js";
+import {  userIdKey } from "../constants.js";
 export const getData = async () => {
   try {
     const userUUID = localStorage.getItem(userIdKey);
