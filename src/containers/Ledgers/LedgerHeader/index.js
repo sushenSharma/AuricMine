@@ -3,7 +3,7 @@ import React from "react";
 import LedgerButton from "../../../ui-kit/Buttons/LedgerButton";
 import { getLabel } from "../../../hooks/ use-labels";
 
-const LedgerHeader = () => {
+const LedgerHeader = ({ table, getInsights, disabled }) => {
   return (
     <div className="ledger-header-container">
       <LedgerButton
@@ -15,24 +15,27 @@ const LedgerHeader = () => {
         hoverType="primary-color"
         size="md"
       />
-      <LedgerButton
-        label={getLabel("saveChangesLabel")}
-        type="outlined"
-        variant="outlined"
-        className="ledger-buttons save-changes"
-        onClick={() => console.log("save-changes")}
-        hoverType="success-color"
-        size="md"
-      />
+
       <LedgerButton
         label={getLabel("getInsightsLabel")}
         type="outlined"
         variant="outlined"
         className="ledger-buttons get-insights"
-        onClick={() => console.log("get-insights")}
+        onClick={() => !disabled && getInsights()}
         hoverType="success-color"
         size="md"
+        disable={disabled}
+      />
 
+      <LedgerButton
+        type="outlined"
+        variant="contained"
+        className="ledger-buttons create-row"
+        onClick={() => {
+          table.setCreatingRow(true);
+        }}
+        label={getLabel("insertNewRowLabel")}
+        size="md"
       />
     </div>
   );

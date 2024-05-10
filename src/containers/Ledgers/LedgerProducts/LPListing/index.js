@@ -1,5 +1,4 @@
 import _ from "lodash";
-import { Button } from "@mui/material";
 import { useEffect, useMemo, useState } from "react";
 import { prepareLedgerColumns } from "./lp-listing-utils";
 import { errorMessage } from "../../../../utils/validation";
@@ -20,6 +19,7 @@ const LPListing = ({
   onEdit,
   invalidSellDate,
   sellDateFocused,
+  tableAction,
 }) => {
   const [errors, setErrors] = useState({});
   const [columnNames, setColumnNames] = useState([]);
@@ -127,23 +127,14 @@ const LPListing = ({
         openModal={openDeleteConfirmModal}
       />
     ),
-    renderTopToolbarCustomActions: ({ table }) => (
-      <Button
-        variant="contained"
-        onClick={() => {
-          table.setCreatingRow(true);
-        }}
-      >
-        {getLabel("insertNewRowLabel")}
-      </Button>
-    ),
+    renderTopToolbarCustomActions: ({ table }) => tableAction(table),
   });
 
   if (loading) return <div>Loading...</div>;
 
   return (
     <div className="ledger-product-listing-container">
-      <MaterialReactTable table={table} />;
+      <MaterialReactTable table={table} />
     </div>
   );
 };
