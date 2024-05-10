@@ -81,7 +81,7 @@ const LedgerProducts = ({ tableAction, getUserData }) => {
       postUserLedgerData(rowData)
         .then((response) => {
           table.setCreatingRow(null);
-          getLedgerProductList(userID);
+          getLedgerProductList(userID, getUserData);
 
           SwalNotification({
             title: getLabel("successLabel"),
@@ -102,7 +102,7 @@ const LedgerProducts = ({ tableAction, getUserData }) => {
     if (valid) {
       updateUserLedgerData(dataID, updatedData)
         .then((response) => {
-          getLedgerProductList(userID);
+          getLedgerProductList(userID, getUserData);
           table.setEditingRow(null);
 
           SwalNotification({
