@@ -25,7 +25,7 @@ export default function SectionHome() {
         <Typography
           sx={{
             fontSize: "3rem", // Adjust font size for smaller screens
-            fontWeight: "500",
+            fontWeight: "600",
             textTransform: "uppercase",
             fontFamily: "Jura",
           }}
@@ -35,7 +35,7 @@ export default function SectionHome() {
         <Typography
           sx={{
             fontSize: "2rem", // Adjust font size for smaller screens
-            fontWeight: "400",
+            fontWeight: "600",
             fontFamily: "Jura",
             paddingY: isMobile ? "2rem":"5rem",
             width: isMobile ? null : "75%"
@@ -50,6 +50,7 @@ export default function SectionHome() {
           sx={{
             fontSize: "3rem", // Adjust font size for smaller screens
             fontFamily: "Jura",
+            fontWeight:"600"
           }}
         >
           Welcome to a <span className="gradientText">Smarter</span> way to Trade
@@ -83,8 +84,8 @@ export default function SectionHome() {
           backgroundSize: "cover",
           backgroundPosition: "center",
           width: "100%",
-          height: isMobile ? "50vh" : "65%", // Adjust height as needed
-          opacity: 0.3
+          height: isMobile ? "50vh" : "100%", // Adjust height as needed
+          opacity: 0.7
         }}
       />
     </Box>
