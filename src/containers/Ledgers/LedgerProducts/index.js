@@ -18,7 +18,7 @@ import LPListing from "./LPListing";
 
 import SwalNotification from "../../../components/SwalNotification/index.js";
 
-const LedgerProducts = () => {
+const LedgerProducts = ({ tableAction, getUserData }) => {
   const user_uuid = getStorageStringItem(userIdKey);
   const [productList, setProductList] = useState([]);
   const { userUUID } = useSelector((state) => state.public);
@@ -31,16 +31,17 @@ const LedgerProducts = () => {
   }, [userUUID, user_uuid]);
 
   useEffect(() => {
-    if (userID) getLedgerProductList(userID);
-  }, [userID]);
+    if (userID) getLedgerProductList(userID, getUserData);
+  }, [userID, getUserData]);
 
-  const getLedgerProductList = async (userID) => {
+  const getLedgerProductList = async (userID, getUserData) => {
     fetchUserLedgerData(userID).then(({ data, error }) => {
       if (error) {
         console.log(error);
         return;
       }
 
+      getUserData(JSON.stringify(data));
       const preparedData = prepareUserLedgerData(data);
       setProductList(preparedData);
     });
@@ -128,6 +129,7 @@ const LedgerProducts = () => {
         onEdit={onFinishHandler}
         invalidSellDate={validSellDate}
         sellDateFocused={() => setValidSellDate(false)}
+        tableAction={tableAction}
       />
     </div>
   );
