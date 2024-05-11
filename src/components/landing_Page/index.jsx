@@ -8,7 +8,7 @@ import Header from "../header";
 export default function LandingPage() {
 
   return (
-    <Box sx={{ backgroundColor: "#121212", height: "auto" }}>
+    <Box sx={{ backgroundColor: "#000000", height: "auto" }}>
       {/* Header */}
       <Header/>
       <SectionHome/>
