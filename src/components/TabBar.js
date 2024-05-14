@@ -3,7 +3,7 @@ import Posts from "./Posts";
 import "../assets/styles/TabBar.css";
 import { supabase, userIdKey } from "../constants";
 import ComingSoon from "./Coming-soon";
-import NewGrid from "./NewGrid";
+import Ledgers from "../containers/Ledgers";
 
 export default function TabBar(session) {
   console.log(session.sessionObj);
