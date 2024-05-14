@@ -5,7 +5,7 @@ import "../assets/styles/landingPage.css"; // Import the CSS file for styling
 import { useNavigate } from "react-router-dom";
 import { PATHS } from "../constants/routerConstant";
 
-export default function Header() {
+export default function Header({handleLogin}) {
   const [value, setValue] = useState("home");
   const theme = useTheme();
   const navigator=useNavigate();
@@ -56,10 +56,7 @@ export default function Header() {
           >
             <Box
               className="loginStyle"
-              onClick={() => {
-                navigator(PATHS.DEFAULT_LOGIN)
-                setValue("login");
-              }}
+              onClick={handleLogin}
             >
               Login/Sign up
             </Box>
