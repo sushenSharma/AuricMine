@@ -19,7 +19,7 @@ const LedgerHeader = ({ table, getInsights, disabled }) => {
       <LedgerButton
         label={getLabel("getInsightsLabel")}
         type="outlined"
-        variant="outlined"
+        variant="contained"
         className="ledger-buttons get-insights"
         onClick={() => !disabled && getInsights()}
         hoverType="success-color"

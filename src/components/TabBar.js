@@ -1,17 +1,14 @@
-import React, { Fragment, useState } from "react";
+import React, { useState } from "react";
 import Posts from "./Posts";
 import "../assets/styles/TabBar.css";
 import { supabase, userIdKey } from "../constants";
 import ComingSoon from "./Coming-soon";
 import Ledgers from "../containers/Ledgers";
-import { useSelector } from "react-redux";
-import { useNavigate } from "react-router-dom";
-import { PATHS } from "../constants/routerConstant";
 
-export default function TabBar() {
+export default function TabBar(session) {
+  console.log(session.sessionObj);
+
   const [select, setSelect] = useState("Ledger");
-  const { userDetails } = useSelector((state) => state.public);
-  const navigator=useNavigate();
   return (
     <>
       <nav
@@ -52,7 +49,7 @@ export default function TabBar() {
             style={{ display: "block", marginLeft: "auto" }}
           >
             <strong>Welcome: </strong>
-            {userDetails.email}
+            {session.sessionObj.user.email}
           </li>
           <li className="nav-item" style={{ display: "block" }}>
             <button
@@ -60,8 +57,6 @@ export default function TabBar() {
               onClick={() => {
                 supabase.auth.signOut();
                 localStorage.removeItem(userIdKey);
-                localStorage.removeItem("token")
-                navigator(PATHS.DEFAULT_HOME)
               }}
             >
               Sign out
@@ -71,12 +66,7 @@ export default function TabBar() {
       </nav>
 
       <div>
-        {select === "Ledger" && (
-          <Fragment>
-            <Ledgers />
-            {/*<NewGrid />*/}
-          </Fragment>
-        )}
+        {select === "Ledger" && <Ledgers></Ledgers>}
         {select === "Risk Management" && <h2>Risk Management</h2>}
         {select === "Watchlist" && <h2>Watchlist</h2>}
         {select === "Blogposts" && <Posts />}

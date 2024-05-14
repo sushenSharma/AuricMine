@@ -5,12 +5,12 @@ import SectionHome from "./section-home";
 import SectionPlatform from "./section-platform";
 import Footer from "./footer";
 import Header from "../header";
-export default function LandingPage() {
+export default function LandingPage({onLogin}) {
 
   return (
-    <Box sx={{ backgroundColor: "#121212", height: "auto" }}>
+    <Box sx={{ backgroundColor: "#000000", height: "auto" }}>
       {/* Header */}
-      <Header/>
+      <Header handleLogin={onLogin}/>
       <SectionHome/>
       <SectionPlatform />
       <Footer />
