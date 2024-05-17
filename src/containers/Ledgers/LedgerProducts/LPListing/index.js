@@ -108,40 +108,45 @@ const LPListing = ({
     createDisplayMode: "row",
     editDisplayMode: "row",
     enableEditing: true,
-    initialState: { density: "compact" },
+    initialState: { density: "comfortable" },
     getRowId: (row) => row.id,
     muiTableContainerProps: {
       sx: {
         border: "1px solid rgba(81, 81, 81, .5)",
       },
     },
+    //Table Column names
     muiTableHeadCellProps: {
       sx: {
-        color: "lightgreen",
-        backgroundColor: "#000000",
-        minWidth: "230px",
+        color: "white",
+        backgroundColor: "#403d3d",
+        minWidth: "50px",
+        alignContent: "center",
       },
     },
     muiColumnActionsButtonProps: {
       sx: {
-        color: "lightgreen",
-        borderRight: "2px solid lightgreen",
+        color: "white",
+        borderRight: "2px solid white",
         borderRadius: "0",
       },
     },
+
+    //Actual Content of table
     muiTableBodyCellProps: {
       sx: {
-        border: "0",
-        backgroundColor: "#000000",
-        color: "#fff",
+        border: "3",
+        backgroundColor: "#d0d5db",
+        color: "#000000",
       },
     },
+    //Top Right corner buttons like search, density
     muiTopToolbarProps: {
       sx: {
         backgroundColor: "#000000",
         color: "#fff",
         "& .MuiIconButton-root": {
-          color: "lightgreen",
+          color: "white",
         },
       },
     },
@@ -152,7 +157,7 @@ const LPListing = ({
         color: "#fff",
         "& .MuiIconButton-root,.MuiBox-root label, .MuiBox-root div,.MuiSvgIcon-root":
           {
-            color: "lightgreen",
+            color: "white",
           },
       },
     },
