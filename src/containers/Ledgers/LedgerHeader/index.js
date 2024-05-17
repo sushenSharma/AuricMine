@@ -2,20 +2,13 @@ import React from "react";
 
 import LedgerButton from "../../../ui-kit/Buttons/LedgerButton";
 import { getLabel } from "../../../hooks/ use-labels";
+import Download from "@mui/icons-material/DownloadOutlined";
+import AI from "@mui/icons-material/AutoFixHighOutlined";
+import AddNewRow from "@mui/icons-material/AddToPhotosOutlined";
 
 const LedgerHeader = ({ table, getInsights, disabled }) => {
   return (
     <div className="ledger-header-container">
-      <LedgerButton
-        label={getLabel("downloadCSVLabel")}
-        type="outlined"
-        variant="outlined"
-        className="ledger-buttons download-csv"
-        onClick={() => console.log("download-csv")}
-        hoverType="primary-color"
-        size="md"
-      />
-
       <LedgerButton
         label={getLabel("getInsightsLabel")}
         type="outlined"
@@ -25,6 +18,7 @@ const LedgerHeader = ({ table, getInsights, disabled }) => {
         hoverType="success-color"
         size="md"
         disable={disabled}
+        icon={<AI></AI>}
       />
 
       <LedgerButton
@@ -36,6 +30,19 @@ const LedgerHeader = ({ table, getInsights, disabled }) => {
         }}
         label={getLabel("insertNewRowLabel")}
         size="md"
+        icon={<AddNewRow></AddNewRow>}
+      />
+
+      <LedgerButton
+        label={getLabel("downloadCSVLabel")}
+        type="outlined"
+        variant="contained"
+        className="ledger-buttons download-csv"
+        onClick={() => console.log("download-csv")}
+        hoverType="primary-color"
+        size="md"
+        icon={<Download></Download>}
+        style={{ marginLeft: "auto" }}
       />
     </div>
   );

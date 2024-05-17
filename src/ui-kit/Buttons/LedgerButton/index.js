@@ -27,6 +27,7 @@ const LedgerButton = ({
     <Button
       type={htmlType}
       id={label}
+      startIcon={icon}
       className={`${className} button-box-shadow ledger-button button-${
         size ? size : "default"
       } ${!disable ? `${type}-enabled` : `${type}-disabled`}${
@@ -39,7 +40,6 @@ const LedgerButton = ({
       style={{ ...styles }}
       variant={variant}
     >
-      {icon && <span>{icon}</span>}
       {label && label}
     </Button>
   );
