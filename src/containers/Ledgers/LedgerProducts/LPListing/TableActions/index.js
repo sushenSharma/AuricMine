@@ -1,5 +1,6 @@
 import React from "react";
 import { Box, IconButton, Tooltip } from "@mui/material";
+
 import EditIcon from "@mui/icons-material/Edit";
 import DeleteIcon from "@mui/icons-material/Delete";
 
@@ -7,7 +8,7 @@ const TableActions = ({ table, row, openModal }) => {
   return (
     <Box sx={{ display: "flex", gap: "1rem" }}>
       <Tooltip title="Edit">
-        <IconButton onClick={() => table.setEditingRow(row)}>
+        <IconButton onClick={() => table.setEditingRow(row)} color="success">
           <EditIcon />
         </IconButton>
       </Tooltip>

@@ -1,16 +1,16 @@
 import _ from "lodash";
 import { useEffect, useMemo, useState } from "react";
 import { prepareLedgerColumns } from "./lp-listing-utils";
+import { getLabel } from "../../../../hooks/ use-labels";
 import { errorMessage } from "../../../../utils/validation";
 import { ledgerProdcutValidation } from "../ledger-validations";
 import {
   MaterialReactTable,
   useMaterialReactTable,
 } from "material-react-table";
-import Swal from "sweetalert2";
 
+import Swal from "sweetalert2";
 import TableActions from "./TableActions";
-import { getLabel } from "../../../../hooks/ use-labels";
 
 const LPListing = ({
   items,
@@ -112,9 +112,52 @@ const LPListing = ({
     getRowId: (row) => row.id,
     muiTableContainerProps: {
       sx: {
-        minHeight: "500px",
+        border: "1px solid rgba(81, 81, 81, .5)",
       },
     },
+    muiTableHeadCellProps: {
+      sx: {
+        color: "lightgreen",
+        backgroundColor: "#000000",
+        minWidth: "230px",
+      },
+    },
+    muiColumnActionsButtonProps: {
+      sx: {
+        color: "lightgreen",
+        borderRight: "2px solid lightgreen",
+        borderRadius: "0",
+      },
+    },
+    muiTableBodyCellProps: {
+      sx: {
+        border: "0",
+        backgroundColor: "#000000",
+        color: "#fff",
+      },
+    },
+    muiTopToolbarProps: {
+      sx: {
+        backgroundColor: "#000000",
+        color: "#fff",
+        "& .MuiIconButton-root": {
+          color: "lightgreen",
+        },
+      },
+    },
+    muiBottomToolbarProps: {
+      className: "custom-footer",
+      sx: {
+        backgroundColor: "#000000",
+        color: "#fff",
+        "& .MuiIconButton-root,.MuiBox-root label, .MuiBox-root div,.MuiSvgIcon-root":
+          {
+            color: "lightgreen",
+          },
+      },
+    },
+
+    onActionCellChange: () => console.log("1"),
     onCreatingRowCancel: () => setErrors({}),
     onCreatingRowSave: ({ values, table }) =>
       handleCreateProduct(values, table),
