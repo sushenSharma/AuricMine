@@ -16,6 +16,7 @@ import {
 } from "@mui/material";
 import MenuIcon from "@mui/icons-material/Menu";
 import HomeIcon from "@mui/icons-material/Home";
+import { Button } from "@mui/material";
 import RiskManagementIcon from "@mui/icons-material/Assessment";
 import WatchlistIcon from "@mui/icons-material/Visibility";
 import BlogIcon from "@mui/icons-material/Article";
@@ -29,7 +30,7 @@ function LogoIcon(props) {
   return (
     <Box
       sx={{
-        height: 60, // Ensures the container height is fixed
+        height: 130, // Ensures the container height is fixed
         // Optional: you might set a width if the logo is not square
         display: "flex",
         alignItems: "center", // Vertically centers the logo
@@ -117,18 +118,14 @@ export default function TabBar(session) {
           },
         }}
       >
+        <LogoIcon
+          style={{
+            color: theme.palette.secondary.main,
+            marginBottom: 1,
+          }}
+        />
         <List>
           {[
-            {
-              logo: (
-                <LogoIcon
-                  style={{
-                    color: theme.palette.secondary.main,
-                    marginBottom: 1,
-                  }}
-                />
-              ),
-            },
             {
               text: "Home",
               icon: <HomeIcon />,
@@ -155,21 +152,39 @@ export default function TabBar(session) {
               action: () => setSelect("Coming soon"),
             },
           ].map((item, index) => (
-            <ListItem
-              button
+            <Button
               key={index}
+              startIcon={item.icon}
               onClick={() => {
                 item.action();
                 toggleDrawer();
               }}
               sx={{
-                "&:hover": { backgroundColor: theme.palette.action.hover },
+                justifyContent: "flex-start",
+                color: "white",
+                width: "100%",
+                textTransform: "none",
+                padding: "10px 20px",
+                fontSize: "0.875rem", // Smaller base font size for better mobile adaptation
+                fontWeight: "medium",
+                borderRadius: "8px",
+                "&:hover": {
+                  backgroundColor: theme.palette.primary.dark,
+                  boxShadow: "0 2px 8px rgba(0,0,0,0.2)",
+                },
+                "& .MuiButton-startIcon": {
+                  color: theme.palette.secondary.main,
+                  marginRight: "8px",
+                  fontSize: "1.25em",
+                },
+                [theme.breakpoints.up("sm")]: {
+                  fontSize: "1rem", // Larger font size for larger screens
+                  padding: "12px 24px", // Larger padding for larger screens
+                },
               }}
             >
-              {item.logo ? item.logo : null}
-              <ListItemIcon>{item.icon}</ListItemIcon>
-              <ListItemText primary={item.text} />
-            </ListItem>
+              {item.text}
+            </Button>
           ))}
         </List>
       </Drawer>
