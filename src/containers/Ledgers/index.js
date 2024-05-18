@@ -8,6 +8,7 @@ import LedgerProducts from "./LedgerProducts";
 import ContentWrapper from "../../components/ContentWrapper";
 import LedgerInsights from "./LedgerInsights";
 import ModalContainer from "../../components/ModalContainer";
+import Box from "@mui/material/Box";
 
 import "./styles.css";
 
@@ -72,18 +73,30 @@ const Ledgers = () => {
   };
 
   return (
-    <ContentWrapper className="ledgers-container">
-      <LedgerHeader
-        table={tableAction}
-        getInsights={() => getInsightsWithAI(userData)}
-        disabled={disabled}
-      />
-      <LedgerProducts
-        tableAction={handleTableAction}
-        getUserData={setUserData}
-      />
-      {renderModal()}
-    </ContentWrapper>
+    <Box
+      sx={{
+        width: "100%",
+        p: 2,
+        border: "1px solid grey",
+        maxWidth: "auto",
+        margin: "auto",
+        overflowX: "auto", // Horizontal scrolling
+        overflowY: "false", // No vertical scrolling
+      }}
+    >
+      <ContentWrapper className="ledgers-container">
+        <LedgerHeader
+          table={tableAction}
+          getInsights={() => getInsightsWithAI(userData)}
+          disabled={disabled}
+        />
+        <LedgerProducts
+          tableAction={handleTableAction}
+          getUserData={setUserData}
+        />
+        {renderModal()}
+      </ContentWrapper>
+    </Box>
   );
 };
 
