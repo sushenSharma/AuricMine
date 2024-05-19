@@ -105,6 +105,7 @@ const LPListing = ({
   const table = useMaterialReactTable({
     columns,
     data: items,
+    enableColumnOrdering: true,
     createDisplayMode: "row",
     editDisplayMode: "row",
     enableEditing: true,
