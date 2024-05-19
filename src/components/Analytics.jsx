@@ -1,84 +1,124 @@
 import React from 'react';
-import { Pie, Line } from 'react-chartjs-2';
-import { Box, Typography, useTheme, Grid } from '@mui/material';
-import Stack from '@mui/material/Stack';
-import { BarChart, LineChart,Gauge, gaugeClasses  } from '@mui/x-charts';
+import { BarChart, LineChart, Gauge, PieChart } from '@mui/x-charts';
+import { Box, Typography, useTheme, Grid, Divider, Stack } from '@mui/material';
 
 const Analytics = ({ data }) => {
   const theme = useTheme();
 
-  // Line Chart settings
-  const lineOptions = {
-    responsive: true,
-    plugins: {
-      legend: {
-        position: 'top',
-      },
-    },
-  };
-
-  const pieData = [
-    { label: 'Group A', value: 400 },
-    { label: 'Group B', value: 300 },
-    { label: 'Group C', value: 300 },
-    { label: 'Group D', value: 200 },
-    { label: 'Group E', value: 278 },
-    { label: 'Group F', value: 189 },
+  // Example gauge data
+  const gaugesData = [
+    { value: 46, label: 'ROCE', description: '46%' },
+    { value: 73, label: 'Trade Accuracy', description: '73%', startAngle: -90, endAngle: 90 }
   ];
-  
-  const uData = [4000, 3000, 2000, 2780, 1890, 2390, 3490];
-  const pData = [2400, 1398, 9800, 3908, 4800, 3800, 4300];
-  const xLabels = ['Page A', 'Page B', 'Page C', 'Page D', 'Page E', 'Page F', 'Page G'];
+    // Background color
+    const bgColor = "#cfcecc"; 
+    const uData = [4000, 3000, 2000, 2780, -1890, 2390, 3490];
+    const pData = [24, 13, 98, 39, 48, 38, 43];
+
+const xLabels = [
+  'TaTa',
+  'Krsnaa',
+  'Reliance',
+  'Mahindra',
+  'Bajaj',
+  'E2E',
+  'MMForg',
+];
+
 
   return (
-    <div>
+    <div style={{ backgroundColor: bgColor, padding: '20px' }}>
       <Grid container spacing={2}>
-        <Grid item xs={12} md={6}>
+        {/* Top Row Charts */}
+        <Grid item xs={12} sm={6} sx={{paddingRight:35}}>
+          <Box sx={{ display: 'flex', justifyContent: 'center', alignItems: 'center', height: '100%' }}>
           <BarChart
-            series={[
-              { data: [3, 4, 1, 6, 5], stack: 'A', label: 'Series A1' },
-              { data: [4, 3, 1, 5, 8], stack: 'A', label: 'Series A2' },
-              { data: [4, 2, 5, 4, 1], stack: 'B', label: 'Series B1' },
-              { data: [2, 8, 1, 3, 1], stack: 'B', label: 'Series B2' },
-              { data: [10, 6, 5, 8, 9], label: 'Series C1' },
-            ]}
-            width={500}
-            height={300}
-          />
-        </Grid>
-        <Grid item xs={12} md={6}>
-          <LineChart
             width={500}
             height={300}
             series={[
-              { data: pData, label: 'pv' },
-              { data: uData, label: 'uv' },
+                {
+                data: pData,
+                label: 'Number of Days Hold',
+                id: 'pvId',
+
+                yAxisKey: 'leftAxisId',
+                },
+                {
+                data: uData,
+                label: 'Profit/Loss',
+                id: 'uvId',
+
+                yAxisKey: 'rightAxisId',
+                },
             ]}
-            xAxis={[{ scaleType: 'point', data: xLabels }]}
-          />
+            xAxis={[
+                { data: xLabels, scaleType: 'band',   tickLabelStyle: {
+                    angle: 45,
+                    textAnchor: 'start',
+                    fontSize: 12,
+                  }, }
+              ]}
+            yAxis={[{ id: 'leftAxisId' }, { id: 'rightAxisId' }]}
+            rightAxis="rightAxisId"
+    />
+          </Box>
         </Grid>
-        <Grid item xs={12} md={6}>
-          <Typography variant="h6">  <Gauge
-  value={75}
-  startAngle={-110}
-  endAngle={110}
-  sx={{
-    [`& .${gaugeClasses.valueText}`]: {
-      fontSize: 40,
-      transform: 'translate(0px, 0px)',
-    },
-  }}
-  text={
-     ({ value, valueMax }) => `${value} / ${valueMax}`
-  }
-/></Typography>
-         
+        <Grid item xs={12} sm={6}>
+          <Box sx={{ display: 'flex', justifyContent: 'center', alignItems: 'center', height: '100%' }}>
+            <LineChart
+              width={500}
+              height={300}
+              series={[
+                { data: [2400, 1398, 9800, 3908, 4800, 3800, 4300], label: 'Total Fund Value' },
+                { data: [4000, 3000, 2000, 2780, 1890, 2390, 3490], label: 'Profit/Loss' },
+              ]}
+              xAxis={[{ scaleType: 'point', data: ['10th Jan', '15th Jan', '20th Feb', '3rd Mar', '15th Mar', '28th Mar', '6th Apr'] }]}
+            />
+          </Box>
         </Grid>
-        <Grid item xs={12} md={6}>
-          <Typography variant="h6">Additional Chart 2 Placeholder</Typography>
-          {/* Placeholder for another chart */}
+
+        {/* Horizontal Divider */}
+        <Grid item xs={12}>
+          <Divider />
         </Grid>
-        
+
+        {/* Bottom Row Charts */}
+        <Grid item xs={12} sm={6} sx={{paddingRight:20}}>
+          <Box sx={{ display: 'flex', justifyContent: 'center', alignItems: 'center', height: '100%' }}>
+            <Stack direction={{ xs: 'column', sm: 'row' }} spacing={2} alignItems="center">
+              {gaugesData.map((gauge, index) => (
+                <Box key={index} sx={{ width: 300, textAlign: 'center' }}>
+                  <Gauge
+                    width={300}
+                    height={300}
+                    value={gauge.value}
+                    startAngle={gauge.startAngle || 0}
+                    endAngle={gauge.endAngle || 360}
+                  />
+                  <Typography variant="h6">{gauge.label}</Typography>
+                  <Typography variant="caption">{gauge.description}</Typography>
+                </Box>
+              ))}
+            </Stack>
+          </Box>
+        </Grid>
+        <Grid item xs={12} sm={6}>
+          <Box sx={{ display: 'flex', justifyContent: 'center', alignItems: 'center', height: '100%' }}>
+            <PieChart
+              series={[
+                {
+                  data: [
+                    { id: 0, value: 10, label: 'Mid Cap' },
+                    { id: 1, value: 15, label: 'Large Cap' },
+                    { id: 2, value: 20, label: 'Small Cap' },
+                  ],
+                },
+              ]}
+              width={500}
+              height={300}
+            />
+          </Box>
+        </Grid>
       </Grid>
     </div>
   );
