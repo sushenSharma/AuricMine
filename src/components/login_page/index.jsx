@@ -56,12 +56,12 @@ export default function AuthPage() {
         display: "flex",
         justifyContent: "center",
         alignItems: "center",
-        backgroundColor: "#121212",
+        backgroundColor: "#fffafa",
       }}
     >
       <div
         style={{
-          background: "#222d30",
+          background: "#fffafa",
           padding: "2rem",
           borderRadius: "1rem",
           boxShadow: "0 4px 8px rgba(0, 0, 0, 0.5)",

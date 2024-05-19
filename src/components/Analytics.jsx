@@ -27,7 +27,8 @@ const xLabels = [
 
 
   return (
-    <div style={{ backgroundColor: bgColor, padding: '20px' }}>
+    <div style={{ backgroundColor: "#000",padding:10 }}>
+ <div style={{ backgroundColor: bgColor,padding:5 }}>
       <Grid container spacing={2}>
         {/* Top Row Charts */}
         <Grid item xs={12} sm={6} sx={{paddingRight:35}}>
@@ -121,6 +122,8 @@ const xLabels = [
         </Grid>
       </Grid>
     </div>
+    </div>
+   
   );
 };
 
