@@ -50,7 +50,7 @@ const setBrokerage = (fieldData) => {
   const buyQty = buyPrice * quantity;
   const sellQty = sellPrice * quantity;
 
-  return buyQty + sellQty + totalPercentageRate + 15.93;
+  return buyQty * totalPercentageRate + sellQty * totalPercentageRate + 15.93;
 };
 
 const setHoldDays = (fieldData) => {

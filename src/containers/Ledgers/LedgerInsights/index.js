@@ -1,14 +1,16 @@
 import React from "react";
 
 const LedgerInsights = ({ textList }) => {
-  const list = textList.map((text, index) => {
-    if (text.length) {
-      return <li key={index}>{text}</li>;
-    }
-    return null;
-  });
-
-  return <ul className="insights-list-container">{list}</ul>;
+  return (
+    <div className="insights-list-container">
+      <div className="title">AI Generated Insights</div>
+      <ul>
+        {textList.map((text, index) =>
+          text.length ? <li key={index}>{text}</li> : null
+        )}
+      </ul>
+    </div>
+  );
 };
 
 export default LedgerInsights;
