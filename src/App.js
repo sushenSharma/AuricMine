@@ -23,10 +23,6 @@ const App = () => {
       data: { subscription },
     } = supabase.auth.onAuthStateChange(async (event, session) => {
       setSession(session);
-      if (event === "SIGNED_IN") {
-        // User explicitly signed in during this session
-        await addUserPosition(session.user.id);
-      }
     });
 
     return () => subscription.unsubscribe();
