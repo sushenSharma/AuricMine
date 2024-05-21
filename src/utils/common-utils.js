@@ -39,3 +39,11 @@ export const getStorageItem = (key) => {
 export const getStorageStringItem = (key) => {
   return localStorage.getItem(key);
 };
+
+export const removeStorageItem = (items) => {
+  if (Array.isArray(items) && items.length) {
+    items.forEach((item) => localStorage.removeItem(item));
+  } else {
+    localStorage.removeItem(items);
+  }
+};

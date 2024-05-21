@@ -1,8 +1,8 @@
 import _ from "lodash";
 import { useEffect, useMemo, useState } from "react";
 import { prepareLedgerColumns } from "./lp-listing-utils";
-import { getLabel } from "../../../../hooks/ use-labels";
-import { errorMessage } from "../../../../utils/validation";
+import { getLabel } from "../../../../../hooks/use-labels";
+import { errorMessage } from "../../../../../utils/validation";
 import { ledgerProdcutValidation } from "../ledger-validations";
 import {
   MaterialReactTable,

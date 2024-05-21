@@ -11,4 +11,10 @@ export const defaults = {
   areYouSureLabel: "Are you sure?",
   cannotRevertLabel: "You won't be able to revert this!",
   deleteLabel: "Yes, delete it!",
+
+  homeLabel: "Home",
+  riskManagementLabel: "Risk Management",
+  watchListLabel: "Watchlist",
+  analyticsLabel: "Analytics",
+  blogsLabel: "Blogs",
 };
