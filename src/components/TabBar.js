@@ -25,7 +25,7 @@ import Ledgers from "../containers/Ledgers";
 import Analytics from "./Analytics";
 import Posts from "./Posts";
 import { supabase, userIdKey } from "../constants";
-
+const drawerWidth = 240;
 function LogoIcon(props) {
   return (
     <Box
@@ -48,6 +48,28 @@ function LogoIcon(props) {
     </Box>
   );
 }
+
+const openedMixin = (theme) => ({
+  width: drawerWidth,
+  transition: theme.transitions.create("width", {
+    easing: theme.transitions.easing.sharp,
+    duration: theme.transitions.duration.enteringScreen,
+  }),
+  overflowX: "hidden",
+});
+
+const closedMixin = (theme) => ({
+  transition: theme.transitions.create("width", {
+    easing: theme.transitions.easing.sharp,
+    duration: theme.transitions.duration.leavingScreen,
+  }),
+  overflowX: "hidden",
+  width: `calc(${theme.spacing(7)} + 1px)`,
+  [theme.breakpoints.up("sm")]: {
+    width: `calc(${theme.spacing(8)} + 1px)`,
+  },
+});
+
 export default function TabBar(session) {
   const [select, setSelect] = useState("Ledger");
   const [isOpen, setIsOpen] = useState(false);
@@ -201,9 +223,9 @@ export default function TabBar(session) {
                 padding: "10px 20px",
                 fontSize: "0.875rem", // Smaller base font size for better mobile adaptation
                 fontWeight: "bold",
-                borderRadius: "30px",
+                borderRadius: "0px",
                 border: "5px solid #56585c", // Adding a filled boundary
-                backgroundColor: "#333333", // Button background color
+                backgroundColor: "#56585", // Button background color
                 "&:hover": {
                   backgroundColor: theme.palette.primary.dark,
                   boxShadow: "0 2px 8px rgba(0,0,0,0.2)",
