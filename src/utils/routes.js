@@ -12,6 +12,7 @@ const RiskManagement = lazy(() => import("../containers/Main/RiskManagement"));
 const Analytics = lazy(() => import("../containers/Main/Analytics"));
 const WatchList = lazy(() => import("../containers/Main/WatchList"));
 const BlogPosts = lazy(() => import("../containers/Main/BlogPosts"));
+const LandingPage = lazy(() => import("../components/landing_Page"));
 
 export const appRoutes = [
   {
@@ -21,7 +22,7 @@ export const appRoutes = [
     nestedRoutes: [
       {
         key: "home",
-        path: "/ledgers",
+        path: "/",
         icon: <HomeIcon />,
         component: Ledger,
       },
@@ -50,5 +51,10 @@ export const appRoutes = [
         component: BlogPosts,
       },
     ],
+  },
+  {
+    key: "home",
+    path: "/home",
+    component: LandingPage,
   },
 ];

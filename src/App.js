@@ -1,16 +1,28 @@
-import React, { Fragment, useState } from "react";
+import _ from "lodash";
+import React, { Fragment, useEffect, useState } from "react";
+import { getStorageItem } from "./utils/common-utils";
+
 import AuthAPIs from "./bootstrap/AuthAPIs";
 import AppContainer from "./bootstrap/AppContainer";
 
 import "./assets/styles/App.css";
+import { useSelector } from "react-redux";
 
 const App = () => {
-  const activeUser = localStorage.getItem("userId");
+  const { userSession } = useSelector((state) => state.public);
+  const [isActive, setIsActive] = useState(null);
+
+  useEffect(() => {
+    if (!_.isEmpty(userSession)) {
+      setIsActive(userSession);
+    }
+  }, [userSession]);
+
   const [loading, setLoading] = useState(true);
 
   return (
     <Fragment>
-      <AuthAPIs activeUser={activeUser} setLoading={setLoading} />
+      <AuthAPIs activeUser={isActive} setLoading={setLoading} />
       {!loading ? <AppContainer /> : <Fragment></Fragment>}
     </Fragment>
   );

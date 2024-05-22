@@ -1,17 +1,20 @@
 import React from "react";
 import { getStorageItem } from "../../utils/common-utils";
 import Main from "../Main";
-import { Outlet } from "react-router-dom";
-import LandingPage from "../../components/landing_Page";
+import { Navigate, Outlet } from "react-router-dom";
 
 const AuthWrapper = () => {
-  const activeUser = getStorageItem("userId");
+  const activeUser = getStorageItem("userSession");
+
   if (activeUser) {
-    <Main>
-      <Outlet />
-    </Main>;
+    return (
+      <Main>
+        <Outlet />
+      </Main>
+    );
   }
 
-  return <LandingPage />;
+  return <Navigate to="/home" />;
 };
+
 export default AuthWrapper;

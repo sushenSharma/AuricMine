@@ -32,12 +32,10 @@ const AppContainer = () => {
     <ThemeLayout>
       <BrowserRouter>
         <Suspense fallback={<div>Loading....</div>}>
-          <Main>
-            <Routes>
-              {routesList}
-              <Route path="*" element={<Navigate to="/" />} />
-            </Routes>
-          </Main>
+          <Routes>
+            {routesList}
+            <Route path="*" element={<Navigate to="/" />} />
+          </Routes>
         </Suspense>
       </BrowserRouter>
     </ThemeLayout>

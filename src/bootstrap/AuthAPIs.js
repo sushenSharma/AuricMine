@@ -1,16 +1,21 @@
 import React, { Fragment, useEffect } from "react";
 import { supabase } from "../constants";
 import { removeStorageItem } from "../utils/common-utils";
+import { useDispatch } from "react-redux";
+import { getUserSession } from "../redux/reducers/public/public-action";
 
 const AuthAPIs = ({ activeUser, setLoading }) => {
+  const dispatch = useDispatch();
+
   useEffect(() => {
     if (activeUser) {
       const getLoggedInUser = (setLoading) => {
+        console.log("1",supabase.auth);
         supabase.auth.getSession().then(({ data: { session } }) => {
+          console.log("2", session);
+
           if (session) {
             addUserPosition(session.user.id);
-          } else {
-            removeStorageItem(["userSession", "userId"]);
           }
           setLoading(false);
         });
@@ -25,6 +30,8 @@ const AuthAPIs = ({ activeUser, setLoading }) => {
       data: { subscription },
     } = supabase.auth.onAuthStateChange(async (event, session) => {
       localStorage.setItem("userSession", JSON.stringify(session));
+
+      dispatch(getUserSession(session));
 
       setLoading(false);
       if (event === "SIGNED_IN") {
