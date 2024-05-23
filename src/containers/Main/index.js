@@ -8,7 +8,7 @@ import TopBar from "../TopBar";
 
 const Main = ({ children }) => {
   const theme = useTheme();
-  const drawerWidth = 220;
+  const drawerWidth = 225;
   const userSession = getStorageItem("userSession");
   const isActive = !_.isEmpty(userSession);
 

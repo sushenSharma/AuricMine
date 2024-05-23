@@ -2,7 +2,6 @@ import React from "react";
 import { useNavigate } from "react-router-dom";
 import { useLabels } from "../../hooks/use-labels";
 import { navigationMenus } from "./navigation-utils";
-
 import { Button, useTheme, List } from "@mui/material";
 
 const Navigation = ({ className, collapsed }) => {
@@ -25,11 +24,11 @@ const Navigation = ({ className, collapsed }) => {
   };
 
   const menuList = navigationMenus(navigationLabels).map((item) => {
-    const { key, icon, label } = item;
+    const { key, iconLabel, label } = item;
     return (
       <Button
         key={key}
-        startIcon={icon}
+        startIcon={iconLabel}
         onClick={() => {
           handleNavigate(item);
         }}
