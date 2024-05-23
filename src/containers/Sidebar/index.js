@@ -7,13 +7,12 @@ function LogoIcon(props) {
   return (
     <Box
       sx={{
-        height: 130, // Ensures the container height is fixed
-        // Optional: you might set a width if the logo is not square
+        height: 130,
         display: "flex",
-        alignItems: "center", // Vertically centers the logo
-        justifyContent: "center", // Horizontally centers the logo
-        marginBottom: 2, // Adds bottom margin
-        overflow: "hidden", // Ensures nothing extends outside the box
+        alignItems: "center",
+        justifyContent: "center",
+        marginBottom: 2,
+        overflow: "hidden",
       }}
     >
       <img

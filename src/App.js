@@ -1,12 +1,11 @@
 import _ from "lodash";
+import { useSelector } from "react-redux";
 import React, { Fragment, useEffect, useState } from "react";
-import { getStorageItem } from "./utils/common-utils";
 
 import AuthAPIs from "./bootstrap/AuthAPIs";
 import AppContainer from "./bootstrap/AppContainer";
 
 import "./assets/styles/App.css";
-import { useSelector } from "react-redux";
 
 const App = () => {
   const { userSession } = useSelector((state) => state.public);

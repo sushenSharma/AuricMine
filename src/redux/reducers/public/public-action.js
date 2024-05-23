@@ -17,3 +17,9 @@ export const getUserSession = (session) => {
     dispatch(publicSliceActions.setUserSession(session));
   };
 };
+
+export const getLedgerData = (ledgerData) => {
+  return (dispatch) => {
+    dispatch(publicSliceActions.setLedgerData(ledgerData));
+  };
+};

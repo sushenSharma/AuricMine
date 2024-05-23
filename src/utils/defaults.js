@@ -1,4 +1,9 @@
 export const defaults = {
+  brandName: "TradingJournal.ai",
+
+  welcomeLabel: "Welcome:",
+  signOutLabel: "Sign out",
+
   downloadCSVLabel: "Download CSV",
   saveChangesLabel: "Save Changes",
   getInsightsLabel: "Get Insights with AI",

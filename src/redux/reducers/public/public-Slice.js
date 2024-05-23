@@ -6,6 +6,7 @@ const publicSlice = createSlice({
     userUUID: "",
     userDetails: {},
     userSession: {},
+    ledgerData: {},
   },
   reducers: {
     setUserUUID(state, action) {
@@ -16,6 +17,9 @@ const publicSlice = createSlice({
     },
     setUserSession(state, action) {
       state.userSession = action.payload;
+    },
+    setLedgerData(state, action) {
+      state.ledgerData = action.payload;
     },
   },
 });

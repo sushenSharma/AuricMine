@@ -1,13 +1,12 @@
 import React, { Fragment, useEffect } from "react";
 import { supabase } from "../constants";
-import { removeStorageItem } from "../utils/common-utils";
 import { useDispatch } from "react-redux";
+import { removeStorageItem } from "../utils/common-utils";
 import {
   getUserDetails,
   getUserSession,
   getUserUUID,
 } from "../redux/reducers/public/public-action";
-import { PATHS } from "../constants/routerConstant";
 
 const AuthAPIs = ({ activeUser, setLoading }) => {
   const dispatch = useDispatch();
@@ -15,12 +14,17 @@ const AuthAPIs = ({ activeUser, setLoading }) => {
   useEffect(() => {
     if (activeUser) {
       const getLoggedInUser = (setLoading) => {
-        console.log("1", supabase.auth);
         supabase.auth.getSession().then(({ data: { session } }) => {
-          console.log("2", session);
-
           if (session) {
             addUserPosition(session.user.id);
+          } else {
+            removeStorageItem([
+              "userId",
+              "userSession",
+              "subscription",
+              "ledgerData",
+              "token",
+            ]);
           }
           setLoading(false);
         });
@@ -44,7 +48,6 @@ const AuthAPIs = ({ activeUser, setLoading }) => {
         localStorage.setItem("token", session.access_token);
         dispatch(getUserUUID(session.user.id));
         dispatch(getUserDetails(session.user));
-        navigator(PATHS.TABLE);
       }
     });
 

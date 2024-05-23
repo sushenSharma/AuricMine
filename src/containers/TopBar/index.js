@@ -4,12 +4,22 @@ import MenuIcon from "@mui/icons-material/Menu";
 import { supabase } from "../../constants";
 import { removeStorageItem } from "../../utils/common-utils";
 import { AppBar, IconButton, Toolbar, Typography } from "@mui/material";
+import { useSelector } from "react-redux";
+import { getLabel } from "../../hooks/use-labels";
 
 const TopBar = ({ open, openDrawer, drawerWidth, theme }) => {
+  const { userSession } = useSelector((state) => state.public);
+
   const handleLogout = () => {
     supabase.auth.signOut();
 
-    removeStorageItem(["userId", "userSession", "subscription"]);
+    removeStorageItem([
+      "userId",
+      "userSession",
+      "subscription",
+      "ledgerData",
+      "token",
+    ]);
   };
 
   return (
@@ -35,18 +45,17 @@ const TopBar = ({ open, openDrawer, drawerWidth, theme }) => {
           <MenuIcon />
         </IconButton>
         <Typography variant="h6" style={{ flexGrow: 1 }}>
-          TradingJournal.ai
+          {getLabel("brandName")}
         </Typography>
         <Typography variant="body1" style={{ marginRight: theme.spacing(2) }}>
-          <strong>Welcome: </strong>
-          {/*sessionObj.user.email*/}
-          test@test.com
+          <strong>{getLabel("welcomeLabel")} </strong>
+          {userSession.user.email}
         </Typography>
         <button
           onClick={handleLogout}
           style={{ color: "white", background: "none", border: "none" }}
         >
-          Sign out
+          {getLabel("signOutLabel")}
         </button>
       </Toolbar>
     </AppBar>

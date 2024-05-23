@@ -11,10 +11,13 @@ import ModalContainer from "../../../components/ModalContainer";
 import Box from "@mui/material/Box";
 
 import "./styles.css";
+import { useDispatch } from "react-redux";
+import { getLedgerData } from "../../../redux/reducers/public/public-action";
 
 let timer = null;
 
 const Ledgers = () => {
+  const dispatch = useDispatch();
   const [open, setOpen] = useState(false);
   const [tableAction, setTableAction] = useState(null);
   const [userData, setUserData] = useState("");
@@ -30,8 +33,10 @@ const Ledgers = () => {
   useEffect(() => {
     if (!_.isEmpty(userData)) {
       setDisabled(false);
+      dispatch(getLedgerData(userData));
+      localStorage.setItem("ledgerData", JSON.stringify(userData));
     }
-  }, [userData]);
+  }, [userData, dispatch]);
 
   const getInsightsWithAI = (userData) => {
     toggle();

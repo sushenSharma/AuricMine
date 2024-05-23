@@ -3,8 +3,8 @@ import { Fragment, Suspense } from "react";
 import { appRoutes } from "../utils/routes";
 import { BrowserRouter, Route, Routes, Navigate } from "react-router-dom";
 
-import Main from "../containers/Main";
 import ThemeLayout from "../components/ThemeLayout";
+import Loader from "../components/Loader";
 
 const AppContainer = () => {
   const routesList = appRoutes.map(
@@ -31,7 +31,7 @@ const AppContainer = () => {
   return (
     <ThemeLayout>
       <BrowserRouter>
-        <Suspense fallback={<div>Loading....</div>}>
+        <Suspense fallback={<Loader />}>
           <Routes>
             {routesList}
             <Route path="*" element={<Navigate to="/" />} />
