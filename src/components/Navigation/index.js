@@ -41,9 +41,9 @@ const Navigation = ({ className, collapsed }) => {
           padding: "10px 20px",
           fontSize: "0.875rem",
           fontWeight: "bold",
-          borderRadius: "30px",
+          borderRadius: "0px",
           border: "5px solid #56585c",
-          backgroundColor: "#333333",
+          backgroundColor: "#56585c",
           "&:hover": {
             backgroundColor: theme.palette.primary.dark,
             boxShadow: "0 2px 8px rgba(0,0,0,0.2)",
