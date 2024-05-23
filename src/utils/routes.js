@@ -1,11 +1,5 @@
 import { lazy } from "react";
 
-import BlogIcon from "@mui/icons-material/Article";
-import HomeIcon from "@mui/icons-material/Home";
-import ComingSoonIcon from "@mui/icons-material/InsertChart";
-import RiskManagementIcon from "@mui/icons-material/NotificationsActiveOutlined";
-import WatchlistIcon from "@mui/icons-material/Visibility";
-
 const AuthWrapper = lazy(() => import("../containers/AuthWrapper"));
 const Ledger = lazy(() => import("../containers/Main/Ledgers"));
 const RiskManagement = lazy(() => import("../containers/Main/RiskManagement"));
@@ -23,31 +17,26 @@ export const appRoutes = [
       {
         key: "home",
         path: "/",
-        icon: <HomeIcon />,
         component: Ledger,
       },
       {
         key: "riskManagement",
         path: "/risk-management",
-        icon: <RiskManagementIcon />,
         component: RiskManagement,
       },
       {
         key: "watchlist",
         path: "/watch-list",
-        icon: <WatchlistIcon />,
         component: WatchList,
       },
       {
         key: "analytics",
         path: "/analytics",
-        icon: <ComingSoonIcon />,
         component: Analytics,
       },
       {
         key: "blogs",
         path: "/blogs",
-        icon: <BlogIcon />,
         component: BlogPosts,
       },
     ],

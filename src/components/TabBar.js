@@ -17,11 +17,11 @@ import {
   useTheme,
 } from "@mui/material";
 import React, { Fragment, useState } from "react";
-import { supabase, userIdKey } from "../constants";
+import { supabase } from "../constants";
 import Ledgers from "../containers/Main/Ledgers";
 import Analytics from "./Analytics";
 import Posts from "./Posts";
-import { getStorageItem, removeStorageItem } from "../utils/common-utils";
+import { removeStorageItem } from "../utils/common-utils";
 
 function LogoIcon(props) {
   return (

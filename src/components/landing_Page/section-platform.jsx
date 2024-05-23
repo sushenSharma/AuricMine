@@ -24,7 +24,7 @@ export default function SectionPlatform() {
     },
     {
       icon: RiMap2Line,
-      name: "Jounarling Made Easy",
+      name: "Journaling Made Easy",
       content:
         "Log your trades with user friendly interface and review your history anytime.",
     },
@@ -32,7 +32,7 @@ export default function SectionPlatform() {
       icon: HiLockClosed,
       name: "Secure and Private",
       content:
-        "Your data is encrypted and kept private at all time.",
+        "Your data is encrypted and kept private at all times.",
     },
   ];
 
