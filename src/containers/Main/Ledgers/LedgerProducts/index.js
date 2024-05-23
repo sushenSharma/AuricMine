@@ -1,12 +1,12 @@
 import _ from "lodash";
 import { useEffect, useState } from "react";
-import { userIdKey } from "../../../constants.js";
+import { userIdKey } from "../../../../constants.js";
 import { getSubmissionData } from "./hooks.js";
 import { useSelector } from "react-redux";
-import { getLabel } from "../../../hooks/ use-labels.js";
+import { getLabel } from "../../../../hooks/use-labels.js";
 import { dateValidations } from "./ledger-validations.js";
 import { prepareUserLedgerData } from "./ledger-products-utils.js";
-import { getStorageStringItem } from "../../../utils/common-utils.js";
+import { getStorageStringItem } from "../../../../utils/common-utils.js";
 import {
   deleteUserLedgerData,
   fetchUserLedgerData,
@@ -16,7 +16,7 @@ import {
 
 import LPListing from "./LPListing";
 
-import SwalNotification from "../../../components/SwalNotification/index.js";
+import SwalNotification from "../../../../components/SwalNotification/index.js";
 
 const LedgerProducts = ({ tableAction, getUserData }) => {
   const user_uuid = getStorageStringItem(userIdKey);

@@ -11,3 +11,15 @@ export const getUserDetails = (userDetails) => {
     dispatch(publicSliceActions.setUserDetails(userDetails));
   };
 };
+
+export const getUserSession = (session) => {
+  return (dispatch) => {
+    dispatch(publicSliceActions.setUserSession(session));
+  };
+};
+
+export const getLedgerData = (ledgerData) => {
+  return (dispatch) => {
+    dispatch(publicSliceActions.setLedgerData(ledgerData));
+  };
+};
