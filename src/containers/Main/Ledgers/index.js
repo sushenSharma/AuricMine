@@ -1,20 +1,23 @@
 import _ from "lodash";
-import { getLabel } from "../../hooks/ use-labels";
+import { getLabel } from "../../../hooks/use-labels";
 import { useEffect, useState } from "react";
 import { fetchInsightsWithAI } from "./LedgerProducts/lib/api";
 
 import LedgerHeader from "./LedgerHeader";
 import LedgerProducts from "./LedgerProducts";
-import ContentWrapper from "../../components/ContentWrapper";
 import LedgerInsights from "./LedgerInsights";
-import ModalContainer from "../../components/ModalContainer";
+import ContentWrapper from "../../../components/ContentWrapper";
+import ModalContainer from "../../../components/ModalContainer";
 import Box from "@mui/material/Box";
 
 import "./styles.css";
+import { useDispatch } from "react-redux";
+import { getLedgerData } from "../../../redux/reducers/public/public-action";
 
 let timer = null;
 
 const Ledgers = () => {
+  const dispatch = useDispatch();
   const [open, setOpen] = useState(false);
   const [tableAction, setTableAction] = useState(null);
   const [userData, setUserData] = useState("");
@@ -30,8 +33,10 @@ const Ledgers = () => {
   useEffect(() => {
     if (!_.isEmpty(userData)) {
       setDisabled(false);
+      dispatch(getLedgerData(userData));
+      localStorage.setItem("ledgerData", JSON.stringify(userData));
     }
-  }, [userData]);
+  }, [userData, dispatch]);
 
   const getInsightsWithAI = (userData) => {
     toggle();

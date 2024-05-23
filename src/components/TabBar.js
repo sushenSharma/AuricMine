@@ -1,31 +1,28 @@
-import React, { useState } from "react";
-import {
-  Drawer,
-  List,
-  ListItem,
-  ListItemIcon,
-  ListItemText,
-  IconButton,
-  AppBar,
-  Toolbar,
-  Typography,
-  Box,
-  useTheme,
-  useMediaQuery,
-  SvgIcon,
-} from "@mui/material";
-import MenuIcon from "@mui/icons-material/Menu";
+import BlogIcon from "@mui/icons-material/Article";
 import HomeIcon from "@mui/icons-material/Home";
-import { Button } from "@mui/material";
+import ComingSoonIcon from "@mui/icons-material/InsertChart";
+import MenuIcon from "@mui/icons-material/Menu";
 import RiskManagementIcon from "@mui/icons-material/NotificationsActiveOutlined";
 import WatchlistIcon from "@mui/icons-material/Visibility";
-import BlogIcon from "@mui/icons-material/Article";
-import ComingSoonIcon from "@mui/icons-material/InsertChart";
-import Ledgers from "../containers/Ledgers";
+import {
+  AppBar,
+  Box,
+  Button,
+  Drawer,
+  IconButton,
+  List,
+  Toolbar,
+  Typography,
+  useMediaQuery,
+  useTheme,
+} from "@mui/material";
+import React, { Fragment, useState } from "react";
+import { supabase } from "../constants";
+import Ledgers from "../containers/Main/Ledgers";
 import Analytics from "./Analytics";
 import Posts from "./Posts";
-import { supabase, userIdKey } from "../constants";
-const drawerWidth = 240;
+import { removeStorageItem } from "../utils/common-utils";
+
 function LogoIcon(props) {
   return (
     <Box
@@ -48,29 +45,7 @@ function LogoIcon(props) {
     </Box>
   );
 }
-
-const openedMixin = (theme) => ({
-  width: drawerWidth,
-  transition: theme.transitions.create("width", {
-    easing: theme.transitions.easing.sharp,
-    duration: theme.transitions.duration.enteringScreen,
-  }),
-  overflowX: "hidden",
-});
-
-const closedMixin = (theme) => ({
-  transition: theme.transitions.create("width", {
-    easing: theme.transitions.easing.sharp,
-    duration: theme.transitions.duration.leavingScreen,
-  }),
-  overflowX: "hidden",
-  width: `calc(${theme.spacing(7)} + 1px)`,
-  [theme.breakpoints.up("sm")]: {
-    width: `calc(${theme.spacing(8)} + 1px)`,
-  },
-});
-
-export default function TabBar(session) {
+const TabBar = ({ sessionObj }) => {
   const [select, setSelect] = useState("Ledger");
   const [isOpen, setIsOpen] = useState(false);
   const drawerWidth = 220;
@@ -83,7 +58,8 @@ export default function TabBar(session) {
 
   const handleLogout = () => {
     supabase.auth.signOut();
-    localStorage.removeItem(userIdKey);
+
+    removeStorageItem(["userId", "userSession", "subscription"]);
   };
   const data = {
     lineChartData: {
@@ -121,7 +97,7 @@ export default function TabBar(session) {
   };
 
   return (
-    <>
+    <Fragment>
       <AppBar
         position="static"
         sx={{
@@ -148,7 +124,7 @@ export default function TabBar(session) {
           </Typography>
           <Typography variant="body1" style={{ marginRight: theme.spacing(2) }}>
             <strong>Welcome: </strong>
-            {session.sessionObj.user.email}
+            {sessionObj.user.email}
           </Typography>
           <button
             onClick={handleLogout}
@@ -221,11 +197,11 @@ export default function TabBar(session) {
                 width: "100%",
                 textTransform: "none",
                 padding: "10px 20px",
-                fontSize: "0.875rem", // Smaller base font size for better mobile adaptation
+                fontSize: "0.875rem",
                 fontWeight: "bold",
-                borderRadius: "0px",
-                border: "5px solid #56585c", // Adding a filled boundary
-                backgroundColor: "#56585", // Button background color
+                borderRadius: "30px",
+                border: "5px solid #56585c",
+                backgroundColor: "#333333",
                 "&:hover": {
                   backgroundColor: theme.palette.primary.dark,
                   boxShadow: "0 2px 8px rgba(0,0,0,0.2)",
@@ -236,8 +212,8 @@ export default function TabBar(session) {
                   fontSize: "1.25em",
                 },
                 [theme.breakpoints.up("sm")]: {
-                  fontSize: "1rem", // Larger font size for larger screens
-                  padding: "12px 24px", // Larger padding for larger screens
+                  fontSize: "1rem",
+                  padding: "12px 24px",
                 },
               }}
             >
@@ -268,6 +244,8 @@ export default function TabBar(session) {
           {select === "Analytics" && <Analytics />}
         </div>
       </Box>
-    </>
+    </Fragment>
   );
-}
+};
+
+export default TabBar;

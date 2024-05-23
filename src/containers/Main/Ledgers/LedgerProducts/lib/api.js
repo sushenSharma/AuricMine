@@ -2,7 +2,7 @@ import {
   supabase,
   tableName,
   openAIConfig,
-} from "../../../../config/index_supabase";
+} from "../../../../../config/index_supabase";
 
 export const fetchUserLedgerData = async (userId) => {
   return await supabase
