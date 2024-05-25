@@ -1,12 +1,6 @@
 export const prepareLedgerColumns = (validationErrors, onColumnFocus) => {
   return [
     {
-      accessorKey: "id",
-      header: "ID",
-      enableEditing: false,
-      size: 80,
-    },
-    {
       accessorKey: "stockSymbol",
       header: "Stock Symbol",
       muiEditTextFieldProps: {
@@ -103,22 +97,6 @@ export const prepareLedgerColumns = (validationErrors, onColumnFocus) => {
       },
     },
     {
-      accessorKey: "brokerage",
-      header: "Brokerage",
-      muiEditTextFieldProps: {
-        type: "number",
-        disabled: true,
-      },
-    },
-    {
-      accessorKey: "daysHold",
-      header: "Days Hold",
-      muiEditTextFieldProps: {
-        type: "string",
-        disabled: true,
-      },
-    },
-    {
       accessorKey: "reasonToBuy",
       header: "Reason to Buy",
       muiEditTextFieldProps: {
@@ -150,6 +128,23 @@ export const prepareLedgerColumns = (validationErrors, onColumnFocus) => {
       },
     },
     {
+      accessorKey: "brokerage",
+      header: "Brokerage",
+      muiEditTextFieldProps: {
+        type: "number",
+        disabled: true,
+      },
+    },
+    {
+      accessorKey: "daysHold",
+      header: "Days Hold",
+      muiEditTextFieldProps: {
+        type: "string",
+        disabled: true,
+      },
+    },
+
+    {
       accessorKey: "profitLoss",
       header: "Profit / Loss",
       muiEditTextFieldProps: {
@@ -180,6 +175,12 @@ export const prepareLedgerColumns = (validationErrors, onColumnFocus) => {
         type: "number",
         disabled: true,
       },
+    },
+    {
+      accessorKey: "id",
+      header: "ID",
+      enableEditing: false,
+      size: 80,
     },
   ];
 };
