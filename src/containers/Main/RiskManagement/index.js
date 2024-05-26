@@ -1,18 +1,59 @@
-import React, { useState } from "react";
+import _ from "lodash";
+import React, { useEffect, useState } from "react";
+import { getLabel } from "../../../hooks/use-labels";
+import { getStorageStringItem } from "../../../utils/common-utils";
 import { TextField, Button, Box, Typography, Grid } from "@mui/material";
+import { getSubmissionData, isError } from "./hooks/validation-risk-management";
+import {
+  fetchRiskManagementData,
+  saveRiskManagementData,
+  updateRiskManagementData,
+} from "./lib/apis";
+
+import SwalNotification from "../../../components/SwalNotification";
 import AccountBalanceWalletOutlinedIcon from "@mui/icons-material/AccountBalanceWalletOutlined";
 
 const RiskManagement = () => {
+  const userID = getStorageStringItem("userId");
+
   const [finalPercentage, setFinalPercentage] = useState(null);
-  const [seedCapital, setSeedCapital] = useState("500000"); // Seed capital set to 500,000
+  const [seedCapital, setSeedCapital] = useState("500000");
   const [initialRisk, setInitialRisk] = useState("5");
-  const [regularIncome, setRegularIncome] = useState(""); // State to store the regular income
-  const [provisioningPercentage, setProvisioningPercentage] = useState(""); // State to store the provisioning percentage
+  const [regularIncome, setRegularIncome] = useState("");
+  const [provisioningPercentage, setProvisioningPercentage] = useState("");
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(null);
+  const [formError, serFormError] = useState({});
+  const [queryAction, setQueryAction] = useState("insert");
 
-  const saveToDatabase = async () => {
-    console.log("Saving changes...");
+  useEffect(() => {
+    getRiskManagementData();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
+
+  const getRiskManagementData = () => {
+    fetchRiskManagementData(userID).then(({ data, error }) => {
+      if (error) {
+        console.log(error);
+        return;
+      }
+
+      if (!_.isEmpty(data)) {
+        const {
+          IncomeCashflow,
+          PercentageCashflowRisk,
+          SeedCapital,
+          SeedRisk,
+        } = data[0];
+
+        setSeedCapital(SeedCapital);
+        setInitialRisk(SeedRisk);
+        setRegularIncome(IncomeCashflow);
+        setProvisioningPercentage(PercentageCashflowRisk);
+
+        setQueryAction("update");
+      }
+    });
   };
 
   const fetchData = async () => {
@@ -33,7 +74,6 @@ const RiskManagement = () => {
         tradeOutcomes: profitLossArray,
         profitMultiplier,
       };
-      const userID = localStorage.getItem("userId");
       const response = await fetch(
         "https://zcvtgtaimnsrlemslypr.supabase.co/functions/v1/hello-world",
         {
@@ -51,6 +91,93 @@ const RiskManagement = () => {
     } finally {
       setLoading(false);
     }
+  };
+
+  const onChangeHandler = (value, key) => {
+    switch (key) {
+      case "seedCapital":
+        setSeedCapital(value);
+        deleteError(formError, key);
+        break;
+      case "initialRisk":
+        setInitialRisk(value);
+        deleteError(formError, key);
+        break;
+      case "regularIncome":
+        setRegularIncome(value);
+        deleteError(formError, key);
+        break;
+      case "provisioningPercentage":
+        setProvisioningPercentage(value);
+        deleteError(formError, key);
+        break;
+      default:
+        return null;
+    }
+  };
+
+  const deleteError = (formError, key) => {
+    delete formError[key];
+  };
+
+  const onFinishHandler = async () => {
+    const { valid, errors, fieldData } = getSubmissionData({
+      seedCapital,
+      initialRisk,
+      regularIncome,
+      provisioningPercentage,
+    });
+
+    if (valid) {
+      onSubmit(fieldData);
+    } else {
+      serFormError(errors);
+    }
+  };
+
+  const onSubmit = (fieldData) => {
+    const requestBody = {
+      Userid: userID,
+      ...fieldData,
+    };
+
+    if (queryAction === "insert") {
+      insertData(requestBody);
+    } else if (queryAction === "update") {
+      updateData(requestBody, userID);
+    }
+  };
+
+  const insertData = (requestBody) => {
+    saveRiskManagementData(requestBody).then(({ data, error }) => {
+      if (error) {
+        console.log(error);
+        return;
+      }
+
+      getRiskManagementData();
+      successPopup();
+    });
+  };
+
+  const updateData = (requestBody, userId) => {
+    updateRiskManagementData(userId, requestBody).then(({ data, error }) => {
+      if (error) {
+        console.log(error);
+        return;
+      }
+      getRiskManagementData();
+      successPopup();
+    });
+  };
+
+  const successPopup = () => {
+    SwalNotification({
+      title: getLabel("successLabel"),
+      text: getLabel("saveDataContent"),
+      iconType: "success",
+      btnLabel: getLabel("okLabel"),
+    });
   };
 
   return (
@@ -72,45 +199,69 @@ const RiskManagement = () => {
               Risk Management Settings
             </Typography>
             <TextField
+              error={isError(formError, "seedCapital")}
               label="Seed Capital"
               variant="outlined"
               fullWidth
               value={seedCapital}
-              onChange={(e) => setSeedCapital(e.target.value)}
+              onChange={(e) => onChangeHandler(e.target.value, "seedCapital")}
               margin="normal"
+              helperText={
+                !_.isEmpty(formError) && formError.seedCapital
+                  ? formError.seedCapital
+                  : ""
+              }
             />
             <TextField
+              error={isError(formError, "initialRisk")}
               label="Initial Risk (%)"
               variant="outlined"
               fullWidth
               value={initialRisk}
-              onChange={(e) => setInitialRisk(e.target.value)}
+              onChange={(e) => onChangeHandler(e.target.value, "initialRisk")}
               margin="normal"
               type="number"
+              helperText={
+                !_.isEmpty(formError) && formError.initialRisk
+                  ? formError.initialRisk
+                  : ""
+              }
             />
             <TextField
+              error={isError(formError, "regularIncome")}
               label="Regular Income"
               variant="outlined"
               fullWidth
               value={regularIncome}
-              onChange={(e) => setRegularIncome(e.target.value)}
+              onChange={(e) => onChangeHandler(e.target.value, "regularIncome")}
               margin="normal"
-              helperText="Enter your regular income from cashflow"
+              helperText={
+                !_.isEmpty(formError) && formError.regularIncome
+                  ? formError.regularIncome
+                  : "Enter your regular income from cashflow"
+              }
             />
             <TextField
+              error={isError(formError, "provisioningPercentage")}
               label="Provisioning Percentage"
               variant="outlined"
               fullWidth
               value={provisioningPercentage}
-              onChange={(e) => setProvisioningPercentage(e.target.value)}
+              onChange={(e) =>
+                onChangeHandler(e.target.value, "provisioningPercentage")
+              }
               margin="normal"
               type="number"
-              helperText="Percentage of income okay for provisioning loss in trades"
+              helperText={
+                !_.isEmpty(formError) && formError.provisioningPercentage
+                  ? formError.provisioningPercentage
+                  : "Percentage of income okay for provisioning loss in trades"
+              }
             />
             <Button
               variant="contained"
               color="primary"
-              onClick={saveToDatabase}
+              onClick={onFinishHandler}
               fullWidth
               sx={{ marginY: 2 }}
             >
@@ -126,7 +277,7 @@ const RiskManagement = () => {
               flexDirection: "column",
               alignItems: "center",
               justifyContent: "center",
-              paddingY: 10, // Added vertical padding for spacing
+              paddingY: 10,
             }}
           >
             <Button
