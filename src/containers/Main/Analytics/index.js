@@ -16,6 +16,7 @@ import {
   ThemeProvider,
   createTheme,
 } from "@mui/material";
+import { countBy } from "lodash";
 
 const Analytics = () => {
   const theme = createTheme({
@@ -61,9 +62,41 @@ const Analytics = () => {
     "MMForg",
   ];
 
+  const ledgerDataRaw = localStorage.getItem("ledgerData");
+  const ledgerData = JSON.parse(JSON.parse(ledgerDataRaw));
+
+  // Calculate the profit or loss as a float for each item in the ledger data
+  const profitLossArray = ledgerData.map((item) =>
+    parseFloat(item.profit_loss)
+  );
+  const stockNamesArray = ledgerData.map((stock) => stock.stock_name);
+
+  // Assume initial seed capital
+  let fundValue = 100000000; // 1 crore
+  const fundValuesArray = [];
+
+  // Traverse through each profit or loss value to update the fund value
+  profitLossArray.forEach((profitLoss) => {
+    fundValue += profitLoss; // Update fund value based on profit or loss
+    fundValuesArray.push(fundValue); // Append updated fund value to array
+  });
+
+  // Map and log sell dates to confirm their format directly
+  const sellDates = ledgerData.map((entry) => entry.sell_date);
+  const daysHeldArray = ledgerData.map((stock) => {
+    const buyDate = new Date(stock.buy_date);
+    const sellDate = new Date(stock.sell_date);
+
+    // Calculate difference in time in milliseconds
+    const timeDiff = sellDate - buyDate;
+
+    // Convert time difference from milliseconds to days
+    return timeDiff / (1000 * 3600 * 24); // Converts milliseconds to days
+  });
+
   const lineSeriesData = {
-    totalFundValue: [2400, 1398, 9800, 3908, 4800, 3800, 4300],
-    profitLoss: [4000, 3000, 2000, 2780, 1890, 2390, 3490],
+    totalFundValue: fundValuesArray,
+    profitLoss: profitLossArray,
   };
 
   const pieChartData = [
@@ -89,23 +122,23 @@ const Analytics = () => {
               }}
             >
               <BarChart
-                width={500}
+                width={600}
                 height={300}
                 series={[
                   {
-                    data: barData,
+                    data: daysHeldArray,
                     label: "Number of Days Hold",
                     yAxisKey: "leftAxisId",
                     color: "#db5432",
                   },
                   {
-                    data: profitLossData,
+                    data: profitLossArray,
                     label: "Profit/Loss",
                     yAxisKey: "rightAxisId",
                     color: "#77cc2d",
                   },
                 ]}
-                xAxis={[{ data: xLabels, scaleType: "band" }]}
+                xAxis={[{ data: stockNamesArray, scaleType: "band" }]}
                 yAxis={[{ id: "leftAxisId" }, { id: "rightAxisId" }]}
               />
             </Box>
@@ -138,7 +171,7 @@ const Analytics = () => {
               }}
             >
               <LineChart
-                width={500}
+                width={700}
                 height={300}
                 series={[
                   {
@@ -154,15 +187,7 @@ const Analytics = () => {
                 ]}
                 xAxis={[
                   {
-                    data: [
-                      "10th Jan",
-                      "15th Jan",
-                      "20th Feb",
-                      "3rd Mar",
-                      "15th Mar",
-                      "28th Mar",
-                      "6th Apr",
-                    ],
+                    data: sellDates,
                     scaleType: "point",
                   },
                 ]}
