@@ -63,6 +63,21 @@ export const prepareLedgerColumns = (validationErrors, onColumnFocus) => {
       },
     },
     {
+      accessorKey: "reasonToBuy",
+      header: "Reason to Buy",
+      muiEditTextFieldProps: {
+        type: "string",
+        required: true,
+        error: !!validationErrors?.reasonToBuy,
+        helperText: validationErrors?.reasonToBuy,
+        onFocus: () =>
+          onColumnFocus({
+            ...validationErrors,
+            reasonToBuy: undefined,
+          }),
+      },
+    },
+    {
       accessorKey: "sellPrice",
       header: "Sell Price",
       muiEditTextFieldProps: {
@@ -96,21 +111,7 @@ export const prepareLedgerColumns = (validationErrors, onColumnFocus) => {
           ),
       },
     },
-    {
-      accessorKey: "reasonToBuy",
-      header: "Reason to Buy",
-      muiEditTextFieldProps: {
-        type: "string",
-        required: true,
-        error: !!validationErrors?.reasonToBuy,
-        helperText: validationErrors?.reasonToBuy,
-        onFocus: () =>
-          onColumnFocus({
-            ...validationErrors,
-            reasonToBuy: undefined,
-          }),
-      },
-    },
+
     {
       accessorKey: "gttEnabled",
       header: "GTT Enabled",
