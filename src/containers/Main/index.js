@@ -20,32 +20,34 @@ const Main = ({ children }) => {
 
   const layoutComponents = isActive ? (
     <Fragment>
-      <TopBar
-        openDrawer={toggleDrawer}
-        open={isOpen}
-        drawerWidth={drawerWidth}
-        theme={theme}
-      />
-      <SideBar
-        closeDrawer={toggleDrawer}
-        open={isOpen}
-        theme={theme}
-        drawerWidth={drawerWidth}
-      />
-      <Box
-        component="main"
-        sx={{
-          flexGrow: 1,
-          p: 3,
-          width: { sm: isOpen ? `calc(100% - ${drawerWidth}px)` : "100%" },
-          ml: { sm: `${isOpen ? drawerWidth : 0}px` },
-          transition: theme.transitions.create("margin", {
-            easing: theme.transitions.easing.sharp,
-            duration: theme.transitions.duration.leavingScreen,
-          }),
-        }}
-      >
-        {children}
+      <Box sx={{ display: "flex" }}>
+        <Box
+          component="main"
+          sx={{
+            flexGrow: 1,
+            pl: 10,
+            width: { sm: isOpen ? `calc(100% - ${drawerWidth}px)` : "100%" },
+            mt: { sm: `64px` },
+            transition: theme.transitions.create("margin", {
+              easing: theme.transitions.easing.sharp,
+              duration: theme.transitions.duration.leavingScreen,
+            }),
+          }}
+        >
+          <TopBar
+            openDrawer={toggleDrawer}
+            open={isOpen}
+            drawerWidth={drawerWidth}
+            theme={theme}
+          />
+          <SideBar
+            closeDrawer={toggleDrawer}
+            open={isOpen}
+            theme={theme}
+            drawerWidth={drawerWidth}
+          />
+          {children}
+        </Box>
       </Box>
     </Fragment>
   ) : (

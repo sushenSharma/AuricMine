@@ -2,9 +2,16 @@ import React from "react";
 import { useNavigate } from "react-router-dom";
 import { useLabels } from "../../hooks/use-labels";
 import { navigationMenus } from "./navigation-utils";
-import { Button, useTheme, List } from "@mui/material";
+import {
+  useTheme,
+  List,
+  ListItem,
+  ListItemButton,
+  ListItemIcon,
+  ListItemText,
+} from "@mui/material";
 
-const Navigation = ({ className, collapsed }) => {
+const Navigation = ({ open }) => {
   const theme = useTheme();
 
   const navigate = useNavigate();
@@ -25,41 +32,55 @@ const Navigation = ({ className, collapsed }) => {
 
   const menuList = navigationMenus(navigationLabels).map((item) => {
     const { key, iconLabel, label } = item;
+
     return (
-      <Button
+      <ListItem
         key={key}
-        startIcon={iconLabel}
-        onClick={() => {
-          handleNavigate(item);
-        }}
+        disablePadding={true}
         sx={{
-          justifyContent: "flex-start",
-          color: "#fff",
-          width: "100%",
-          textTransform: "none",
-          padding: "10px 20px",
-          fontSize: "0.875rem",
-          fontWeight: "bold",
-          borderRadius: "0px",
+          display: "block",
+          [theme.breakpoints.up("sm")]: {
+            fontSize: "1rem",
+            padding: "0 12px 0 5px",
+          },
+          "& .MuiSvgIcon-root": {
+            color: "#fff",
+            marginRight: "8px",
+            fontSize: "1.25em",
+          },
           border: "5px solid #56585c",
           backgroundColor: "#56585c",
           "&:hover": {
             backgroundColor: theme.palette.primary.dark,
             boxShadow: "0 2px 8px rgba(0,0,0,0.2)",
           },
-          "& .MuiButton-startIcon": {
-            color: "#fff",
-            marginRight: "8px",
-            fontSize: "1.25em",
-          },
-          [theme.breakpoints.up("sm")]: {
-            fontSize: "1rem",
-            padding: "12px 24px",
-          },
         }}
+        onClick={() => handleNavigate(item)}
       >
-        {label}
-      </Button>
+        <ListItemButton
+          sx={{
+            justifyContent: "center",
+            px: 0,
+          }}
+        >
+          <ListItemIcon
+            sx={{
+              minWidth: 0,
+              mr: !open ? "auto" : 2,
+              justifyContent: "center",
+            }}
+          >
+            {iconLabel}
+          </ListItemIcon>
+          <ListItemText
+            primary={label}
+            sx={{
+              opacity: !open ? 0 : 1,
+              color: "white",
+            }}
+          />
+        </ListItemButton>
+      </ListItem>
     );
   });
 
