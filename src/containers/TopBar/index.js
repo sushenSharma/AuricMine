@@ -24,7 +24,7 @@ const TopBar = ({ open, openDrawer, drawerWidth, theme }) => {
 
   return (
     <AppBar
-      position="static"
+      position="fixed"
       sx={{
         width: { sm: open ? `calc(100% - ${drawerWidth}px)` : "100%" },
         ml: { sm: open ? `${drawerWidth}px` : 0 },
@@ -33,14 +33,18 @@ const TopBar = ({ open, openDrawer, drawerWidth, theme }) => {
           duration: theme.transitions.duration.leavingScreen,
         }),
         backgroundColor: "#000000",
+        zIndex: 1201,
       }}
     >
       <Toolbar>
         <IconButton
-          edge="start"
           color="inherit"
-          aria-label="menu"
+          aria-label="open drawer"
           onClick={openDrawer}
+          edge="start"
+          sx={{
+            marginRight: 5,
+          }}
         >
           <MenuIcon />
         </IconButton>
