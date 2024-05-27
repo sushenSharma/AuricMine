@@ -109,7 +109,10 @@ const LPListing = ({
     createDisplayMode: "row",
     editDisplayMode: "row",
     enableEditing: true,
-    initialState: { density: "comfortable" },
+    initialState: {
+      density: "compact",
+      columnPinning: { left: ["stockSymbol"] },
+    },
     getRowId: (row) => row.id,
     muiTableContainerProps: {
       sx: {
