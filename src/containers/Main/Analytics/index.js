@@ -16,7 +16,7 @@ import {
   ThemeProvider,
   createTheme,
 } from "@mui/material";
-import { countBy } from "lodash";
+import WordGraph from "./WordGraph";
 
 const Analytics = () => {
   const theme = createTheme({
@@ -103,6 +103,24 @@ const Analytics = () => {
     { id: 0, value: 10, label: "Mid Cap" },
     { id: 1, value: 15, label: "Large Cap" },
     { id: 2, value: 20, label: "Small Cap" },
+  ];
+
+  const WordGraphData = [
+    { text: "Breakout", weight: Math.floor(Math.random() * 50) + 1 },
+    { text: "Pullback", weight: Math.floor(Math.random() * 50) + 1 },
+    { text: "Retest", weight: Math.floor(Math.random() * 50) + 1 },
+    { text: "Gap Up", weight: Math.floor(Math.random() * 50) + 1 },
+    { text: "Momentum", weight: Math.floor(Math.random() * 50) + 1 },
+    { text: "Reversal", weight: Math.floor(Math.random() * 50) + 1 },
+    { text: "Support", weight: Math.floor(Math.random() * 50) + 1 },
+    { text: "Resistance", weight: Math.floor(Math.random() * 50) + 1 },
+    { text: "Overbought", weight: Math.floor(Math.random() * 50) + 1 },
+    { text: "Oversold", weight: Math.floor(Math.random() * 50) + 1 },
+    { text: "Trend Line", weight: Math.floor(Math.random() * 50) + 1 },
+    { text: "Volume Spike", weight: Math.floor(Math.random() * 50) + 1 },
+    { text: "Candlestick", weight: Math.floor(Math.random() * 50) + 1 },
+    { text: "Scalping", weight: Math.floor(Math.random() * 50) + 1 },
+    { text: "Range Trading", weight: Math.floor(Math.random() * 50) + 1 },
   ];
 
   return (
@@ -283,11 +301,12 @@ const Analytics = () => {
                 backgroundColor: "#56585c",
               }}
             >
-              <PieChart
+              {/* <PieChart
                 series={[{ data: pieChartData }]}
                 width={500}
                 height={300}
-              />
+              /> */}
+              <WordGraph words={WordGraphData} />
             </Box>
             <Typography
               variant="h6"
@@ -304,7 +323,7 @@ const Analytics = () => {
                 fontWeight: "bold",
               }}
             >
-              Asset Allocation
+              Best Working Strategy
             </Typography>
           </Grid>
         </Grid>
