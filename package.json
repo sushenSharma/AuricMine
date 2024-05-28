@@ -23,6 +23,7 @@
     "bootstrap": "^5.3.2",
     "chart.js": "^4.4.3",
     "cors": "^2.8.5",
+    "d3": "^7.9.0",
     "date-fns": "^3.6.0",
     "handsontable": "^14.0.0",
     "hyperformula": "^2.6.0",
