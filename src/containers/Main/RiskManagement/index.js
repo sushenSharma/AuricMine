@@ -46,6 +46,8 @@ const RiskManagement = () => {
           SeedRisk,
         } = data[0];
 
+        localStorage.setItem("riskManagementData", JSON.stringify(data[0]));
+
         setSeedCapital(SeedCapital);
         setInitialRisk(SeedRisk);
         setRegularIncome(IncomeCashflow);
