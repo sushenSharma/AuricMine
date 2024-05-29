@@ -1,8 +1,9 @@
 import React from "react";
-import { Box } from "@mui/material";
+import { Box, IconButton } from "@mui/material";
 import { styled } from "@mui/material/styles";
 import MuiDrawer from "@mui/material/Drawer";
 import Navigation from "../../components/Navigation";
+import MenuIcon from "@mui/icons-material/Menu";
 
 function LogoIcon(props) {
   return (
@@ -26,7 +27,7 @@ function LogoIcon(props) {
   );
 }
 
-const SideBar = ({ open, drawerWidth, theme }) => {
+const SideBar = ({ open, drawerWidth, theme, closeDrawer }) => {
   const openedMixin = (theme) => ({
     width: drawerWidth,
     transition: theme.transitions.create("width", {
@@ -47,6 +48,14 @@ const SideBar = ({ open, drawerWidth, theme }) => {
       width: `calc(${theme.spacing(8)} + 1px)`,
     },
   });
+
+  const DrawerHeader = styled("div")(({ theme }) => ({
+    display: "flex",
+    alignItems: "center",
+    justifyContent: "flex-start",
+    padding: theme.spacing(0, 1),
+    ...theme.mixins.toolbar,
+  }));
 
   const Drawer = styled(MuiDrawer, {
     shouldForwardProp: (prop) => prop !== "open",
@@ -76,13 +85,30 @@ const SideBar = ({ open, drawerWidth, theme }) => {
         },
       }}
     >
-      <LogoIcon
-        style={{
-          color: theme.palette.secondary.main,
-          marginBottom: 1,
-          opacity: open ? 1 : 0,
-        }}
-      />
+      <DrawerHeader>
+        <IconButton
+          color="inherit"
+          aria-label="open drawer"
+          onClick={closeDrawer}
+          edge="start"
+          sx={{
+            marginLeft: 1,
+            color: "#ffffff",
+          }}
+        >
+          <MenuIcon />
+        </IconButton>
+      </DrawerHeader>
+      {open && (
+        <LogoIcon
+          style={{
+            color: theme.palette.secondary.main,
+            marginBottom: 1,
+            opacity: open ? 1 : 0,
+          }}
+          open={open}
+        />
+      )}
 
       <Navigation open={open} />
     </Drawer>

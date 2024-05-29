@@ -37,17 +37,19 @@ const TopBar = ({ open, openDrawer, drawerWidth, theme }) => {
       }}
     >
       <Toolbar>
-        <IconButton
-          color="inherit"
-          aria-label="open drawer"
-          onClick={openDrawer}
-          edge="start"
-          sx={{
-            marginRight: 5,
-          }}
-        >
-          <MenuIcon />
-        </IconButton>
+        {!open && (
+          <IconButton
+            color="inherit"
+            aria-label="open drawer"
+            onClick={openDrawer}
+            edge="start"
+            sx={{
+              marginRight: 5,
+            }}
+          >
+            <MenuIcon />
+          </IconButton>
+        )}
         <Typography variant="h6" style={{ flexGrow: 1 }}>
           {getLabel("brandName")}
         </Typography>

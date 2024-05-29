@@ -46,7 +46,7 @@ const Navigation = ({ open }) => {
           "& .MuiSvgIcon-root": {
             color: "#fff",
             marginRight: "8px",
-            fontSize: "1.25em",
+            fontSize: "1.5em",
           },
           border: "5px solid #56585c",
           backgroundColor: "#56585c",
