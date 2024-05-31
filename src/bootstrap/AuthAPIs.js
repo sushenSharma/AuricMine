@@ -16,7 +16,7 @@ const AuthAPIs = ({ activeUser, setLoading }) => {
       const getLoggedInUser = (setLoading) => {
         supabase.auth.getSession().then(({ data: { session } }) => {
           if (session) {
-            addUserPosition(session.user.id);
+            //addUserPosition(session.user.id);
           } else {
             removeStorageItem([
               "userId",

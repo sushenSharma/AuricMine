@@ -16,7 +16,7 @@ export default function AuthPage() {
     supabase.auth.getSession().then(({ data: { session } }) => {
       // setSession(session);
       if (session) {
-        addUserPosition(session.user.id);
+        //addUserPosition(session.user.id);
         localStorage.setItem(userIdKey, session.user.id);
       }
     });
