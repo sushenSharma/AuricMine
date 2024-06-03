@@ -8,7 +8,7 @@ import TopBar from "../TopBar";
 
 const Main = ({ children }) => {
   const theme = useTheme();
-  const drawerWidth = 225;
+  const drawerWidth = 200;
   const userSession = getStorageItem("userSession");
   const isActive = !_.isEmpty(userSession);
 
@@ -27,7 +27,7 @@ const Main = ({ children }) => {
             flexGrow: 1,
             pl: 10,
             width: { sm: isOpen ? `calc(100% - ${drawerWidth}px)` : "100%" },
-            mt: { sm: `64px` },
+            mt: { sm: `44px` },
             transition: theme.transitions.create("margin", {
               easing: theme.transitions.easing.sharp,
               duration: theme.transitions.duration.leavingScreen,
