@@ -13,9 +13,7 @@ import {
 
 const Navigation = ({ open }) => {
   const theme = useTheme();
-
   const navigate = useNavigate();
-
   const navigationLabels = useLabels([
     "homeLabel",
     "riskManagementLabel",
@@ -40,13 +38,13 @@ const Navigation = ({ open }) => {
         sx={{
           display: "block",
           [theme.breakpoints.up("sm")]: {
-            fontSize: "1rem",
+            fontSize: "1.85em",
             padding: "0 12px 0 5px",
           },
           "& .MuiSvgIcon-root": {
             color: "#fff",
-            marginRight: "8px",
-            fontSize: "1.5em",
+            marginRight: open ? "8px" : 0,
+            fontSize: "1.25em",
           },
           border: "5px solid #56585c",
           backgroundColor: "#56585c",
@@ -59,6 +57,9 @@ const Navigation = ({ open }) => {
       >
         <ListItemButton
           sx={{
+            display: "flex",
+            flexDirection: open ? "row" : "column",
+            alignItems: "center",
             justifyContent: "center",
             px: 0,
           }}
@@ -66,7 +67,6 @@ const Navigation = ({ open }) => {
           <ListItemIcon
             sx={{
               minWidth: 0,
-              mr: !open ? "auto" : 2,
               justifyContent: "center",
             }}
           >
@@ -75,8 +75,12 @@ const Navigation = ({ open }) => {
           <ListItemText
             primary={label}
             sx={{
-              opacity: !open ? 0 : 1,
+              display: "flex",
+              justifyContent: "center",
+              alignItems: "center",
+              opacity: 1,
               color: "white",
+              textAlign: "center",
             }}
           />
         </ListItemButton>
