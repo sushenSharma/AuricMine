@@ -7,6 +7,8 @@ const Analytics = lazy(() => import("../containers/Main/Analytics"));
 const WatchList = lazy(() => import("../containers/Main/WatchList"));
 const BlogPosts = lazy(() => import("../containers/Main/BlogPosts"));
 const LandingPage = lazy(() => import("../components/landing_Page"));
+const AboutUs = lazy(() => import("../pages/AboutUs"));
+const Services = lazy(() => import("../pages/Services"));
 
 export const appRoutes = [
   {
@@ -45,5 +47,15 @@ export const appRoutes = [
     key: "home",
     path: "/home",
     component: LandingPage,
+  },
+  {
+    key: "aboutus",
+    path: "/about-us",
+    component: AboutUs,
+  },
+  {
+    key: "services",
+    path: "/services",
+    component: Services,
   },
 ];

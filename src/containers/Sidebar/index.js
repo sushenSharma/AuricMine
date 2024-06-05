@@ -61,7 +61,6 @@ const SideBar = ({ open, drawerWidth, theme, closeDrawer }) => {
     shouldForwardProp: (prop) => prop !== "open",
   })(({ theme, open }) => ({
     width: drawerWidth,
-
     ...(open && {
       ...openedMixin(theme),
       "& .MuiDrawer-paper": openedMixin(theme),
@@ -77,7 +76,6 @@ const SideBar = ({ open, drawerWidth, theme, closeDrawer }) => {
       variant="permanent"
       open={open}
       sx={{
-        width: drawerWidth,
         flexShrink: 0,
         "& .MuiDrawer-paper": {
           boxSizing: "border-box",
