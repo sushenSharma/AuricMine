@@ -1,0 +1,41 @@
+.abous-us-page {
+  padding: 5rem;
+}
+
+.about-us-section {
+  padding: 1rem;
+}
+
+.about-us-section > div {
+  display: flex;
+}
+
+.about-us-section .image-box {
+  width: 50%;
+  height: auto;
+  flex: 1;
+}
+
+.about-us-section .image-box img {
+  width: 100%;
+  border-radius: 10px;
+}
+
+.about-us-section .content-box {
+  flex: 1;
+  color: #fff;
+  font-size: 18px;
+}
+
+.about-us-first-content{
+    margin-bottom: 50px;
+}
+
+.about-us-first-content .content-box {
+  padding-left: 2rem;
+}
+
+.about-us-second-content .content-box {
+  order: -1;
+  padding-right: 2rem;
+}

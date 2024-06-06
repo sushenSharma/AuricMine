@@ -25,7 +25,9 @@ const Main = ({ children }) => {
           component="main"
           sx={{
             flexGrow: 1,
-            pl: 10,
+            pt: 5,
+            pl: { sm: isOpen ? 1 : 15 },
+            ml: { sm: isOpen ? `${drawerWidth}px` : 0 },
             width: { sm: isOpen ? `calc(100% - ${drawerWidth}px)` : "100%" },
             mt: { sm: `44px` },
             transition: theme.transitions.create("margin", {

@@ -1,22 +1,19 @@
-import React, { useState } from "react";
+import React, { Fragment, useState } from "react";
 import { Tab, Box, Tabs, useMediaQuery, useTheme } from "@mui/material";
 import Logo from "../assets/resources/nav_image.png"; // Path to your logo image
 import "../assets/styles/landingPage.css"; // Import the CSS file for styling
-import { useNavigate } from "react-router-dom";
-import { PATHS } from "../constants/routerConstant";
 
-export default function Header({handleLogin}) {
-  const [value, setValue] = useState("home");
+export default function Header({ handleLogin, setSelectedTab }) {
+  const [activeTab, setActiveTab] = useState("home");
   const theme = useTheme();
-  const navigator=useNavigate();
   const isMobile = useMediaQuery(theme.breakpoints.down("sm"));
 
-  const handleChange = (event, newValue) => {
-    setValue(newValue);
+  const handleTabChange = (event, selectedTab) => {
+    setSelectedTab(selectedTab);
+    setActiveTab(selectedTab);
   };
-
   return (
-    <>
+    <Fragment>
       <Box
         sx={{
           width: "100%",
@@ -30,37 +27,46 @@ export default function Header({handleLogin}) {
         <img src={Logo} alt="logo" className="logo" />
 
         <Tabs
-          value={value}
-          onChange={handleChange}
+          value={activeTab}
+          onChange={handleTabChange}
           TabIndicatorProps={{
             style: { backgroundColor: "#FF4D4C", height: "5px" },
           }}
           textColor="white"
           sx={{ color: "white", marginLeft: isMobile ? "0" : "5rem" }} // Adjust margin for mobile
-          orientation={ "horizontal" } // Change orientation on mobile
+          orientation={"horizontal"} // Change orientation on mobile
         >
-          <Tab value="home" label="Home" sx={{ fontSize: isMobile ?"10px":"25px" }} />
-          <Tab value="about" label="About" sx={{ fontSize: isMobile ?"10px":"25px" }} />
-          <Tab value="services" label="Services" sx={{ fontSize: isMobile ?"10px":"25px" }} />
+          <Tab
+            value="home"
+            label="Home"
+            sx={{ fontSize: isMobile ? "10px" : "25px" }}
+          />
+          <Tab
+            value="about"
+            label="About"
+            sx={{ fontSize: isMobile ? "10px" : "25px" }}
+          />
+          <Tab
+            value="services"
+            label="Services"
+            sx={{ fontSize: isMobile ? "10px" : "25px" }}
+          />
         </Tabs>
 
-          <Box
-            style={{
-              marginLeft: "auto",
-              width: "auto",
-              marginRight: isMobile ? "0px":"60px",
-              display: "flex",
-              justifyContent: "space-around",
-              color: "#ffffff",
-            }}
-          >
-            <Box
-              className="loginStyle"
-              onClick={handleLogin}
-            >
-              Login/Sign up
-            </Box>
+        <Box
+          style={{
+            marginLeft: "auto",
+            width: "auto",
+            marginRight: isMobile ? "0px" : "60px",
+            display: "flex",
+            justifyContent: "space-around",
+            color: "#ffffff",
+          }}
+        >
+          <Box className="loginStyle" onClick={handleLogin}>
+            Login/Sign up
           </Box>
+        </Box>
       </Box>
 
       <hr
@@ -69,6 +75,6 @@ export default function Header({handleLogin}) {
           height: "2px",
         }}
       />
-    </>
+    </Fragment>
   );
 }
