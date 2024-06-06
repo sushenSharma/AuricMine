@@ -1,6 +1,7 @@
 import _ from "lodash";
 import React, { Fragment, useEffect, useState } from "react";
 import { Box } from "@mui/material";
+import "./styles.css";
 
 import Header from "../header";
 import Footer from "./footer";

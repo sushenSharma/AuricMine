@@ -1,23 +1,27 @@
 import React from "react";
-import { Box, Button, Typography, useMediaQuery, useTheme } from "@mui/material";
+import {
+  Box,
+  Button,
+  Typography,
+  useMediaQuery,
+  useTheme,
+} from "@mui/material";
 import "../../assets/styles/landingPage.css"; // Import the CSS file for styling
 import lad from "../../assets/resources/landingpage.png";
 import { useNavigate } from "react-router-dom";
 import { PATHS } from "../../constants/routerConstant";
 
 export default function SectionHome() {
-  const theme=useTheme();
+  const theme = useTheme();
   const isMobile = useMediaQuery(theme.breakpoints.down("sm"));
-  const navigator=useNavigate();
+  const navigator = useNavigate();
   return (
-    <Box
-      className="homeSectionMain"
-    >
+    <Box className="homeSectionMain">
       {/* Left container for text */}
       <Box
         sx={{
           zIndex: 1,
-          padding: isMobile ? "2rem": "5rem",
+          padding: isMobile ? "2rem" : "5rem",
           width: "100%", // Full width
         }}
       >
@@ -37,8 +41,8 @@ export default function SectionHome() {
             fontSize: "2rem", // Adjust font size for smaller screens
             fontWeight: "600",
             fontFamily: "Jura",
-            paddingY: isMobile ? "2rem":"5rem",
-            width: isMobile ? null : "75%"
+            paddingY: isMobile ? "2rem" : "5rem",
+            width: isMobile ? null : "75%",
             // padding: "2rem 0",
           }}
         >
@@ -50,10 +54,11 @@ export default function SectionHome() {
           sx={{
             fontSize: "3rem", // Adjust font size for smaller screens
             fontFamily: "Jura",
-            fontWeight:"600"
+            fontWeight: "600",
           }}
         >
-          Welcome to a <span className="gradientText">Smarter</span> way to Trade
+          Welcome to a <span className="gradientText">Smarter</span> way to
+          Trade
         </Typography>
         <Button
           type="button"
@@ -66,7 +71,8 @@ export default function SectionHome() {
             padding: "1rem 2rem",
             borderRadius: "20px",
           }}
-          onClick={()=>navigator(PATHS.DEFAULT_LOGIN)}
+          className="signup-button"
+          onClick={() => navigator(PATHS.DEFAULT_LOGIN)}
         >
           Sign Up
         </Button>
@@ -78,14 +84,14 @@ export default function SectionHome() {
           top: 0,
           right: 0,
           bottom: 0,
-          left: isMobile? 0 : 356,
+          left: isMobile ? 0 : 356,
           zIndex: 0, // Set a lower z-index so the text appears above
           backgroundImage: `url(${lad})`,
           backgroundSize: "cover",
           backgroundPosition: "center",
           width: "100%",
           height: isMobile ? "50vh" : "100%", // Adjust height as needed
-          opacity: 0.7
+          opacity: 0.7,
         }}
       />
     </Box>
