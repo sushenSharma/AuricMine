@@ -1,4 +1,5 @@
 import ServicesPlatforms from "./ServicesPlatforms";
+import "./styles.css";
 
 const Services = () => {
   return (

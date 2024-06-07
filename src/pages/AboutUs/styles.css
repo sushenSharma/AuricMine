@@ -1,5 +1,6 @@
 .abous-us-page {
   padding: 5rem;
+  height: 100%;
 }
 
 .about-us-section {
@@ -27,8 +28,8 @@
   font-size: 18px;
 }
 
-.about-us-first-content{
-    margin-bottom: 50px;
+.about-us-first-content {
+  margin-bottom: 50px;
 }
 
 .about-us-first-content .content-box {
