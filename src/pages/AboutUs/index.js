@@ -1,7 +1,7 @@
 import { getLabel } from "../../hooks/use-labels";
 import ImageContentBox from "../../components/ImageContentBox";
-import firstImage from "../../assets/resources/first-section-img.jpeg";
-import secondImage from "../../assets/resources/first-section-img.jpeg";
+import firstImage from "../../assets/resources/harneet.jpeg";
+import secondImage from "../../assets/resources/sushen.jpg";
 import "./styles.css";
 
 const AboutUs = () => {
