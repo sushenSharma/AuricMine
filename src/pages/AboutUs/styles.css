@@ -2,44 +2,71 @@
   padding: 5rem;
   height: 100%;
   display: flex;
-  flex-direction: column; /* Ensures items are stacked vertically */
+  flex-direction: column;
 }
 
 .about-us-section {
   padding: 1rem;
   display: flex;
-  flex-direction: row; /* Aligns items horizontally */
-  align-items: center; /* Centers items vertically within the section */
+  flex-direction: row;
+  align-items: center;
 }
 
 .about-us-section > div {
   display: flex;
-  flex-direction: row; /* Ensures flex items are laid out horizontally */
+  flex-direction: row;
 }
 
 .about-us-section .image-box {
   width: 50%;
-  flex-shrink: 0; /* Prevents the image box from shrinking */
+  flex-shrink: 0;
 }
 
 .about-us-section .image-box img {
   width: 100%;
-  height: auto; /* Maintains aspect ratio */
+  height: auto;
   border-radius: 10px;
 }
 
 .about-us-section .content-box {
   flex: 1;
-  padding-left: 2rem; /* Adds space between the image and the text */
+  padding-left: 2rem;
   color: #fff;
   font-size: 18px;
 }
 
 .about-us-first-content .content-box {
-  padding-left: 2rem; /* Additional padding for the first content box */
+  padding-left: 2rem;
 }
 
 .about-us-second-content .content-box {
-  order: -1; /* Flips the order of content and image for second content */
+  order: -1;
   padding-right: 2rem;
+}
+
+/* Media Queries for Mobile Devices */
+@media (max-width: 768px) {
+  .abous-us-page {
+    padding: 2rem; /* Less padding on smaller screens */
+  }
+
+  .about-us-section {
+    flex-direction: column; /* Stack elements vertically */
+    align-items: stretch; /* Stretch items to take full width */
+  }
+
+  .about-us-section .image-box,
+  .about-us-section .content-box {
+    width: 100%; /* Full width for smaller screens */
+    padding: 0; /* Remove padding for a tighter fit */
+  }
+
+  .about-us-first-content .content-box,
+  .about-us-second-content .content-box {
+    padding: 1rem 0; /* Adjust padding */
+  }
+
+  .about-us-second-content .content-box {
+    order: 1; /* Reset order to default for mobile */
+  }
 }
