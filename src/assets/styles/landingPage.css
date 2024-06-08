@@ -27,9 +27,8 @@
   color: #ffffff;
   position: relative;
   padding-left: 5rem;
-  background-size: contain;
-  background-repeat: no-repeat;
-  background-position-x: 200%;
+  overflow: hidden;
+
 }
 
 .gradientText {

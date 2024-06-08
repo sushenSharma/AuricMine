@@ -18,7 +18,7 @@ export default function SectionHome() {
   return (
     <Box
       className="home-section-main"
-      style={{ backgroundImage: `url(${lad})` }}
+      // style={{ backgroundImage: `url(${lad})` }}
     >
       {/* Left container for text */}
       <Box
@@ -81,22 +81,24 @@ export default function SectionHome() {
         </Button>
       </Box>
       {/* Right container for background image */}
-      {/*<Box
-        sx={{
-          position: "absolute", // Position the background image absolutely
-          top: 0,
-          right: 0,
-          bottom: 0,
-          left: isMobile ? 0 : 0,
-          zIndex: 0, // Set a lower z-index so the text appears above
-          backgroundImage: `url(${lad})`,
-          backgroundSize: "cover",
-          backgroundPosition: "center",
-          width: "100%",
-          height: isMobile ? "50vh" : "100%", // Adjust height as needed
-          opacity: 0.7,
-        }}
-      />*/}
+      {
+        <Box
+          sx={{
+            position: "absolute", // Position the background image absolutely
+            top: 0,
+            right: 0,
+            bottom: 0,
+            left: isMobile ? 0 : 300,
+            zIndex: 0, // Set a lower z-index so the text appears above
+            backgroundImage: `url(${lad})`,
+            backgroundSize: "cover",
+            backgroundPosition: "center",
+            width: "100%",
+            height: isMobile ? "50vh" : "100%", // Adjust height as needed
+            opacity: 0.7,
+          }}
+        />
+      }
     </Box>
   );
 }
