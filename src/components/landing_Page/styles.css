@@ -1,3 +1,10 @@
 .signup-button:hover {
   background-color: #fff !important;
 }
+
+.landing-page-container {
+  display: flex;
+  flex-flow: column;
+  background-color: #000;
+  min-height: 100vh;
+}

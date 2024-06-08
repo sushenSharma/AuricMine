@@ -16,7 +16,10 @@ export default function SectionHome() {
   const isMobile = useMediaQuery(theme.breakpoints.down("sm"));
   const navigator = useNavigate();
   return (
-    <Box className="homeSectionMain">
+    <Box
+      className="home-section-main"
+      style={{ backgroundImage: `url(${lad})` }}
+    >
       {/* Left container for text */}
       <Box
         sx={{
@@ -78,13 +81,13 @@ export default function SectionHome() {
         </Button>
       </Box>
       {/* Right container for background image */}
-      <Box
+      {/*<Box
         sx={{
           position: "absolute", // Position the background image absolutely
           top: 0,
           right: 0,
           bottom: 0,
-          left: isMobile ? 0 : 356,
+          left: isMobile ? 0 : 0,
           zIndex: 0, // Set a lower z-index so the text appears above
           backgroundImage: `url(${lad})`,
           backgroundSize: "cover",
@@ -93,7 +96,7 @@ export default function SectionHome() {
           height: isMobile ? "50vh" : "100%", // Adjust height as needed
           opacity: 0.7,
         }}
-      />
+      />*/}
     </Box>
   );
 }

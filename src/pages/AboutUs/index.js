@@ -1,22 +1,22 @@
 import { getLabel } from "../../hooks/use-labels";
 import ImageContentBox from "../../components/ImageContentBox";
+import firstImage from "../../assets/resources/first-section-img.jpeg";
+import secondImage from "../../assets/resources/first-section-img.jpeg";
 import "./styles.css";
-
-const imgPath = "/assets/images";
 
 const AboutUs = () => {
   return (
     <div className="abous-us-page">
       <section className="about-us-section">
         <ImageContentBox
-          image={`${imgPath}/first-section-img.jpeg`}
+          image={firstImage}
           content={getLabel("aboutUsFirstContent")}
           className="about-us-first-content"
         />
       </section>
       <section className="about-us-section">
         <ImageContentBox
-          image={`${imgPath}/section-section-image.jpeg`}
+          image={secondImage}
           content={getLabel("aboutUsSecondContent")}
           className="about-us-second-content"
         />
