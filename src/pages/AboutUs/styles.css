@@ -1,43 +1,45 @@
 .abous-us-page {
   padding: 5rem;
   height: 100%;
-  flex: 1;
+  display: flex;
+  flex-direction: column; /* Ensures items are stacked vertically */
 }
 
 .about-us-section {
   padding: 1rem;
+  display: flex;
+  flex-direction: row; /* Aligns items horizontally */
+  align-items: center; /* Centers items vertically within the section */
 }
 
 .about-us-section > div {
   display: flex;
+  flex-direction: row; /* Ensures flex items are laid out horizontally */
 }
 
 .about-us-section .image-box {
   width: 50%;
-  height: auto;
-  flex: 1;
+  flex-shrink: 0; /* Prevents the image box from shrinking */
 }
 
 .about-us-section .image-box img {
   width: 100%;
+  height: auto; /* Maintains aspect ratio */
   border-radius: 10px;
 }
 
 .about-us-section .content-box {
   flex: 1;
+  padding-left: 2rem; /* Adds space between the image and the text */
   color: #fff;
   font-size: 18px;
 }
 
-.about-us-first-content {
-  margin-bottom: 50px;
-}
-
 .about-us-first-content .content-box {
-  padding-left: 2rem;
+  padding-left: 2rem; /* Additional padding for the first content box */
 }
 
 .about-us-second-content .content-box {
-  order: -1;
+  order: -1; /* Flips the order of content and image for second content */
   padding-right: 2rem;
 }
