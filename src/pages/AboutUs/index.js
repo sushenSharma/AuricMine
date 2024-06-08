@@ -1,6 +1,6 @@
 import { getLabel } from "../../hooks/use-labels";
 import ImageContentBox from "../../components/ImageContentBox";
-import firstImage from "../../assets/resources/harneet.jpeg";
+import firstImage from "../../assets/resources/harneet.jpg";
 import secondImage from "../../assets/resources/sushen.jpg";
 import "./styles.css";
 
