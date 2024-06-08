@@ -63,7 +63,7 @@ const LandingPage = () => {
   };
 
   return (
-    <Box sx={{ backgroundColor: "#000000", height: "auto" }}>
+    <Box className="landing-page-container">
       <Header handleLogin={handleLogin} setSelectedTab={setSelectedTab} />
       {renderComponent(selectedTab)}
       <Footer />

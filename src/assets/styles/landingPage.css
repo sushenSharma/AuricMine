@@ -12,8 +12,6 @@
   transform: scale(1.05); /* Slightly enlarges the logo on hover */
 }
 
-
-
 .loginStyle {
   background-color: #ffffff;
   padding: 5px 30px;
@@ -23,13 +21,14 @@
   cursor: pointer;
   margin-right: 20px;
   font-family: "Jura";
-
 }
-.homeSectionMain {
+.home-section-main {
   display: flex;
   color: #ffffff;
   position: relative;
   padding-left: 5rem;
+  overflow: hidden;
+
 }
 
 .gradientText {
@@ -37,7 +36,6 @@
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
 }
-
 
 @media (min-width: 300px) and (max-width: 600px) {
   /* Tailwind 'lg' breakpoint */
@@ -60,11 +58,10 @@
     font-family: "inika";
   }
 
-  .homeSectionMain {
+  .home-section-main {
     flex-direction: column;
     align-items: center;
     text-align: center;
-  padding-left: 0rem;
-
+    padding-left: 0rem;
   }
 }

@@ -1,3 +1,10 @@
+html,
+body,
+#root,
+main {
+  height: 100%;
+}
+
 a.App {
   text-align: center;
 }
@@ -41,4 +48,6 @@ li {
   margin: 1em;
 }
 
-iframe#webpack-dev-server-client-overlay{display:none!important}
+iframe#webpack-dev-server-client-overlay {
+  display: none !important;
+}
