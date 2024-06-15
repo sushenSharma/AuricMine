@@ -6,7 +6,7 @@ import "./styles.css";
 
 const AboutUs = () => {
   return (
-    <div className="abous-us-page">
+    <div className="about-us-page">
       <section className="about-us-section">
         <ImageContentBox
           image={firstImage}
