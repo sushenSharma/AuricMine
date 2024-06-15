@@ -47,12 +47,17 @@
 /* Media Queries for Mobile Devices */
 @media (max-width: 768px) {
   .abous-us-page {
-    padding: 2rem; /* Less padding on smaller screens */
+    padding: 1rem; /* Reduced padding for smaller screens */
   }
 
   .about-us-section {
     flex-direction: column; /* Stack elements vertically */
     align-items: stretch; /* Stretch items to take full width */
+    padding: 0.5rem 0; /* Reduced vertical padding */
+  }
+
+  .about-us-section > div {
+    flex-direction: column; /* Ensure divs inside sections also stack vertically */
   }
 
   .about-us-section .image-box,
@@ -61,9 +66,14 @@
     padding: 0; /* Remove padding for a tighter fit */
   }
 
+  .about-us-section .content-box {
+    padding: 1rem 1rem; /* Uniform padding for readability */
+    font-size: 16px; /* Slightly larger font for better readability on small devices */
+  }
+
   .about-us-first-content .content-box,
   .about-us-second-content .content-box {
-    padding: 1rem 0; /* Adjust padding */
+    padding: 1rem; /* Consistent padding */
   }
 
   .about-us-second-content .content-box {
