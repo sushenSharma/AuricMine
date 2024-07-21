@@ -6,7 +6,7 @@
 }
 
 .about-us-section {
-  padding: 1rem;
+  padding: 50px;
   display: flex;
   flex-direction: row;
   align-items: center;
@@ -15,6 +15,7 @@
 .about-us-section > div {
   display: flex;
   flex-direction: row;
+  align-items: center;
 }
 
 .about-us-section .image-box {
@@ -26,6 +27,8 @@
   width: 100%;
   height: auto;
   border-radius: 10px;
+  max-width: 400px;
+  margin: 0 auto;
 }
 
 .about-us-section .content-box {
@@ -56,6 +59,10 @@
     padding: 0.5rem 0; /* Reduced vertical padding */
   }
 
+  .about-us-section:first-child{
+    padding-bottom: 0;
+  }
+
   .about-us-section > div {
     flex-direction: column; /* Ensure divs inside sections also stack vertically */
   }
@@ -71,9 +78,14 @@
     font-size: 16px; /* Slightly larger font for better readability on small devices */
   }
 
+  .about-us-section .image-box{
+    margin-bottom: 16px;
+  }
+
   .about-us-first-content .content-box,
   .about-us-second-content .content-box {
     padding: 1rem; /* Consistent padding */
+    text-align: justify;
   }
 
   .about-us-second-content .content-box {
