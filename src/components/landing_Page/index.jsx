@@ -1,19 +1,19 @@
-import _ from "lodash";
 import React, { Fragment, useEffect, useState } from "react";
+import { useSelector } from "react-redux";
+import { useNavigate } from "react-router-dom";
 import { Box } from "@mui/material";
-import "./styles.css";
+import _ from "lodash";
 
 import Header from "../header";
 import Footer from "./footer";
 import SectionHome from "./section-home";
 import SectionPlatform from "./section-platform";
 import AuthModal from "../../containers/AuthWrapper/AuthModal";
-
-import "../../assets/styles/landingPage.css"; // Import the CSS file for styling
-import { useSelector } from "react-redux";
-import { useNavigate } from "react-router-dom";
 import AboutUs from "../../pages/AboutUs";
 import Services from "../../pages/Services";
+
+import "../../assets/styles/landingPage.css"; // Import the CSS file for styling
+import "./styles.css";
 
 const LandingPage = () => {
   const navigate = useNavigate();
@@ -44,7 +44,7 @@ const LandingPage = () => {
       case "home":
         return (
           <Fragment>
-            <SectionHome />
+            <SectionHome handleLogin={handleLogin}/>
             <SectionPlatform />
           </Fragment>
         );
@@ -55,7 +55,7 @@ const LandingPage = () => {
       default:
         return (
           <Fragment>
-            <SectionHome />
+            <SectionHome handleLogin={handleLogin}/>
             <SectionPlatform />
           </Fragment>
         );

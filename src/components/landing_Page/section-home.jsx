@@ -8,13 +8,11 @@ import {
 } from "@mui/material";
 import "../../assets/styles/landingPage.css"; // Import the CSS file for styling
 import lad from "../../assets/resources/landingpage.png";
-import { useNavigate } from "react-router-dom";
-import { PATHS } from "../../constants/routerConstant";
 
-export default function SectionHome() {
+export default function SectionHome({ handleLogin }) {
   const theme = useTheme();
   const isMobile = useMediaQuery(theme.breakpoints.down("sm"));
-  const navigator = useNavigate();
+
   return (
     <Box
       className="home-section-main"
@@ -68,14 +66,15 @@ export default function SectionHome() {
           sx={{
             backgroundColor: "#ffffff",
             margin: "2rem 0", // Adjust margin for smaller screens
-            fontSize: "1.5rem", // Adjust font size for smaller screens
+            fontSize: "16px", // Adjust font size for smaller screens
             fontFamily: "Jura",
-            color: "black",
-            padding: "1rem 2rem",
-            borderRadius: "20px",
+            color: "#000",
+            padding: "7px 16px 8px",
+            borderRadius: "8px",
+            fontWeight: 700,
           }}
           className="signup-button"
-          onClick={() => navigator(PATHS.DEFAULT_LOGIN)}
+          onClick={handleLogin}
         >
           Sign Up
         </Button>
