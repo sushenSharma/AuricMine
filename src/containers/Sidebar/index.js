@@ -45,7 +45,7 @@ const SideBar = ({ open, drawerWidth, theme, closeDrawer }) => {
     overflowX: "hidden",
     width: `calc(${theme.spacing(9)} + 1px)`,
     [theme.breakpoints.up("sm")]: {
-      width: `calc(${theme.spacing(14)} + 1px)`,
+      width: `calc(${theme.spacing(9)} + 1px)`,
     },
   });
 
@@ -90,8 +90,9 @@ const SideBar = ({ open, drawerWidth, theme, closeDrawer }) => {
           onClick={closeDrawer}
           edge="start"
           sx={{
-            marginLeft: 1,
+            marginLeft: "0",
             color: "#ffffff",
+            paddingLeft: "0",
           }}
         >
           <MenuIcon />
