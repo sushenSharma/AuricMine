@@ -38,8 +38,8 @@ const Navigation = ({ open }) => {
         sx={{
           display: "block",
           [theme.breakpoints.up("sm")]: {
-            fontSize: "1.85em",
-            padding: "0 12px 0 5px",
+            fontSize: "1em",
+             margin: "0"
           },
           "& .MuiSvgIcon-root": {
             color: "#fff",
@@ -49,8 +49,7 @@ const Navigation = ({ open }) => {
           border: "5px solid #56585c",
           backgroundColor: "#56585c",
           "&:hover": {
-            backgroundColor: theme.palette.primary.dark,
-            boxShadow: "0 2px 8px rgba(0,0,0,0.2)",
+            backgroundColor: "transparent",
           },
         }}
         onClick={() => handleNavigate(item)}
@@ -62,6 +61,12 @@ const Navigation = ({ open }) => {
             alignItems: "center",
             justifyContent: "center",
             px: 0,
+            ...(open ? { padding: "12px 5px" } : {}),
+            "&:hover": {
+              backgroundColor: theme.palette.primary.dark,
+              boxShadow: "0 2px 8px rgba(0,0,0,0.2)",
+              borderRadius: "8px",
+            },
           }}
         >
           <ListItemIcon
@@ -76,11 +81,26 @@ const Navigation = ({ open }) => {
             primary={label}
             sx={{
               display: "flex",
-              justifyContent: "center",
+
               alignItems: "center",
               opacity: 1,
               color: "white",
               textAlign: "center",
+              ...(!open
+                ? {
+                    justifyContent: "center",
+                    width: "60px",
+                    "& .MuiTypography-root": {
+                      fontSize: "14px",
+                      display: "block",
+                      whiteSpace: "nowrap",
+                      overflow: "hidden",
+                      textOverflow: "ellipsis",
+                    },
+                  }
+                : {
+                    justifyContent: "flex-start",
+                  }),
             }}
           />
         </ListItemButton>
