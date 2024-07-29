@@ -51,6 +51,11 @@ export default function Header({ handleLogin, setSelectedTab }) {
             label="Services"
             sx={{ fontSize: isMobile ? "10px" : "25px" }}
           />
+          <Tab
+            value="pricing"
+            label="Pricing"
+            sx={{ fontSize: isMobile ? "10px" : "25px" }}
+          />
         </Tabs>
 
         <Box

@@ -1,5 +1,11 @@
 import React from "react";
-import { Box, Divider, Typography, useMediaQuery, useTheme } from "@mui/material";
+import {
+  Box,
+  Divider,
+  Typography,
+  useMediaQuery,
+  useTheme,
+} from "@mui/material";
 import "../../assets/styles/landingPage.css"; // Import the CSS file for styling
 import { BsFillClockFill, BsGraphUp } from "react-icons/bs";
 import { RiMap2Line } from "react-icons/ri";
@@ -31,8 +37,7 @@ export default function SectionPlatform() {
     {
       icon: HiLockClosed,
       name: "Secure and Private",
-      content:
-        "Your data is encrypted and kept private at all times.",
+      content: "Your data is encrypted and kept private at all times.",
     },
   ];
 
@@ -40,11 +45,15 @@ export default function SectionPlatform() {
     <Box>
       <Box sx={{ display: "flex", alignItems: "center" }}>
         <Divider
-          sx={{ height: "2px", width:isMobile ? "25%": "37%", backgroundColor: "#ffffff" }}
+          sx={{
+            height: "2px",
+            width: isMobile ? "25%" : "37%",
+            backgroundColor: "#ffffff",
+          }}
         />
         <Typography
           sx={{
-            width:isMobile ? "50%": "26%",
+            width: isMobile ? "50%" : "26%",
             textAlign: "center",
             color: "white",
             fontSize: isMobile ? "22px" : "48px",
@@ -54,7 +63,11 @@ export default function SectionPlatform() {
           Platform Features
         </Typography>
         <Divider
-          sx={{ height: "2px", width:isMobile ? "25%": "37%", backgroundColor: "#ffffff" }}
+          sx={{
+            height: "2px",
+            width: isMobile ? "25%" : "37%",
+            backgroundColor: "#ffffff",
+          }}
         />
       </Box>
       <Box sx={{ padding: isMobile ? "1rem 2rem" : "2rem 8rem" }}>
@@ -90,12 +103,18 @@ export default function SectionPlatform() {
                 }}
               >
                 <Typography
-                  sx={{ fontSize: isMobile ? "24px" : "24px", fontWeight: "600" }}
+                  sx={{
+                    fontSize: isMobile ? "24px" : "24px",
+                    fontWeight: "600",
+                  }}
                 >
                   {item.name}
                 </Typography>
                 <Typography
-                  sx={{ fontSize: isMobile ? "16px" : "16px", fontWeight: "400" }}
+                  sx={{
+                    fontSize: isMobile ? "16px" : "16px",
+                    fontWeight: "400",
+                  }}
                 >
                   {item.content}
                 </Typography>
