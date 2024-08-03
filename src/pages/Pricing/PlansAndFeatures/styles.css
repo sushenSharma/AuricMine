@@ -1,0 +1,60 @@
+.plan-and-features-container {
+  max-width: 1136px;
+  margin: 0 auto;
+}
+
+.table-header-col {
+  background-color: #000 !important;
+  border-color: #000;
+  padding-bottom: 0 !important;
+  padding-top: 19px !important;
+}
+
+.plan-view-tag {
+  color: #fff;
+  font-size: 23px;
+  font-weight: 700;
+  display: flex;
+  align-items: center;
+}
+
+.plan-view-tag::before {
+  content: "";
+  background-color: #fff;
+  border-radius: 20px;
+  width: 15px;
+  height: 15px;
+  display: inline-flex;
+  margin-right: 10px;
+  align-items: center;
+  justify-content: center;
+}
+
+.plan-header-content {
+  text-align: left;
+}
+
+.table-header-col .ledger-button {
+  color: #000;
+  background-color: #fdfdfd;
+  border: 1px solid transparent;
+  border-radius: 0.375rem;
+  margin: 20px auto;
+  padding: 0.25rem 0;
+  font-size: 16px;
+  font-weight: 700;
+  line-height: 1.5rem;
+  width: 100%;
+  max-width: 150px;
+}
+
+.table-header-col .ledger-button:hover {
+  opacity: 0.8;
+}
+
+.table-cell-data .plan-title {
+  color: #d1d1d1;
+  margin-left: 10px;
+  font-size: 20px;
+  font-weight: 700;
+}

@@ -94,4 +94,9 @@ export const defaults = {
 
   compareAndPlanFeatures: "Compare plans and features",
   chosePlanFeatureDescription: "Choose the plan that's right for your business",
+  faqLabel: "FAQs",
+
+  tryItFreeLabel: "Try It Free",
+  getStartedLabel: "Get Started",
+  contactSalesLabel: "Contact Sales",
 };

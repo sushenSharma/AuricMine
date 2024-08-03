@@ -3,9 +3,10 @@ import { preparePackageCardsData } from "./package-card-utils";
 import { Grid } from "@mui/material";
 import CardView from "./CardView";
 
+import "./styles.css"
+
 const PackageCards = () => {
   const cardsList = preparePackageCardsData().map((item, index) => {
-    console.log("item", item);
     return (
       <Grid item xs={4} key={index}>
         <CardView {...item} />
@@ -14,9 +15,11 @@ const PackageCards = () => {
   });
 
   return (
-    <Grid container spacing={2}>
-      {cardsList}
-    </Grid>
+    <div className="package-cards-container">
+      <Grid container spacing={4}>
+        {cardsList}
+      </Grid>
+    </div>
   );
 };
 

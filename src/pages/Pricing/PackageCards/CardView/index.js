@@ -20,15 +20,15 @@ const CardView = (props) => {
           <span className="card-view-tag">{packageType}</span>
         </div>
         <div className="card-view-header-liner">
-          <span className="card-view-tag">{packageTypeLiner}</span>
+          <span className="card-view-subtitle">{packageTypeLiner}</span>
         </div>
       </div>
       <div className="card-view-content">
         <div className="card-view-pricing-content">
           <div className="card-view-pricing-meta">
-            <span className="card-view-price">{packageTypePrice}</span> /{" "}
+            <span className="card-view-price">{packageTypePrice}</span>
             <span className="card-view-price-duration">
-              {packageTypeDuration}
+              / {packageTypeDuration}
             </span>
           </div>
           <div className="card-view-billing-duration">
@@ -40,7 +40,7 @@ const CardView = (props) => {
           <LedgerButton
             label={packageTypeBtnLink}
             type="primary"
-            size="md"
+            size="lg"
             onClick={() => console.log("btn")}
           />
         </div>
