@@ -53,7 +53,7 @@ export const infinityIcon = (
   </svg>
 );
 
-export const tickIcon = (
+export const blackTickIcon = (
   <svg
     xmlns="http://www.w3.org/2000/svg"
     width="24"
@@ -207,7 +207,7 @@ export const supportIcon = (
     <style xmlns="" lang="en" type="text/css" id="dark-mode-custom-style" />
     <style xmlns="" lang="en" type="text/css" id="dark-mode-native-style" />
     <style xmlns="" lang="en" type="text/css" id="dark-mode-native-sheet" />
-    <g clip-path="url(#clip0_2008_40)">
+    <g clipPath="url(#clip0_2008_40)">
       <path
         d="M6.66669 25.0001C6.66669 24.116 7.01788 23.2682 7.643 22.6431C8.26812 22.0179 9.11597 21.6667 10 21.6667H11.6667C12.5507 21.6667 13.3986 22.0179 14.0237 22.6431C14.6488 23.2682 15 24.116 15 25.0001V30.0001C15 30.8841 14.6488 31.732 14.0237 32.3571C13.3986 32.9822 12.5507 33.3334 11.6667 33.3334H10C9.11597 33.3334 8.26812 32.9822 7.643 32.3571C7.01788 31.732 6.66669 30.8841 6.66669 30.0001V25.0001Z"
         stroke="#EDEDED"
@@ -261,7 +261,7 @@ export const securityIcon = (
     <style xmlns="" lang="en" type="text/css" id="dark-mode-custom-style" />
     <style xmlns="" lang="en" type="text/css" id="dark-mode-native-style" />
     <style xmlns="" lang="en" type="text/css" id="dark-mode-native-sheet" />
-    <g clip-path="url(#clip0_2008_45)">
+    <g clipPath="url(#clip0_2008_45)">
       <path
         d="M20 5C23.893 8.44429 28.9741 10.2376 34.1667 10C34.9226 12.5717 35.154 15.2691 34.8469 17.932C34.5398 20.5948 33.7005 23.1688 32.379 25.5009C31.0575 27.833 29.2806 29.8756 27.1541 31.5075C25.0275 33.1393 22.5946 34.327 20 35C17.4053 34.327 14.9725 33.1393 12.8459 31.5075C10.7193 29.8756 8.9425 27.833 7.62098 25.5009C6.29946 23.1688 5.46021 20.5948 5.15311 17.932C4.84602 15.2691 5.07733 12.5717 5.83332 10C11.0259 10.2376 16.1069 8.44429 20 5Z"
         stroke="#EDEDED"
@@ -273,6 +273,46 @@ export const securityIcon = (
     <defs>
       <clipPath id="clip0_2008_45">
         <rect width="40" height="40" fill="white" />
+      </clipPath>
+    </defs>
+  </svg>
+);
+
+export const whiteTickProductIcon = (
+  <svg
+    xmlns="http://www.w3.org/2000/svg"
+    width="24"
+    height="24"
+    viewBox="0 0 24 24"
+    fill="none"
+  >
+    <link
+      xmlns=""
+      type="text/css"
+      rel="stylesheet"
+      id="dark-mode-custom-link"
+    />
+    <link
+      xmlns=""
+      type="text/css"
+      rel="stylesheet"
+      id="dark-mode-general-link"
+    />
+    <style xmlns="" lang="en" type="text/css" id="dark-mode-custom-style" />
+    <style xmlns="" lang="en" type="text/css" id="dark-mode-native-style" />
+    <style xmlns="" lang="en" type="text/css" id="dark-mode-native-sheet" />
+    <g clip-path="url(#clip0_2006_37)">
+      <path
+        d="M5 12L10 17L20 7"
+        stroke="white"
+        strokeWidth="2"
+        strokeLinecap="round"
+        strokeLinejoin="round"
+      />
+    </g>
+    <defs>
+      <clipPath id="clip0_2006_37">
+        <rect width="24" height="24" fill="white" />
       </clipPath>
     </defs>
   </svg>

@@ -4,7 +4,8 @@ import {
   infinityIcon,
   securityIcon,
   supportIcon,
-  tickIcon,
+  whiteTickProductIcon,
+  blackTickIcon,
   unifiedIcon,
 } from "../../../svgImages";
 import LedgerButton from "../../../ui-kit/Buttons/LedgerButton";
@@ -90,7 +91,8 @@ const createData = (
   planFree,
   planRidiculous,
   planGrowth,
-  planEnterprise
+  planEnterprise,
+  className
 ) => {
   return {
     planFeatures,
@@ -98,86 +100,406 @@ const createData = (
     planRidiculous,
     planGrowth,
     planEnterprise,
+    className,
   };
 };
 
 export const prepareTableData = () => {
   return [
     createData(
-      <span className="plan-title">{unifiedIcon} Unified</span>,
+      <span className="product-content">
+        <span className="product-icon">{unifiedIcon}</span>
+        <span className="procuct-title">Unified</span>
+      </span>,
       "",
       "",
-      ""
-    ),
-
-    createData("API Calls", "2,000", "50,000", infinityIcon, infinityIcon),
-    createData("Pricing Type", "Free", "Standard", "Volume", "Custom"),
-    createData("Common Models", tickIcon, tickIcon, tickIcon, tickIcon),
-    createData(
-      "Basic Integrations",
-      infinityIcon,
-      infinityIcon,
-      infinityIcon,
-      infinityIcon
-    ),
-    createData("Premium Integrations", "-", "1", infinityIcon, infinityIcon),
-    createData("Passthrough API", tickIcon, tickIcon, tickIcon, tickIcon),
-    createData(
-      "Passthrough Forwarding",
-      tickIcon,
-      tickIcon,
-      tickIcon,
-      tickIcon
-    ),
-    createData("API Request Logs", tickIcon, tickIcon, tickIcon, tickIcon),
-    createData("SDKs", tickIcon, tickIcon, tickIcon, tickIcon),
-
-    createData(
-      <span className="plan-title">{authKitIcon} AuthKit</span>,
       "",
       "",
-      ""
+      "procduct-title-row"
     ),
 
     createData(
-      "Connected Accounts",
-      "10",
-      infinityIcon,
-      infinityIcon,
-      infinityIcon
+      <span className="feature-name">API Calls</span>,
+      <span className="feature-item">2,000</span>,
+      <span className="feature-item">50,000</span>,
+      <span className="feature-item-icon">{infinityIcon}</span>,
+      <span className="feature-item-icon">{infinityIcon}</span>,
+      "procduct-data-row"
     ),
-    createData("Configuration", tickIcon, tickIcon, tickIcon, tickIcon),
-    createData("SDKs", tickIcon, tickIcon, tickIcon, tickIcon),
-    createData("OAuth2 Support", tickIcon, tickIcon, tickIcon, tickIcon),
-    createData("White labeling", "-", "-", tickIcon, tickIcon),
+    createData(
+      <span className="feature-name">Pricing Type</span>,
+      <span className="feature-item">Free</span>,
+      <span className="feature-item">Standard</span>,
+      <span className="feature-item">Volume</span>,
+      <span className="feature-item">Custom</span>,
+      "procduct-data-row"
+    ),
+    createData(
+      <span className="feature-name">Common Models</span>,
+      <span className="feature-item-icon tick-icon white-color-icon">
+        {blackTickIcon}
+      </span>,
+      <span className="feature-item-icon tick-icon blue-color-icon">
+        {whiteTickProductIcon}
+      </span>,
+      <span className="feature-item-icon tick-icon purple-color-icon">
+        {whiteTickProductIcon}
+      </span>,
+      <span className="feature-item-icon tick-icon teal-color-icon">
+        {whiteTickProductIcon}
+      </span>,
+      "procduct-data-row"
+    ),
+    createData(
+      <span className="feature-name"> Basic Integrations </span>,
+      <span className="feature-item-icon">{infinityIcon}</span>,
+      <span className="feature-item-icon">{infinityIcon}</span>,
+      <span className="feature-item-icon">{infinityIcon}</span>,
+      <span className="feature-item-icon">{infinityIcon}</span>,
+      "procduct-data-row"
+    ),
+    createData(
+      <span className="feature-name">Premium Integrations</span>,
+      <span className="feature-item">-</span>,
+      <span className="feature-item">1</span>,
+      <span className="feature-item-icon">{infinityIcon}</span>,
+      <span className="feature-item-icon">{infinityIcon}</span>,
+      "procduct-data-row"
+    ),
+    createData(
+      <span className="feature-name">Passthrough API</span>,
+      <span className="feature-item-icon tick-icon  white-color-icon">
+        {blackTickIcon}
+      </span>,
+      <span className="feature-item-icon tick-icon blue-color-icon">
+        {whiteTickProductIcon}
+      </span>,
+      <span className="feature-item-icon tick-icon purple-color-icon">
+        {whiteTickProductIcon}
+      </span>,
+      <span className="feature-item-icon tick-icon teal-color-icon">
+        {whiteTickProductIcon}
+      </span>,
+      "procduct-data-row"
+    ),
+    createData(
+      <span className="feature-name">Passthrough Forwarding</span>,
+      <span className="feature-item-icon tick-icon white-color-icon">
+        {blackTickIcon}
+      </span>,
+      <span className="feature-item-icon tick-icon blue-color-icon">
+        {whiteTickProductIcon}
+      </span>,
+      <span className="feature-item-icon tick-icon purple-color-icon">
+        {whiteTickProductIcon}
+      </span>,
+      <span className="feature-item-icon tick-icon teal-color-icon">
+        {whiteTickProductIcon}
+      </span>,
+      "procduct-data-row"
+    ),
+    createData(
+      <span className="feature-name">API Request Logs</span>,
+      <span className="feature-item-icon tick-icon white-color-icon">
+        {blackTickIcon}
+      </span>,
+      <span className="feature-item-icon tick-icon blue-color-icon">
+        {whiteTickProductIcon}
+      </span>,
+      <span className="feature-item-icon tick-icon purple-color-icon">
+        {whiteTickProductIcon}
+      </span>,
+      <span className="feature-item-icon tick-icon teal-color-icon">
+        {whiteTickProductIcon}
+      </span>,
+      "procduct-data-row"
+    ),
+    createData(
+      <span className="feature-name">SDKs</span>,
+      <span className="feature-item-icon tick-icon white-color-icon">
+        {blackTickIcon}
+      </span>,
+      <span className="feature-item-icon tick-icon blue-color-icon">
+        {whiteTickProductIcon}
+      </span>,
+      <span className="feature-item-icon tick-icon purple-color-icon">
+        {whiteTickProductIcon}
+      </span>,
+      <span className="feature-item-icon tick-icon teal-color-icon">
+        {whiteTickProductIcon}
+      </span>,
+      "procduct-data-row"
+    ),
 
     createData(
-      <span className="plan-title">{securityIcon} Security</span>,
+      <span className="product-content">
+        <span className="product-icon">{authKitIcon}</span>
+        <span className="procuct-title">AuthKit</span>
+      </span>,
       "",
       "",
-      ""
+      "",
+      "",
+      "procduct-title-row"
     ),
-
-    createData("HTTPS/SSL by default", tickIcon, tickIcon, tickIcon, tickIcon),
-    createData("DDoS Mitigation", tickIcon, tickIcon, tickIcon, tickIcon),
-    createData("Audit Logs", "-", "-", "-", tickIcon),
-    createData("Single Sign-On (SSO)", "-", "-", "-", tickIcon),
 
     createData(
-      <span className="plan-title">{supportIcon} Support</span>,
-      "",
-      "",
-      ""
+      <span className="feature-name">Connected Accounts</span>,
+      <span className="feature-item">10</span>,
+      <span className="feature-item-icon">{infinityIcon}</span>,
+      <span className="feature-item-icon">{infinityIcon}</span>,
+      <span className="feature-item-icon">{infinityIcon}</span>,
+      "procduct-data-row"
+    ),
+    createData(
+      <span className="feature-name">Configuration</span>,
+      <span className="feature-item-icon tick-icon white-color-icon">
+        {blackTickIcon}
+      </span>,
+      <span className="feature-item-icon tick-icon blue-color-icon">
+        {whiteTickProductIcon}
+      </span>,
+      <span className="feature-item-icon tick-icon purple-color-icon">
+        {whiteTickProductIcon}
+      </span>,
+      <span className="feature-item-icon tick-icon teal-color-icon">
+        {whiteTickProductIcon}
+      </span>,
+      "procduct-data-row"
+    ),
+    createData(
+      <span className="feature-name">SDKs</span>,
+      <span className="feature-item-icon tick-icon white-color-icon">
+        {blackTickIcon}
+      </span>,
+      <span className="feature-item-icon tick-icon blue-color-icon">
+        {whiteTickProductIcon}
+      </span>,
+      <span className="feature-item-icon tick-icon purple-color-icon">
+        {whiteTickProductIcon}
+      </span>,
+      <span className="feature-item-icon tick-icon teal-color-icon">
+        {whiteTickProductIcon}
+      </span>,
+      "procduct-data-row"
+    ),
+    createData(
+      <span className="feature-name">OAuth2 Support</span>,
+      <span className="feature-item-icon tick-icon white-color-icon">
+        {blackTickIcon}
+      </span>,
+      <span className="feature-item-icon tick-icon blue-color-icon">
+        {whiteTickProductIcon}
+      </span>,
+      <span className="feature-item-icon tick-icon purple-color-icon">
+        {whiteTickProductIcon}
+      </span>,
+      <span className="feature-item-icon tick-icon teal-color-icon">
+        {whiteTickProductIcon}
+      </span>,
+      "procduct-data-row"
+    ),
+    createData(
+      <span className="feature-name">White labeling</span>,
+      <span className="feature-item">-</span>,
+      <span className="feature-item">-</span>,
+      <span className="feature-item-icon tick-icon purple-color-icon">
+        {whiteTickProductIcon}
+      </span>,
+      <span className="feature-item-icon tick-icon teal-color-icon">
+        {whiteTickProductIcon}
+      </span>,
+      "procduct-data-row"
     ),
 
-    createData("Community Support", tickIcon, tickIcon, tickIcon, tickIcon),
-    createData("Email Support", tickIcon, tickIcon, tickIcon, tickIcon),
-    createData("Email Support SLA", "-", "-", "-", tickIcon),
-    createData("Onboarding Support", "-", tickIcon, tickIcon, tickIcon),
-    createData("Dedicated Slack Channel", "-", tickIcon, tickIcon, tickIcon),
-    createData("Dedicated Account Manager", "-", "-", tickIcon, tickIcon),
-    createData("SLA for 99.99% Uptime", "-", "-", "-", tickIcon),
-    createData("Advanced Support Scope", "-", "-", "-", tickIcon),
-    createData("Core Audits & Professional Services", "-", "-", "-", tickIcon),
+    createData(
+      <span className="product-content">
+        <span className="product-icon">{securityIcon}</span>
+        <span className="procuct-title">Security</span>
+      </span>,
+      "",
+      "",
+      "",
+      "",
+      "procduct-title-row"
+    ),
+
+    createData(
+      <span className="feature-name">HTTPS/SSL by default</span>,
+      <span className="feature-item-icon tick-icon white-color-icon">
+        {blackTickIcon}
+      </span>,
+      <span className="feature-item-icon tick-icon blue-color-icon">
+        {whiteTickProductIcon}
+      </span>,
+      <span className="feature-item-icon tick-icon purple-color-icon">
+        {whiteTickProductIcon}
+      </span>,
+      <span className="feature-item-icon tick-icon teal-color-icon">
+        {whiteTickProductIcon}
+      </span>,
+      "procduct-data-row"
+    ),
+    createData(
+      <span className="feature-name">DDoS Mitigation</span>,
+      <span className="feature-item-icon tick-icon white-color-icon">
+        {blackTickIcon}
+      </span>,
+      <span className="feature-item-icon tick-icon blue-color-icon">
+        {whiteTickProductIcon}
+      </span>,
+      <span className="feature-item-icon tick-icon purple-color-icon">
+        {whiteTickProductIcon}
+      </span>,
+      <span className="feature-item-icon tick-icon teal-color-icon">
+        {whiteTickProductIcon}
+      </span>,
+      "procduct-data-row"
+    ),
+    createData(
+      <span className="feature-name">Audit Logs</span>,
+      <span className="feature-item">-</span>,
+      <span className="feature-item">-</span>,
+      <span className="feature-item">-</span>,
+      <span className="feature-item-icon tick-icon teal-color-icon">
+        {whiteTickProductIcon}
+      </span>,
+      "procduct-data-row"
+    ),
+    createData(
+      <span className="feature-name">Single Sign-On (SSO)</span>,
+      <span className="feature-item">-</span>,
+      <span className="feature-item">-</span>,
+      <span className="feature-item">-</span>,
+      <span className="feature-item-icon tick-icon teal-color-icon">
+        {whiteTickProductIcon}
+      </span>,
+      "procduct-data-row"
+    ),
+
+    createData(
+      <span className="product-content">
+        <span className="product-icon">{supportIcon}</span>
+        <span className="procuct-title"> Support</span>
+      </span>,
+      "",
+      "",
+      "",
+      "",
+      "procduct-title-row"
+    ),
+
+    createData(
+      <span className="feature-name">Community Support</span>,
+      <span className="feature-item-icon tick-icon white-color-icon">
+        {blackTickIcon}
+      </span>,
+      <span className="feature-item-icon tick-icon blue-color-icon">
+        {whiteTickProductIcon}
+      </span>,
+      <span className="feature-item-icon tick-icon purple-color-icon">
+        {whiteTickProductIcon}
+      </span>,
+      <span className="feature-item-icon tick-icon teal-color-icon">
+        {whiteTickProductIcon}
+      </span>,
+      "procduct-data-row"
+    ),
+    createData(
+      <span className="feature-name">Email Support</span>,
+      <span className="feature-item-icon tick-icon white-color-icon">
+        {blackTickIcon}
+      </span>,
+      <span className="feature-item-icon tick-icon blue-color-icon">
+        {whiteTickProductIcon}
+      </span>,
+      <span className="feature-item-icon tick-icon purple-color-icon">
+        {whiteTickProductIcon}
+      </span>,
+      <span className="feature-item-icon tick-icon teal-color-icon">
+        {whiteTickProductIcon}
+      </span>,
+      "procduct-data-row"
+    ),
+    createData(
+      <span className="feature-name">Email Support SLA</span>,
+      <span className="feature-item">-</span>,
+      <span className="feature-item">-</span>,
+      <span className="feature-item">-</span>,
+      <span className="feature-item-icon tick-icon teal-color-icon">
+        {whiteTickProductIcon}
+      </span>,
+      "procduct-data-row"
+    ),
+    createData(
+      <span className="feature-name">Onboarding Support</span>,
+      <span className="feature-item">-</span>,
+      <span className="feature-item-icon tick-icon blue-color-icon">
+        {whiteTickProductIcon}
+      </span>,
+      <span className="feature-item-icon tick-icon purple-color-icon">
+        {whiteTickProductIcon}
+      </span>,
+      <span className="feature-item-icon tick-icon teal-color-icon">
+        {whiteTickProductIcon}
+      </span>,
+      "procduct-data-row"
+    ),
+    createData(
+      <span className="feature-name">Dedicated Slack Channel</span>,
+      <span className="feature-item">-</span>,
+      <span className="feature-item-icon tick-icon blue-color-icon">
+        {whiteTickProductIcon}
+      </span>,
+      <span className="feature-item-icon tick-icon purple-color-icon">
+        {whiteTickProductIcon}
+      </span>,
+      <span className="feature-item-icon tick-icon teal-color-icon">
+        {whiteTickProductIcon}
+      </span>,
+      "procduct-data-row"
+    ),
+    createData(
+      <span className="feature-name">Dedicated Account Manager</span>,
+      <span className="feature-item">-</span>,
+      <span className="feature-item">-</span>,
+      <span className="feature-item-icon tick-icon purple-color-icon">
+        {whiteTickProductIcon}
+      </span>,
+      <span className="feature-item-icon tick-icon teal-color-icon">
+        {whiteTickProductIcon}
+      </span>,
+      "procduct-data-row"
+    ),
+    createData(
+      <span className="feature-name">SLA for 99.99% Uptime</span>,
+      <span className="feature-item">-</span>,
+      <span className="feature-item">-</span>,
+      <span className="feature-item">-</span>,
+      <span className="feature-item-icon tick-icon teal-color-icon">
+        {whiteTickProductIcon}
+      </span>,
+      "procduct-data-row"
+    ),
+    createData(
+      <span className="feature-name">Advanced Support Scope</span>,
+      <span className="feature-item">-</span>,
+      <span className="feature-item">-</span>,
+      <span className="feature-item">-</span>,
+      <span className="feature-item-icon tick-icon teal-color-icon">
+        {whiteTickProductIcon}
+      </span>,
+      "procduct-data-row"
+    ),
+    createData(
+      <span className="feature-name">Core Audits & Professional Services</span>,
+      <span className="feature-item">-</span>,
+      <span className="feature-item">-</span>,
+      <span className="feature-item">-</span>,
+      <span className="feature-item-icon tick-icon teal-color-icon">
+        {whiteTickProductIcon}
+      </span>,
+      "procduct-data-row"
+    ),
   ];
 };

@@ -1,0 +1,21 @@
+.faqs-list-container {
+  max-width: 600px;
+  margin: 0 auto;
+}
+
+.faqs-list-container > div {
+  background-color: black;
+}
+
+.faqs-list-container > div .MuiTypography-root {
+  color: #ededed;
+  margin-top: 0;
+  margin-bottom: 0;
+  font-size: 16px;
+  font-weight: 400;
+  line-height: 1.8;
+}
+
+.faqs-list-container > div .MuiSvgIcon-root {
+  color: #ededed;
+}

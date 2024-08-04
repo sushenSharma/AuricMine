@@ -16,6 +16,7 @@ const TableWrapper = ({
   handleChangePage,
   handleChangeRowsPerPage,
 }) => {
+  console.log("rowsData", rowsData);
   return (
     <div className="table-content-container">
       <TableContainer>
@@ -36,13 +37,16 @@ const TableWrapper = ({
           </TableHead>
           <TableBody>
             {rowsData.map((row, index) => {
+              const { className = "" } = row;
               return (
                 <TableRow
                   hover
                   role="checkbox"
                   tabIndex={-1}
                   key={index}
-                  className="table-row-data"
+                  className={`table-row-data${
+                    className ? " " + className : ""
+                  }`}
                 >
                   {columns.map((column) => {
                     const value = row[column.id];

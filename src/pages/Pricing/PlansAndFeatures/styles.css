@@ -52,9 +52,75 @@
   opacity: 0.8;
 }
 
-.table-cell-data .plan-title {
+.table-cell-data .feature-name {
+  color: #ededed;
+  font-size: 14px;
+}
+
+.table-cell-data .feature-item {
+  color: #a1a1a1;
+  font-size: 14px;
+}
+
+.table-cell-data .procuct-title {
   color: #d1d1d1;
   margin-left: 10px;
   font-size: 20px;
   font-weight: 700;
+}
+
+.product-content {
+  display: inline-flex;
+  align-items: center;
+}
+
+.product-icon {
+  width: 40px;
+  height: 40px;
+  border: 0.5px solid #464646;
+  background-color: #131213;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.product-icon svg {
+  width: 25px;
+  height: 25px;
+}
+
+.procduct-title-row,
+.procduct-title-row:hover {
+  background-color: #1d1d1d !important;
+}
+
+.feature-item-icon.tick-icon {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 20px;
+  height: 20px;
+  border-radius: 50%;
+}
+
+.feature-item-icon.tick-icon svg {
+  width: 14px;
+  height: 14px;
+}
+
+.white-color-icon {
+  background-color: white;
+}
+
+.blue-color-icon {
+  background-color: #0370f3;
+}
+
+.purple-color-icon {
+  background-color: #7927ca;
+}
+
+.teal-color-icon {
+  background-color: #17384d;
 }
