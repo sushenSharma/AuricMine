@@ -11,13 +11,19 @@ const CardView = (props) => {
     packageTypeBtnLink,
     packageTypePlanIncludes,
     packageTypePlanList,
+    className,
+    iconColor,
+    btnLinkColor,
   } = props;
 
   return (
-    <div className="card-view-container">
+    <div className={`card-view-container ${className}`}>
       <div className="card-view-header">
         <div className="card-view-header-title">
-          <span className="card-view-tag">{packageType}</span>
+          <span className="card-view-tag">
+            <span className={`card-view-tag-icon ${iconColor}`}></span>
+            {packageType}
+          </span>
         </div>
         <div className="card-view-header-liner">
           <span className="card-view-subtitle">{packageTypeLiner}</span>
@@ -42,6 +48,7 @@ const CardView = (props) => {
             type="primary"
             size="lg"
             onClick={() => console.log("btn")}
+            className={`primary-btn${btnLinkColor ? " " + btnLinkColor : ""}`}
           />
         </div>
 

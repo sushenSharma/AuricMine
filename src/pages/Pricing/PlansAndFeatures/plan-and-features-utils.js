@@ -14,39 +14,44 @@ export const columns = [
   {
     id: "planFeatures",
     label: "",
-    minWidth: 170,
     className: "table-header-col",
   },
   {
     id: "planFree",
     label: (
       <div className="plan-header-content">
-        <span className="plan-view-tag">Free</span>
+        <span className="plan-view-tag">
+          <span className="plan-view-tag-icon white-color-icon"></span>Free
+        </span>
         <LedgerButton
           label={getLabel("tryItFreeLabel")}
           type="primary"
           size="lg"
           onClick={() => console.log("btn")}
+          className="white-color-bg"
         />
       </div>
     ),
-    minWidth: 100,
+    minWidth: 197,
     className: "table-header-col",
   },
   {
     id: "planRidiculous",
     label: (
       <div className="plan-header-content">
-        <span className="plan-view-tag">Ridiculous</span>
+        <span className="plan-view-tag">
+          <span className="plan-view-tag-icon blue-color-icon"></span>Ridiculous
+        </span>
         <LedgerButton
           label={getLabel("getStartedLabel")}
           type="primary"
           size="lg"
           onClick={() => console.log("btn")}
+          className="blue-color-bg"
         />
       </div>
     ),
-    minWidth: 170,
+    minWidth: 197,
     align: "right",
     className: "table-header-col",
   },
@@ -54,16 +59,19 @@ export const columns = [
     id: "planGrowth",
     label: (
       <div className="plan-header-content">
-        <span className="plan-view-tag">Growth</span>
+        <span className="plan-view-tag">
+          <span className="plan-view-tag-icon purple-color-icon"></span>Growth
+        </span>
         <LedgerButton
           label={getLabel("getStartedLabel")}
           type="primary"
           size="lg"
           onClick={() => console.log("btn")}
+          className="purple-color-bg"
         />
       </div>
     ),
-    minWidth: 170,
+    minWidth: 197,
     align: "right",
     className: "table-header-col",
   },
@@ -71,16 +79,19 @@ export const columns = [
     id: "planEnterprise",
     label: (
       <div className="plan-header-content">
-        <span className="plan-view-tag">Enterprise</span>
+        <span className="plan-view-tag">
+          <span className="plan-view-tag-icon teal-color-icon"></span>Enterprise
+        </span>
         <LedgerButton
           label={getLabel("contactSalesLabel")}
           type="primary"
           size="lg"
           onClick={() => console.log("btn")}
+          className="teal-color-bg"
         />
       </div>
     ),
-    minWidth: 170,
+    minWidth: 197,
     align: "right",
     className: "table-header-col",
   },

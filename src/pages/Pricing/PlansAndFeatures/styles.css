@@ -8,6 +8,7 @@
   border-color: #000;
   padding-bottom: 0 !important;
   padding-top: 19px !important;
+  border: 0.5px solid #464646 !important;
 }
 
 .plan-view-tag {
@@ -18,7 +19,7 @@
   align-items: center;
 }
 
-.plan-view-tag::before {
+.plan-view-tag-icon {
   content: "";
   background-color: #fff;
   border-radius: 20px;
@@ -46,10 +47,44 @@
   line-height: 1.5rem;
   width: 100%;
   max-width: 150px;
+  text-transform: unset;
 }
 
 .table-header-col .ledger-button:hover {
   opacity: 0.8;
+}
+
+.table-header-col .white-color-bg,
+.table-header-col .white-color-bg:hover {
+  background-color: white !important;
+  color: #000 !important;
+}
+
+.table-header-col .blue-color-bg,
+.table-header-col .blue-color-bg:hover {
+  background-color: #0370f3 !important;
+  color: #fff !important;
+}
+
+.table-header-col .purple-color-bg,
+.table-header-col .purple-color-bg:hover {
+  background-color: #7927ca;
+  color: #fff !important;
+}
+
+.table-header-col .teal-color-bg,
+.table-header-col .teal-color-bg:hover {
+  background-color: #17384d;
+  color: #fff !important;
+}
+
+.procduct-data-row .table-cell-data {
+  border: 0.5px solid #464646 !important;
+  line-height: 27px;
+}
+
+.procduct-data-row .table-cell-data:not(:first-child) {
+  text-align: center;
 }
 
 .table-cell-data .feature-name {
@@ -95,6 +130,19 @@
   background-color: #1d1d1d !important;
 }
 
+.procduct-title-row .table-cell-data:first-child {
+  border-left: 0.5px solid #464646;
+}
+
+.procduct-title-row .table-cell-data:last-child {
+  border-right: 0.5px solid #464646;
+}
+
+.procduct-title-row > td {
+  border: 0;
+  border-bottom: 0.5px solid #464646;
+}
+
 .feature-item-icon.tick-icon {
   display: flex;
   align-items: center;
@@ -102,6 +150,7 @@
   width: 20px;
   height: 20px;
   border-radius: 50%;
+  margin: 0 auto;
 }
 
 .feature-item-icon.tick-icon svg {
@@ -109,18 +158,6 @@
   height: 14px;
 }
 
-.white-color-icon {
-  background-color: white;
-}
-
-.blue-color-icon {
-  background-color: #0370f3;
-}
-
-.purple-color-icon {
-  background-color: #7927ca;
-}
-
-.teal-color-icon {
-  background-color: #17384d;
+.feature-item-icon svg {
+  margin: 0 auto;
 }

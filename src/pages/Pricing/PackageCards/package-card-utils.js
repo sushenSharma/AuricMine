@@ -1,7 +1,6 @@
 import { getLabel } from "../../../hooks/use-labels";
 
 export const preparePackageCardsData = () => {
-//   console.log("nakr", getLabel("packageTypeOnePlanList"));
   return [
     {
       packageType: getLabel("packageTypeOne"),
@@ -12,6 +11,9 @@ export const preparePackageCardsData = () => {
       packageTypeBtnLink: getLabel("packageTypeOneLink"),
       packageTypePlanIncludes: getLabel("packageTypeOnePlanOffers"),
       packageTypePlanList: getLabel("packageTypeOnePlanList"),
+      className: "package-one",
+      iconColor: "white-color-icon",
+      btnLinkColor: "",
     },
     {
       packageType: getLabel("packageTypeTwo"),
@@ -22,6 +24,9 @@ export const preparePackageCardsData = () => {
       packageTypeBtnLink: getLabel("packageTypeTwoLink"),
       packageTypePlanIncludes: getLabel("packageTypeTwoPlanOffers"),
       packageTypePlanList: getLabel("packageTypeTwoPlanList"),
+      className: "package-two",
+      iconColor: "blue-color-icon",
+      btnLinkColor: "white-button-color",
     },
     {
       packageType: getLabel("packageTypeThree"),
@@ -32,6 +37,9 @@ export const preparePackageCardsData = () => {
       packageTypeBtnLink: getLabel("packageTypeThreeLink"),
       packageTypePlanIncludes: getLabel("packageTypeThreePlanOffers"),
       packageTypePlanList: getLabel("packageTypeThreePlanList"),
+      className: "package-three",
+      iconColor: "purple-color-icon",
+      btnLinkColor: "",
     },
   ];
 };
