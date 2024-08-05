@@ -301,7 +301,7 @@ export const whiteTickProductIcon = (
     <style xmlns="" lang="en" type="text/css" id="dark-mode-custom-style" />
     <style xmlns="" lang="en" type="text/css" id="dark-mode-native-style" />
     <style xmlns="" lang="en" type="text/css" id="dark-mode-native-sheet" />
-    <g clip-path="url(#clip0_2006_37)">
+    <g clipPath="url(#clip0_2006_37)">
       <path
         d="M5 12L10 17L20 7"
         stroke="white"

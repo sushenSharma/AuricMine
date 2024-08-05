@@ -32,7 +32,7 @@ export default function Header({ handleLogin, setSelectedTab }) {
           TabIndicatorProps={{
             style: { backgroundColor: "#FF4D4C", height: "5px" },
           }}
-          textColor="white"
+          textColor="inherit"
           sx={{ color: "white", marginLeft: isMobile ? "0" : "5rem" }} // Adjust margin for mobile
           orientation={"horizontal"} // Change orientation on mobile
         >

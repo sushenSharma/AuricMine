@@ -3,12 +3,13 @@ import { preparePackageCardsData } from "./package-card-utils";
 import { Grid } from "@mui/material";
 import CardView from "./CardView";
 
-import "./styles.css"
+import "./styles.css";
+import { setColSize } from "../../../utils/common-utils";
 
 const PackageCards = () => {
   const cardsList = preparePackageCardsData().map((item, index) => {
     return (
-      <Grid item xs={4} key={index}>
+      <Grid item {...setColSize(4, 4, 12, 12, 12)} key={index}>
         <CardView {...item} />
       </Grid>
     );

@@ -19,7 +19,7 @@ const AccordionWrapper = ({ list, className }) => {
   const handleChange = (panel) => (event, isExpanded) => {
     setExpanded(isExpanded ? panel : false);
   };
-  console.log("dataList", dataList);
+
   const items = !_.isEmpty(dataList)
     ? dataList.map((item) => {
         const { key, label, content } = item;

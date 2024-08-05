@@ -1,4 +1,4 @@
-import React from "react";
+import * as React from 'react';
 import Table from "@mui/material/Table";
 import TableBody from "@mui/material/TableBody";
 import TableCell from "@mui/material/TableCell";
@@ -6,6 +6,8 @@ import TableContainer from "@mui/material/TableContainer";
 import TableHead from "@mui/material/TableHead";
 import TablePagination from "@mui/material/TablePagination";
 import TableRow from "@mui/material/TableRow";
+
+import "./styles.css"
 
 const TableWrapper = ({
   columns,
@@ -16,10 +18,10 @@ const TableWrapper = ({
   handleChangePage,
   handleChangeRowsPerPage,
 }) => {
-  console.log("rowsData", rowsData);
+
   return (
     <div className="table-content-container">
-      <TableContainer>
+      <TableContainer sx={{ overflowX: 'initial' }}>
         <Table stickyHeader aria-label="sticky table">
           <TableHead>
             <TableRow>

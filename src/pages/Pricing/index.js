@@ -24,6 +24,8 @@ const Pricing = () => {
           className="pricing-title"
         />
         <PlansAndFeatures />
+      </div>
+      <div className="pricing-page-faqs">
         <TitleDescription
           title={getLabel("faqLabel")}
           className="pricing-title"

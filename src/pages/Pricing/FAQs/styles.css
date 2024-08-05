@@ -1,10 +1,18 @@
-.faqs-list-container {
-  max-width: 600px;
+.faqs-section-container {
+  max-width: 1200px;
   margin: 0 auto;
 }
 
+.faqs-list-container {
+  max-width: 600px;
+  margin: 20px auto 0;
+}
+
 .faqs-list-container > div {
-  background-color: black;
+  background-color: #111;
+  padding-top: 20px;
+  padding-bottom: 20px;
+  border-bottom: 0.5px solid #525252;
 }
 
 .faqs-list-container > div .MuiTypography-root {
