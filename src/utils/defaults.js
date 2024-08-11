@@ -46,7 +46,7 @@ export const defaults = {
   packageTypeOnePrice: "$0",
   packageTypeOneDuration: "month",
   packageTypeOnePaymentDuration: "No credit card required",
-  packageTypeOneLink: "Try it for free",
+  packageTypeOneLinkLabel: "Try it for free",
   packageTypeOnePlanOffers: "What's included:",
   packageTypeOnePlanList: [
     "10 connected accounts",
@@ -63,7 +63,7 @@ export const defaults = {
   packageTypeTwoPrice: "$59",
   packageTypeTwoDuration: "month",
   packageTypeTwoPaymentDuration: "Billed monthly",
-  packageTypeTwoLink: "Get Started",
+  packageTypeTwoLinkLabel: "Get Started",
   packageTypeTwoPlanOffers: "Everything in Free, plus:",
   packageTypeTwoPlanList: [
     "Unlimited connected accounts",
@@ -80,7 +80,7 @@ export const defaults = {
   packageTypeThreePrice: "$499",
   packageTypeThreeDuration: "month",
   packageTypeThreePaymentDuration: "Billed monthly",
-  packageTypeThreeLink: "Contact Sales",
+  packageTypeThreeLinkLabel: "Contact Sales",
   packageTypeThreePlanOffers: "Everything in Ridiculous, plus:",
   packageTypeThreePlanList: [
     "Unlimited Unified API calls",
@@ -99,4 +99,11 @@ export const defaults = {
   tryItFreeLabel: "Try It Free",
   getStartedLabel: "Get Started",
   contactSalesLabel: "Contact Sales",
+
+  /** Payment Gateway ***/
+
+  paymentGatewayLabel: "PhonePe Payment Gateway",
+  payWithLabel: "Pay with PhonePe",
+  congratulationsLabel: "Congratulations",
+  successContent: "You have subscribed for AI feature",
 };

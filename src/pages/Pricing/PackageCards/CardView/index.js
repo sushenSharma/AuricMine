@@ -8,12 +8,14 @@ const CardView = (props) => {
     packageTypePrice,
     packageTypeDuration,
     packageTypePaymentDuration,
+    packageTypeLinkLabel,
     packageTypeBtnLink,
     packageTypePlanIncludes,
     packageTypePlanList,
     className,
     iconColor,
     btnLinkColor,
+    enableLink,
   } = props;
 
   return (
@@ -44,10 +46,10 @@ const CardView = (props) => {
 
         <div className="card-view-billing-btn">
           <LedgerButton
-            label={packageTypeBtnLink}
+            label={packageTypeLinkLabel}
             type="primary"
             size="lg"
-            onClick={() => console.log("btn")}
+            onClick={() => enableLink && packageTypeBtnLink()}
             className={`primary-btn${btnLinkColor ? " " + btnLinkColor : ""}`}
           />
         </div>

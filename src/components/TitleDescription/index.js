@@ -6,7 +6,7 @@ const TitleDescription = ({ title, description, className }) => {
       }`}
     >
       <div className="title-box">{title}</div>
-      <div className="description-box">{description}</div>
+      {description && <div className="description-box">{description}</div>}
     </div>
   );
 };

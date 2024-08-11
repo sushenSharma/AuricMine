@@ -1,0 +1,39 @@
+.form-control-element {
+  width: 100%;
+  margin-bottom: 16px !important;
+}
+
+.form-control-element label {
+  font-weight: 600;
+  color: #ffffff;
+}
+
+.form-control-element input {
+  border: 1px solid #ffffff;
+  border-radius: 10px;
+  color: #ffffff;
+  position: relative;
+  padding-bottom: 8px;
+  padding-top: 25px;
+  padding-left: 10px;
+}
+
+.form-control-element .MuiFilledInput-root {
+  background-color: transparent;
+}
+
+.form-control-element .MuiFilledInput-underline::before,
+.form-control-element .MuiFilledInput-underline:hover {
+  border-bottom: 0 !important;
+}
+
+
+.form-control-element input::-webkit-outer-spin-button,
+.form-control-element input::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+
+.form-control-element input[type=number] {
+  -moz-appearance: textfield;
+}
