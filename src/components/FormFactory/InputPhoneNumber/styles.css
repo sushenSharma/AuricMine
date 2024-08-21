@@ -1,0 +1,204 @@
+.tj-phone-number-input:not(.tj-phone-number-input-without-country) {
+  border: 1px solid rgba(6, 6, 6, 0.2);
+  border-radius: 10px;
+}
+
+.tj-phone-number-input .PhoneInputCountrySelect {
+  order: 0;
+  cursor: pointer;
+  height: 100%;
+  left: 0;
+  opacity: 0;
+  position: absolute;
+  top: 0;
+  width: 100%;
+  z-index: 1;
+}
+
+.select-phone-country {
+  margin-right: 16px;
+  border: 1px solid #000;
+  border-radius: 10px;
+  width: 102px;
+}
+
+.input-item-container .select-phone-country .ant-select-selector {
+  border: 0;
+  border-radius: 10px;
+  padding: 0 16px;
+}
+
+.input-item-container .select-phone-country .ant-select-selection-item {
+  display: flex;
+  align-items: center;
+  padding-inline-end: 13px;
+}
+
+.input-item-container
+  .select-phone-country
+  .ant-select-selection-item
+  .select-phone-country-flag-icon {
+  width: 16px;
+  height: 16px;
+  border-radius: 50%;
+  background-size: cover;
+  box-shadow: 0 0 3px rgba(0, 0, 0, 0.3);
+}
+
+.select-phone-country-dial-code,
+.select-phone-country-flag-country {
+  color: #000;
+  font-family: "Poppins";
+  font-size: 14px;
+  font-style: normal;
+  font-weight: 500;
+  line-height: normal;
+}
+
+.select-phone-country-dial-code {
+  position: relative;
+  left: 5px;
+}
+
+.select-phone-country-flag-country {
+  position: relative;
+  left: 10px;
+  margin-right: 10px;
+}
+
+.custom-phone-input-container .ant-col:nth-child(2) {
+  flex: 1;
+}
+
+.tj-phone-number-input.PhoneInput {
+  display: flex;
+  border: 1px solid #ffffff;
+  border-radius: 10px;
+}
+
+.tj-phone-number-input.PhoneInput.PhoneInput--disabled {
+  background-color: #efefef;
+  border: 1px solid #efefef;
+}
+
+.tj-phone-number-input.PhoneInput.PhoneInput--disabled
+  .PhoneInputCountryIconImg,
+.form-elements .PhoneInput--disabled .MuiInputLabel-root.MuiFormLabel-filled {
+  filter: grayscale(1);
+}
+
+.tj-phone-number-input.PhoneInput--disabled .PhoneInputCountry {
+  background-color: #efefef;
+}
+
+.tj-phone-number-input.PhoneInput--disabled .PhoneInputCountrySelect {
+  cursor: default;
+}
+
+.tj-phone-number-input.PhoneInput input {
+  width: 100%;
+  border-top-right-radius: 10px;
+  border-bottom-right-radius: 10px;
+  background-color: transparent;
+  color: #ffffff;
+}
+
+.tj-phone-number-input.PhoneInput input:focus-visible {
+  outline: 0;
+}
+
+/*** CUSTOM INPUT STYLE ENDS ***/
+
+.tj-phone-number-input.tj-phone-number-input-without-country
+  .PhoneInputCountry {
+  display: none;
+}
+
+.tj-phone-number-input .PhoneInputCountry {
+  align-items: center;
+  justify-content: center;
+  display: flex;
+  position: relative;
+  border: 0;
+  border-right: 0;
+  background: transparent;
+  border-radius: 10px;
+  border-top-right-radius: 0;
+  border-bottom-right-radius: 0;
+  height: 58px;
+  padding: 0 12.5px;
+}
+
+.tj-phone-number-input .PhoneInputCountryIcon {
+  min-width: 16px;
+  width: 30px;
+  height: 20px;
+}
+
+.tj-phone-number-input .PhoneInputCountryIcon.PhoneInputCountryIcon--border {
+  height: 20px;
+  position: relative;
+}
+
+.tj-phone-number-input .PhoneInputCountryIcon img {
+  width: 100%;
+  object-fit: cover;
+  height: 100%;
+}
+
+.tj-phone-number-input .PhoneInputCountrySelectArrow,
+.select-phone-country .ant-select-arrow > span {
+  background-image: url("/public/assets/images/white-dropdown-arrow.png");
+  background-position: 100% 4%;
+  background-repeat: no-repeat;
+  background-size: contain;
+  content: "";
+  display: inline-block;
+  height: 16px;
+  top: -1px;
+  position: relative;
+  width: 16px;
+  border: 0;
+  transform: unset;
+  opacity: 1;
+  left: 10px;
+}
+
+.PhoneInputCountrySelect:focus + .PhoneInputCountryIcon--border {
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.3);
+}
+
+.form-elements
+  .tj-phone-number-input:not(.tj-phone-number-input-without-country)
+  .MuiInputBase-root:not(.MuiInputBase-root.Mui-disabled) {
+  border-left: 0;
+  border-top-left-radius: 0;
+  border-bottom-left-radius: 0;
+  border: 0;
+}
+
+.form-elements
+  .tj-phone-number-input:not(.tj-phone-number-input-without-country)
+  input {
+  padding-left: 5px;
+}
+
+.form-elements
+  .tj-phone-number-input:not(.tj-phone-number-input-without-country)
+  .MuiInputLabel-root {
+  left: -6px;
+  padding-left: 0 !important;
+}
+
+@media screen and (max-width: 575px) {
+  .tj-phone-number-input .PhoneInputCountry {
+    margin-right: 5px;
+    height: 53px;
+    padding: 0 10px;
+  }
+
+  .tj-phone-number-input .PhoneInputCountryIcon {
+    width: 25px;
+    height: 25px;
+  }
+}

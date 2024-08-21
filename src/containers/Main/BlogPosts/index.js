@@ -1,15 +1,6 @@
-import React from "react";
-import {
-  Container,
-  Row,
-  Col,
-  Nav,
-  Navbar,
-  FormControl,
-  Form,
-} from "react-bootstrap";
-import MediaCard from "../../../components/MediaCard";
 import Grid from "@mui/material/Grid";
+import React from "react";
+import MediaCard from "../../../components/MediaCard";
 
 const BlogPosts = () => {
   return (

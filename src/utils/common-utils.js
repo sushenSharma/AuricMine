@@ -47,3 +47,13 @@ export const removeStorageItem = (items) => {
     localStorage.removeItem(items);
   }
 };
+
+export const setColSize = (xl, lg, md, sm, xs) => {
+  return {
+    xl,
+    lg,
+    md,
+    sm,
+    xs,
+  };
+};

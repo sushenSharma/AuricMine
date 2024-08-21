@@ -39,6 +39,7 @@ const LedgerButton = ({
       }}
       style={{ ...styles }}
       variant={variant}
+      disabled={disable}
     >
       {label && label}
     </Button>

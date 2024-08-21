@@ -1,0 +1,52 @@
+import { getLabel } from "../../../hooks/use-labels";
+
+export const preparePackageCardsData = (onClickPackageHandler) => {
+  return [
+    {
+      packageType: getLabel("packageTypeOne"),
+      packageTypeLiner: getLabel("packageTypeOneLiner"),
+      packageTypePrice: getLabel("packageTypeOnePrice"),
+      packageTypeDuration: getLabel("packageTypeOnePrice"),
+      packageTypePaymentDuration: getLabel("packageTypeOnePaymentDuration"),
+      packageTypeLinkLabel: getLabel("packageTypeOneLinkLabel"),
+      packageTypeBtnLink: onClickPackageHandler,
+      packageTypeLink: getLabel("packageTypeOneLinkLabel"),
+      packageTypePlanIncludes: getLabel("packageTypeOnePlanOffers"),
+      packageTypePlanList: getLabel("packageTypeOnePlanList"),
+      className: "package-one",
+      iconColor: "white-color-icon",
+      btnLinkColor: "",
+      enableLink: false,
+    },
+    {
+      packageType: getLabel("packageTypeTwo"),
+      packageTypeLiner: getLabel("packageTypeTwoLiner"),
+      packageTypePrice: getLabel("packageTypeTwoPrice"),
+      packageTypeDuration: getLabel("packageTypeTwoPrice"),
+      packageTypePaymentDuration: getLabel("packageTypeTwoPaymentDuration"),
+      packageTypeLinkLabel: getLabel("packageTypeTwoLinkLabel"),
+      packageTypeBtnLink: onClickPackageHandler,
+      packageTypePlanIncludes: getLabel("packageTypeTwoPlanOffers"),
+      packageTypePlanList: getLabel("packageTypeTwoPlanList"),
+      className: "package-two",
+      iconColor: "blue-color-icon",
+      btnLinkColor: "white-button-color",
+      enableLink: true,
+    },
+    {
+      packageType: getLabel("packageTypeThree"),
+      packageTypeLiner: getLabel("packageTypeThreeLiner"),
+      packageTypePrice: getLabel("packageTypeThreePrice"),
+      packageTypeDuration: getLabel("packageTypeThreePrice"),
+      packageTypePaymentDuration: getLabel("packageTypeThreePaymentDuration"),
+      packageTypeLinkLabel: getLabel("packageTypeThreeLinkLabel"),
+      packageTypeBtnLink: onClickPackageHandler,
+      packageTypePlanIncludes: getLabel("packageTypeThreePlanOffers"),
+      packageTypePlanList: getLabel("packageTypeThreePlanList"),
+      className: "package-three",
+      iconColor: "purple-color-icon",
+      btnLinkColor: "",
+      enableLink: false,
+    },
+  ];
+};

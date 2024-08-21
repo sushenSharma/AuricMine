@@ -1,5 +1,5 @@
-import React, { useRef, useEffect } from "react";
 import * as d3 from "d3";
+import React, { useEffect, useRef } from "react";
 
 const WordGraph = ({ words }) => {
   const ref = useRef();

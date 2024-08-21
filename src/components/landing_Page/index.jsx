@@ -14,6 +14,7 @@ import Services from "../../pages/Services";
 
 import "../../assets/styles/landingPage.css"; // Import the CSS file for styling
 import "./styles.css";
+import Pricing from "../../pages/Pricing";
 
 const LandingPage = () => {
   const navigate = useNavigate();
@@ -44,7 +45,7 @@ const LandingPage = () => {
       case "home":
         return (
           <Fragment>
-            <SectionHome handleLogin={handleLogin}/>
+            <SectionHome handleLogin={handleLogin} />
             <SectionPlatform />
           </Fragment>
         );
@@ -52,10 +53,12 @@ const LandingPage = () => {
         return <AboutUs />;
       case "services":
         return <Services />;
+      case "pricing":
+        return <Pricing />;
       default:
         return (
           <Fragment>
-            <SectionHome handleLogin={handleLogin}/>
+            <SectionHome handleLogin={handleLogin} />
             <SectionPlatform />
           </Fragment>
         );

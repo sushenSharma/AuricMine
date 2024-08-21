@@ -1,5 +1,6 @@
 import React from "react";
 import LedgerButton from "./LedgerButton";
+import "./styles.css";
 
 const Buttons = ({ type, ...props }) => {
   const elementButton = {

@@ -1,21 +1,20 @@
-import React from "react";
-import {
-  BarChart,
-  LineChart,
-  Gauge,
-  PieChart,
-  gaugeClasses,
-} from "@mui/x-charts";
 import {
   Box,
-  Typography,
-  Grid,
-  Divider,
-  Stack,
   CssBaseline,
+  Divider,
+  Grid,
+  Stack,
   ThemeProvider,
+  Typography,
   createTheme,
 } from "@mui/material";
+import {
+  BarChart,
+  Gauge,
+  LineChart,
+  gaugeClasses
+} from "@mui/x-charts";
+import React from "react";
 import WordGraph from "./WordGraph";
 
 const Analytics = () => {

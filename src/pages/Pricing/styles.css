@@ -1,0 +1,46 @@
+.pricing-page-content {
+  max-width: 1280px;
+  margin: 0 auto 100px;
+  padding: 0 25px;
+}
+
+.pricing-title {
+  margin: 90px auto 24px;
+  text-align: center;
+}
+
+.pricing-title .title-box {
+  color: #fff;
+  font-size: 50px;
+  line-height: 60px;
+  font-weight: 700;
+}
+
+.pricing-title .description-box {
+  margin: 24px 0;
+  font-size: 18px;
+  color: #b1b2be;
+}
+
+.pricing-page-faqs {
+  background-color: #111;
+  border-top: 0.5px solid #464646;
+  padding-bottom: 100px;
+  padding: 0 25px;
+}
+
+.white-color-icon {
+  background-color: white;
+}
+
+.blue-color-icon {
+  background-color: #0370f3;
+}
+
+.purple-color-icon {
+  background-color: #7927ca;
+}
+
+.teal-color-icon {
+  background-color: #17384d;
+}
