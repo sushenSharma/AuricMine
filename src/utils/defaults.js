@@ -58,9 +58,9 @@ export const defaults = {
     "Community support",
   ],
 
-  packageTypeTwo: "Ridiculously cheap",
+  packageTypeTwo: "For Growing Traders",
   packageTypeTwoLiner: "The plan to unlock more customers",
-  packageTypeTwoPrice: "$59",
+  packageTypeTwoPrice: "₹59",
   packageTypeTwoDuration: "month",
   packageTypeTwoPaymentDuration: "Billed monthly",
   packageTypeTwoLinkLabel: "Get Started",
@@ -75,9 +75,9 @@ export const defaults = {
     "Dedicated Slack channel",
   ],
 
-  packageTypeThree: "Growth",
+  packageTypeThree: "Professional Traders",
   packageTypeThreeLiner: "For teams that are scaling up",
-  packageTypeThreePrice: "$499",
+  packageTypeThreePrice: "₹159",
   packageTypeThreeDuration: "month",
   packageTypeThreePaymentDuration: "Billed monthly",
   packageTypeThreeLinkLabel: "Contact Sales",
