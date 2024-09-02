@@ -39,15 +39,20 @@
 }
 
 .insights-list-container {
+  position: fixed; /* Fixed positioning to keep it centered */
   background-color: #f8f9fa; /* Light grey background */
   border-radius: 8px; /* Rounded corners */
   padding: 20px; /* Padding around the text */
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Subtle shadow for depth */
   font-family: "Arial", sans-serif; /* Modern font */
-  color: #333; /* Dark grey text for readability */
-  max-width: 400px; /* Maximum width of the container */
-  margin: auto; /* Centering the container */
+  color: #641313; /* Dark grey text for readability */
+  max-width: 600px; /* Maximum width of the container */
+  width: 80%; /* Ensure the container is responsive */
+  height: 500px; /* Fixed height for the container */
+  overflow-y: auto; /* Adds vertical scroll bar when content overflows */
+  overflow-x: auto; /* Prevents horizontal scroll bar */
   list-style: none; /* Remove default list styling */
+  z-index: 1000; /* Ensure it stays on top of other elements */
 }
 
 li {
