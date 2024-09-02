@@ -56,7 +56,11 @@ export const fetchInsightsWithAI = async (formData) => {
   });
 
   const data = await response.json();
-  const text = data.choices[0].text.split("\n").map((line) => line.trim());
+
+  // Extract the content from the response
+  const text = data.choices[0].message.content
+    .split("\n")
+    .map((line) => line.trim());
 
   return text;
 };
