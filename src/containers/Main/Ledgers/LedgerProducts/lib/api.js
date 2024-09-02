@@ -29,8 +29,20 @@ export const updateUserLedgerData = async (dataID, updateData) => {
 
 export const fetchInsightsWithAI = async (formData) => {
   const requestBody = {
-    prompt: `With json data ${formData}, ${openAIConfig.promptText}`,
+    messages: [
+      {
+        role: "system",
+        content: `With json data ${JSON.stringify(formData)}, ${
+          openAIConfig.promptText
+        }`,
+      },
+    ],
     max_tokens: Math.min(formData.length, 1000),
+    temperature: 0.7, // Adjust the temperature as needed
+    frequency_penalty: 0, // Adjust the frequency penalty as needed
+    presence_penalty: 0, // Adjust the presence penalty as needed
+    top_p: 0.95, // Adjust top_p as needed
+    stop: null, // Set stop to null or any specific stop sequence if needed
   };
 
   const response = await fetch(openAIConfig.apiUrl, {

@@ -2,7 +2,7 @@
 import { useRef, useState } from "react";
 import { supabase, openAIConfig, tableName } from "../config/index_supabase.js";
 import Swal from "sweetalert2";
-import {  userIdKey } from "../constants.js";
+import { userIdKey } from "../constants.js";
 import { getData } from "./getData.js";
 const userUUID = localStorage.getItem(userIdKey);
 
@@ -144,10 +144,20 @@ export const useCustomHooks = (materialdata) => {
     const dataString = JSON.stringify(materialdata);
 
     const requestBody = {
-      prompt: `With json data ${JSON.stringify(dataString)}, ${
-        openAIConfig.promptText
-      }`,
+      messages: [
+        {
+          role: "system",
+          content: `With json data ${JSON.stringify(dataString)}, ${
+            openAIConfig.promptText
+          }`,
+        },
+      ],
       max_tokens: Math.min(dataString.length, 1000),
+      temperature: 0.7, // Adjust the temperature as needed
+      frequency_penalty: 0, // Adjust the frequency penalty as needed
+      presence_penalty: 0, // Adjust the presence penalty as needed
+      top_p: 0.95, // Adjust top_p as needed
+      stop: null, // Set stop to null or any specific stop sequence if needed
     };
     try {
       Swal.fire({
