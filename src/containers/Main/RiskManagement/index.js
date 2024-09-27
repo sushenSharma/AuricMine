@@ -67,8 +67,8 @@ const RiskManagement = () => {
       const profitLossArray = ledgerData.map((item) =>
         parseFloat(item.profit_loss)
       );
-      const initialCapital = 1000;
-      const initialRiskPercentage = 0.05;
+      const initialCapital = parseFloat(seedCapital);
+      const initialRiskPercentage = parseFloat(initialRisk) / 100;
       const profitMultiplier = 1.5;
       const requestBody = {
         initialCapital,
