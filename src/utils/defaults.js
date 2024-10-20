@@ -19,7 +19,7 @@ export const defaults = {
 
   homeLabel: "Home",
   riskManagementLabel: "Risk Management",
-  watchListLabel: "Watchlist",
+  watchListLabel: "Simulator",
   analyticsLabel: "Analytics",
   blogsLabel: "Blogs",
 
