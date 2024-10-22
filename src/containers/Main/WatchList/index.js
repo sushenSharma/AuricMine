@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { Line } from "react-chartjs-2";
 import "chart.js/auto";
-import "/Users/shushen/Desktop/LedgerAI/src/assets/styles/TradingGameComparison.css";
+import "../../../assets/styles/TradingGameComparison.css";
 
 const Watchlist = () => {
   const [seedCapital] = useState(100000); // Fixed seed capital to 1 lakh
