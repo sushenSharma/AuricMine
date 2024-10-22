@@ -169,7 +169,7 @@ const TabBar = ({ sessionObj }) => {
               action: () => setSelect("Risk Management"),
             },
             {
-              text: "Watchlist",
+              text: "Simulator",
               icon: <WatchlistIcon />,
               action: () => setSelect("Watchlist"),
             },

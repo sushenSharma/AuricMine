@@ -1,0 +1,131 @@
+body {
+  font-family: Arial, sans-serif;
+  background-color: #f4f4f9;
+  margin: 0;
+  padding: 0;
+}
+
+.container {
+  max-width: 1000px;
+  margin: 0 auto;
+  padding: 20px;
+  background-color: #fff;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  border-radius: 8px;
+}
+
+.title {
+  text-align: center;
+  color: #333;
+  margin-bottom: 20px;
+}
+
+.input-section {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin-bottom: 20px;
+}
+
+.input-label {
+  font-size: 16px;
+  margin-bottom: 8px;
+  color: #333;
+}
+
+.input-field {
+  width: 300px;
+  padding: 8px;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+  margin-bottom: 12px;
+}
+
+.button-container {
+  display: flex;
+  gap: 10px;
+}
+
+.action-button {
+  padding: 10px 20px;
+  background-color: #4caf50;
+  color: white;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  transition: background-color 0.3s;
+}
+
+.action-button:hover {
+  background-color: #45a049;
+}
+
+.message {
+  text-align: center;
+  color: #ff9800;
+}
+
+.outcomes {
+  text-align: center;
+  color: #333;
+  margin-bottom: 20px;
+}
+
+.chart-section {
+  display: flex;
+  justify-content: space-around;
+  margin-bottom: 20px;
+}
+
+.chart-card {
+  background-color: #f4f4f9;
+  padding: 20px;
+  border-radius: 8px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  width: 48%; /* Increase width to take up more space */
+}
+.chart-card canvas {
+  width: 100% !important; /* Ensure canvas takes up the full width of the container */
+  height: auto !important; /* Maintain height proportion */
+}
+.chart-title {
+  text-align: center;
+  margin-bottom: 12px;
+  color: #333;
+}
+
+.metrics-section {
+  margin-bottom: 20px;
+}
+
+.metrics-card {
+  background-color: #f4f4f9;
+  padding: 20px;
+  margin-bottom: 20px;
+  border-radius: 8px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+.section-title {
+  text-align: center;
+  margin-bottom: 20px;
+  color: #333;
+}
+
+.card-title {
+  font-weight: bold;
+  margin-bottom: 10px;
+  color: #333;
+}
+
+.trade-details-section {
+  margin-bottom: 20px;
+}
+
+.trade-card {
+  background-color: #f4f4f9;
+  padding: 20px;
+  margin-bottom: 20px;
+  border-radius: 8px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
