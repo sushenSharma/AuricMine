@@ -2,12 +2,13 @@ import React, { useState } from "react";
 import { Line } from "react-chartjs-2";
 import "chart.js/auto";
 import "/Users/shushen/Desktop/LedgerAI/src/assets/styles/TradingGameComparison.css";
+
 const Watchlist = () => {
   const [seedCapital] = useState(100000); // Fixed seed capital to 1 lakh
   const [seedLossBuffer, setSeedLossBuffer] = useState(250);
   const [results, setResults] = useState({ withAlgo: [], withoutAlgo: [] });
   const [metrics, setMetrics] = useState({}); // State for metrics
-  const [message, setMessage] = useState(""); // State for messages
+  const [showMetricsDefinitions, setShowMetricsDefinitions] = useState(false); // Toggle for side panel
 
   const minStopLossPercent = 0.02;
   const maxStopLossPercent = 0.2;
@@ -17,10 +18,9 @@ const Watchlist = () => {
 
   // Generate randomized profit or loss states
   const generateRandomTradeStates = (numTrades) => {
-    const randomTradeStates = Array.from({ length: numTrades }, () => ({
+    return Array.from({ length: numTrades }, () => ({
       isProfit: Math.random() >= 0.5, // Randomly decide profit or loss
     }));
-    return randomTradeStates;
   };
 
   const calculateMetrics = (capitalSeries) => {
@@ -75,10 +75,8 @@ const Watchlist = () => {
   // Simulate profit/loss outcome based on state
   const simulateTradeOutcome = (isProfit, capital, stopLoss) => {
     if (isProfit) {
-      // Random profit, same for both scenarios
       return Math.random() * 10000;
     } else {
-      // Loss based on the current stop-loss
       return -(capital * stopLoss);
     }
   };
@@ -88,11 +86,9 @@ const Watchlist = () => {
     if (isProfit) {
       const profitMultiplier = Math.random() > 0.5 ? 1 : 1.5;
       const profitPercent = stopLoss * profitMultiplier;
-      const profit = capital * profitPercent;
-      return profit;
+      return capital * profitPercent;
     } else {
-      const loss = -(capital * stopLoss);
-      return loss;
+      return -(capital * stopLoss);
     }
   };
 
@@ -104,7 +100,7 @@ const Watchlist = () => {
     let consecutiveLosses = 0;
 
     const resultsWithAlgo = tradeStates.map((state, index) => {
-      let outcome = simulateTradeOutcomeWithAlgo(
+      const outcome = simulateTradeOutcomeWithAlgo(
         state.isProfit,
         capital,
         stopLoss
@@ -115,24 +111,19 @@ const Watchlist = () => {
         const profit33 = outcome * 0.33;
         capital += profit66;
         lossBuffer += profit33;
-
         consecutiveWins += 1;
         consecutiveLosses = 0;
-
         stopLoss = Math.min(stopLoss * winFactorIncrement, maxStopLossPercent);
       } else {
         capital += outcome;
         if (capital < 0) capital = 0;
-
         if (lossBuffer > 0) {
           const lossRefill = Math.min(-outcome, lossBuffer);
           lossBuffer -= lossRefill;
           capital += lossRefill;
         }
-
         consecutiveLosses += 1;
         consecutiveWins = 0;
-
         stopLoss = Math.max(stopLoss / lossFactorDecrement, minStopLossPercent);
       }
 
@@ -149,15 +140,13 @@ const Watchlist = () => {
 
   const simulateWithoutAlgo = (tradeStates) => {
     let capital = seedCapital;
-    const resultsWithoutAlgo = tradeStates.map((state, index) => {
+    return tradeStates.map((state, index) => {
       const outcome = simulateTradeOutcome(
         state.isProfit,
         capital,
         staticStopLossPercent
       );
-
       capital += outcome;
-
       return {
         tradeNumber: index + 1,
         tradeOutcome: outcome,
@@ -165,7 +154,6 @@ const Watchlist = () => {
         stopLossPercent: staticStopLossPercent * 100,
       };
     });
-    return resultsWithoutAlgo;
   };
 
   const compareScenarios = () => {
@@ -224,8 +212,38 @@ const Watchlist = () => {
           <button className="action-button" onClick={compareScenarios}>
             Compare Scenarios
           </button>
+          <button
+            className="toggle-button"
+            onClick={() => setShowMetricsDefinitions(!showMetricsDefinitions)}
+          >
+            {showMetricsDefinitions ? "Hide Definitions" : "Show Definitions"}
+          </button>
         </div>
       </div>
+
+      {showMetricsDefinitions && (
+        <div className="side-panel">
+          <h3>Metrics Definitions</h3>
+          <ul>
+            <li>
+              <strong>Max Drawdown</strong>: Largest drop in portfolio value
+              from peak to trough.
+            </li>
+            <li>
+              <strong>Volatility</strong>: Degree of fluctuation in portfolio
+              value.
+            </li>
+            <li>
+              <strong>Profit/Loss Ratio</strong>: Ratio of winning to losing
+              trades.
+            </li>
+            <li>
+              <strong>Positive Returns</strong>: Number of trades where capital
+              exceeded seed capital.
+            </li>
+          </ul>
+        </div>
+      )}
 
       {results.withAlgo.length > 0 && (
         <div className="chart-section">
