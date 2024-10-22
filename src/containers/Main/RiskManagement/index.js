@@ -64,9 +64,19 @@ const RiskManagement = () => {
     try {
       const ledgerDataRaw = localStorage.getItem("ledgerData");
       const ledgerData = JSON.parse(JSON.parse(ledgerDataRaw));
-      const profitLossArray = ledgerData.map((item) =>
+
+      // Sort the ledger data by Sell Date using Lodash
+      const sortedLedgerData = _.sortBy(
+        ledgerData,
+        (item) => new Date(item.sell_date)
+      );
+      console.log(sortedLedgerData);
+
+      // Extract the profit and loss values from sorted ledger data
+      const profitLossArray = sortedLedgerData.map((item) =>
         parseFloat(item.profit_loss)
       );
+
       const initialCapital = parseFloat(seedCapital);
       const initialRiskPercentage = parseFloat(initialRisk) / 100;
       const profitMultiplier = 1.5;
@@ -76,6 +86,7 @@ const RiskManagement = () => {
         tradeOutcomes: profitLossArray,
         profitMultiplier,
       };
+
       const response = await fetch(
         "https://zcvtgtaimnsrlemslypr.supabase.co/functions/v1/hello-world",
         {
@@ -87,7 +98,7 @@ const RiskManagement = () => {
 
       if (!response.ok) throw new Error("Network response was not ok");
       const result = await response.json();
-      setFinalPercentage(result.finalRiskPercentage); // Adjust according to your actual API response
+      setFinalPercentage(result.finalRiskPercentage);
     } catch (error) {
       setError(error.message);
     } finally {
