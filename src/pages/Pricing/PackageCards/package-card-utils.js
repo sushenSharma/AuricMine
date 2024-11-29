@@ -33,20 +33,5 @@ export const preparePackageCardsData = (onClickPackageHandler) => {
       btnLinkColor: "white-button-color",
       enableLink: true,
     },
-    {
-      packageType: getLabel("packageTypeThree"),
-      packageTypeLiner: getLabel("packageTypeThreeLiner"),
-      packageTypePrice: getLabel("packageTypeThreePrice"),
-      packageTypeDuration: getLabel("packageTypeThreePrice"),
-      packageTypePaymentDuration: getLabel("packageTypeThreePaymentDuration"),
-      packageTypeLinkLabel: getLabel("packageTypeThreeLinkLabel"),
-      packageTypeBtnLink: onClickPackageHandler,
-      packageTypePlanIncludes: getLabel("packageTypeThreePlanOffers"),
-      packageTypePlanList: getLabel("packageTypeThreePlanList"),
-      className: "package-three",
-      iconColor: "purple-color-icon",
-      btnLinkColor: "",
-      enableLink: false,
-    },
   ];
 };

@@ -40,7 +40,7 @@ export const columns = [
     label: (
       <div className="plan-header-content">
         <span className="plan-view-tag">
-          <span className="plan-view-tag-icon blue-color-icon"></span>Ridiculous
+          <span className="plan-view-tag-icon blue-color-icon"></span>Pro Trader
         </span>
         <LedgerButton
           label={getLabel("getStartedLabel")}
@@ -48,46 +48,6 @@ export const columns = [
           size="lg"
           onClick={() => console.log("btn")}
           className="blue-color-bg"
-        />
-      </div>
-    ),
-    minWidth: 197,
-    align: "right",
-    className: "table-header-col",
-  },
-  {
-    id: "planGrowth",
-    label: (
-      <div className="plan-header-content">
-        <span className="plan-view-tag">
-          <span className="plan-view-tag-icon purple-color-icon"></span>Growth
-        </span>
-        <LedgerButton
-          label={getLabel("getStartedLabel")}
-          type="primary"
-          size="lg"
-          onClick={() => console.log("btn")}
-          className="purple-color-bg"
-        />
-      </div>
-    ),
-    minWidth: 197,
-    align: "right",
-    className: "table-header-col",
-  },
-  {
-    id: "planEnterprise",
-    label: (
-      <div className="plan-header-content">
-        <span className="plan-view-tag">
-          <span className="plan-view-tag-icon teal-color-icon"></span>Enterprise
-        </span>
-        <LedgerButton
-          label={getLabel("contactSalesLabel")}
-          type="primary"
-          size="lg"
-          onClick={() => console.log("btn")}
-          className="teal-color-bg"
         />
       </div>
     ),
@@ -120,7 +80,7 @@ export const prepareTableData = () => {
     createData(
       <span className="product-content">
         <span className="product-icon">{unifiedIcon}</span>
-        <span className="procuct-title">Unified</span>
+        <span className="procuct-title">Basic journaling Features</span>
       </span>,
       "",
       "",
@@ -130,9 +90,9 @@ export const prepareTableData = () => {
     ),
 
     createData(
-      <span className="feature-name">API Calls</span>,
-      <span className="feature-item">2,000</span>,
-      <span className="feature-item">50,000</span>,
+      <span className="feature-name">Track Parameters</span>,
+      <span className="feature-item">5</span>,
+      <span className="feature-item">15</span>,
       <span className="feature-item-icon">{infinityIcon}</span>,
       <span className="feature-item-icon">{infinityIcon}</span>,
       "procduct-data-row"
@@ -146,7 +106,7 @@ export const prepareTableData = () => {
       "procduct-data-row"
     ),
     createData(
-      <span className="feature-name">Common Models</span>,
+      <span className="feature-name">Charts and Analytics</span>,
       <span className="feature-item-icon tick-icon white-color-icon">
         {blackTickIcon}
       </span>,
