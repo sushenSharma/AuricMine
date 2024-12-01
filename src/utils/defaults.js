@@ -21,7 +21,7 @@ export const defaults = {
   riskManagementLabel: "Risk Management",
   watchListLabel: "Simulator",
   analyticsLabel: "Analytics",
-  blogsLabel: "Blogs",
+  blogsLabel: "Kanban Board",
 
   /** Header Navigation */
   homeNavLinkLabel: "Home",
