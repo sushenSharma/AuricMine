@@ -179,7 +179,7 @@ const TabBar = ({ sessionObj }) => {
               action: () => setSelect("Analytics"),
             },
             {
-              text: "Blogs",
+              text: "Kanban Board",
               icon: <BlogIcon />,
               action: () => setSelect("Blogs"),
             },
