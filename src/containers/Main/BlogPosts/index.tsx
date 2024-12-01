@@ -3,6 +3,7 @@ import Grid from '@mui/material/Grid';
 import { DndContext, DragEndEvent } from '@dnd-kit/core';
 import type { Task, Column as ColumnType } from '../../../components/KanbanBoard/types.js';
 import { Column } from '../../../components/KanbanBoard/Column';
+import Box from '@mui/material/Box';
 
 // Define the swimlanes
 const COLUMNS: ColumnType[] = [
@@ -77,7 +78,7 @@ const BlogPosts = () => {
   function handleDragEnd(event: DragEndEvent) {
     const { active, over } = event;
 
-    if (!over) return;
+   if (!over || !over.id) return;
 
     const taskId = active.id as string;
     const newStatus = over.id as Task['status'];
@@ -97,18 +98,25 @@ const BlogPosts = () => {
   }
 
   return (
-    <Grid container spacing={2} className="p-4">
+    <Box
+      sx={{
+        display: 'flex',
+        overflowX: 'auto',
+        padding: 2,
+        gap: 2,
+      }}
+    >
       <DndContext onDragEnd={handleDragEnd}>
         {COLUMNS.map((column) => (
-          <Grid item xs={12} md={4} key={column.id}>
+          <Box key={column.id} sx={{ minWidth: 300 }}>
             <Column
               column={column}
               tasks={tasks.filter((task) => task.status === column.id)}
             />
-          </Grid>
+          </Box>
         ))}
       </DndContext>
-    </Grid>
+    </Box>
   );
 };
 
