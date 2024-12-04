@@ -4,8 +4,11 @@ import { DndContext, DragEndEvent } from '@dnd-kit/core';
 import type { Task, Column as ColumnType } from '../../../components/KanbanBoard/types.js';
 import { Column } from '../../../components/KanbanBoard/Column';
 import Box from '@mui/material/Box';
+import Modal from '@mui/material/Modal';
+import Typography from '@mui/material/Typography';
+import Link from '@mui/material/Link';
+import Button from '@mui/material/Button';
 
-// Define the swimlanes
 const COLUMNS: ColumnType[] = [
   { id: 'To Watch', title: 'To Watch' },
   { id: 'Researching', title: 'Researching' },
@@ -14,7 +17,6 @@ const COLUMNS: ColumnType[] = [
   { id: 'Ready To Sell', title: 'Ready To Sell' },
 ];
 
-// Define initial tasks aligned with the new swimlanes
 const INITIAL_TASKS: Task[] = [
   {
     id: '1',
@@ -74,14 +76,16 @@ const INITIAL_TASKS: Task[] = [
 
 const BlogPosts = () => {
   const [tasks, setTasks] = useState<Task[]>(INITIAL_TASKS);
+  const [selectedTask, setSelectedTask] = useState<Task | null>(null);
+  const [modalOpen, setModalOpen] = useState(false);
 
   function handleDragEnd(event: DragEndEvent) {
     const { active, over } = event;
 
-   if (!over || !over.id) return;
+    if (!over || !over.id) return;
 
     const taskId = active.id as string;
-    const newStatus = over.id as Task['status'];
+    const newStatus = over.id as Task["status"];
 
     if (taskId && newStatus) {
       setTasks((prevTasks) =>
@@ -91,31 +95,69 @@ const BlogPosts = () => {
                 ...task,
                 status: newStatus,
               }
-            : task,
-        ),
+            : task
+        )
       );
     }
   }
 
+  const handleTaskClick = (task: Task) => {
+    console.log("Task Clicked!", task)
+    setSelectedTask(task);
+    setModalOpen(true); // Open the modal
+  };
+
+  const handleClose = () => {
+    setModalOpen(false); // Close the modal
+    setSelectedTask(null);
+  };
+
   return (
     <Box
       sx={{
-        display: 'flex',
-        overflowX: 'auto',
+        display: "flex",
+        overflowX: "auto",
         padding: 2,
-        gap: 2,
+        gap: 3,
       }}
     >
       <DndContext onDragEnd={handleDragEnd}>
         {COLUMNS.map((column) => (
-          <Box key={column.id} sx={{ minWidth: 300 }}>
+          <Box key={column.id} sx={{ minWidth: 300, marginRight: 2 }}>
             <Column
               column={column}
               tasks={tasks.filter((task) => task.status === column.id)}
+              onTaskClick={handleTaskClick} // Pass the click handler
             />
           </Box>
         ))}
       </DndContext>
+
+      {/* Modal Component */}
+      <Modal open={modalOpen} onClose={handleClose}>
+        <Box
+          sx={{
+            position: "absolute",
+            top: "50%",
+            left: "50%",
+            transform: "translate(-50%, -50%)",
+            width: 400,
+            bgcolor: "background.paper",
+            border: "2px solid #000",
+            boxShadow: 24,
+            p: 4,
+          }}
+        >
+          {selectedTask && (
+            <>
+              <Typography variant="h6" component="h2">
+                {selectedTask.title}
+              </Typography>
+              <Typography sx={{ mt: 2 }}>{selectedTask.description}</Typography>
+            </>
+          )}
+        </Box>
+      </Modal>
     </Box>
   );
 };
