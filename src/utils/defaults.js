@@ -19,7 +19,7 @@ export const defaults = {
 
   homeLabel: "Home",
   riskManagementLabel: "Risk Management",
-  watchListLabel: "Watchlist",
+  watchListLabel: "Simulator",
   analyticsLabel: "Analytics",
   blogsLabel: "Blogs",
 
@@ -33,51 +33,47 @@ export const defaults = {
     'Mr. Harneet Singh Kharbanda is associated with TradingJournal.ai as an Advisor and is a full-time trader in the stock market with a strong social media following of more than 200,000 people who value his expertise. Harneet is a firm believer in the importance of maintaining a trading journal and advocates strongly for good trading psychology. His best-selling book, "Trade Like a Monk," emphasizes the psychological aspects of trading. Known for his straightforward approach, Harneet is a sought-after speaker and has delivered impactful talks at prestigious institutions like IIIT UNA and Masters Union. He is passionate about simplifying the complexities of trading and investment, often emphasizing the importance of discipline. Through his educational efforts, Harneet\'s mission is to make the stock market accessible to everyone, showing that with the right tools and mindset, anyone can achieve significant success in trading.',
 
   aboutUsSecondContent:
-    "Sushen Sharma, the Founder of TradingJournal.ai, has a decade of experience as a trader and is also a skilled software developer. He is a staunch advocate for risk management and deeply understands the critical factors necessary to scale the business of stock trading. Through TradingJournal.ai, Sushen is dedicated to developing tools that enhance journaling practices and empower retail traders to implement a robust risk management framework effectively. Sushen believes in treating trading as a serious business, a structured discipline that requires thorough analysis and reflection. With TradingJournal.ai, Sushen's objective is to transform retail traders into well-informed, strategic market participants. By promoting a disciplined and systematic approach to trading, he combines his extensive knowledge of the markets with his programming acumen to guide traders towards higher performance and success in the competitive world of stock trading.",
+    "Shushen Sharma, the Founder of TradingJournal.ai, is a seasoned trader with a decade of experience and a skilled software developer. He has won the 60-day challenge by the renowned broker Zerodha twice, showcasing his expertise in the trading domain. However, this challenge has been discontinued due to regulatory constraints. As a staunch advocate for risk management, Shushen deeply understands the essential factors necessary to scale the business of stock trading. Through TradingJournal.ai, he is committed to creating tools that enhance journaling practices and empower retail traders to implement a robust risk management framework effectively. Shushen believes in treating trading as a serious business—a structured discipline requiring thorough analysis and reflection. His goal with TradingJournal.ai is to transform retail traders into well-informed, strategic market participants by promoting a disciplined and systematic approach to trading. By combining his extensive market knowledge with his programming skills, Shushen guides traders toward higher performance and success in the competitive world of stock trading.",
 
   /**
    * Pricing
    */
   pricingAndPlanTitle: "Pricing & Plans",
   pricingAndPlanDescription:
-    "Transparent pricing that scales with premium features and call volume.",
-  packageTypeOne: "Free forever",
-  packageTypeOneLiner: "The ultimate project kickstart",
-  packageTypeOnePrice: "$0",
+    "Transparent pricing that scales with your trading business",
+  packageTypeOne: "Free Forever Plan (Starter)",
+  packageTypeOneLiner: "Your journey to disciplined trading begins here.",
+  packageTypeOnePrice: "₹0",
   packageTypeOneDuration: "month",
   packageTypeOnePaymentDuration: "No credit card required",
   packageTypeOneLinkLabel: "Try it for free",
   packageTypeOnePlanOffers: "What's included:",
   packageTypeOnePlanList: [
-    "10 connected accounts",
-    "2,000 Unified API calls",
-    "Unlimited Basic integrations",
-    "Passthrough API",
+    "Access to basic analytics and charts",
+    "Limited historical data access (e.g., 30 days)",
+    "Basic performance insights (e.g., Win/Loss ratio)",
     "1-day log retention",
-    "Modern SDKs",
     "Community support",
   ],
 
-  packageTypeTwo: "Ridiculously cheap",
-  packageTypeTwoLiner: "The plan to unlock more customers",
-  packageTypeTwoPrice: "$59",
+  packageTypeTwo: "Pro Trader Plan",
+  packageTypeTwoLiner: "Take your trading to the next level.",
+  packageTypeTwoPrice: "₹19",
   packageTypeTwoDuration: "month",
   packageTypeTwoPaymentDuration: "Billed monthly",
   packageTypeTwoLinkLabel: "Get Started",
   packageTypeTwoPlanOffers: "Everything in Free, plus:",
   packageTypeTwoPlanList: [
-    "Unlimited connected accounts",
-    "50,000 Unified API calls",
-    "1 Premium integration",
-    "Standard API pricing",
-    "7-day log retention",
+    "Unlimited portfolios and trades",
+    "Risk management tools and dynamic stop-loss calculator",
+    "AI-driven trade suggestions or journaling prompts",
+    "Access to pre-built templates for journaling",
     "Onboarding Support",
-    "Dedicated Slack channel",
   ],
 
-  packageTypeThree: "Growth",
+  packageTypeThree: "Professional Traders",
   packageTypeThreeLiner: "For teams that are scaling up",
-  packageTypeThreePrice: "$499",
+  packageTypeThreePrice: "₹159",
   packageTypeThreeDuration: "month",
   packageTypeThreePaymentDuration: "Billed monthly",
   packageTypeThreeLinkLabel: "Contact Sales",

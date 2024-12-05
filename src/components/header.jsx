@@ -57,6 +57,18 @@ export default function Header({ handleLogin, setSelectedTab }) {
             sx={{ fontSize: isMobile ? "10px" : "25px" }}
           />
         </Tabs>
+        <a 
+            href="https://www.producthunt.com/posts/tradingjournal-ai?embed=true&utm_source=badge-featured&utm_medium=badge&utm_souce=badge-tradingjournal&#0045;ai" 
+            target="_blank" 
+            rel="noopener noreferrer"
+            style={{ marginRight: "45px" }}
+          >
+            <img 
+              src="https://api.producthunt.com/widgets/embed-image/v1/featured.svg?post_id=595438&theme=light" 
+              alt="TradingJournal.ai - Track, Analyze, and Improve Your Trades with TradingJournal.ai | Product Hunt" 
+              style={{ width: "250px", height: "52px" }}
+            />
+          </a>
 
         <Box
           style={{
@@ -68,6 +80,8 @@ export default function Header({ handleLogin, setSelectedTab }) {
             color: "#ffffff",
           }}
         >
+        
+          
           <Box className="loginStyle" onClick={handleLogin}>
             Login/Sign up
           </Box>
