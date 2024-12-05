@@ -76,10 +76,6 @@ const RiskManagement = () => {
       const profitLossArray = sortedLedgerData.map((item) =>
         parseFloat(item.profit_loss)
       );
-<<<<<<< HEAD
-=======
-
->>>>>>> 5f6c3b59e80a91700452c3f2b61d70d4a3970c6d
       const initialCapital = parseFloat(seedCapital);
       const initialRiskPercentage = parseFloat(initialRisk) / 100;
       const profitMultiplier = 1.5;
