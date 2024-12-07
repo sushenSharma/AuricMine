@@ -79,7 +79,7 @@ const SideBar = ({ open, drawerWidth, theme, closeDrawer }) => {
         flexShrink: 0,
         "& .MuiDrawer-paper": {
           boxSizing: "border-box",
-          backgroundColor: "#56585c",
+          backgroundColor: "#ffffff",
         },
       }}
     >

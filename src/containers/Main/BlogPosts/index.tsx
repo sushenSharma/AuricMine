@@ -1,13 +1,19 @@
 import React, { useState } from 'react';
 import Grid from '@mui/material/Grid';
-import { DndContext, DragEndEvent } from '@dnd-kit/core';
+import {
+  DndContext,
+  DragEndEvent,
+  useSensor,
+  useSensors,
+  PointerSensor,
+} from '@dnd-kit/core';
 import type { Task, Column as ColumnType } from '../../../components/KanbanBoard/types.js';
 import { Column } from '../../../components/KanbanBoard/Column';
 import Box from '@mui/material/Box';
-import Modal from '@mui/material/Modal';
-import Typography from '@mui/material/Typography';
-import Link from '@mui/material/Link';
+import TextField from '@mui/material/TextField';
 import Button from '@mui/material/Button';
+import Typography from '@mui/material/Typography';
+import Modal from '@mui/material/Modal';
 
 const COLUMNS: ColumnType[] = [
   { id: 'To Watch', title: 'To Watch' },
@@ -77,7 +83,12 @@ const INITIAL_TASKS: Task[] = [
 const BlogPosts = () => {
   const [tasks, setTasks] = useState<Task[]>(INITIAL_TASKS);
   const [selectedTask, setSelectedTask] = useState<Task | null>(null);
-  const [modalOpen, setModalOpen] = useState(false);
+
+  const sensors = useSensors(
+    useSensor(PointerSensor, {
+      activationConstraint: { delay: 150, tolerance: 5 },
+    })
+  );
 
   function handleDragEnd(event: DragEndEvent) {
     const { active, over } = event;
@@ -85,7 +96,7 @@ const BlogPosts = () => {
     if (!over || !over.id) return;
 
     const taskId = active.id as string;
-    const newStatus = over.id as Task["status"];
+    const newStatus = over.id as Task['status'];
 
     if (taskId && newStatus) {
       setTasks((prevTasks) =>
@@ -102,58 +113,104 @@ const BlogPosts = () => {
   }
 
   const handleTaskClick = (task: Task) => {
-    console.log("Task Clicked!", task)
     setSelectedTask(task);
-    setModalOpen(true); // Open the modal
   };
 
-  const handleClose = () => {
-    setModalOpen(false); // Close the modal
-    setSelectedTask(null);
+  const handleFormChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    if (selectedTask) {
+      const { name, value } = e.target;
+      setSelectedTask({ ...selectedTask, [name]: value });
+    }
+  };
+
+  const handleSave = () => {
+    if (selectedTask) {
+      setTasks((prevTasks) =>
+        prevTasks.map((task) =>
+          task.id === selectedTask.id ? selectedTask : task
+        )
+      );
+      setSelectedTask(null); // Clear the selected task
+    }
   };
 
   return (
     <Box
       sx={{
-        display: "flex",
-        overflowX: "auto",
+        display: 'flex',
+        overflowX: 'auto',
         padding: 2,
         gap: 3,
       }}
     >
-      <DndContext onDragEnd={handleDragEnd}>
+      <DndContext sensors={sensors} onDragEnd={handleDragEnd}>
         {COLUMNS.map((column) => (
           <Box key={column.id} sx={{ minWidth: 300, marginRight: 2 }}>
             <Column
               column={column}
               tasks={tasks.filter((task) => task.status === column.id)}
-              onTaskClick={handleTaskClick} // Pass the click handler
+              onTaskClick={handleTaskClick}
             />
           </Box>
         ))}
       </DndContext>
 
       {/* Modal Component */}
-      <Modal open={modalOpen} onClose={handleClose}>
+      <Modal
+        open={!!selectedTask}
+        onClose={() => setSelectedTask(null)}
+        aria-labelledby="edit-task-modal"
+        aria-describedby="edit-task-form"
+      >
         <Box
           sx={{
-            position: "absolute",
-            top: "50%",
-            left: "50%",
-            transform: "translate(-50%, -50%)",
+            position: 'absolute',
+            top: '50%',
+            left: '50%',
+            transform: 'translate(-50%, -50%)',
             width: 400,
-            bgcolor: "background.paper",
-            border: "2px solid #000",
+            bgcolor: 'background.paper',
+            border: '1px solid #ddd',
+            borderRadius: '8px',
             boxShadow: 24,
             p: 4,
           }}
         >
           {selectedTask && (
             <>
-              <Typography variant="h6" component="h2">
-                {selectedTask.title}
+              <Typography variant="h6" gutterBottom>
+                Edit Task
               </Typography>
-              <Typography sx={{ mt: 2 }}>{selectedTask.description}</Typography>
+              <TextField
+                fullWidth
+                label="Title"
+                name="title"
+                value={selectedTask.title}
+                onChange={handleFormChange}
+                margin="normal"
+              />
+              <TextField
+                fullWidth
+                label="Description"
+                name="description"
+                value={selectedTask.description}
+                onChange={handleFormChange}
+                margin="normal"
+                multiline
+                rows={4}
+              />
+              <Box mt={2} display="flex" justifyContent="space-between">
+                <Button variant="contained" color="primary" onClick={handleSave}>
+                  Save
+                </Button>
+                <Button
+                  variant="outlined"
+                  color="secondary"
+                  onClick={() => setSelectedTask(null)}
+                >
+                  Cancel
+                </Button>
+              </Box>
             </>
           )}
         </Box>

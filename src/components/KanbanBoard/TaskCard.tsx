@@ -23,14 +23,13 @@ export function TaskCard({ task, onClick }: TaskCardProps) {
       ref={setNodeRef}
       {...listeners}
       {...attributes}
-      onClick={() => {
-        console.log("TaskCard clicked:", task); // Debugging
-        onClick && onClick(); // Call parent handler
-      }}
+     
       className="cursor-grab rounded-lg bg-neutral-700 p-4 shadow-sm hover:shadow-md"
       style={style}
     >
-      <h3 className="font-medium text-neutral-100 underline cursor-pointer">
+      <h3 className="font-medium text-neutral-100 underline cursor-pointer"  onClick={() => {
+        onClick && onClick();
+      }}>
         {task.title}
       </h3>
       <p className="mt-2 text-sm text-neutral-400">{task.description}</p>

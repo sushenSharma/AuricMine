@@ -39,17 +39,16 @@ const Navigation = ({ open }) => {
           display: "block",
           [theme.breakpoints.up("sm")]: {
             fontSize: "1em",
-             margin: "0"
+            margin: "0",
           },
           "& .MuiSvgIcon-root": {
-            color: "#fff",
+            color: "black", // Change icon color to black for visibility
             marginRight: open ? "8px" : 0,
             fontSize: "1.25em",
           },
-          border: "5px solid #56585c",
-          backgroundColor: "#56585c",
+          backgroundColor: "#ffffff", // Uniform white background
           "&:hover": {
-            backgroundColor: "transparent",
+            backgroundColor: "#f5f5f5", // Light gray on hover for subtle effect
           },
         }}
         onClick={() => handleNavigate(item)}
@@ -63,8 +62,8 @@ const Navigation = ({ open }) => {
             px: 0,
             ...(open ? { padding: "12px 5px" } : {}),
             "&:hover": {
-              backgroundColor: theme.palette.primary.dark,
-              boxShadow: "0 2px 8px rgba(0,0,0,0.2)",
+              backgroundColor: "#f5f5f5", // Ensure hover effect matches
+              boxShadow: "0 2px 8px rgba(0,0,0,0.1)", // Subtle shadow for hover
               borderRadius: "8px",
             },
           }}
@@ -81,10 +80,9 @@ const Navigation = ({ open }) => {
             primary={label}
             sx={{
               display: "flex",
-
               alignItems: "center",
               opacity: 1,
-              color: "white",
+              color: "black", // Change text color to black
               textAlign: "center",
               ...(!open
                 ? {
