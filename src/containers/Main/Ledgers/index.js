@@ -82,14 +82,22 @@ const Ledgers = () => {
       sx={{
         width: "100%",
         p: 2,
-        border: "1px solid grey",
+        border: "2px solid grey",
         maxWidth: "auto",
         margin: "auto",
         overflowX: "auto", // Horizontal scrolling
-        overflowY: "false", // No vertical scrolling
+        overflowY: "hidden", // Disable vertical scrolling
+        backgroundColor: "#535454", // Set background color to black
+        color: "white", // Set text color to white for readability
       }}
     >
-      <ContentWrapper className="ledgers-container">
+      <ContentWrapper
+        className="ledgers-container"
+        style={{
+          backgroundColor: "black", // Ensure ContentWrapper has a black background
+          color: "white", // Ensure text color is white
+        }}
+      >
         <LedgerHeader
           table={tableAction}
           getInsights={() => getInsightsWithAI(userData)}

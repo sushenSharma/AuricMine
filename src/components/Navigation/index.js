@@ -42,11 +42,11 @@ const Navigation = ({ open }) => {
             margin: "0",
           },
           "& .MuiSvgIcon-root": {
-            color: "black", // Change icon color to black for visibility
+            color: "#535454", // Change icon color to black for visibility
             marginRight: open ? "8px" : 0,
             fontSize: "1.25em",
           },
-          backgroundColor: "#ffffff", // Uniform white background
+          backgroundColor: "#535454", // Uniform white background
           "&:hover": {
             backgroundColor: "#f5f5f5", // Light gray on hover for subtle effect
           },
@@ -62,9 +62,9 @@ const Navigation = ({ open }) => {
             px: 0,
             ...(open ? { padding: "12px 5px" } : {}),
             "&:hover": {
-              backgroundColor: "#f5f5f5", // Ensure hover effect matches
+              backgroundColor: "#535454", // Ensure hover effect matches
               boxShadow: "0 2px 8px rgba(0,0,0,0.1)", // Subtle shadow for hover
-              borderRadius: "8px",
+              borderRadius: "3px",
             },
           }}
         >
@@ -82,7 +82,8 @@ const Navigation = ({ open }) => {
               display: "flex",
               alignItems: "center",
               opacity: 1,
-              color: "black", // Change text color to black
+              color: "white", // Change text color to black
+              fontWeight: "bold",
               textAlign: "center",
               ...(!open
                 ? {
