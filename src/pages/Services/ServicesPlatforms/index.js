@@ -10,7 +10,7 @@ import { BsFillClockFill, BsGraphUp } from "react-icons/bs";
 import { RiMap2Line } from "react-icons/ri";
 import { HiLockClosed } from "react-icons/hi";
 
-import "../../../assets/styles/landingPage.css"
+import "../../../assets/styles/landingPage.css";
 
 const ServicesPlatforms = () => {
   const theme = useTheme();

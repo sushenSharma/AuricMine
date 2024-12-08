@@ -4,7 +4,7 @@
 
 .ledger-header-container {
   display: flex;
-  gap: 10px;
+  gap: 15px;
 }
 
 .center-align {
@@ -16,12 +16,12 @@
 }
 
 .ledgers-container .MuiButtonBase-root .MuiTableSortLabel-icon {
-  color: "#000000" !important;
+  color: lightgreen !important;
 }
 
 .ledger-product-listing-container ::-webkit-scrollbar {
-  width: 10px;
-  height: 10px;
+  width: 5px;
+  height: 5px;
 }
 
 .ledger-product-listing-container ::-webkit-scrollbar-track {
@@ -30,7 +30,7 @@
 }
 
 .ledger-product-listing-container ::-webkit-scrollbar-thumb {
-  background-color: rgb(98, 109, 110);
+  background-color: lightgreen;
   border-radius: 10px;
 }
 
@@ -57,7 +57,7 @@
 
 li {
   border-bottom: 1px solid #ddd; /* Separator between items */
-  padding: 5px 0; /* Padding for each item */
+  padding: 10px 0; /* Padding for each item */
   margin: 0 10px; /* Margin inside the list */
 }
 
@@ -67,7 +67,7 @@ li:last-child {
 
 /* Adding a hover effect for interaction */
 li:hover {
-  background-color: #535454;
+  background-color: #ececec;
 }
 
 /* Title style if needed separately */
