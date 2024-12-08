@@ -81,8 +81,9 @@ const Ledgers = () => {
     <Box
       sx={{
         width: "100%",
+        height: "100vh",
         p: 2,
-        border: "2px solid grey",
+        border: "2px solid black",
         maxWidth: "auto",
         margin: "auto",
         overflowX: "auto", // Horizontal scrolling
@@ -94,6 +95,7 @@ const Ledgers = () => {
       <ContentWrapper
         className="ledgers-container"
         style={{
+          height: "100%",
           backgroundColor: "black", // Ensure ContentWrapper has a black background
           color: "white", // Ensure text color is white
         }}
