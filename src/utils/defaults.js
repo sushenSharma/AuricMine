@@ -102,4 +102,7 @@ export const defaults = {
   payWithLabel: "Pay with PhonePe",
   congratulationsLabel: "Congratulations",
   successContent: "You have subscribed for AI feature",
+
+  /**Kanban Board Page */
+  AddNewStockToWatchListLabel: "ADD NEW STOCK ",
 };
