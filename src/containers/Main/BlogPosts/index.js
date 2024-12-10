@@ -15,8 +15,8 @@ import LedgerButton from "../../../ui-kit/Buttons/LedgerButton/index.js";
 import AddCircleOutlineIcon from "@mui/icons-material/AddCircleOutline";
 import {
   fetchWatchlistData,
-  postUserLedgerData,
   postWatchListData,
+  postStatus,
 } from "../../../containers/Main/Ledgers/LedgerProducts/lib/api.js";
 
 const COLUMNS = [
@@ -111,6 +111,23 @@ const BlogPosts = () => {
       if (error) {
         console.error("Error adding task to ledger:", error);
         alert("Failed to add task. Please try again.");
+        return;
+      }
+      // Step 2: Sirf `id` aur `stateName` extract karein
+      console.log(taskData);
+
+      const { id, status } = taskData;
+
+      const statusFormData = { id, status }; // Single parameter as an object
+      const { data: statusData, error: statusError } = await postStatus(
+        statusFormData
+      );
+
+      if (statusError) {
+        console.error("Error posting status:", statusError);
+        alert("Task added but failed to post status.");
+        // Yahan aap decide kar sakte hain ki kya aapko rollback karna hai ya aage badhna hai
+        // For example, aap task ko watchlist se hata sakte hain agar status post nahi ho raha
         return;
       }
 

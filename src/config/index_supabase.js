@@ -14,3 +14,4 @@ export const openAIConfig = {
 export const tableName = process.env.REACT_APP_SUPABASE_TABLE_NAME;
 export const watchlistTableName =
   process.env.REACT_APP_SUPABASE_WATCHLIST_TABLE_NAME;
+export const stateTableName = process.env.REACT_APP_SUPABASE_STATUS_TABLE_NAME;

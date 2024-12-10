@@ -3,6 +3,7 @@ import {
   tableName,
   openAIConfig,
   watchlistTableName,
+  stateTableName,
 } from "../../../../../config/index_supabase";
 
 export const fetchUserLedgerData = async (userId) => {
@@ -67,11 +68,13 @@ export const fetchInsightsWithAI = async (formData) => {
 };
 
 export const postWatchListData = async (formData) => {
-  console.log("Inside Post Watchlsit Function");
-  console.log({ formData });
   return await supabase.from(watchlistTableName).insert(formData);
 };
 
 export const fetchWatchlistData = async (userId) => {
   return await supabase.from(watchlistTableName).select();
+};
+
+export const postStatus = async (formData) => {
+  return await supabase.from(stateTableName).insert(formData);
 };
