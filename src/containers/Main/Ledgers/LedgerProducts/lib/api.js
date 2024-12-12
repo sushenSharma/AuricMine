@@ -76,5 +76,28 @@ export const fetchWatchlistData = async (userId) => {
 };
 
 export const postStatus = async (formData) => {
+  console.log(formData)
+  console.log(formData["id"])
+  console.log(formData["status"])
   return await supabase.from(stateTableName).insert(formData);
 };
+
+export const updateCardStatus = async (taskId, newStatus) => {
+  try {
+    const { error } = await supabase
+      .from(watchlistTableName) // Replace "watchlist" with your actual table name
+      .update({ status: newStatus }) // Update the status field
+      .eq("id", taskId); // Match the card by its id
+
+    if (error) {
+      console.error("Error updating status in database:", error);
+      return { success: false, error };
+    }
+
+    return { success: true };
+  } catch (err) {
+    console.error("Unexpected error updating status:", err);
+    return { success: false, error: err };
+  }
+};
+

@@ -17,6 +17,7 @@ import {
   fetchWatchlistData,
   postWatchListData,
   postStatus,
+  updateCardStatus
 } from "../../../containers/Main/Ledgers/LedgerProducts/lib/api.js";
 
 const COLUMNS = [
@@ -59,25 +60,38 @@ const BlogPosts = () => {
     fetchData();
   }, []);
 
-  const handleDragEnd = (event) => {
+  const handleDragEnd = async (event) => {
     const { active, over } = event;
-
+  
     if (!over || !over.id) return;
-
+  
     const taskId = active.id;
     const newStatus = over.id;
-
+  
     if (taskId && newStatus) {
+      // Update the task locally
       setTasks((prevTasks) =>
         prevTasks.map((task) =>
           task.id === taskId
-            ? {
-                ...task,
-                status: newStatus,
-              }
+            ? { ...task, status: newStatus }
             : task
         )
       );
+  
+      // Call the update function
+      const result = await updateCardStatus(taskId, newStatus);
+  
+      if (!result.success) {
+        alert("Failed to update status in database. Reverting changes.");
+        // Rollback the local update
+        setTasks((prevTasks) =>
+          prevTasks.map((task) =>
+            task.id === taskId
+              ? { ...task, status: tasks.find((t) => t.id === taskId).status }
+              : task
+          )
+        );
+      }
     }
   };
 
