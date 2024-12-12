@@ -5,6 +5,7 @@ import {
   useSensors,
   PointerSensor,
 } from "@dnd-kit/core";
+import { useSelector } from "react-redux"; // Import useSelector
 import { Column } from "../../../components/KanbanBoard/Column.tsx";
 import Box from "@mui/material/Box";
 import TextField from "@mui/material/TextField";
@@ -16,8 +17,7 @@ import AddCircleOutlineIcon from "@mui/icons-material/AddCircleOutline";
 import {
   fetchWatchlistData,
   postWatchListData,
-  postStatus,
-  updateCardStatus
+  updateCardStatus,
 } from "../../../containers/Main/Ledgers/LedgerProducts/lib/api.js";
 
 const COLUMNS = [
@@ -43,10 +43,13 @@ const BlogPosts = () => {
     })
   );
 
+  const { userUUID } = useSelector((state) => state.public);
+
   useEffect(() => {
     const fetchData = async () => {
+      if (!userUUID) return; // Ensure userUUID is available
       try {
-        const { data, error } = await fetchWatchlistData();
+        const { data, error } = await fetchWatchlistData(userUUID);
         if (error) {
           console.error("Error fetching watchlist data:", error);
         } else {
@@ -58,32 +61,27 @@ const BlogPosts = () => {
     };
 
     fetchData();
-  }, []);
+  }, [userUUID]);
 
   const handleDragEnd = async (event) => {
     const { active, over } = event;
-  
+
     if (!over || !over.id) return;
-  
+
     const taskId = active.id;
     const newStatus = over.id;
-  
+
     if (taskId && newStatus) {
-      // Update the task locally
       setTasks((prevTasks) =>
         prevTasks.map((task) =>
-          task.id === taskId
-            ? { ...task, status: newStatus }
-            : task
+          task.id === taskId ? { ...task, status: newStatus } : task
         )
       );
-  
-      // Call the update function
+
       const result = await updateCardStatus(taskId, newStatus);
-  
+
       if (!result.success) {
         alert("Failed to update status in database. Reverting changes.");
-        // Rollback the local update
         setTasks((prevTasks) =>
           prevTasks.map((task) =>
             task.id === taskId
@@ -108,6 +106,16 @@ const BlogPosts = () => {
     });
   };
 
+  const handleCardClick = (task) => {
+    console.log("Card clicked: ", task); 
+    setNewTask({
+      title: task.title,
+      description: task.description,
+      status: task.status,
+    });
+    setModalOpen(true);
+  };
+
   const handleFieldChange = (e) => {
     const { name, value } = e.target;
     setNewTask((prev) => ({
@@ -117,7 +125,12 @@ const BlogPosts = () => {
   };
 
   const handleAddTask = async () => {
-    const taskData = { ...newTask, id: Date.now().toString() };
+    if (!userUUID) {
+      alert("User not identified. Please try again.");
+      return;
+    }
+
+    const taskData = { ...newTask, id: Date.now().toString(), userUUID };
 
     try {
       const { data, error } = await postWatchListData(taskData);
@@ -125,23 +138,6 @@ const BlogPosts = () => {
       if (error) {
         console.error("Error adding task to ledger:", error);
         alert("Failed to add task. Please try again.");
-        return;
-      }
-      // Step 2: Sirf `id` aur `stateName` extract karein
-      console.log(taskData);
-
-      const { id, status } = taskData;
-
-      const statusFormData = { id, status }; // Single parameter as an object
-      const { data: statusData, error: statusError } = await postStatus(
-        statusFormData
-      );
-
-      if (statusError) {
-        console.error("Error posting status:", statusError);
-        alert("Task added but failed to post status.");
-        // Yahan aap decide kar sakte hain ki kya aapko rollback karna hai ya aage badhna hai
-        // For example, aap task ko watchlist se hata sakte hain agar status post nahi ho raha
         return;
       }
 
@@ -155,7 +151,6 @@ const BlogPosts = () => {
 
   return (
     <Box sx={{ padding: 2 }}>
-      {/* Add New Stock Button */}
       <Box
         sx={{
           display: "flex",
@@ -179,7 +174,6 @@ const BlogPosts = () => {
         />
       </Box>
 
-      {/* Swimlanes */}
       <DndContext sensors={sensors} onDragEnd={handleDragEnd}>
         <Box
           sx={{
@@ -193,13 +187,13 @@ const BlogPosts = () => {
               <Column
                 column={column}
                 tasks={tasks.filter((task) => task.status === column.id)}
+                onCardClick={handleCardClick}
               />
             </Box>
           ))}
         </Box>
       </DndContext>
 
-      {/* Add New Stock Modal */}
       <Modal
         open={modalOpen}
         onClose={handleCloseModal}
@@ -221,7 +215,7 @@ const BlogPosts = () => {
           }}
         >
           <Typography variant="h6" gutterBottom>
-            Add New Stock
+            {newTask.title ? "Edit Stock" : "Add New Stock"}
           </Typography>
           <TextField
             fullWidth
@@ -241,27 +235,9 @@ const BlogPosts = () => {
             multiline
             rows={3}
           />
-          <TextField
-            fullWidth
-            select
-            label="Status"
-            name="status"
-            value={newTask.status}
-            onChange={handleFieldChange}
-            margin="normal"
-            SelectProps={{
-              native: true,
-            }}
-          >
-            {COLUMNS.map((column) => (
-              <option key={column.id} value={column.id}>
-                {column.title}
-              </option>
-            ))}
-          </TextField>
           <Box mt={2} display="flex" justifyContent="space-between">
             <Button variant="contained" color="primary" onClick={handleAddTask}>
-              Add
+              Save
             </Button>
             <Button
               variant="outlined"

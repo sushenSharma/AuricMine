@@ -68,19 +68,30 @@ export const fetchInsightsWithAI = async (formData) => {
 };
 
 export const postWatchListData = async (formData) => {
+
   return await supabase.from(watchlistTableName).insert(formData);
 };
 
 export const fetchWatchlistData = async (userId) => {
-  return await supabase.from(watchlistTableName).select();
+  try {
+    const { data, error } = await supabase
+      .from(watchlistTableName)
+      .select("*") // Specify the columns you want to fetch
+      .eq("userUUID", userId); // Ensure the filter is applied based on the userUUID
+
+    if (error) {
+      console.error("Error fetching watchlist data:", error);
+      return { data: null, error };
+    }
+
+    return { data, error: null };
+  } catch (err) {
+    console.error("Unexpected error fetching watchlist data:", err);
+    return { data: null, error: err };
+  }
 };
 
-export const postStatus = async (formData) => {
-  console.log(formData)
-  console.log(formData["id"])
-  console.log(formData["status"])
-  return await supabase.from(stateTableName).insert(formData);
-};
+
 
 export const updateCardStatus = async (taskId, newStatus) => {
   try {
