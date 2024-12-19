@@ -10,7 +10,7 @@ export const navigationMenus = (navigationLabels) => {
     riskManagementLabel,
     watchListLabel,
     analyticsLabel,
-    blogsLabel,
+    KanbanLabel,
   } = navigationLabels;
 
   return [
@@ -49,11 +49,11 @@ export const navigationMenus = (navigationLabels) => {
       title: analyticsLabel,
     },
     {
-      key: "blogs",
-      label: blogsLabel,
+      key: "Kanban",
+      label: KanbanLabel,
       iconLabel: <BlogIcon style={{ fontSize: "36px", color: "#60c4a2" }} />,
-      path: "/blogs",
-      title: blogsLabel,
+      path: "/Kanban",
+      title: KanbanLabel,
     },
   ];
 };
