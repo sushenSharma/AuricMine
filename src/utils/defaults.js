@@ -105,4 +105,6 @@ export const defaults = {
 
   /**Kanban Board Page */
   AddNewStockToWatchListLabel: "ADD NEW STOCK ",
+  successArchievedTitle: "Stock Sold! 🎉",
+  successArchievedText: "The stock details has been successfully archived for future reference.",
 };

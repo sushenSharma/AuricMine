@@ -17,6 +17,16 @@ export function Column({ column, tasks, onTaskClick }: ColumnProps) {
   return (
     <div className="flex w-80 flex-col rounded-lg bg-neutral-800 p-4">
       <h2 className="mb-4 font-semibold text-neutral-100">{column.title}</h2>
+      
+      {/* Conditionally display message for "Sold" column */}
+      {column.id === "Sold" && (
+        <div className="mb-4 text-sm text-neutral-400">
+          <p>
+            Stocks moved here will be archived automatically and will no longer be visible on the board.
+          </p>
+        </div>
+      )}
+
       <div ref={setNodeRef} className="flex flex-1 flex-col gap-4">
         {tasks.length === 0 ? (
           <div className="flex items-center justify-center text-neutral-400">

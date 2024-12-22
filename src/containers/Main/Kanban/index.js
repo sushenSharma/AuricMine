@@ -18,7 +18,10 @@ import {
   fetchWatchlistData,
   postWatchListData,
   updateCardStatus,
+  updateTask
 } from "../Ledgers/LedgerProducts/lib/api.js";
+import SwalNotification from "../../../../src/components/SwalNotification/index.js";
+import { getLabel } from "../../../../src/hooks/use-labels.js";
 
 const COLUMNS = [
   { id: "To Watch", title: "To Watch" },
@@ -26,6 +29,7 @@ const COLUMNS = [
   { id: "Ready To Buy", title: "Ready To Buy" },
   { id: "Bought", title: "Bought" },
   { id: "Ready To Sell", title: "Ready To Sell" },
+  { id: "Sold", title: "Sold" },
 ];
 
 const Kanban = () => {
@@ -61,33 +65,58 @@ const Kanban = () => {
 
   const handleDragEnd = async (event) => {
     const { active, over } = event;
-
+  
     if (!over || !over.id) return;
-
+  
     const taskId = active.id;
     const newStatus = over.id;
-
+  
     if (taskId && newStatus) {
-      setTasks((prevTasks) =>
-        prevTasks.map((task) =>
-          task.id === taskId ? { ...task, status: newStatus } : task
-        )
-      );
-
-      const result = await updateCardStatus(taskId, newStatus);
-
-      if (!result.success) {
-        alert("Failed to update status in database. Reverting changes.");
+      if (newStatus === "Sold") {
+        // Archive the task
+        setTasks((prevTasks) => prevTasks.filter((task) => task.id !== taskId));
+  
+        try {
+          const result = await updateTask(taskId, { status: "Archived" });
+          if (!result.success) {
+            console.error("Failed to archive task in Supabase:", result.error);
+            alert("Failed to archive task. Please try again.");
+          } else {
+            SwalNotification({
+              title: getLabel("successArchievedTitle"),
+              text: getLabel("successArchievedText"),
+              iconType: "success",
+              btnLabel: getLabel("okLabel"),
+            });
+          }
+        } catch (err) {
+          console.error("Unexpected error while archiving:", err);
+          alert("An unexpected error occurred. Please try again.");
+        }
+      } else {
+        // Update the task's status locally
         setTasks((prevTasks) =>
           prevTasks.map((task) =>
-            task.id === taskId
-              ? { ...task, status: tasks.find((t) => t.id === taskId).status }
-              : task
+            task.id === taskId ? { ...task, status: newStatus } : task
           )
         );
+  
+        // Update the task's status in Supabase
+        const result = await updateCardStatus(taskId, newStatus);
+        if (!result.success) {
+          alert("Failed to update status in database. Reverting changes.");
+          setTasks((prevTasks) =>
+            prevTasks.map((task) =>
+              task.id === taskId
+                ? { ...task, status: tasks.find((t) => t.id === taskId).status }
+                : task
+            )
+          );
+        }
       }
     }
   };
+  
 
   const handleAddNewStock = () => {
     setSelectedTask({ title: "", description: "", status: COLUMNS[0].id });
@@ -100,7 +129,6 @@ const Kanban = () => {
   };
 
   const handleCardClick = (task) => {
-    console.log("I am inside handleCardClick")
     setSelectedTask(task);
     setModalOpen(true);
   };
@@ -115,38 +143,54 @@ const Kanban = () => {
 
   const handleSaveTask = async () => {
     if (!selectedTask) return;
-
+  
     if (selectedTask.id) {
-      // Existing task - update it
+      // Update the task locally
       setTasks((prevTasks) =>
         prevTasks.map((task) =>
           task.id === selectedTask.id ? selectedTask : task
         )
       );
-      // Optionally update in database
-      await updateCardStatus(selectedTask.id, selectedTask.status);
+  
+      // Save the updated task to Supabase
+      try {
+        const result = await updateTask(selectedTask.id, {
+          title: selectedTask.title,
+          description: selectedTask.description,
+          status: selectedTask.status,
+        });
+  
+        if (!result.success) {
+          console.error("Failed to update task in Supabase:", result.error);
+          alert("Failed to save task. Please try again.");
+        }
+      } catch (err) {
+        console.error("Unexpected error:", err);
+        alert("An unexpected error occurred. Please try again.");
+      }
     } else {
       // New task - add it
       const taskData = { ...selectedTask, id: Date.now().toString(), userUUID };
-
+  
       try {
         const { data, error } = await postWatchListData(taskData);
-
+  
         if (error) {
           console.error("Error adding task to ledger:", error);
           alert("Failed to add task. Please try again.");
           return;
         }
-
+  
         setTasks((prevTasks) => [...prevTasks, taskData]);
       } catch (err) {
         console.error("Unexpected error:", err);
         alert("An unexpected error occurred. Please try again.");
       }
     }
-
+  
     handleCloseModal();
   };
+  
 
   return (
     <Box sx={{ padding: 2 }}>
@@ -186,7 +230,7 @@ const Kanban = () => {
               <Column
                 column={column}
                 tasks={tasks.filter((task) => task.status === column.id)}
-                onCardClick={handleCardClick}
+                onTaskClick={handleCardClick}
               />
             </Box>
           ))}
