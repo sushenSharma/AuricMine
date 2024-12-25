@@ -24,6 +24,7 @@ import SwalNotification from "../../../../src/components/SwalNotification/index.
 import { getLabel } from "../../../../src/hooks/use-labels.js";
 import Swal from "sweetalert2";
 import ImportContactsIcon from '@mui/icons-material/ImportContacts';
+import posthog from 'posthog-js';
 
 const COLUMNS = [
   { id: "To Watch", title: "To Watch" },
@@ -169,6 +170,7 @@ const Kanban = () => {
   
 
   const handleAddNewStock = () => {
+    posthog.capture('button_click', { label: 'Add new Stock Button' });
     setSelectedTask({ title: "", description: "", status: COLUMNS[0].id });
     setModalOpen(true);
   };
