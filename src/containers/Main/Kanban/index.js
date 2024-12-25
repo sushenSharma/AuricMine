@@ -161,8 +161,20 @@ const Kanban = () => {
         });
   
         if (!result.success) {
-          console.error("Failed to update task in Supabase:", result.error);
-          alert("Failed to save task. Please try again.");
+          SwalNotification({
+            title: getLabel("FailUpdateStockCard"),
+            text: getLabel("FailUpdateStockCardText"),
+            iconType: "error",
+            btnLabel: getLabel("okLabel")
+          })
+        }else{
+          SwalNotification({
+            title: getLabel("successUpdateStockCard"),
+            text: getLabel("successUpdateStockText"),
+            iconType: "success",
+            btnLabel: getLabel("okLabel")
+          })
+          
         }
       } catch (err) {
         console.error("Unexpected error:", err);
@@ -176,9 +188,21 @@ const Kanban = () => {
         const { data, error } = await postWatchListData(taskData);
   
         if (error) {
-          console.error("Error adding task to ledger:", error);
-          alert("Failed to add task. Please try again.");
+          SwalNotification({
+            title: getLabel("FailUpdateStockSupabase"),
+            text: getLabel("FailUpdateStockSupabaseText"),
+            iconType: "error",
+            btnLabel: getLabel("okLabel")
+          })
           return;
+        }else{
+          SwalNotification({
+            title: getLabel("successUpdateStockSupabase"),
+            text: getLabel("successUpdateStockSupabaseText"),
+            iconType: "success",
+            btnLabel: getLabel("okLabel")
+          })
+
         }
   
         setTasks((prevTasks) => [...prevTasks, taskData]);
