@@ -22,6 +22,8 @@ import {
 } from "../Ledgers/LedgerProducts/lib/api.js";
 import SwalNotification from "../../../../src/components/SwalNotification/index.js";
 import { getLabel } from "../../../../src/hooks/use-labels.js";
+import Swal from "sweetalert2";
+import ImportContactsIcon from '@mui/icons-material/ImportContacts';
 
 const COLUMNS = [
   { id: "To Watch", title: "To Watch" },
@@ -34,8 +36,10 @@ const COLUMNS = [
 
 const Kanban = () => {
   const [tasks, setTasks] = useState([]);
+  const [archivedTasks, setArchivedTasks] = useState([]);
   const [modalOpen, setModalOpen] = useState(false);
-  const [selectedTask, setSelectedTask] = useState(null); // New state for selected task
+  const [archivedModalOpen, setArchivedModalOpen] = useState(false);
+  const [selectedTask, setSelectedTask] = useState(null);
 
   const sensors = useSensors(
     useSensor(PointerSensor, {
@@ -63,6 +67,30 @@ const Kanban = () => {
     fetchData();
   }, [userUUID]);
 
+  const handleFetchArchivedStocks = async () => {
+    if (!userUUID) return;
+    try {
+      const { data, error } = await fetchWatchlistData(userUUID, { status: "Archived" });
+      if (error) {
+        SwalNotification({
+          title: "Failed to Fetch Archived Stocks",
+          text: "An error occurred while fetching archived stocks.",
+          iconType: "error",
+          btnLabel: "OK",
+        });
+        throw new Error("Error fetching archived tasks");
+      }
+      setArchivedTasks(data || []);
+      setArchivedModalOpen(true);
+    } catch (err) {
+      console.error(err.message);
+    }
+  };
+
+  const handleCloseArchivedModal = () => {
+    setArchivedModalOpen(false);
+  };
+
   const handleDragEnd = async (event) => {
     const { active, over } = event;
   
@@ -73,26 +101,41 @@ const Kanban = () => {
   
     if (taskId && newStatus) {
       if (newStatus === "Sold") {
-        // Archive the task
-        setTasks((prevTasks) => prevTasks.filter((task) => task.id !== taskId));
+        // Show confirmation dialog before archiving the task
+        Swal.fire({
+          title: "Are you sure?",
+          text: "This will move the task to 'Archived'.",
+          icon: "question",
+          showCancelButton: true,
+          confirmButtonText: "Yes, archive it!",
+          cancelButtonText: "No, cancel",
+        }).then(async (result) => {
+          if (result.isConfirmed) {
+            // Archive the task locally
+            setTasks((prevTasks) => prevTasks.filter((task) => task.id !== taskId));
   
-        try {
-          const result = await updateTask(taskId, { status: "Archived" });
-          if (!result.success) {
-            console.error("Failed to archive task in Supabase:", result.error);
-            alert("Failed to archive task. Please try again.");
+            try {
+              // Update the task's status in the backend
+              const result = await updateTask(taskId, { status: "Archived" });
+              if (!result.success) {
+                console.error("Failed to archive task in Supabase:", result.error);
+                Swal.fire("Error", "Failed to archive task. Please try again.", "error");
+              } else {
+                Swal.fire(
+                  getLabel("successArchievedTitle"),
+                  getLabel("successArchievedText"),
+                  "success"
+                );
+              }
+            } catch (err) {
+              console.error("Unexpected error while archiving:", err);
+              Swal.fire("Error", "An unexpected error occurred. Please try again.", "error");
+            }
           } else {
-            SwalNotification({
-              title: getLabel("successArchievedTitle"),
-              text: getLabel("successArchievedText"),
-              iconType: "success",
-              btnLabel: getLabel("okLabel"),
-            });
+            // User canceled the action
+            Swal.fire("Cancelled", "The task was not archived.", "info");
           }
-        } catch (err) {
-          console.error("Unexpected error while archiving:", err);
-          alert("An unexpected error occurred. Please try again.");
-        }
+        });
       } else {
         // Update the task's status locally
         setTasks((prevTasks) =>
@@ -101,10 +144,17 @@ const Kanban = () => {
           )
         );
   
-        // Update the task's status in Supabase
-        const result = await updateCardStatus(taskId, newStatus);
-        if (!result.success) {
-          alert("Failed to update status in database. Reverting changes.");
+        try {
+          // Update the task's status in the backend
+          const result = await updateCardStatus(taskId, newStatus);
+          if (!result.success) {
+            throw new Error("Failed to update task status in the database.");
+          }
+        } catch (err) {
+          console.error(err.message);
+          Swal.fire("Error", "Failed to update task status. Reverting changes.", "error");
+  
+          // Revert local changes in case of error
           setTasks((prevTasks) =>
             prevTasks.map((task) =>
               task.id === taskId
@@ -239,6 +289,17 @@ const Kanban = () => {
           }}
           onClick={handleAddNewStock}
         />
+
+         <LedgerButton
+          label="Show Archived Stocks"
+          type="outlined"
+          variant="contained"
+          hoverType="warning-color"
+          icon={<ImportContactsIcon />}
+          size="sm"
+          style={{ width: "auto", padding: "8px 16px", marginLeft: "10px" }}
+          onClick={handleFetchArchivedStocks}
+        />
       </Box>
 
       <DndContext sensors={sensors} onDragEnd={handleDragEnd}>
@@ -314,6 +375,81 @@ const Kanban = () => {
               Cancel
             </Button>
           </Box>
+        </Box>
+      </Modal>
+
+         {/* Modal for Archived Stocks */}
+         <Modal
+        open={archivedModalOpen}
+        onClose={handleCloseArchivedModal}
+        aria-labelledby="archived-stocks-modal"
+        aria-describedby="archived-stocks-list"
+      >
+        <Box
+          sx={{
+            position: "absolute",
+            top: "50%",
+            left: "50%",
+            transform: "translate(-50%, -50%)",
+            width: 400,
+            bgcolor: "#fff",
+            border: "1px solid #ddd",
+            borderRadius: "8px",
+            boxShadow: 24,
+            p: 4,
+          }}
+        >
+          <Typography
+            variant="h6"
+            gutterBottom
+            sx={{ color: "#333", fontWeight: "bold" }}
+          >
+            Archived Stocks
+          </Typography>
+          {archivedTasks.length ? (
+            <Box
+              sx={{
+                maxHeight: "300px",
+                overflowY: "auto",
+                padding: "8px",
+                bgcolor: "#f9f9f9",
+                borderRadius: "4px",
+              }}
+            >
+              <ul style={{ listStyleType: "none", padding: 0, margin: 0 }}>
+                {archivedTasks.map((task) => (
+                  <li
+                    key={task.id}
+                    style={{
+                      marginBottom: "8px",
+                      padding: "8px",
+                      backgroundColor: "#e6f7ff",
+                      borderRadius: "4px",
+                    }}
+                  >
+                    <Typography
+                      variant="body1"
+                      sx={{ color: "#000" }}
+                    >
+                      {task.title} - {task.description}
+                    </Typography>
+                  </li>
+                ))}
+              </ul>
+            </Box>
+          ) : (
+            <Typography variant="body2" color="textSecondary">
+              No archived stocks found.
+            </Typography>
+          )}
+          <Button
+            variant="contained"
+            color="primary"
+            onClick={handleCloseArchivedModal}
+            sx={{ marginTop: 2 }}
+          >
+            Close
+          </Button>
         </Box>
       </Modal>
     </Box>
