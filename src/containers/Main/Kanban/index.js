@@ -170,7 +170,7 @@ const Kanban = () => {
         }else{
           SwalNotification({
             title: getLabel("successUpdateStockCard"),
-            text: getLabel("successUpdateStockText"),
+            text: getLabel("successUpdateStockCardText"),
             iconType: "success",
             btnLabel: getLabel("okLabel")
           })
