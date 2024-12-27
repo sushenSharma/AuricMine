@@ -81,26 +81,27 @@ const Ledgers = () => {
     <Box
       sx={{
         width: "100%",
+        height: "100vh",
         p: 2,
-        border: "1px solid grey",
+        border: "2px solid black",
         maxWidth: "auto",
         margin: "auto",
         overflowX: "auto", // Horizontal scrolling
-        overflowY: "false", // No vertical scrolling
+        overflowY: "hidden", // Disable vertical scrolling
+        backgroundColor: "#black", // Set background color to black
+        color: "white", // Set text color to white for readability
       }}
     >
-      <ContentWrapper className="ledgers-container">
-        <LedgerHeader
-          table={tableAction}
-          getInsights={() => getInsightsWithAI(userData)}
-          disabled={disabled}
-        />
-        <LedgerProducts
-          tableAction={handleTableAction}
-          getUserData={setUserData}
-        />
-        {renderModal()}
-      </ContentWrapper>
+      <LedgerHeader
+        table={tableAction}
+        getInsights={() => getInsightsWithAI(userData)}
+        disabled={disabled}
+      />
+      <LedgerProducts
+        tableAction={handleTableAction}
+        getUserData={setUserData}
+      />
+      {renderModal()}
     </Box>
   );
 };

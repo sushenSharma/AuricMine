@@ -32,7 +32,7 @@ const TopBar = ({ open, openDrawer, drawerWidth, theme }) => {
           easing: theme.transitions.easing.sharp,
           duration: theme.transitions.duration.leavingScreen,
         }),
-        backgroundColor: "#000000",
+        backgroundColor: "#38B88D",
         zIndex: 1201,
       }}
     >

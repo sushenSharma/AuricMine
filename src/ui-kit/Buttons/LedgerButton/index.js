@@ -21,6 +21,7 @@ const LedgerButton = ({
     width:
       width && typeof width === "object" ? `${pixels}${unit}` : `${width}px`,
     ...style,
+    backgroundColor: "#38b88d",
   };
 
   return (

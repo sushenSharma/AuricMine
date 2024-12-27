@@ -17,35 +17,41 @@ export const navigationMenus = (navigationLabels) => {
     {
       key: "home",
       label: homeLabel,
-      iconLabel: <HomeIcon />,
+      iconLabel: <HomeIcon style={{ fontSize: "36px", color: "#60c4a2" }} />,
       path: "/ledgers",
       title: homeLabel,
     },
     {
       key: "riskManagement",
       label: riskManagementLabel,
-      iconLabel: <RiskManagementIcon />,
+      iconLabel: (
+        <RiskManagementIcon style={{ fontSize: "36px", color: "#60c4a2" }} />
+      ),
       path: "/risk-management",
       title: riskManagementLabel,
     },
     {
       key: "watchlist",
       label: watchListLabel,
-      iconLabel: <WatchlistIcon />,
+      iconLabel: (
+        <WatchlistIcon style={{ fontSize: "36px", color: "#60c4a2" }} />
+      ),
       path: "/watch-list",
       title: watchListLabel,
     },
     {
       key: "analytics",
       label: analyticsLabel,
-      iconLabel: <ComingSoonIcon />,
+      iconLabel: (
+        <ComingSoonIcon style={{ fontSize: "36px", color: "#60c4a2" }} />
+      ),
       path: "/analytics",
       title: analyticsLabel,
     },
     {
       key: "blogs",
       label: blogsLabel,
-      iconLabel: <BlogIcon />,
+      iconLabel: <BlogIcon style={{ fontSize: "36px", color: "#60c4a2" }} />,
       path: "/blogs",
       title: blogsLabel,
     },

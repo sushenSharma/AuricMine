@@ -21,7 +21,7 @@ export const defaults = {
   riskManagementLabel: "Risk Management",
   watchListLabel: "Simulator",
   analyticsLabel: "Analytics",
-  blogsLabel: "Blogs",
+  blogsLabel: "Kanban Board",
 
   /** Header Navigation */
   homeNavLinkLabel: "Home",
@@ -102,4 +102,7 @@ export const defaults = {
   payWithLabel: "Pay with PhonePe",
   congratulationsLabel: "Congratulations",
   successContent: "You have subscribed for AI feature",
+
+  /**Kanban Board Page */
+  AddNewStockToWatchListLabel: "ADD NEW STOCK ",
 };

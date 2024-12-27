@@ -5,7 +5,7 @@ const Ledger = lazy(() => import("../containers/Main/Ledgers"));
 const RiskManagement = lazy(() => import("../containers/Main/RiskManagement"));
 const Analytics = lazy(() => import("../containers/Main/Analytics"));
 const WatchList = lazy(() => import("../containers/Main/WatchList"));
-const BlogPosts = lazy(() => import("../containers/Main/BlogPosts"));
+const BlogPosts = lazy(() => import("../containers/Main/BlogPosts/index.js"));
 const LandingPage = lazy(() => import("../components/landing_Page"));
 const AboutUs = lazy(() => import("../pages/AboutUs"));
 const Services = lazy(() => import("../pages/Services"));

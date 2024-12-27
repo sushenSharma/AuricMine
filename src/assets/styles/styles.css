@@ -37,3 +37,35 @@ table.htCore tr.selected td {
 .handsontable .htRight .changeType {
   margin: 3px 1px 0 13px;
 }
+
+/* Ensure the container background is black */
+.ledgers-container {
+  background-color: black !important; /* Set container background color to black */
+  color: white !important; /* Ensure text color is white */
+}
+
+/* Apply black background to modal, header, and products */
+.ledger-header-container,
+.ledger-products-container,
+.modal-container {
+  background-color: black !important; /* Black background for all components */
+  color: white !important; /* White text for readability */
+}
+
+/* Adjust table header and body background */
+.MuiTableHead-root,
+.MuiTableBody-root {
+  background-color: black !important; /* Black table background */
+  color: white !important; /* White text for table */
+}
+
+/* Adjust button text and icons for better visibility */
+button,
+.ledger-buttons {
+  background-color: black !important; /* Button background */
+  color: white !important; /* Button text color */
+}
+
+.center-align {
+  color: white !important; /* Ensure loading text is white */
+}

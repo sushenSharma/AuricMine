@@ -2,6 +2,8 @@ import {
   supabase,
   tableName,
   openAIConfig,
+  watchlistTableName,
+  stateTableName,
 } from "../../../../../config/index_supabase";
 
 export const fetchUserLedgerData = async (userId) => {
@@ -64,3 +66,49 @@ export const fetchInsightsWithAI = async (formData) => {
 
   return text;
 };
+
+export const postWatchListData = async (formData) => {
+
+  return await supabase.from(watchlistTableName).insert(formData);
+};
+
+export const fetchWatchlistData = async (userId) => {
+  try {
+    const { data, error } = await supabase
+      .from(watchlistTableName)
+      .select("*") // Specify the columns you want to fetch
+      .eq("userUUID", userId); // Ensure the filter is applied based on the userUUID
+
+    if (error) {
+      console.error("Error fetching watchlist data:", error);
+      return { data: null, error };
+    }
+
+    return { data, error: null };
+  } catch (err) {
+    console.error("Unexpected error fetching watchlist data:", err);
+    return { data: null, error: err };
+  }
+};
+
+
+
+export const updateCardStatus = async (taskId, newStatus) => {
+  try {
+    const { error } = await supabase
+      .from(watchlistTableName) // Replace "watchlist" with your actual table name
+      .update({ status: newStatus }) // Update the status field
+      .eq("id", taskId); // Match the card by its id
+
+    if (error) {
+      console.error("Error updating status in database:", error);
+      return { success: false, error };
+    }
+
+    return { success: true };
+  } catch (err) {
+    console.error("Unexpected error updating status:", err);
+    return { success: false, error: err };
+  }
+};
+
