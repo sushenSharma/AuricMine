@@ -112,3 +112,22 @@ export const updateCardStatus = async (taskId, newStatus) => {
   }
 };
 
+export const updateTask = async (taskId, updates) => {
+  try {
+    const { data, error } = await supabase
+      .from(watchlistTableName) // Replace 'tasks' with your actual table name
+      .update(updates) // Pass the updated fields
+      .eq('id', taskId); // Match the task by ID
+
+    if (error) {
+      console.error('Error updating task:', error);
+      return { success: false, error };
+    }
+
+    return { success: true, data };
+  } catch (err) {
+    console.error('Unexpected error:', err);
+    return { success: false, error: err.message };
+  }
+};
+

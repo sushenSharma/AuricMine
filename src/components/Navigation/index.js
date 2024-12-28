@@ -19,7 +19,7 @@ const Navigation = ({ open }) => {
     "riskManagementLabel",
     "watchListLabel",
     "analyticsLabel",
-    "blogsLabel",
+    "KanbanLabel",
   ]);
 
   const handleNavigate = ({ path, title }) => {

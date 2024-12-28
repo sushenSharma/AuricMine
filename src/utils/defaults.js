@@ -21,7 +21,7 @@ export const defaults = {
   riskManagementLabel: "Risk Management",
   watchListLabel: "Simulator",
   analyticsLabel: "Analytics",
-  blogsLabel: "Kanban Board",
+  KanbanLabel: "Kanban Board",
 
   /** Header Navigation */
   homeNavLinkLabel: "Home",
@@ -105,4 +105,14 @@ export const defaults = {
 
   /**Kanban Board Page */
   AddNewStockToWatchListLabel: "ADD NEW STOCK ",
+  successArchievedTitle: "Stock Sold! 🎉",
+  successArchievedText: "The stock details has been successfully archived for future reference.",
+  successUpdateStockSupabase: " Success🎉",
+  successUpdateStockSupabaseText: "Stock Added to Watchlist!",
+  FailUpdateStockSupabase: " Fail ❌",
+  FailUpdateStockSupabaseText: "Failed to Add Stock to Watchlist!",
+  successUpdateStockCard: " Success🎉",
+  successUpdateStockCardText: "Stock Description updated!",
+  FailUpdateStockCard: " Fail ❌",
+  FailUpdateStockCardText: "Failed to update Stock Description!",
 };
