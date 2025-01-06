@@ -13,6 +13,12 @@ import Box from "@mui/material/Box";
 import "./styles.css";
 import { useDispatch } from "react-redux";
 import { getLedgerData } from "../../../redux/reducers/public/public-action";
+import PaymentForm1 from "../../../pages/Pricing/PaymentForm/index1";
+import { useNavigate } from "react-router-dom";
+import { getStorageItem, setStorageItem } from "../../../utils/common-utils";
+import { featuresKey } from "../../../constants";
+import { supabase } from "../../../config/index_supabase";
+import { userUUID } from "../../../constants/constant";
 
 let timer = null;
 
@@ -23,6 +29,8 @@ const Ledgers = () => {
   const [userData, setUserData] = useState("");
   const [insightsData, setInsightsData] = useState([]);
   const [disabled, setDisabled] = useState(true);
+  const [openPayment, setOpenPayment] = useState(false);
+  const navigate = useNavigate();
 
   useEffect(() => {
     return () => {
@@ -41,10 +49,28 @@ const Ledgers = () => {
   const getInsightsWithAI = (userData) => {
     toggle();
     fetchInsightsWithAI(userData)
-      .then((response) => {
+      .then(async (response) => {
         setInsightsData(response);
+
+        let features = getStorageItem(featuresKey);
+        const insight_c_updated = features.insight_c + 1;
+        features.insight_c = insight_c_updated;
+        setStorageItem(featuresKey, features);
+
+        const { error: updateErrorFeatures } = await supabase
+          .from("features")
+          .update({ insight_c: insight_c_updated })
+          .eq('user_id', features.user_id);
+
+        if (updateErrorFeatures) {
+          throw updateErrorFeatures;
+        }
       })
       .catch(console.error);
+  };
+
+  const showPaymentForm = () => {
+    togglePayment();
   };
 
   const handleTableAction = (table) => {
@@ -55,6 +81,10 @@ const Ledgers = () => {
 
   const toggle = () => {
     setOpen((prev) => !prev);
+  };
+
+  const togglePayment = () => {
+    setOpenPayment((prev) => !prev);
   };
 
   const renderModal = () => {
@@ -77,13 +107,24 @@ const Ledgers = () => {
     );
   };
 
+  const renderModalPayment = () => {
+    if (!openPayment) return null;
+    const modalProps = {
+      open: openPayment,
+      handleClose: togglePayment,
+    };
+    return (
+      <PaymentForm1 {...modalProps} />
+    );
+  };
+
   return (
     <Box
       sx={{
         width: "100%",
-        height: "100vh",
-        p: 2,
-        border: "2px solid black",
+        height: "100%",
+        p: 1,
+        border: "0px solid black",
         maxWidth: "auto",
         margin: "auto",
         overflowX: "auto", // Horizontal scrolling
@@ -96,12 +137,14 @@ const Ledgers = () => {
         table={tableAction}
         getInsights={() => getInsightsWithAI(userData)}
         disabled={disabled}
+        showPayment={() => showPaymentForm()}
       />
       <LedgerProducts
         tableAction={handleTableAction}
         getUserData={setUserData}
       />
       {renderModal()}
+      {renderModalPayment()}
     </Box>
   );
 };

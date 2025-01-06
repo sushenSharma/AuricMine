@@ -1,2 +1,3 @@
-import {userIdKey } from "../constants.js";
+import {featuresKey, userIdKey } from "../constants.js";
 export const userUUID = localStorage.getItem(userIdKey);
+export const features = localStorage.getItem(featuresKey);

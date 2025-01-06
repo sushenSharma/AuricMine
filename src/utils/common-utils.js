@@ -57,3 +57,11 @@ export const setColSize = (xl, lg, md, sm, xs) => {
     xs,
   };
 };
+
+export const getActiveUser = () => {
+  return getStorageItem("userSession").user;
+}
+
+export const setStorageItem = (key, value) => {
+  localStorage.setItem(key, JSON.stringify(value));
+};

@@ -31,7 +31,7 @@ export const preparePackageCardsData = (onClickPackageHandler) => {
       className: "package-two",
       iconColor: "blue-color-icon",
       btnLinkColor: "white-button-color",
-      enableLink: true,
+      enableLink: false,
     },
   ];
 };

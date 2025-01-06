@@ -117,6 +117,7 @@ const LPListing = ({
     muiTableContainerProps: {
       sx: {
         border: "1px solid rgba(81, 81, 81, .5)",
+        maxHeight:"400px",
       },
     },
     //Table Column names

@@ -10,6 +10,8 @@ import {
   ListItemIcon,
   ListItemText,
 } from "@mui/material";
+import { getStorageItem } from "../../utils/common-utils";
+import { featuresKey, paymentStatusKey } from "../../constants";
 
 const Navigation = ({ open }) => {
   const theme = useTheme();
@@ -20,14 +22,17 @@ const Navigation = ({ open }) => {
     "watchListLabel",
     "analyticsLabel",
     "KanbanLabel",
+	"feedbackLabel"
   ]);
 
-  const handleNavigate = ({ path, title }) => {
-    if (path) {
+  const freeFeature = ["home", "feedback"];
+
+  const features = getStorageItem(featuresKey);
+  const handleNavigate = ({ key, path, title }) => {
+    if (path && (freeFeature.includes(key) || (features && features.p_status == paymentStatusKey))) {
       navigate(`${path}`, { state: { title } });
     }
   };
-
   const menuList = navigationMenus(navigationLabels).map((item) => {
     const { key, iconLabel, label } = item;
 
@@ -67,6 +72,7 @@ const Navigation = ({ open }) => {
               borderRadius: "3px",
             },
           }}
+        disabled = {!freeFeature.includes(key) && (features && features.p_status != paymentStatusKey)}
         >
           <ListItemIcon
             sx={{

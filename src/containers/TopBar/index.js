@@ -19,6 +19,7 @@ const TopBar = ({ open, openDrawer, drawerWidth, theme }) => {
       "subscription",
       "ledgerData",
       "token",
+      "features",
     ]);
   };
 

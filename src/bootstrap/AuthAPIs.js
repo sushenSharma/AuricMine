@@ -1,12 +1,13 @@
 import React, { Fragment, useEffect } from "react";
-import { supabase } from "../constants";
+import { featuresKey, supabase } from "../constants";
 import { useDispatch } from "react-redux";
-import { removeStorageItem } from "../utils/common-utils";
+import { removeStorageItem, setStorageItem } from "../utils/common-utils";
 import {
   getUserDetails,
   getUserSession,
   getUserUUID,
 } from "../redux/reducers/public/public-action";
+import { getFeatureData } from "../api/supabaseClient";
 
 const AuthAPIs = ({ activeUser, setLoading }) => {
   const dispatch = useDispatch();
@@ -24,6 +25,7 @@ const AuthAPIs = ({ activeUser, setLoading }) => {
               "subscription",
               "ledgerData",
               "token",
+              "features",
             ]);
           }
           setLoading(false);
@@ -46,6 +48,7 @@ const AuthAPIs = ({ activeUser, setLoading }) => {
       if (event === "SIGNED_IN") {
         localStorage.setItem("userId", session.user.id);
         localStorage.setItem("token", session.access_token);
+        getFeatureData(session.user.id).then(data => setStorageItem(featuresKey, data));
         dispatch(getUserUUID(session.user.id));
         dispatch(getUserDetails(session.user));
       }

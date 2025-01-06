@@ -9,6 +9,7 @@ const Kanban = lazy(() => import("../containers/Main/Kanban/index.js"));
 const LandingPage = lazy(() => import("../components/landing_Page"));
 const AboutUs = lazy(() => import("../pages/AboutUs"));
 const Services = lazy(() => import("../pages/Services"));
+const Feedback = lazy(() => import("../containers/Main/Feedback"));
 
 export const appRoutes = [
   {
@@ -40,6 +41,11 @@ export const appRoutes = [
         key: "Kanban",
         path: "/Kanban",
         component: Kanban,
+      },
+      {
+        key: "feedback",
+        path: "/feedback",
+        component: Feedback,
       },
     ],
   },

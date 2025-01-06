@@ -3,6 +3,7 @@ import HomeIcon from "@mui/icons-material/Home";
 import ComingSoonIcon from "@mui/icons-material/InsertChart";
 import RiskManagementIcon from "@mui/icons-material/NotificationsActiveOutlined";
 import WatchlistIcon from "@mui/icons-material/Visibility";
+import FeedbackIcon from '@mui/icons-material/Feedback';
 
 export const navigationMenus = (navigationLabels) => {
   const {
@@ -11,6 +12,7 @@ export const navigationMenus = (navigationLabels) => {
     watchListLabel,
     analyticsLabel,
     KanbanLabel,
+	feedbackLabel
   } = navigationLabels;
 
   return [
@@ -54,6 +56,15 @@ export const navigationMenus = (navigationLabels) => {
       iconLabel: <BlogIcon style={{ fontSize: "36px", color: "#60c4a2" }} />,
       path: "/Kanban",
       title: KanbanLabel,
+    },
+    {
+      key: "feedback",
+      label: feedbackLabel,
+      iconLabel: (
+        <FeedbackIcon style={{ fontSize: "36px", color: "#60c4a2" }} />
+      ),
+      path: "/feedback",
+      title: feedbackLabel,
     },
   ];
 };

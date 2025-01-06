@@ -82,3 +82,9 @@ export const columns = [
 ];
 
 export const userIdKey = "userId";
+
+export const featuresKey = "features";
+
+export const paymentStatusKey = "completed";
+
+export const themeColor = "#37b98d";

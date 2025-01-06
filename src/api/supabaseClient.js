@@ -1,13 +1,14 @@
 import { createClient } from "@supabase/supabase-js";
-import { supabaseConfig, tableName } from "../config/index_supabase.js";
+import { supabase, tableName } from "../config/index_supabase.js";
 import {userUUID } from "../constants/constant.js";
 import { useState} from "react";
+import { data } from "autoprefixer";
 
-const supabase = createClient("https://zcvtgtaimnsrlemslypr.supabase.co", process.env.REACT_APP_SUPABASE_ANON_KEY);
+// const supabase = createClient("https://zcvtgtaimnsrlemslypr.supabase.co", process.env.REACT_APP_SUPABASE_ANON_KEY);
 export const GetData = async () => {
   const [materialdata, setMaterialData] = useState([]);
   try {
-    const { data, error } = await supabaseConfig
+    const { data, error } = await supabase
       .from(process.env.REACT_APP_SUPABASE_TABLE_NAME)
       .select()
       .eq("user_id", userUUID)
@@ -39,4 +40,24 @@ export const GetData = async () => {
   } catch (error) {
     console.error(error);
   }
+};
+
+export const getFeatureData = async (userId) => {
+  try {
+      const { data, error } = await supabase
+      .from("features")
+      .select()
+      .eq("user_id", userId);
+
+      const features = {
+        p_status: data[0].p_status,
+        insight_c: data[0].insight_c,
+        user_id:data[0].user_id
+      }
+      // console.log("features")
+      // console.log(features);
+      return features;
+    } catch (error) {
+      console.error(error);
+    }
 };

@@ -98,8 +98,8 @@ export const defaults = {
 
   /** Payment Gateway ***/
 
-  paymentGatewayLabel: "PhonePe Payment Gateway",
-  payWithLabel: "Pay with PhonePe",
+  paymentGatewayLabel: "Online Payment",
+  payWithLabel: "Pay",
   congratulationsLabel: "Congratulations",
   successContent: "You have subscribed for AI feature",
 
@@ -115,4 +115,8 @@ export const defaults = {
   successUpdateStockCardText: "Stock Description updated!",
   FailUpdateStockCard: " Fail ❌",
   FailUpdateStockCardText: "Failed to update Stock Description!",
+  
+  upgradeToPremiumLabel: "Unlock Premium features",
+  closeBtnLabel: "Close",
+  feedbackLabel: "Feedback"
 };

@@ -11,21 +11,21 @@
 }
 
 .payment-gateway-title {
-  background-color: #673ab7;
+  background-color: #37b98d;
   border-radius: 10px;
-  margin: 80px auto 40px;
-  padding: 15px 0;
+  margin: 40px auto 60px;
+  padding: 10px 0;
 }
 
 .payment-gateway-title .title-box {
   color: #fff;
-  font-weight: 800;
+  font-weight: 700;
   font-size: 30px;
   text-align: center;
 }
 
 .payment-success-title .title-box {
-  color: #673ab7;
+  color: #37b98d;
   font-weight: 800;
   font-size: 35px;
   text-align: center;
@@ -39,7 +39,7 @@
 }
 
 .trading-journal-content {
-  border: 2px solid #673ab7;
+  border: 2px solid #37b98d;
   padding: 40px 25px 20px;
   border-radius: 10px;
   margin-bottom: 20px;
@@ -55,7 +55,7 @@
 }
 
 .phonepe-button {
-  background-color: #673ab7 !important;
+  background-color: #37b98d !important;
   color: #ffffff !important;
   padding: 12px 16px !important;
   border-radius: 10px !important;
