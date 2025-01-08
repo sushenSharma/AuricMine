@@ -45,9 +45,6 @@ export default function Footer() {
             marginRight: isMobile ? "0" : "1rem",
           }}
         >
-          <FaInstagram color="white" />
-          <FaLinkedinIn color="white" />
-          <FaFacebookF color="white" />
         </Box>
         <Typography
           fontSize={isMobile ? "16px" : "20px"}
