@@ -7,34 +7,40 @@ import Loader from "../../../components/Loader";
 import { useRazorpay } from "react-razorpay";
 import { supabase } from "../../../config/index_supabase.js";
 
-import Backdrop from '@mui/material/Backdrop';
-import Box from '@mui/material/Box';
-import Modal from '@mui/material/Modal';
-import Fade from '@mui/material/Fade';
-import Typography from '@mui/material/Typography';
+import Backdrop from "@mui/material/Backdrop";
+import Box from "@mui/material/Box";
+import Modal from "@mui/material/Modal";
+import Fade from "@mui/material/Fade";
+import Typography from "@mui/material/Typography";
 import { fieldData } from "./fields-data.js";
-import { getSubmissionData, updatedFormData } from "../../../hooks/form-helpers.js";
+import {
+  getSubmissionData,
+  updatedFormData,
+} from "../../../hooks/form-helpers.js";
 import FormFactory from "../../../components/FormFactory/index.js";
-import { getActiveUser, getStorageItem, setStorageItem } from "../../../utils/common-utils.js";
+import {
+  getActiveUser,
+  getStorageItem,
+  setStorageItem,
+} from "../../../utils/common-utils.js";
 import { userUUID } from "../../../constants/constant.js";
 import { featuresKey, paymentStatusKey } from "../../../constants.js";
 import Swal from "sweetalert2";
 
 const style = {
-  position: 'absolute',
-  top: '30%',
-  left: '50%',
-  transform: 'translate(-50%, -50%)',
+  position: "absolute",
+  top: "30%",
+  left: "50%",
+  transform: "translate(-50%, -50%)",
   bgcolor: "#0e0e0f",
   width: 600,
-  border: '2px solid #000',
+  border: "2px solid #000",
   boxShadow: 24,
   p: 2,
-  borderRadius: '25px'
+  borderRadius: "25px",
 };
 
 const PaymentForm1 = ({ open, handleClose }) => {
-
   const { fields } = fieldData();
   const [formFields, setFormFields] = useState(fields);
   const [errors, setErrors] = useState({});
@@ -69,14 +75,12 @@ const PaymentForm1 = ({ open, handleClose }) => {
 
   const onSubmit = (fieldData) => {
     const userInfo = getActiveUser();
-    Object.assign(fieldData,
-      {
-        MUID: userInfo.id,
-        email: userInfo.email,
-        phone: userInfo.phone
-      }
-    )
-    console.log(fieldData)
+    Object.assign(fieldData, {
+      MUID: userInfo.id,
+      email: userInfo.email,
+      phone: userInfo.phone,
+    });
+    console.log(fieldData);
     payNow(fieldData);
 
     setLoading(false);
@@ -85,16 +89,19 @@ const PaymentForm1 = ({ open, handleClose }) => {
   const payNow = async (fieldData) => {
     // console.log("->fieldData"+JSON.stringify(fieldData))
     const data = {
-      amount: fieldData.amount
-    }
+      amount: fieldData.amount,
+    };
     try {
-      const response = await fetch(process.env.REACT_APP_BE_BASE_URL + '/order', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify(data),
-      });
+      const response = await fetch(
+        process.env.REACT_APP_BE_BASE_URL + "/payments",
+        {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify(data),
+        }
+      );
 
       if (response.ok) {
         const result = await response.json();
@@ -110,8 +117,8 @@ const PaymentForm1 = ({ open, handleClose }) => {
           status: result.status,
           user_id: fieldData.MUID,
           user_email: fieldData.email,
-          user_phone: parseInt(fieldData.phone)
-        }
+          user_phone: parseInt(fieldData.phone),
+        };
         const { error: insertError } = await supabase
           .from("payments")
           .insert(insertData);
@@ -120,18 +127,16 @@ const PaymentForm1 = ({ open, handleClose }) => {
           throw insertError;
         }
 
-        PaymentComponent(fieldData, result)
+        PaymentComponent(fieldData, result);
       } else {
-        console.error('Error:', response.status, response.statusText);
+        console.error("Error:", response.status, response.statusText);
       }
     } catch (error) {
-      console.error('Error:', error.message);
+      console.error("Error:", error.message);
     }
-
   };
 
   const PaymentComponent = (fieldData, orderData) => {
-
     const options = {
       key: process.env.REACT_APP_RP_KEY_ID,
       amount: orderData.amount, // Amount in paise
@@ -141,31 +146,31 @@ const PaymentForm1 = ({ open, handleClose }) => {
       order_id: orderData.id, // Generate order_id on server
       handler: async (response) => {
         Swal.fire({
-                title: "Success!",
-                text: "Payment Success!",
-                icon: "success",
-                confirmButtonText: "OK",
-              });
+          title: "Success!",
+          text: "Payment Success!",
+          icon: "success",
+          confirmButtonText: "OK",
+        });
         // console.log(response);
         // console.log('Success:', response);
         const updateData = {
           payment_id: response.razorpay_payment_id,
-          status: paymentStatusKey
+          status: paymentStatusKey,
         };
 
         const { error: updateErrorPayment } = await supabase
           .from("payments")
           .update(updateData)
-          .eq('order_id', orderData.id);
+          .eq("order_id", orderData.id);
 
         let features = getStorageItem(featuresKey);
-        features.p_status = paymentStatusKey
+        features.p_status = paymentStatusKey;
         setStorageItem(featuresKey, features);
-        
+
         const { error: updateErrorFeatures } = await supabase
           .from("features")
-          .update({p_status: paymentStatusKey})
-          .eq('user_id', features.user_id);
+          .update({ p_status: paymentStatusKey })
+          .eq("user_id", features.user_id);
 
         if (updateErrorPayment) {
           throw updateErrorPayment;
@@ -188,12 +193,9 @@ const PaymentForm1 = ({ open, handleClose }) => {
 
     const razorpayInstance = new Razorpay(options);
     razorpayInstance.open();
-
   };
 
-
   return (
-
     <div>
       <Modal
         aria-labelledby="transition-modal-title"
@@ -245,7 +247,6 @@ const PaymentForm1 = ({ open, handleClose }) => {
                     size="md"
                     className="phonepe-button"
                     onClick={handleClose}
-
                   />
                 </div>
               </div>
