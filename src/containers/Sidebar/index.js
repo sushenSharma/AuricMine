@@ -91,7 +91,7 @@ const SideBar = ({ open, drawerWidth, theme, closeDrawer }) => {
           edge="start"
           sx={{
             marginLeft: "0",
-            color: "#535454",
+            color: "#fff",
             paddingLeft: "0",
           }}
         >
@@ -102,7 +102,7 @@ const SideBar = ({ open, drawerWidth, theme, closeDrawer }) => {
         <LogoIcon
           style={{
             color: theme.palette.secondary.main,
-            marginBottom: 1,
+            marginBottom: 12,
             opacity: open ? 1 : 0,
           }}
           open={open}

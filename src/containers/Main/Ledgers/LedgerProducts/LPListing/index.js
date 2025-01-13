@@ -110,13 +110,13 @@ const LPListing = ({
     editDisplayMode: "row",
     enableEditing: true,
     initialState: {
-      density: "compact",
+      density: "comfortable",
       columnPinning: { left: ["stockSymbol"] },
     },
     getRowId: (row) => row.id,
     muiTableContainerProps: {
       sx: {
-        border: "1px solid rgba(81, 81, 81, .5)",
+        border: "1px solid rgba(81, 81, 81, .5)", //Actual Table boundary
         maxHeight: "400px",
       },
     },
@@ -124,7 +124,7 @@ const LPListing = ({
     muiTableHeadCellProps: {
       sx: {
         color: "white",
-        backgroundColor: "#403d3d",
+        backgroundColor: "#403d3d", //Column strip background colour
         minWidth: "50px",
         alignContent: "center",
         borderBottom: "2px solid #272727", // Adding a border for separation
@@ -135,23 +135,22 @@ const LPListing = ({
     muiBottomToolbarProps: {
       className: "custom-footer",
       sx: {
-        backgroundColor: "#000000", // Black background to match desired footer
-        color: "#272727",
-        marginTop: "0", // Ensure no unintentional gap
+        backgroundColor: "#272727", // Footer strip Background colour
+        borderTop: "15px solid black",
         borderBottom: "2px solid #272727", // Add a black border if needed
         "& .MuiIconButton-root,.MuiBox-root label, .MuiBox-root div,.MuiSvgIcon-root":
           {
-            color: "white",
+            color: "white", //Rows Per Page in footer Section
           },
-        padding: "15px", // Adjust padding for content alignment
+        padding: "20px", // Adjust padding for content alignment
       },
     },
     // Actual Content of the table
     muiTableBodyCellProps: {
       sx: {
         border: "3",
-        backgroundColor: "#d0d5db",
-        color: "#000000",
+        backgroundColor: "#d0d5db", //Rows colour
+        color: "#000", //Table columns Text
       },
     },
     // Styling Top Toolbar
@@ -159,7 +158,7 @@ const LPListing = ({
       sx: {
         backgroundColor: "#272727",
         color: "#fff",
-        borderBottom: "15px solid #000000", // Adding a border for separation
+        borderBottom: "15px solid #000", // Adding a border for separation
         "& .MuiIconButton-root": {
           color: "white",
         },
@@ -167,7 +166,7 @@ const LPListing = ({
     },
     muiColumnActionsButtonProps: {
       sx: {
-        color: "white",
+        color: "#38b88d", //colour names properties
         borderRight: "2px solid white",
         borderRadius: "0",
       },

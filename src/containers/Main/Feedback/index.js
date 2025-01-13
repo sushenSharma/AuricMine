@@ -63,8 +63,8 @@ const Feedback = () => {
 
     if (Object.keys(newErrors).length === 0) {
       console.log("Form submitted:", formData);
-      
-      sumbitFeedback(formData)
+
+      sumbitFeedback(formData);
     } else {
       setErrors(newErrors);
     }
@@ -80,13 +80,12 @@ const Feedback = () => {
       setFormData({
         rating: 0,
         feedback: "",
-        user_id: ""
+        user_id: "",
       });
+    } catch (error) {
+      console.error("Error:", error.message);
     }
-    catch (error) {
-      console.error('Error:', error.message);
-    }
-  }
+  };
 
   return (
     <Container maxWidth="lg" sx={{ py: 4 }}>
@@ -111,16 +110,11 @@ const Feedback = () => {
             >
               We Value Your Feedback
             </Typography>
-            <Typography
-              variant="body1"
-              sx={{ mb: 8, color: "white" }}
-            >
-              Your feedback helps us improve our services and provide a better experience for everyone. 
+            <Typography variant="body1" sx={{ mb: 8, color: "white" }}>
+              Your feedback helps us improve our services and provide a better
+              experience for everyone.
             </Typography>
-            <Typography
-              variant="body1"
-              sx={{ mb: 4, color: "white" }}
-            >
+            <Typography variant="body1" sx={{ mb: 4, color: "white" }}>
               Share your thoughts with us today!
             </Typography>
             <Button
@@ -132,6 +126,7 @@ const Feedback = () => {
                 textTransform: "none",
                 py: 1.5,
                 maxWidth: "200px",
+                backgroundColor: "#38b88d",
               }}
               onClick={() => document.getElementById("feedbackBox").focus()}
             >
@@ -143,8 +138,6 @@ const Feedback = () => {
         <Grid item xs={12} md={7}>
           <StyledPaper>
             <form onSubmit={handleSubmit}>
-
-
               <Box sx={{ my: 2 }}>
                 <Typography component="legend">Rate your experience</Typography>
                 <Rating
@@ -175,7 +168,9 @@ const Feedback = () => {
                   width: "100%",
                   padding: "12px",
                   borderRadius: "12px",
-                  border: errors.feedback ? "1px solid #d32f2f" : "1px solid #ccc",
+                  border: errors.feedback
+                    ? "1px solid #d32f2f"
+                    : "1px solid #ccc",
                   marginTop: "16px",
                   fontFamily: "inherit",
                 }}
@@ -197,6 +192,7 @@ const Feedback = () => {
                   borderRadius: "12px",
                   textTransform: "none",
                   py: 1.5,
+                  backgroundColor: "#38b88d",
                 }}
               >
                 Submit Feedback
