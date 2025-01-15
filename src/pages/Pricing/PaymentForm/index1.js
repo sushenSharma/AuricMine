@@ -21,10 +21,11 @@ import FormFactory from "../../../components/FormFactory/index.js";
 import {
   getActiveUser,
   getStorageItem,
+  isIndianUser,
   setStorageItem,
 } from "../../../utils/common-utils.js";
 import { userUUID } from "../../../constants/constant.js";
-import { featuresKey, paymentStatusKey } from "../../../constants.js";
+import { featuresKey, indAmount, indLabel, nonIndLabel, paymentStatusKey } from "../../../constants.js";
 import Swal from "sweetalert2";
 
 const style = {
@@ -41,7 +42,8 @@ const style = {
 };
 
 const PaymentForm1 = ({ open, handleClose }) => {
-  const { fields } = fieldData();
+  console.log("isIndianUser",isIndianUser())
+  const { fields } = fieldData(isIndianUser());
   const [formFields, setFormFields] = useState(fields);
   const [errors, setErrors] = useState({});
 
@@ -79,8 +81,9 @@ const PaymentForm1 = ({ open, handleClose }) => {
       MUID: userInfo.id,
       email: userInfo.email,
       phone: userInfo.phone,
+      loc: fieldData.amount == indAmount ? indLabel : nonIndLabel
     });
-    console.log(fieldData);
+    // console.log("fieldData",fieldData);
     payNow(fieldData);
 
     setLoading(false);
@@ -90,6 +93,7 @@ const PaymentForm1 = ({ open, handleClose }) => {
     // console.log("->fieldData"+JSON.stringify(fieldData))
     const data = {
       amount: fieldData.amount,
+      loc: fieldData.loc
     };
     try {
       const response = await fetch(
