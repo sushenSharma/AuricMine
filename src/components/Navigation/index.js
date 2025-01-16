@@ -22,14 +22,18 @@ const Navigation = ({ open }) => {
     "watchListLabel",
     "analyticsLabel",
     "KanbanLabel",
-	"feedbackLabel"
+    "feedbackLabel",
   ]);
 
   const freeFeature = ["home", "feedback"];
 
   const features = getStorageItem(featuresKey);
   const handleNavigate = ({ key, path, title }) => {
-    if (path && (freeFeature.includes(key) || (features && features.p_status == paymentStatusKey))) {
+    if (
+      path &&
+      (freeFeature.includes(key) ||
+        (features && features.p_status == paymentStatusKey))
+    ) {
       navigate(`${path}`, { state: { title } });
     }
   };
@@ -53,7 +57,7 @@ const Navigation = ({ open }) => {
           },
           backgroundColor: "#535454", // Uniform white background
           "&:hover": {
-            backgroundColor: "#f5f5f5", // Light gray on hover for subtle effect
+            backgroundColor: "#535454", // Light gray on hover for subtle effect
           },
         }}
         onClick={() => handleNavigate(item)}
@@ -72,7 +76,11 @@ const Navigation = ({ open }) => {
               borderRadius: "3px",
             },
           }}
-        disabled = {!freeFeature.includes(key) && (features && features.p_status != paymentStatusKey)}
+          disabled={
+            !freeFeature.includes(key) &&
+            features &&
+            features.p_status != paymentStatusKey
+          }
         >
           <ListItemIcon
             sx={{

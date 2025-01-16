@@ -1,4 +1,7 @@
-export const fieldData = () => {
+import { indAmount, nonIndAmount } from "../../../constants";
+import { isIndianUser } from "../../../utils/common-utils";
+
+export const fieldData = (isIndianUser) => {
   return {
     fields: {
       // name: {
@@ -43,7 +46,7 @@ export const fieldData = () => {
       amount: {
         elementConfigs: {
           fieldLabel: "",
-          label: "Amount",
+          label: isIndianUser ? "Amount (₹)" : "Amount ($)",
           type: "number",
           placeholder: "Amount",
           className: "single-form-item",
@@ -51,7 +54,7 @@ export const fieldData = () => {
           variant: "filled",
           requiredTxt: "Required!",
         },
-        value: "19",
+        value: isIndianUser ? indAmount : nonIndAmount,
       },
       
     },

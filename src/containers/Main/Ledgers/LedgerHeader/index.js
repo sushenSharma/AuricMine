@@ -5,7 +5,7 @@ import AI from "@mui/icons-material/AutoFixHighOutlined";
 import Download from "@mui/icons-material/DownloadOutlined";
 import AddNewRow from "@mui/icons-material/AddToPhotosOutlined";
 import LedgerButton from "../../../../ui-kit/Buttons/LedgerButton";
-import ShoppingCartIcon from '@mui/icons-material/ShoppingCart';
+import ShoppingCartIcon from "@mui/icons-material/ShoppingCart";
 import { getStorageItem } from "../../../../utils/common-utils";
 import { featuresKey, paymentStatusKey } from "../../../../constants";
 
@@ -24,7 +24,7 @@ const LedgerHeader = ({ table, getInsights, disabled, showPayment }) => {
         size="md"
         icon={<AddNewRow></AddNewRow>}
       />
-      
+
       <LedgerButton
         label={getLabel("getInsightsLabel")}
         type="outlined"
@@ -33,7 +33,12 @@ const LedgerHeader = ({ table, getInsights, disabled, showPayment }) => {
         onClick={() => !disabled && getInsights()}
         hoverType="success-color"
         size="md"
-        disable={disabled || (features && features.p_status != paymentStatusKey && features.insight_c >= 5)}
+        disable={
+          disabled ||
+          (features &&
+            features.p_status != paymentStatusKey &&
+            features.insight_c >= 5)
+        }
         icon={<AI></AI>}
       />
 
@@ -48,18 +53,6 @@ const LedgerHeader = ({ table, getInsights, disabled, showPayment }) => {
         icon={<ShoppingCartIcon></ShoppingCartIcon>}
         style={{ marginLeft: "auto" }}
       />
-
-      {/* <LedgerButton
-        label={getLabel("downloadCSVLabel")}
-        type="outlined"
-        variant="contained"
-        className="ledger-buttons download-csv"
-        onClick={() => console.log("download-csv")}
-        hoverType="primary-color"
-        size="md"
-        icon={<Download></Download>}
-        style={{ marginLeft: "auto" }}
-      /> */}
     </div>
   );
 };

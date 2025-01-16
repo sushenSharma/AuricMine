@@ -15,7 +15,6 @@ import { useRazorpay } from "react-razorpay";
 import { supabase } from "../../../config/index_supabase.js";
 import { paymentStatusKey } from "../../../constants.js";
 
-
 const PaymentForm = ({ onSubmit: onSuccess }) => {
   const { fields } = fieldData();
 
@@ -50,62 +49,62 @@ const PaymentForm = ({ onSubmit: onSuccess }) => {
   };
 
   const onSubmit = (fieldData) => {
-
     // payNow(fieldData);
 
     setLoading(false);
   };
-  
+
   const payNow = async (fieldData) => {
-      // console.log("->fieldData"+JSON.stringify(fieldData))
-      const data = {
-        amount : fieldData.amount
-      }  
-      try {
-        const response = await fetch(process.env.REACT_APP_BE_BASE_URL+'/order', {
-          method: 'POST',
+    // console.log("->fieldData"+JSON.stringify(fieldData))
+    const data = {
+      amount: fieldData.amount,
+    };
+    try {
+      const response = await fetch(
+        process.env.REACT_APP_BE_BASE_URL + "/payments",
+        {
+          method: "POST",
           headers: {
-            'Content-Type': 'application/json',       
+            "Content-Type": "application/json",
           },
-          body: JSON.stringify(data), 
-        });
-    
-        if (response.ok) {
-          const result = await response.json(); 
-          console.log('Success:', result);
-          //Order created, storing in DB
-          const insertData = {
-            amount: result.amount,
-            attempts: result.attempts,
-            currency: result.currency,
-            entity: result.entity,
-            order_id: result.id,
-            receipt: result.receipt,
-            status: result.status,
-            user_id : fieldData.MUID,
-            user_email : fieldData.MUID,
-            user_phone : fieldData.mobile
-          }
-          const { error: insertError } = await supabase
+          body: JSON.stringify(data),
+        }
+      );
+
+      if (response.ok) {
+        const result = await response.json();
+        console.log("Success:", result);
+        //Order created, storing in DB
+        const insertData = {
+          amount: result.amount,
+          attempts: result.attempts,
+          currency: result.currency,
+          entity: result.entity,
+          order_id: result.id,
+          receipt: result.receipt,
+          status: result.status,
+          user_id: fieldData.MUID,
+          user_email: fieldData.MUID,
+          user_phone: fieldData.mobile,
+        };
+        const { error: insertError } = await supabase
           .from("payments")
           .insert(insertData);
 
         if (insertError) {
           throw insertError;
         }
-  
-          PaymentComponent(fieldData, result)
-        } else {
-          console.error('Error:', response.status, response.statusText);
-        }
-      } catch (error) {
-        console.error('Error:', error.message);
+
+        PaymentComponent(fieldData, result);
+      } else {
+        console.error("Error:", response.status, response.statusText);
       }
-    
-    };
-    
-const PaymentComponent = (fieldData, orderData) => {
-    
+    } catch (error) {
+      console.error("Error:", error.message);
+    }
+  };
+
+  const PaymentComponent = (fieldData, orderData) => {
     const options = {
       key: process.env.REACT_APP_RP_KEY_ID,
       amount: orderData.amount, // Amount in paise
@@ -118,14 +117,14 @@ const PaymentComponent = (fieldData, orderData) => {
         // console.log(response);
 
         const updateData = {
-          payment_id : response.razorpay_payment_id,
-          status: paymentStatusKey
-        }
+          payment_id: response.razorpay_payment_id,
+          status: paymentStatusKey,
+        };
 
         const { error: updateError } = await supabase
           .from("payments")
           .update(updateData)
-          .eq('order_id', orderData.id);
+          .eq("order_id", orderData.id);
 
         if (updateError) {
           throw updateError;
@@ -134,7 +133,7 @@ const PaymentComponent = (fieldData, orderData) => {
         const { MUID } = fieldData;
         onSuccess(MUID);
       },
-      
+
       prefill: {
         name: fieldData.name,
         email: fieldData.MUID,
@@ -144,10 +143,9 @@ const PaymentComponent = (fieldData, orderData) => {
         color: "#4340f5",
       },
     };
-  
+
     const razorpayInstance = new Razorpay(options);
     razorpayInstance.open();
-    
   };
 
   return (

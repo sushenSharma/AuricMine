@@ -110,63 +110,67 @@ const LPListing = ({
     editDisplayMode: "row",
     enableEditing: true,
     initialState: {
-      density: "compact",
+      density: "comfortable",
       columnPinning: { left: ["stockSymbol"] },
     },
     getRowId: (row) => row.id,
     muiTableContainerProps: {
       sx: {
-        border: "1px solid rgba(81, 81, 81, .5)",
-        maxHeight:"400px",
+        border: "1px solid rgba(81, 81, 81, .5)", //Actual Table boundary
+        maxHeight: "400px",
       },
     },
-    //Table Column names
+    // Styling the Table Header
     muiTableHeadCellProps: {
       sx: {
         color: "white",
-        backgroundColor: "#403d3d",
+        backgroundColor: "#403d3d", //Column strip background colour
         minWidth: "50px",
         alignContent: "center",
+        borderBottom: "2px solid #272727", // Adding a border for separation
+        padding: "8px",
       },
     },
-    muiColumnActionsButtonProps: {
+    // Styling the Table Footer
+    muiBottomToolbarProps: {
+      className: "custom-footer",
       sx: {
-        color: "white",
-        borderRight: "2px solid white",
-        borderRadius: "0",
+        backgroundColor: "#272727", // Footer strip Background colour
+        borderTop: "15px solid black",
+        borderBottom: "2px solid #272727", // Add a black border if needed
+        "& .MuiIconButton-root,.MuiBox-root label, .MuiBox-root div,.MuiSvgIcon-root":
+          {
+            color: "white", //Rows Per Page in footer Section
+          },
+        padding: "20px", // Adjust padding for content alignment
       },
     },
-
-    //Actual Content of table
+    // Actual Content of the table
     muiTableBodyCellProps: {
       sx: {
         border: "3",
-        backgroundColor: "#d0d5db",
-        color: "#000000",
+        backgroundColor: "#d0d5db", //Rows colour
+        color: "#000", //Table columns Text
       },
     },
-    //Top Right corner buttons like search, density
+    // Styling Top Toolbar
     muiTopToolbarProps: {
       sx: {
-        backgroundColor: "#000000",
+        backgroundColor: "#272727",
         color: "#fff",
+        borderBottom: "15px solid #000", // Adding a border for separation
         "& .MuiIconButton-root": {
           color: "white",
         },
       },
     },
-    muiBottomToolbarProps: {
-      className: "custom-footer",
+    muiColumnActionsButtonProps: {
       sx: {
-        backgroundColor: "#000000",
-        color: "#fff",
-        "& .MuiIconButton-root,.MuiBox-root label, .MuiBox-root div,.MuiSvgIcon-root":
-          {
-            color: "white",
-          },
+        color: "#38b88d", //colour names properties
+        borderRight: "2px solid white",
+        borderRadius: "0",
       },
     },
-
     onActionCellChange: () => console.log("1"),
     onCreatingRowCancel: () => setErrors({}),
     onCreatingRowSave: ({ values, table }) =>

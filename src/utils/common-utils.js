@@ -1,3 +1,5 @@
+import { featuresKey } from "../constants";
+
 export const isJSON = (val) => {
   if (typeof val === "string" && val.length > 1) {
     const startChar = val[0];
@@ -64,4 +66,9 @@ export const getActiveUser = () => {
 
 export const setStorageItem = (key, value) => {
   localStorage.setItem(key, JSON.stringify(value));
+};
+
+export const isIndianUser = () => {
+  let features = getStorageItem(featuresKey);
+  return features && features.loc == "IND" ? true : false
 };

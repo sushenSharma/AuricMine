@@ -3,6 +3,7 @@ import { supabase, tableName } from "../config/index_supabase.js";
 import {userUUID } from "../constants/constant.js";
 import { useState} from "react";
 import { data } from "autoprefixer";
+import { indLabel, nonIndLabel } from "../constants.js";
 
 // const supabase = createClient("https://zcvtgtaimnsrlemslypr.supabase.co", process.env.REACT_APP_SUPABASE_ANON_KEY);
 export const GetData = async () => {
@@ -49,10 +50,13 @@ export const getFeatureData = async (userId) => {
       .select()
       .eq("user_id", userId);
 
+      const date = new Date().toString();
+
       const features = {
         p_status: data[0].p_status,
         insight_c: data[0].insight_c,
-        user_id:data[0].user_id
+        user_id:data[0].user_id,
+        loc: date.includes("530") ? indLabel : nonIndLabel
       }
       // console.log("features")
       // console.log(features);

@@ -88,3 +88,9 @@ export const featuresKey = "features";
 export const paymentStatusKey = "completed";
 
 export const themeColor = "#37b98d";
+
+export const indLabel = "IND";
+export const indAmount = "99";
+
+export const nonIndLabel = "OTR";
+export const nonIndAmount = "9.99";
