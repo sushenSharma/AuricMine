@@ -35,7 +35,7 @@ export default function SectionHome({ handleLogin }) {
       fontFamily: "Jura",
     }}
   >
-    SWING TRADING, PERFECTED <br /> WITH <br /> TRADINGJOURNAL.AI
+    SWING TRADING, PERFECTED <br /> WITH <br /> <span className="gradientText">TRADINGJOURNAL.AI</span>
   </Typography>
   <Typography
     sx={{
