@@ -39,7 +39,7 @@ export const appRoutes = [
       },
       {
         key: "Kanban",
-        path: "/Kanban",
+        path: "/watchlist",
         component: Kanban,
       },
       {

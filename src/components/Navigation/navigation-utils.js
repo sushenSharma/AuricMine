@@ -32,15 +32,15 @@ export const navigationMenus = (navigationLabels) => {
       path: "/risk-management",
       title: riskManagementLabel,
     },
-    {
-      key: "watchlist",
-      label: watchListLabel,
-      iconLabel: (
-        <WatchlistIcon style={{ fontSize: "36px", color: "#60c4a2" }} />
-      ),
-      path: "/watch-list",
-      title: watchListLabel,
-    },
+    // {
+    //   key: "watchlist",
+    //   label: watchListLabel,
+    //   iconLabel: (
+    //     <WatchlistIcon style={{ fontSize: "36px", color: "#60c4a2" }} />
+    //   ),
+    //   path: "/watch-list",
+    //   title: watchListLabel,
+    // },
     {
       key: "analytics",
       label: analyticsLabel,
@@ -54,7 +54,7 @@ export const navigationMenus = (navigationLabels) => {
       key: "Kanban",
       label: KanbanLabel,
       iconLabel: <BlogIcon style={{ fontSize: "36px", color: "#60c4a2" }} />,
-      path: "/Kanban",
+      path: "/watchlist",
       title: KanbanLabel,
     },
     {
