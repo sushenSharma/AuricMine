@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React from "react";
 import {
   Box,
   Button,
@@ -6,88 +6,205 @@ import {
   useMediaQuery,
   useTheme,
 } from "@mui/material";
-import Carousel from "react-material-ui-carousel"; // Install this package with npm or yarn
-import "../../assets/styles/landingPage.css"; // Import the CSS file for styling
-import CarouselImage1 from "../../../src/assets/resources/MainTable.jpg"
-import CarouselImage2 from "../../../src/assets/resources/Carousel2.jpg"
-import CarouselImage3 from "../../../src/assets/resources/carousel3.jpg"
-import CarouselImage4 from "../../../src/assets/resources/Carousel4.jpg"
-import CarouselImage5 from "../../../src/assets/resources/carousel6.jpg"
-
+import Carousel from "react-material-ui-carousel";
+import "../../assets/styles/landingPage.css";
+import CarouselImage1 from "../../../src/assets/resources/TradeJournalTable.png";
+import CarouselImage2 from "../../../src/assets/resources/AI Generated insights.png";
+import CarouselImage3 from "../../../src/assets/resources/StockWatchlist.png";
 
 export default function SectionHome({ handleLogin }) {
   const theme = useTheme();
   const isMobile = useMediaQuery(theme.breakpoints.down("sm"));
 
-  // Carousel images (replace with actual images)
-  const carouselImages = [
-  CarouselImage1,CarouselImage2,CarouselImage3,CarouselImage4,CarouselImage5
-  ];
+  // Carousel images
+  const carouselImages = [CarouselImage1, CarouselImage2, CarouselImage3];
 
   return (
-    <Box className="home-section-main">
-      {/* Left container for text */}
+    <Box
+      sx={{
+        display: "grid",
+        gridTemplateColumns: isMobile ? "1fr" : "1fr 1fr", // Two columns for desktop, single column for mobile
+        gridTemplateRows: "auto auto", // Two rows (first row: title & carousel; second row: content)
+        gridTemplateAreas: isMobile
+          ? `
+          "title"
+          "carousel"
+          "content"
+        `
+          : `
+          "title carousel"
+          "content content"
+        `,
+        gap: "2rem", // Space between boxes
+        padding: "2rem",
+      }}
+    >
+      {/* Title Box */}
       <Box
         sx={{
-          zIndex: 1,
-          padding: isMobile ? "2rem" : "5rem",
-          width: "100%",
+          fontSize: isMobile ? "2.5rem" : "4rem", // Slightly larger font for more prominence
+          fontWeight: "800", // Thicker font weight
+          textTransform: "uppercase",
+          fontFamily: "Jura", // Use a bold font family like Roboto Bold or similar
+          color: "#ffffff", // Ensures text visibility
+          justifyContent:"center",
+          textAlign:"center",
+          
+
         }}
       >
         <Typography
           sx={{
-            fontSize: "3rem",
-            fontWeight: "600",
+            fontSize: isMobile ? "2rem" : "4rem",
+            fontWeight: "900",
             textTransform: "uppercase",
-            fontFamily: "Jura",
+            fontFamily: "Montserrat",
+            color: "#ffffff",
+            fontWeight:"bold"
           }}
         >
-          SWING TRADING, STREAMLINED <br /> WITH <br />{" "}
+          SWING TRADING, STREAMLINED <br /> WITH <br />
           <span className="gradientText">TRADINGJOURNAL.AI</span>
         </Typography>
+        
+      </Box>
+
+      {/* Carousel Box */}
+      <Box
+        sx={{
+          gridArea: "carousel",
+          position: "relative",
+          zIndex: 1,
+          height: isMobile ? "300px" : "500px",
+        }}
+      >
+        <Carousel indicators={false} navButtonsAlwaysVisible>
+          {carouselImages.map((image, index) => (
+            <img
+              key={index}
+              src={image}
+              alt={`Feature ${index + 1}`}
+              style={{
+                width: "100%",
+                height: "100%",
+                objectFit: "cover",
+                borderRadius: "10px",
+              }}
+            />
+          ))}
+        </Carousel>
+      </Box>
+
+      {/* Content Box */}
+      <Box
+        sx={{
+          gridArea: "content",
+          backgroundColor: isMobile ? "#1a1a1a" : "transparent", // Background to enhance text visibility
+          padding: "2rem",
+          borderRadius: "10px",
+        }}
+      >
         <Typography
           sx={{
-            fontSize: "2rem",
+            fontSize: isMobile ? "1.5rem" : "3rem",
             fontWeight: "600",
             fontFamily: "Jura",
-            paddingY: isMobile ? "2rem" : "5rem",
-            width: isMobile ? null : "75%",
+            color: "#ffffff", // Ensures text visibility
+            marginBottom: "2rem",
           }}
         >
-          Revolutionize your trades with our AI-driven platform. Track, analyze,
-          and improve with ease.
+          Revolutionize your trades with :-
         </Typography>
+
         <ul
-          style={{
-            listStyleType: "disc",
-            marginLeft: "2rem",
-            fontFamily: "Jura",
-          }}
-        >
-          <li>
-            <Typography sx={{ fontSize: "1.5rem", fontWeight: "500" }}>
-              <strong>Stage-Based Watchlists :</strong> Map your stock’s journey—research, setup, entry, and exit
-            </Typography>
-          </li>
-          <li>
-            <Typography sx={{ fontSize: "1.5rem", fontWeight: "500" }}>
-              <strong>AI-Powered Insights :</strong> Discover what works with
-              tailored recommendations for your swing strategies.
-            </Typography>
-          </li>
-          <li>
-            <Typography sx={{ fontSize: "1.5rem", fontWeight: "500" }}>
-              <strong>Proprietary Risk Management Algorithm :</strong>{" "}
-              Dynamically adjust stop-losses based on performance for smarter
-              trades.
-            </Typography>
-          </li>
-        </ul>
+  style={{
+    listStyleType: "none", // Remove default bullets
+    marginLeft: "-1rem",
+    fontFamily: "Jura",
+    padding: "0",
+  }}
+>
+  <li
+    style={{
+      display: "flex",
+      alignItems: "flex-start",
+      marginBottom: "1rem",
+    }}
+  >
+    {/* Bullet Icon */}
+    <span
+      style={{
+        width: "10px",
+        height: "10px",
+        backgroundColor: "#ffffff", // Bullet color
+        borderRadius: "50%", // Makes it a circle
+        marginRight: "1rem", // Spacing between icon and text
+        marginTop: "0.5rem", // Align bullet vertically
+      }}
+    ></span>
+
+    {/* Text */}
+    <Typography sx={{ fontSize: "1.8rem", fontWeight: "500", color: "#ffffff" }}>
+      <strong>Stage-Based Watchlists:</strong> Map your stock’s journey—research, setup, entry, and exit
+    </Typography>
+  </li>
+
+  <li
+    style={{
+      display: "flex",
+      alignItems: "flex-start",
+      marginBottom: "1rem",
+    }}
+  >
+    {/* Bullet Icon */}
+    <span
+      style={{
+        width: "10px",
+        height: "10px",
+        backgroundColor: "#ffffff",
+        borderRadius: "50%",
+        marginRight: "1rem",
+        marginTop: "0.5rem",
+      }}
+    ></span>
+
+    {/* Text */}
+    <Typography sx={{ fontSize: "1.8rem", fontWeight: "500", color: "#ffffff" }}>
+      <strong>AI-Powered Insights:</strong> Discover what works with tailored recommendations for your swing strategies.
+    </Typography>
+  </li>
+
+  <li
+    style={{
+      display: "flex",
+      alignItems: "flex-start",
+    }}
+  >
+    {/* Bullet Icon */}
+    <span
+      style={{
+        width: "10px",
+        height: "10px",
+        backgroundColor: "#ffffff",
+        borderRadius: "50%",
+        marginRight: "1rem",
+        marginTop: "0.5rem",
+      }}
+    ></span>
+
+    {/* Text */}
+    <Typography sx={{ fontSize: "1.8rem", fontWeight: "500", color: "#ffffff" }}>
+      <strong>Proprietary Risk Management Algorithm:</strong> Dynamically adjust stop-losses based on performance for smarter trades.
+    </Typography>
+  </li>
+</ul>
+
+
         <Button
           type="button"
           sx={{
             backgroundColor: "#ffffff",
-            margin: "2rem 0",
+            marginTop: "2rem",
             fontSize: "16px",
             fontFamily: "Jura",
             color: "#000",
@@ -100,43 +217,6 @@ export default function SectionHome({ handleLogin }) {
         >
           Sign Up
         </Button>
-      </Box>
-
-      {/* Right container for carousel */}
-      <Box
-        sx={{
-          position: "relative",
-          zIndex: 1,
-          padding: "1rem",
-          width: "110%", // Adjust the width as needed
-          height: "200%", // Adjust the height as needed
-          marginRight: isMobile ? "2rem" : "2rem", // Add gap on the right
-          marginLeft: isMobile ? "2rem" : "5rem", // Optionally shift carousel left
-        }}
-      >
-        <Carousel
-          indicators={false}
-          navButtonsAlwaysVisible={true}
-          sx={{
-            height: isMobile ? "300px" : "500px",
-            borderRadius: "10px",
-            boxShadow: "0px 4px 10px rgba(0, 0, 0, 0.1)",
-          }}
-        >
-          {carouselImages.map((image, index) => (
-            <img
-              key={index}
-              src={image}
-              alt={`Feature ${index + 1}`}
-              style={{
-                width: "100%",
-                height: "100%",
-                objectFit: "cover",
-                borderRadius: "30px",
-              }}
-            />
-          ))}
-        </Carousel>
       </Box>
     </Box>
   );
