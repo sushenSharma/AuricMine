@@ -69,6 +69,6 @@ export const setStorageItem = (key, value) => {
 };
 
 export const isIndianUser = () => {
-  let features = getStorageItem(featuresKey);
-  return features && features.loc == "IND" ? true : false
+  const date = new Date().toString();
+  return date.includes("530") ? true : false
 };

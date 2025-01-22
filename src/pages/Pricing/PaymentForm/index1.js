@@ -24,7 +24,6 @@ import {
   isIndianUser,
   setStorageItem,
 } from "../../../utils/common-utils.js";
-import { userUUID } from "../../../constants/constant.js";
 import { featuresKey, indAmount, indLabel, nonIndLabel, paymentStatusKey } from "../../../constants.js";
 import Swal from "sweetalert2";
 
@@ -42,7 +41,7 @@ const style = {
 };
 
 const PaymentForm1 = ({ open, handleClose }) => {
-  console.log("isIndianUser",isIndianUser())
+  // console.log("isIndianUser",isIndianUser())
   const { fields } = fieldData(isIndianUser());
   const [formFields, setFormFields] = useState(fields);
   const [errors, setErrors] = useState({});

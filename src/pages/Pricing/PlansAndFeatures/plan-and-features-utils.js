@@ -19,17 +19,17 @@ export const columns = [
   {
     id: "planFree",
     label: (
-      <div className="plan-header-content">
+      <div className="plan-header-content pb-3">
         <span className="plan-view-tag">
           <span className="plan-view-tag-icon white-color-icon"></span>Free
         </span>
-        <LedgerButton
+        {/* <LedgerButton
           label={getLabel("tryItFreeLabel")}
           type="primary"
           size="lg"
           onClick={() => console.log("btn")}
           className="white-color-bg"
-        />
+        /> */}
       </div>
     ),
     minWidth: 197,
@@ -38,17 +38,17 @@ export const columns = [
   {
     id: "planRidiculous",
     label: (
-      <div className="plan-header-content">
+      <div className="plan-header-content pb-3">
         <span className="plan-view-tag">
           <span className="plan-view-tag-icon blue-color-icon"></span>Pro Trader
         </span>
-        <LedgerButton
+        {/* <LedgerButton
           label={getLabel("getStartedLabel")}
           type="primary"
           size="lg"
           onClick={() => console.log("btn")}
           className="blue-color-bg"
-        />
+        /> */}
       </div>
     ),
     minWidth: 197,

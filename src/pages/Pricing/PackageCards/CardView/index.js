@@ -44,7 +44,7 @@ const CardView = (props) => {
           </div>
         </div>
 
-        <div className="card-view-billing-btn">
+        {/* <div className="card-view-billing-btn">
           <LedgerButton
             label={packageTypeLinkLabel}
             type="primary"
@@ -52,7 +52,7 @@ const CardView = (props) => {
             onClick={() => enableLink && packageTypeBtnLink()}
             className={`primary-btn${btnLinkColor ? " " + btnLinkColor : ""}`}
           />
-        </div>
+        </div> */}
 
         <div className="card-view-offer-listing-containe">
           <div className="card-view-offer-title">{packageTypePlanIncludes}</div>

@@ -1,12 +1,14 @@
+import { indAmount, nonIndAmount } from "../../../constants";
 import { getLabel } from "../../../hooks/use-labels";
+import { isIndianUser } from "../../../utils/common-utils";
 
 export const preparePackageCardsData = (onClickPackageHandler) => {
   return [
     {
       packageType: getLabel("packageTypeOne"),
       packageTypeLiner: getLabel("packageTypeOneLiner"),
-      packageTypePrice: getLabel("packageTypeOnePrice"),
-      packageTypeDuration: getLabel("packageTypeOnePrice"),
+      packageTypePrice: (isIndianUser() ? "₹" : "$") + getLabel("packageTypeOnePrice"),
+      packageTypeDuration: getLabel("packageTypeTwoDuration"),
       packageTypePaymentDuration: getLabel("packageTypeOnePaymentDuration"),
       packageTypeLinkLabel: getLabel("packageTypeOneLinkLabel"),
       packageTypeBtnLink: onClickPackageHandler,
@@ -21,8 +23,8 @@ export const preparePackageCardsData = (onClickPackageHandler) => {
     {
       packageType: getLabel("packageTypeTwo"),
       packageTypeLiner: getLabel("packageTypeTwoLiner"),
-      packageTypePrice: getLabel("packageTypeTwoPrice"),
-      packageTypeDuration: getLabel("packageTypeTwoPrice"),
+      packageTypePrice: isIndianUser() ? "₹"+indAmount : "$"+nonIndAmount,
+      packageTypeDuration: getLabel("packageTypeTwoDuration"),
       packageTypePaymentDuration: getLabel("packageTypeTwoPaymentDuration"),
       packageTypeLinkLabel: getLabel("packageTypeTwoLinkLabel"),
       packageTypeBtnLink: onClickPackageHandler,

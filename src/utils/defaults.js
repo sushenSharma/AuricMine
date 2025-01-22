@@ -43,7 +43,7 @@ export const defaults = {
     "Transparent pricing that scales with your trading business",
   packageTypeOne: "Free Forever Plan (Starter)",
   packageTypeOneLiner: "Your journey to disciplined trading begins here.",
-  packageTypeOnePrice: "₹0",
+  packageTypeOnePrice: "0",
   packageTypeOneDuration: "month",
   packageTypeOnePaymentDuration: "No credit card required",
   packageTypeOneLinkLabel: "Try it for free",
@@ -58,9 +58,9 @@ export const defaults = {
 
   packageTypeTwo: "Pro Trader Plan",
   packageTypeTwoLiner: "Take your trading to the next level.",
-  packageTypeTwoPrice: "₹19",
-  packageTypeTwoDuration: "month",
-  packageTypeTwoPaymentDuration: "Billed monthly",
+  packageTypeTwoPrice: "19",
+  packageTypeTwoDuration: "Annual",
+  packageTypeTwoPaymentDuration: "Billed Annually",
   packageTypeTwoLinkLabel: "Get Started",
   packageTypeTwoPlanOffers: "Everything in Free, plus:",
   packageTypeTwoPlanList: [
@@ -73,9 +73,9 @@ export const defaults = {
 
   packageTypeThree: "Professional Traders",
   packageTypeThreeLiner: "For teams that are scaling up",
-  packageTypeThreePrice: "₹159",
-  packageTypeThreeDuration: "month",
-  packageTypeThreePaymentDuration: "Billed monthly",
+  packageTypeThreePrice: "159",
+  packageTypeThreeDuration: "Annual",
+  packageTypeThreePaymentDuration: "Billed Annually",
   packageTypeThreeLinkLabel: "Contact Sales",
   packageTypeThreePlanOffers: "Everything in Ridiculous, plus:",
   packageTypeThreePlanList: [
