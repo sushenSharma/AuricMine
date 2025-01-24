@@ -93,4 +93,4 @@ export const indLabel = "IND";
 export const indAmount = "199";
 
 export const nonIndLabel = "OTR";
-export const nonIndAmount = "1.99";
+export const nonIndAmount = "9.99";
