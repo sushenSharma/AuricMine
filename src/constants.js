@@ -90,7 +90,7 @@ export const paymentStatusKey = "completed";
 export const themeColor = "#37b98d";
 
 export const indLabel = "IND";
-export const indAmount = "99";
+export const indAmount = "199";
 
 export const nonIndLabel = "OTR";
-export const nonIndAmount = "9.99";
+export const nonIndAmount = "1.99";
