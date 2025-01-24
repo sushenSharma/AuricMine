@@ -2,39 +2,39 @@ export const prepareFaqs = () => {
   return [
     {
       key: "faq1",
-      label: "What is a connected account?",
+      label: "What is a connected trading account?",
       content:
-        "A Connected Account represents a user's authorized account for a selected integration vendor. A single end-user of your application might have accounts at different integration vendors, which means they would have multiple different Connected Accounts.",
+        "A connected trading account in TradingJournal.ai refers to an authorized account you link from your preferred broker or platform. This allows you to sync and analyze your trades directly within the app, providing seamless integration and eliminating the need for manual entries.",
     },
     {
       key: "faq2",
-      label: "Does AuthKit work with my frontend framework?",
+      label: "Does TradingJournal.ai support my trading strategy?",
       content:
-        "AuthKit is compatible with almost all major frameworks, including React, Next.js, Vue, Svelte and more.",
+        "Yes! TradingJournal.ai is designed to support various trading styles, including swing trading, day trading, and long-term investing. The app provides detailed insights and analytics tailored to help you optimize your strategy and improve decision-making.",
     },
     {
       key: "faq3",
-      label: "What's Standard API Pricing?",
+      label: "What is the pricing for TradingJournal.ai?",
       content:
-        "Unified API is usage-based billing and gets cheaper with volume. API calls start on Standard Pricing, which bills each call at $0.029.",
+        "TradingJournal.ai offers subscription-based pricing with plans designed to fit your trading needs. We provide a free trial to help you get started, and our paid plans offer additional features such as advanced analytics, stock watchlists, and automated trade syncing.",
     },
     {
       key: "faq4",
-      label: "Why is IntegrationOS mainly usage-based vs value-based?",
+      label: "Why is TradingJournal.ai focused on discipline-based trading?",
       content:
-        "Value-based pricing is geared around testing how much money you're willing to pay. Usage-based pricing is like a utility - where we continually seek to lower costs and make money through volume.",
+        "TradingJournal.ai promotes discipline-based trading because consistent and structured analysis leads to better performance in the markets. Our tools are designed to help you track your trades, refine your strategies, and manage risk effectively to achieve long-term success.",
     },
     {
       key: "faq5",
-      label: "How can I manage my spend?",
+      label: "How can I manage my trading performance using TradingJournal.ai?",
       content:
-        "We provide customers with tools to observe, control, and alert on their infrastructure spend with Spend Management. You can define a spend amount (e.g. $40) and receive email, web, and SMS notifications as you reach that amount.",
+        "With TradingJournal.ai, you can monitor your performance through detailed metrics like win/loss ratios, risk-to-reward analysis, and trade outcomes. Use our tools to set personal goals, evaluate past trades, and identify areas for improvement to stay on top of your trading game.",
     },
     {
       key: "faq6",
-      label: "Can I white label IntegrationOS?",
+      label: "Can I customize my TradingJournal.ai workspace?",
       content:
-        "Yes. All customers on our Growth plan have access to the white label feature. Once enabled, IntegrationOS branding is hidden and not displayed to your end users when authenticating via the AuthKit drop-in component. ",
+        "Yes! TradingJournal.ai offers customization options to fit your trading workflow. From creating personalized stock watchlists in a Jira-style board to tagging trades with custom labels, you can tailor the app to suit your unique trading approach.",
     },
   ];
 };
