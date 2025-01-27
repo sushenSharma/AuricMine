@@ -112,6 +112,11 @@ const LPListing = ({
     initialState: {
       density: "comfortable",
       columnPinning: { left: ["stockSymbol"] },
+      sorting: [
+        {
+          id: "id", // Replace "id" with the actual ID column's key if it's named differently
+          desc: false, // `false` for ascending order
+        },]
     },
     getRowId: (row) => row.id,
     muiTableContainerProps: {

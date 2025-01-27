@@ -171,7 +171,7 @@ export const prepareLedgerColumns = (validationErrors, onColumnFocus) => {
     },
     {
       accessorKey: "roce",
-      header: "Roce",
+      header: "Annualised ROCE",
       muiEditTextFieldProps: {
         type: "number",
         disabled: true,

@@ -1,5 +1,5 @@
 const totalPercentageRate =
-  0.001 + 0.0000325 + 0.00000001 + 0.18 * (0.0000325 + 0.00000001) + 0.00015;
+  0.001 + 0.0000307 + 0.00000570 + 0.18 * (0.0000325 + 0.00000001) + 0.00015;
 
 export const getSubmissionData = (fieldData, userUUID) => {
   return [
@@ -42,7 +42,17 @@ const setAmountInvested = (fieldData) => {
 };
 
 const setRoce = (fieldData) => {
-  return (setProfitLoss(fieldData) / setAmountInvested(fieldData)) * 100;
+  const profitLoss = parseFloat(setProfitLoss(fieldData)); // Profit or loss from the trade
+  const amountInvested = parseFloat(setAmountInvested(fieldData)); // Total capital invested
+  const daysHold = setHoldDays(fieldData); // Days the investment was held
+
+  // Return 0 if amount invested or days held is invalid to avoid errors
+  if (!amountInvested || amountInvested <= 0 || !daysHold || daysHold <= 0) {
+    return 0;
+  }
+  // Calculate annualized return
+  const annualizedReturn = ((1 + (profitLoss / amountInvested)) ** (365 / daysHold) - 1) * 100;
+  return annualizedReturn;
 };
 
 const setBrokerage = (fieldData) => {
