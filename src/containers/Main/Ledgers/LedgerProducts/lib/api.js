@@ -15,6 +15,7 @@ export const fetchUserLedgerData = async (userId) => {
 };
 
 export const postUserLedgerData = async (formData) => {
+  console.log(formData);
   return await supabase.from(tableName).insert(formData);
 };
 
@@ -68,7 +69,6 @@ export const fetchInsightsWithAI = async (formData) => {
 };
 
 export const postWatchListData = async (formData) => {
-
   return await supabase.from(watchlistTableName).insert(formData);
 };
 
@@ -90,8 +90,6 @@ export const fetchWatchlistData = async (userId) => {
     return { data: null, error: err };
   }
 };
-
-
 
 export const updateCardStatus = async (taskId, newStatus) => {
   try {
@@ -117,17 +115,16 @@ export const updateTask = async (taskId, updates) => {
     const { data, error } = await supabase
       .from(watchlistTableName) // Replace 'tasks' with your actual table name
       .update(updates) // Pass the updated fields
-      .eq('id', taskId); // Match the task by ID
+      .eq("id", taskId); // Match the task by ID
 
     if (error) {
-      console.error('Error updating task:', error);
+      console.error("Error updating task:", error);
       return { success: false, error };
     }
 
     return { success: true, data };
   } catch (err) {
-    console.error('Unexpected error:', err);
+    console.error("Unexpected error:", err);
     return { success: false, error: err.message };
   }
 };
-

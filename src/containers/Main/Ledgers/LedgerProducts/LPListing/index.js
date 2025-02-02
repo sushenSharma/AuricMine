@@ -109,6 +109,7 @@ const LPListing = ({
     createDisplayMode: "row",
     editDisplayMode: "row",
     enableEditing: true,
+
     initialState: {
       density: "comfortable",
       columnPinning: { left: ["stockSymbol"] },
@@ -116,13 +117,31 @@ const LPListing = ({
         {
           id: "id", // Replace "id" with the actual ID column's key if it's named differently
           desc: false, // `false` for ascending order
-        },]
+        },
+      ],
     },
     getRowId: (row) => row.id,
     muiTableContainerProps: {
       sx: {
         border: "1px solid rgba(81, 81, 81, .5)", //Actual Table boundary
-        maxHeight: "400px",
+        maxHeight: "calc(85vh - 200px)",
+        /* Custom scrollbar styling */
+        "::-webkit-scrollbar": {
+          width: "26px", // Adjust scrollbar width here (default is ~8px)
+          height: "16px",
+        },
+        "::-webkit-scrollbar-thumb": {
+          backgroundColor: "#888", // Change the scrollbar thumb color
+          borderRadius: "8px",
+          border: "4px solid #f1f1f1", // Adds padding inside the scrollbar
+        },
+        "::-webkit-scrollbar-track": {
+          backgroundColor: "#f1f1f1", // Track color
+        },
+
+        /* For Firefox */
+        scrollbarWidth: "thin", // Options: 'auto', 'thin'
+        scrollbarColor: "#888 #f1f1f1", // Thumb color and track color
       },
     },
     // Styling the Table Header
