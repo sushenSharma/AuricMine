@@ -49,9 +49,8 @@ export const defaults = {
   packageTypeOneLinkLabel: "Try it for free",
   packageTypeOnePlanOffers: "What's included:",
   packageTypeOnePlanList: [
-    "Access to basic analytics and charts",
-    "Limited historical data access (e.g., 30 days)",
-    "Basic performance insights (e.g., Win/Loss ratio)",
+    "Access to Ledger Table and data entry for records",
+    "Limited access to AI Insights",
     "1-day log retention",
     "Community support",
   ],
@@ -67,7 +66,7 @@ export const defaults = {
     "Unlimited portfolios and trades",
     "Risk management tools and dynamic stop-loss calculator",
     "AI-driven trade suggestions or journaling prompts",
-    "Access to pre-built templates for journaling",
+    "Access to Smart Watchlist feature",
     "Onboarding Support",
   ],
 
@@ -106,7 +105,8 @@ export const defaults = {
   /**Kanban Board Page */
   AddNewStockToWatchListLabel: "ADD NEW STOCK ",
   successArchievedTitle: "Stock Sold! 🎉",
-  successArchievedText: "The stock details has been successfully archived for future reference.",
+  successArchievedText:
+    "The stock details has been successfully archived for future reference.",
   successUpdateStockSupabase: " Success🎉",
   successUpdateStockSupabaseText: "Stock Added to Watchlist!",
   FailUpdateStockSupabase: " Fail ❌",
@@ -115,8 +115,8 @@ export const defaults = {
   successUpdateStockCardText: "Stock Description updated!",
   FailUpdateStockCard: " Fail ❌",
   FailUpdateStockCardText: "Failed to update Stock Description!",
-  
+
   upgradeToPremiumLabel: "Unlock Premium features",
   closeBtnLabel: "Close",
-  feedbackLabel: "Feedback"
+  feedbackLabel: "Feedback",
 };
