@@ -132,6 +132,7 @@ export const prepareLedgerColumns = (validationErrors, onColumnFocus) => {
       accessorKey: "brokerage",
       header: "Brokerage",
       muiEditTextFieldProps: {
+        helperText: "will be auto calculated",
         type: "number",
         disabled: true,
       },
@@ -140,6 +141,7 @@ export const prepareLedgerColumns = (validationErrors, onColumnFocus) => {
       accessorKey: "daysHold",
       header: "Days Hold",
       muiEditTextFieldProps: {
+        helperText: "will be auto calculated",
         type: "string",
         disabled: true,
       },
@@ -149,6 +151,7 @@ export const prepareLedgerColumns = (validationErrors, onColumnFocus) => {
       accessorKey: "profitLoss",
       header: "Profit / Loss",
       muiEditTextFieldProps: {
+        helperText: "will be auto calculated",
         type: "number",
         disabled: true,
       },
@@ -157,6 +160,7 @@ export const prepareLedgerColumns = (validationErrors, onColumnFocus) => {
       accessorKey: "amount",
       header: "Amount Invested",
       muiEditTextFieldProps: {
+        helperText: "will be auto calculated",
         type: "number",
         disabled: true,
       },
@@ -165,14 +169,16 @@ export const prepareLedgerColumns = (validationErrors, onColumnFocus) => {
       accessorKey: "annualReturnGenerated",
       header: "Annual Return Generated",
       muiEditTextFieldProps: {
+        helperText: "will be auto calculated",
         type: "number",
         disabled: true,
       },
     },
     {
       accessorKey: "roce",
-      header: "Annualised ROCE",
+      header: "ROCE (Trading Capital Efficiency)",
       muiEditTextFieldProps: {
+        helperText: "will be auto calculated",
         type: "number",
         disabled: true,
       },
