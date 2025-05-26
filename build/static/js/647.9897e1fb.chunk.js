@@ -1,2 +1,0 @@
-"use strict";(self.webpackChunkdatasheet=self.webpackChunkdatasheet||[]).push([[647],{1647:(e,s,t)=>{t.r(s),t.d(s,{default:()=>h});t(5043);var a=t(579);const h=()=>(0,a.jsx)("h1",{children:"Watch List"})}}]);
-//# sourceMappingURL=647.9897e1fb.chunk.js.map

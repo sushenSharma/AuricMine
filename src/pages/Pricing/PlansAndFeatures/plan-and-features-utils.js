@@ -107,9 +107,7 @@ export const prepareTableData = () => {
     ),
     createData(
       <span className="feature-name">Charts and Analytics</span>,
-      <span className="feature-item-icon tick-icon white-color-icon">
-        {redcro}
-      </span>,
+      <span className="feature-item-icon tick-icon white-color-icon"></span>,
       <span className="feature-item-icon tick-icon blue-color-icon">
         {whiteTickProductIcon}
       </span>,
