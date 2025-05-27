@@ -15,6 +15,7 @@ import Services from "../../pages/Services";
 import "../../assets/styles/landingPage.css"; // Import the CSS file for styling
 import "./styles.css";
 import Pricing from "../../pages/Pricing";
+import WhyIronOreSection from "./whyIronOreSection";
 
 const LandingPage = () => {
   const navigate = useNavigate();
@@ -46,7 +47,7 @@ const LandingPage = () => {
         return (
           <Fragment>
             <SectionHome handleLogin={handleLogin} />
-            <SectionPlatform />
+            <WhyIronOreSection></WhyIronOreSection>
           </Fragment>
         );
       case "about":
@@ -59,7 +60,7 @@ const LandingPage = () => {
         return (
           <Fragment>
             <SectionHome handleLogin={handleLogin} />
-            <SectionPlatform />
+            <WhyIronOreSection></WhyIronOreSection>
           </Fragment>
         );
     }

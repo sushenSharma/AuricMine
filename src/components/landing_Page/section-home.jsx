@@ -8,106 +8,118 @@ import {
 } from "@mui/material";
 import Carousel from "react-material-ui-carousel";
 import "../../assets/styles/landingPage.css";
-import CarouselImage1 from "../../../src/assets/resources/TradeJournalTable.png";
-import CarouselImage2 from "../../../src/assets/resources/AI Generated insights.png";
-import CarouselImage3 from "../../../src/assets/resources/StockWatchlist.png";
+import BackgroundImage from "../../../src/assets/resources/r.jpg";
+
+
 
 export default function SectionHome({ handleLogin }) {
   const theme = useTheme();
   const isMobile = useMediaQuery(theme.breakpoints.down("sm"));
-  const carouselImages = [CarouselImage1, CarouselImage2, CarouselImage3];
+
 
   return (
     <Box
       sx={{
+        position: "relative",
+        height: isMobile ? "100vh" : "90vh",
+        width: "100%",
+        backgroundImage: `url(${BackgroundImage})`, // Use your road background image here
+        backgroundSize: "cover",
+        backgroundPosition: "center",
         display: "flex",
-        flexDirection: isMobile ? "column" : "row",
         alignItems: "center",
-        justifyContent: "space-between",
-        padding: isMobile ? "2rem 1rem" : "4rem",
-        backgroundColor: "#000",
-        gap: "3rem",
+        justifyContent: "center",
+        color: "#fff",
+        textAlign: "center",
+        px: 2,
       }}
     >
-      {/* Text Section */}
-      <Box sx={{ flex: 1, textAlign: isMobile ? "center" : "left" }}>
+      {/* Overlay */}
+      <Box
+        sx={{
+          position: "absolute",
+          top: 0,
+          left: 0,
+          width: "100%",
+          height: "100%",
+          backgroundColor: "rgba(0, 0, 0, 0.65)",
+          zIndex: 1,
+        }}
+      />
+
+      {/* Content */}
+      <Box sx={{ position: "relative", zIndex: 2, maxWidth: "900px" }}>
         <Typography
+          variant="h2"
           sx={{
-            fontSize: isMobile ? "2rem" : "3.5rem",
-            fontWeight: 800,
-            textTransform: "uppercase",
-            color: "#ffffff",
+            fontWeight: 700,
+            fontSize: isMobile ? "2.5rem" : "4rem",
             lineHeight: 1.2,
-            fontFamily: "Montserrat",
+            mb: 2,
           }}
         >
-          Auric Mine Delivers
-          <br />
-          <span style={{ color: "#FF6666" }}>20% Monthly Returns</span>
-          <br />
-          <span style={{ color: "#ffffff" }}>with</span>
-          <br />
-          <span style={{ color: "#FF9999" }}>
-            Reliably, Transparently, Consistently
-          </span>
+          Invest in the <span style={{ color: "#FFA500" }}>Future of Iron</span>
         </Typography>
 
         <Typography
           sx={{
-            marginTop: "2rem",
-            fontSize: isMobile ? "1.2rem" : "1.6rem",
-            color: "#aaaaaa",
-            fontFamily: "Jura",
-            fontWeight: 400,
-            lineHeight: 1.5,
+            fontSize: isMobile ? "1rem" : "1.25rem",
+            mb: 3,
+            color: "#e0e0e0",
           }}
         >
-          Revolutionize your passive income through real-world mining assets
-          backed by data and trust.
+          Earn 6-10% Monthly Returns with Backed Iron Ore Ventures
         </Typography>
 
         <Button
-          type="button"
-          sx={{
-            backgroundColor: "#ffffff",
-            marginTop: "2rem",
-            fontSize: "16px",
-            fontFamily: "Jura",
-            color: "#000",
-            padding: "10px 24px",
-            borderRadius: "8px",
-            fontWeight: 700,
-          }}
-          className="signup-button"
           onClick={handleLogin}
+          sx={{
+            backgroundColor: "#FFA500",
+            color: "#000",
+            fontWeight: "bold",
+            px: 4,
+            py: 1.5,
+            borderRadius: "8px",
+            fontSize: "1rem",
+            textTransform: "none",
+            "&:hover": {
+              backgroundColor: "#ffb733",
+            },
+          }}
         >
-          Start Earning Now
+          Start Investing Now →
         </Button>
-      </Box>
 
-      {/* Carousel Section */}
-      <Box
-        sx={{
-          flex: 1,
-          height: isMobile ? "280px" : "450px",
-          width: "100%",
-        }}
-      >
-        <Carousel indicators={false} navButtonsAlwaysVisible>
-          {carouselImages.map((image, index) => (
-            <img
-              key={index}
-              src={image}
-              alt={`Feature ${index + 1}`}
-              style={{
-                width: "100%",
-                height: "100%",
-                objectFit: "cover",
-                borderRadius: "12px",
-              }}
-            />
-          ))}
-        </Carousel>
+        {/* Stats Row */}
+        <Box
+          sx={{
+            display: "flex",
+            flexDirection: isMobile ? "column" : "row",
+            justifyContent: "center",
+            alignItems: "center",
+            gap: isMobile ? 1.5 : 6,
+            mt: 5,
+          }}
+        >
+          <Box>
+            <Typography sx={{ fontSize: "1.5rem", fontWeight: "bold", color: "#FFCC00" }}>
+              6-10%
+            </Typography>
+            <Typography variant="body2">Annual Returns</Typography>
+          </Box>
+          <Box>
+            <Typography sx={{ fontSize: "1.5rem", fontWeight: "bold", color: "#FFCC00" }}>
+              130M+
+            </Typography>
+            <Typography variant="body2">Tonnes Reserve</Typography>
+          </Box>
+          <Box>
+            <Typography sx={{ fontSize: "1.5rem", fontWeight: "bold", color: "#FFCC00" }}>
+              1,200+
+            </Typography>
+            <Typography variant="body2">Global Investors</Typography>
+          </Box>
+        </Box>
       </Box>
     </Box>
   );
