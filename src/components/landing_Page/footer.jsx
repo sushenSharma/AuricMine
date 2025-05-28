@@ -53,7 +53,7 @@ export default function Footer() {
           color={"white"}
           textAlign={isMobile ? "center" : "right"}
         >
-          tradingjournal@gmail.com
+          support@AuricMine.com
         </Typography>
       </Box>
     </Box>

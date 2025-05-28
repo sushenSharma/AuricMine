@@ -16,6 +16,10 @@ import "../../assets/styles/landingPage.css"; // Import the CSS file for styling
 import "./styles.css";
 import Pricing from "../../pages/Pricing";
 import WhyIronOreSection from "./whyIronOreSection";
+import OurProjectsSection from "./ourProjectsSection";
+import ReturnsSection from "./resultsSection";
+import TestimonialsSection from "./testimonialSection";
+import InvestorCTASection from "./investorCtaSection";
 
 const LandingPage = () => {
   const navigate = useNavigate();
@@ -48,6 +52,11 @@ const LandingPage = () => {
           <Fragment>
             <SectionHome handleLogin={handleLogin} />
             <WhyIronOreSection></WhyIronOreSection>
+            <OurProjectsSection></OurProjectsSection>
+            <ReturnsSection></ReturnsSection>
+            <TestimonialsSection></TestimonialsSection>
+            <InvestorCTASection></InvestorCTASection>
+          
           </Fragment>
         );
       case "about":
@@ -61,6 +70,10 @@ const LandingPage = () => {
           <Fragment>
             <SectionHome handleLogin={handleLogin} />
             <WhyIronOreSection></WhyIronOreSection>
+            <OurProjectsSection></OurProjectsSection>
+            <ReturnsSection></ReturnsSection>
+            <TestimonialsSection></TestimonialsSection>
+            <InvestorCTASection></InvestorCTASection>
           </Fragment>
         );
     }
