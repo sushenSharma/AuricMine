@@ -12,7 +12,10 @@ import {
   Stack,
 } from "@mui/material";
 import CheckCircleIcon from '@mui/icons-material/CheckCircle';
-import AustralianMine from "../../assets/resources/AustraliaMine.jpg"
+import AustralianMine from "../../assets/resources/kt.png"
+import CanadaMine from "../../assets/resources/Screenshot 2025-05-30 at 12.32.56 AM.png"
+import BrazilMine from "../../assets/resources/BrazilMine.png"
+import JapanMine from "../../assets/resources/101284599-139495551.webp"
 
 const projectData = [
   {
@@ -22,7 +25,7 @@ const projectData = [
     lease: "Government lease until 2045",
     access: "Direct port access - 45km",
     grade: "65% iron content grade",
-    image: {AustralianMine},
+    image: AustralianMine,
     flag: "/images/flag-brazil.png",
     status: "Active",
     progress: 92,
@@ -35,7 +38,7 @@ const projectData = [
     lease: "Mining rights until 2050",
     access: "Rail connection to Port Hedland",
     grade: "62% iron content grade",
-    image: "/images/australia.jpg",
+    image: CanadaMine,
     flag: "/images/flag-australia.png",
     status: "Expanding",
     progress: 78,
@@ -48,7 +51,7 @@ const projectData = [
     lease: "License valid till 2042",
     access: "Road link to Paradip port",
     grade: "64% iron content grade",
-    image: "/images/india.jpg",
+    image: BrazilMine,
     flag: "/images/flag-india.png",
     status: "Active",
     progress: 85,
@@ -61,7 +64,7 @@ const projectData = [
     lease: "Long-term lease till 2048",
     access: "Bulk rail corridor available",
     grade: "63% iron content grade",
-    image: "/images/southafrica.jpg",
+    image: JapanMine,
     flag: "/images/flag-southafrica.png",
     status: "Developing",
     progress: 60,

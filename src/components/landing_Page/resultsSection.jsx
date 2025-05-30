@@ -8,6 +8,7 @@ import {
   LinearProgress,
   Divider,
 } from "@mui/material";
+import ProvenTrackRecordBackgroungImage from "../../assets/resources/gerger.png"
 
 const returnsData = [
   { year: "Year 1 (2022)", target: 18, actual: 20.5, color: "#4caf50" },
@@ -29,14 +30,18 @@ export default function ReturnsSection() {
         {/* Proven Track Record Card */}
         <Grid item xs={12} md={6}>
           <Card elevation={3} sx={{ borderRadius: 4, overflow: "hidden", textAlign: "left" }}>
-            <Box
-              sx={{
-                height: 200,
-                backgroundImage: `url(/images/business.jpg)`,
-                backgroundSize: "cover",
-                backgroundPosition: "center",
-              }}
-            />
+          <Box
+             component="img"
+             src={ProvenTrackRecordBackgroungImage}
+             alt="Proven Track Record"
+             sx={{
+                width: "100%",
+                height: "200px",
+                objectFit: "contain",
+                backgroundColor: "#fff",
+                }}
+/>
+
             <CardContent>
               <Typography variant="h6" fontWeight={600}>Proven Track Record</Typography>
               <Typography variant="body2" color="textSecondary">3+ years of consistent outperformance</Typography>

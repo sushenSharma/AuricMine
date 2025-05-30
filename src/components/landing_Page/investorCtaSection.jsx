@@ -12,6 +12,7 @@ import TrendingUpIcon from '@mui/icons-material/TrendingUp';
 import PublicIcon from '@mui/icons-material/Public';
 import VerifiedUserIcon from '@mui/icons-material/VerifiedUser';
 import SecurityIcon from '@mui/icons-material/Security';
+import MineLandscape from "../../assets/resources/4trgr.png"
 
 export default function InvestorCTASection() {
   return (
@@ -83,7 +84,7 @@ export default function InvestorCTASection() {
           <Paper elevation={6} sx={{ borderRadius: 4, overflow: 'hidden', position: 'relative' }}>
             <Box
               component="img"
-              src="/images/mine-banner.jpg"
+              src={MineLandscape}
               alt="Mine Landscape"
               sx={{ width: '100%', height: 320, objectFit: 'cover' }}
             />

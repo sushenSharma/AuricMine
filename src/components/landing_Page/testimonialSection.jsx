@@ -41,13 +41,13 @@ const testimonials = [
     rating: 5,
   },
   {
-    name: "Rajesh Patel",
-    location: "Mumbai, India",
-    flag: "🇮🇳",
-    initial: "R",
+    name: "Jeff Reugger",
+    location: "Durban, Ireland",
+    flag: "🇮🇪",
+    initial: "J",
     color: "#ef6c00",
     quote:
-      "Doubled my investment in 2 years—this is the real goldmine! The quarterly payouts are consistent and the transparency is unmatched.",
+      "Turned my initial investment into double in under two years. The returns are steady, and everything’s completely above board. This is where real value lies.",
     rating: 4.5,
   },
 ];
