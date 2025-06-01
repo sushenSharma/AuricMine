@@ -12,6 +12,9 @@ const TopBar = ({ open, openDrawer, drawerWidth, theme }) => {
 
   const handleLogout = () => {
     supabase.auth.signOut();
+    sessionStorage.clear();
+    localStorage.clear();
+    userSession.clear();
 
     removeStorageItem([
       "userId",

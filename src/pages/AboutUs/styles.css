@@ -27,7 +27,7 @@
   width: 100%;
   height: auto;
   border-radius: 10px;
-  max-width: 400px;
+  max-width: 450px;
   margin: 0 auto;
 }
 
@@ -35,7 +35,7 @@
   flex: 1;
   padding-left: 2rem;
   color: #fff;
-  font-size: 18px;
+  font-size: 24px;
 }
 
 .about-us-first-content .content-box {
@@ -59,7 +59,7 @@
     padding: 0.5rem 0; /* Reduced vertical padding */
   }
 
-  .about-us-section:first-child{
+  .about-us-section:first-child {
     padding-bottom: 0;
   }
 
@@ -78,7 +78,7 @@
     font-size: 16px; /* Slightly larger font for better readability on small devices */
   }
 
-  .about-us-section .image-box{
+  .about-us-section .image-box {
     margin-bottom: 16px;
   }
 

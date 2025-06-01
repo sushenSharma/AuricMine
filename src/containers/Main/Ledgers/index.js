@@ -19,6 +19,7 @@ import { getStorageItem, setStorageItem } from "../../../utils/common-utils";
 import { featuresKey } from "../../../constants";
 import { supabase } from "../../../config/index_supabase";
 import { userUUID } from "../../../constants/constant";
+import UserHierarchyTree from "./UserHierarchyTree";
 
 let timer = null;
 
@@ -60,7 +61,7 @@ const Ledgers = () => {
         const { error: updateErrorFeatures } = await supabase
           .from("features")
           .update({ insight_c: insight_c_updated })
-          .eq('user_id', features.user_id);
+          .eq("user_id", features.user_id);
 
         if (updateErrorFeatures) {
           throw updateErrorFeatures;
@@ -113,9 +114,7 @@ const Ledgers = () => {
       open: openPayment,
       handleClose: togglePayment,
     };
-    return (
-      <PaymentForm1 {...modalProps} />
-    );
+    return <PaymentForm1 {...modalProps} />;
   };
 
   return (
@@ -139,10 +138,7 @@ const Ledgers = () => {
         disabled={disabled}
         showPayment={() => showPaymentForm()}
       />
-      <LedgerProducts
-        tableAction={handleTableAction}
-        getUserData={setUserData}
-      />
+      <UserHierarchyTree></UserHierarchyTree>
       {renderModal()}
       {renderModalPayment()}
     </Box>
