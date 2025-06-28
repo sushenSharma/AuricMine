@@ -31,11 +31,30 @@ export const getParameter = (metaInformation, key) => {
   return null;
 };
 
-export const getStorageItem = (key) => {
-  const item = localStorage.getItem(key);
-  if (item) return JSON.parse(item);
+export const getStorageItem = (key, fallbackValue = null) => {
+  try {
+    const item = localStorage.getItem(key);
 
-  return null;
+    if (!item || item === "undefined" || item === "null") {
+      // Clean up corrupt value
+      localStorage.removeItem(key);
+      if (fallbackValue !== null) {
+        localStorage.setItem(key, JSON.stringify(fallbackValue));
+        return fallbackValue;
+      }
+      return null;
+    }
+
+    return JSON.parse(item);
+  } catch (e) {
+    console.warn(`Corrupt localStorage value for "${key}", resetting...`, e);
+    localStorage.removeItem(key);
+    if (fallbackValue !== null) {
+      localStorage.setItem(key, JSON.stringify(fallbackValue));
+      return fallbackValue;
+    }
+    return null;
+  }
 };
 
 export const getStorageStringItem = (key) => {
@@ -62,7 +81,7 @@ export const setColSize = (xl, lg, md, sm, xs) => {
 
 export const getActiveUser = () => {
   return getStorageItem("userSession").user;
-}
+};
 
 export const setStorageItem = (key, value) => {
   localStorage.setItem(key, JSON.stringify(value));
@@ -70,5 +89,5 @@ export const setStorageItem = (key, value) => {
 
 export const isIndianUser = () => {
   const date = new Date().toString();
-  return date.includes("530") ? true : false
+  return date.includes("530") ? true : false;
 };
