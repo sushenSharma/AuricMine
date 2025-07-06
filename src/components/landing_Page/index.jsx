@@ -1,13 +1,12 @@
 import React, { Fragment, useEffect, useState } from "react";
 import { useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
-import { Box } from "@mui/material";
+import { Box, Container, Fade } from "@mui/material";
 import _ from "lodash";
 
 import Header from "../header";
 import Footer from "./footer";
 import SectionHome from "./section-home";
-import SectionPlatform from "./section-platform";
 import AuthModal from "../../containers/AuthWrapper/AuthModal";
 import AboutUs from "../../pages/AboutUs";
 import Services from "../../pages/Services";
@@ -46,43 +45,67 @@ const LandingPage = () => {
   }
 
   const renderComponent = (selectedTab) => {
+    const homeContent = (
+      <Fragment>
+        <SectionHome handleLogin={handleLogin} />
+        <WhyIronOreSection />
+        <OurProjectsSection />
+        <ReturnsSection />
+        <TestimonialsSection />
+        <InvestorCTASection />
+      </Fragment>
+    );
+
     switch (selectedTab) {
       case "home":
         return (
-          <Fragment>
-            <SectionHome handleLogin={handleLogin} />
-            <WhyIronOreSection></WhyIronOreSection>
-            <OurProjectsSection></OurProjectsSection>
-            <ReturnsSection></ReturnsSection>
-            <TestimonialsSection></TestimonialsSection>
-            <InvestorCTASection></InvestorCTASection>
-          
-          </Fragment>
+          <Fade in={true} timeout={600}>
+            <Box>{homeContent}</Box>
+          </Fade>
         );
       case "about":
-        return <AboutUs />;
+        return (
+          <Fade in={true} timeout={600}>
+            <Container maxWidth="lg" sx={{ py: 4 }}>
+              <AboutUs />
+            </Container>
+          </Fade>
+        );
       case "services":
-        return <Services />;
+        return (
+          <Fade in={true} timeout={600}>
+            <Container maxWidth="lg" sx={{ py: 4 }}>
+              <Services />
+            </Container>
+          </Fade>
+        );
       case "pricing":
-        return <Pricing />;
+        return (
+          <Fade in={true} timeout={600}>
+            <Container maxWidth="lg" sx={{ py: 4 }}>
+              <Pricing />
+            </Container>
+          </Fade>
+        );
       default:
         return (
-          <Fragment>
-            <SectionHome handleLogin={handleLogin} />
-            <WhyIronOreSection></WhyIronOreSection>
-            <OurProjectsSection></OurProjectsSection>
-            <ReturnsSection></ReturnsSection>
-            <TestimonialsSection></TestimonialsSection>
-            <InvestorCTASection></InvestorCTASection>
-          </Fragment>
+          <Fade in={true} timeout={600}>
+            <Box>{homeContent}</Box>
+          </Fade>
         );
     }
   };
 
   return (
     <Box className="landing-page-container">
-      <Header handleLogin={handleLogin} setSelectedTab={setSelectedTab} />
-      {renderComponent(selectedTab)}
+      <Header 
+        handleLogin={handleLogin} 
+        setSelectedTab={setSelectedTab} 
+        selectedTab={selectedTab}
+      />
+      <Box sx={{ minHeight: 'calc(100vh - 160px)' }}>
+        {renderComponent(selectedTab)}
+      </Box>
       <Footer />
     </Box>
   );
