@@ -491,7 +491,7 @@ const UserHierarchyDashboard = ({ currentUser }) => {
                               Total Investment
                             </Typography>
                             <Typography variant="body2" sx={{ color: '#FFA500', fontWeight: 600 }}>
-                              ${selectedNode.totalInvestment?.toLocaleString()}
+                              ₹{selectedNode.totalInvestment?.toLocaleString()}
                             </Typography>
                           </Box>
                           <Box sx={{ display: 'flex', justifyContent: 'space-between', mb: 1 }}>
@@ -499,7 +499,7 @@ const UserHierarchyDashboard = ({ currentUser }) => {
                               Monthly Earnings
                             </Typography>
                             <Typography variant="body2" sx={{ color: '#4CAF50', fontWeight: 600 }}>
-                              ${selectedNode.monthlyEarnings?.toLocaleString()}
+                              ₹{selectedNode.monthlyEarnings?.toLocaleString()}
                             </Typography>
                           </Box>
                           <Box sx={{ display: 'flex', justifyContent: 'space-between', mb: 1 }}>
@@ -562,7 +562,7 @@ const UserHierarchyDashboard = ({ currentUser }) => {
 
                       <Box sx={{ mb: 3 }}>
                         <Typography variant="h4" sx={{ color: '#2196F3', fontWeight: 'bold', mb: 1 }}>
-                          ${flatData.reduce((sum, member) => sum + (member.totalInvestment || 0), 0).toLocaleString()}
+                          ₹{flatData.reduce((sum, member) => sum + (member.totalInvestment || 0), 0).toLocaleString()}
                         </Typography>
                         <Typography variant="body2" sx={{ color: '#e0e0e0' }}>
                           Network Total Investment
@@ -648,12 +648,12 @@ const UserHierarchyDashboard = ({ currentUser }) => {
                           </TableCell>
                           <TableCell>
                             <Typography sx={{ color: '#e0e0e0' }}>
-                              ${member.totalInvestment?.toLocaleString()}
+                              ₹{member.totalInvestment?.toLocaleString()}
                             </Typography>
                           </TableCell>
                           <TableCell>
                             <Typography sx={{ color: '#4CAF50' }}>
-                              ${member.monthlyEarnings?.toLocaleString()}
+                              ₹{member.monthlyEarnings?.toLocaleString()}
                             </Typography>
                           </TableCell>
                           <TableCell>

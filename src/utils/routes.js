@@ -1,7 +1,8 @@
 import { lazy } from "react";
 
 const AuthWrapper = lazy(() => import("../containers/AuthWrapper"));
-const Ledger = lazy(() => import("../containers/Main/Ledgers"));
+const Ledger = lazy(() => import("../containers/Main/Ledgers/SimplifiedHome"));
+const FullLedger = lazy(() => import("../containers/Main/Ledgers"));
 const RiskManagement = lazy(() => import("../containers/Main/RiskManagement"));
 const Analytics = lazy(() => import("../containers/Main/Analytics"));
 const WatchList = lazy(() => import("../containers/Main/WatchList"));
@@ -23,24 +24,9 @@ export const appRoutes = [
         component: Ledger,
       },
       {
-        key: "riskManagement",
-        path: "/risk-management",
-        component: RiskManagement,
-      },
-      {
-        key: "watchlist",
-        path: "/watch-list",
-        component: WatchList,
-      },
-      {
-        key: "analytics",
-        path: "/analytics",
-        component: Analytics,
-      },
-      {
-        key: "Kanban",
-        path: "/watchlist",
-        component: Kanban,
+        key: "fullDashboard",
+        path: "/full-dashboard",
+        component: FullLedger,
       },
       {
         key: "feedback",

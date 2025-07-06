@@ -76,6 +76,16 @@ const PaymentForm1 = ({ open, handleClose }) => {
 
   const onSubmit = (fieldData) => {
     const userInfo = getActiveUser();
+    if (!userInfo) {
+      Swal.fire({
+        title: "Error!",
+        text: "Please login to continue with payment",
+        icon: "error",
+        confirmButtonText: "OK",
+      });
+      setLoading(false);
+      return;
+    }
     Object.assign(fieldData, {
       MUID: userInfo.id,
       email: userInfo.email,
@@ -95,6 +105,7 @@ const PaymentForm1 = ({ open, handleClose }) => {
       loc: fieldData.loc
     };
     try {
+      // Call the payments API
       const response = await fetch(
         process.env.REACT_APP_BE_BASE_URL + "/payments",
         {
@@ -106,36 +117,43 @@ const PaymentForm1 = ({ open, handleClose }) => {
         }
       );
 
-      if (response.ok) {
-        const result = await response.json();
-
-        //Order created, storing in DB
-        const insertData = {
-          amount: result.amount,
-          attempts: result.attempts,
-          currency: result.currency,
-          entity: result.entity,
-          order_id: result.id,
-          receipt: result.receipt,
-          status: result.status,
-          user_id: fieldData.MUID,
-          user_email: fieldData.email,
-          user_phone: parseInt(fieldData.phone),
-        };
-        const { error: insertError } = await supabase
-          .from("payments")
-          .insert(insertData);
-
-        if (insertError) {
-          throw insertError;
-        }
-
-        PaymentComponent(fieldData, result);
-      } else {
-        console.error("Error:", response.status, response.statusText);
+      if (!response.ok) {
+        throw new Error(`HTTP error! status: ${response.status}`);
       }
+
+      const result = await response.json();
+
+      //Order created, storing in DB
+      const insertData = {
+        amount: result.amount,
+        attempts: result.attempts || 0,
+        currency: result.currency || "INR",
+        entity: result.entity || "order",
+        order_id: result.id,
+        receipt: result.receipt,
+        status: result.status || "created",
+        user_id: fieldData.MUID,
+        user_email: fieldData.email,
+        user_phone: parseInt(fieldData.phone),
+      };
+      const { error: insertError } = await supabase
+        .from("payments")
+        .insert(insertData);
+
+      if (insertError) {
+        throw insertError;
+      }
+
+      PaymentComponent(fieldData, result);
     } catch (error) {
       console.error("Error:", error.message);
+      setLoading(false);
+      Swal.fire({
+        title: "Error!",
+        text: "Payment initialization failed. Please try again.",
+        icon: "error",
+        confirmButtonText: "OK",
+      });
     }
   };
 
@@ -144,7 +162,7 @@ const PaymentForm1 = ({ open, handleClose }) => {
       key: process.env.REACT_APP_RP_KEY_ID,
       amount: orderData.amount, // Amount in paise
       currency: orderData.currency,
-      name: "Trading journal",
+      name: "AuricMine",
       description: "AI feature payment",
       order_id: orderData.id, // Generate order_id on server
       handler: async (response) => {
@@ -166,14 +184,23 @@ const PaymentForm1 = ({ open, handleClose }) => {
           .update(updateData)
           .eq("order_id", orderData.id);
 
-        let features = getStorageItem(featuresKey);
+        let features = getStorageItem(featuresKey) || {};
         features.p_status = paymentStatusKey;
         setStorageItem(featuresKey, features);
 
-        const { error: updateErrorFeatures } = await supabase
-          .from("features")
-          .update({ p_status: paymentStatusKey })
-          .eq("user_id", features.user_id);
+        // Try to update features table, but don't fail if it doesn't exist
+        try {
+          const { error: updateErrorFeatures } = await supabase
+            .from("features")
+            .update({ p_status: paymentStatusKey })
+            .eq("user_id", features.user_id);
+          
+          if (updateErrorFeatures) {
+            console.warn("Features table update failed (table may not exist):", updateErrorFeatures);
+          }
+        } catch (featuresError) {
+          console.warn("Features table not available:", featuresError);
+        }
 
         if (updateErrorPayment) {
           throw updateErrorPayment;

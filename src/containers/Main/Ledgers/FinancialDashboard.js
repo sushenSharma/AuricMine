@@ -30,7 +30,7 @@ import {
   Security
 } from '@mui/icons-material';
 
-const FinancialDashboard = ({ currentUser, showPerformanceOnly = false }) => {
+const FinancialDashboard = ({ currentUser, showPerformanceOnly = false, simplified = false }) => {
   const theme = useTheme();
   const isMobile = useMediaQuery(theme.breakpoints.down('md'));
 
@@ -117,6 +117,98 @@ const FinancialDashboard = ({ currentUser, showPerformanceOnly = false }) => {
   const totalCurrentValue = bondPortfolio.reduce((sum, bond) => sum + bond.currentValue, 0);
   const totalReturns = totalCurrentValue - totalInvestment;
   const avgReturns = (totalReturns / totalInvestment * 100).toFixed(2);
+
+  // Simplified view for the new home page
+  if (simplified) {
+    return (
+      <Box>
+        <Typography variant="h6" sx={{ color: '#FFA500', mb: 3, fontWeight: 600 }}>
+          Active Investments
+        </Typography>
+        
+        <Grid container spacing={2}>
+          {bondPortfolio.slice(0, 3).map((bond) => (
+            <Grid item xs={12} md={4} key={bond.id}>
+              <Card
+                sx={{
+                  bgcolor: 'rgba(255, 255, 255, 0.05)',
+                  border: '1px solid rgba(255, 255, 255, 0.1)',
+                  borderRadius: 2,
+                  '&:hover': {
+                    bgcolor: 'rgba(255, 255, 255, 0.08)',
+                    border: '1px solid rgba(255, 165, 0, 0.3)'
+                  },
+                  transition: 'all 0.3s ease'
+                }}
+              >
+                <CardContent sx={{ p: 2 }}>
+                  <Typography variant="subtitle1" sx={{ color: '#FFA500', fontWeight: 600, mb: 1 }}>
+                    {bond.name}
+                  </Typography>
+                  <Box sx={{ display: 'flex', justifyContent: 'space-between', mb: 1 }}>
+                    <Typography variant="body2" sx={{ color: '#e0e0e0' }}>
+                      Investment:
+                    </Typography>
+                    <Typography variant="body2" sx={{ color: '#fff', fontWeight: 500 }}>
+                      ₹{bond.investment.toLocaleString()}
+                    </Typography>
+                  </Box>
+                  <Box sx={{ display: 'flex', justifyContent: 'space-between', mb: 1 }}>
+                    <Typography variant="body2" sx={{ color: '#e0e0e0' }}>
+                      Returns:
+                    </Typography>
+                    <Typography 
+                      variant="body2" 
+                      sx={{ 
+                        color: bond.returns > 0 ? '#4CAF50' : '#F44336', 
+                        fontWeight: 600 
+                      }}
+                    >
+                      +{bond.returns}%
+                    </Typography>
+                  </Box>
+                  <Box sx={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
+                    <Chip
+                      label={bond.status}
+                      size="small"
+                      sx={{
+                        bgcolor: `${getStatusColor(bond.status)}20`,
+                        color: getStatusColor(bond.status),
+                        fontSize: '0.75rem',
+                        height: 24
+                      }}
+                    />
+                    <Typography variant="caption" sx={{ color: '#bbb' }}>
+                      {bond.region}
+                    </Typography>
+                  </Box>
+                </CardContent>
+              </Card>
+            </Grid>
+          ))}
+        </Grid>
+
+        {bondPortfolio.length > 3 && (
+          <Box sx={{ textAlign: 'center', mt: 3 }}>
+            <Button
+              variant="outlined"
+              sx={{
+                color: '#FFA500',
+                borderColor: '#FFA500',
+                '&:hover': {
+                  borderColor: '#FF4D4C',
+                  color: '#FF4D4C',
+                  bgcolor: 'rgba(255, 77, 76, 0.1)'
+                }
+              }}
+            >
+              View All Investments ({bondPortfolio.length})
+            </Button>
+          </Box>
+        )}
+      </Box>
+    );
+  }
 
   if (showPerformanceOnly) {
     return (
@@ -230,12 +322,12 @@ const FinancialDashboard = ({ currentUser, showPerformanceOnly = false }) => {
                         </TableCell>
                         <TableCell>
                           <Typography sx={{ color: '#e0e0e0' }}>
-                            ${bond.investment.toLocaleString()}
+                            ₹{bond.investment.toLocaleString()}
                           </Typography>
                         </TableCell>
                         <TableCell>
                           <Typography sx={{ color: '#e0e0e0' }}>
-                            ${bond.currentValue.toLocaleString()}
+                            ₹{bond.currentValue.toLocaleString()}
                           </Typography>
                         </TableCell>
                         <TableCell>
@@ -294,7 +386,7 @@ const FinancialDashboard = ({ currentUser, showPerformanceOnly = false }) => {
                 <CardContent>
                   <MonetizationOn sx={{ color: '#FFA500', fontSize: '3rem', mb: 2 }} />
                   <Typography variant="h4" sx={{ color: '#FFA500', fontWeight: 'bold', mb: 1 }}>
-                    ${totalCurrentValue.toLocaleString()}
+                    ₹{totalCurrentValue.toLocaleString()}
                   </Typography>
                   <Typography variant="body2" sx={{ color: '#e0e0e0', mb: 2 }}>
                     Total Portfolio Value

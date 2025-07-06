@@ -1,17 +1,15 @@
 import BlogIcon from "@mui/icons-material/Article";
 import HomeIcon from "@mui/icons-material/Home";
 import ComingSoonIcon from "@mui/icons-material/InsertChart";
-import RiskManagementIcon from "@mui/icons-material/NotificationsActiveOutlined";
+import DashboardIcon from "@mui/icons-material/Dashboard";
 import WatchlistIcon from "@mui/icons-material/Visibility";
 import FeedbackIcon from '@mui/icons-material/Feedback';
 
 export const navigationMenus = (navigationLabels) => {
   const {
     homeLabel,
-    riskManagementLabel,
+    fullDashboardLabel,
     watchListLabel,
-    analyticsLabel,
-    KanbanLabel,
 	feedbackLabel
   } = navigationLabels;
 
@@ -24,13 +22,13 @@ export const navigationMenus = (navigationLabels) => {
       title: homeLabel,
     },
     {
-      key: "riskManagement",
-      label: riskManagementLabel,
+      key: "fullDashboard",
+      label: "Full Dashboard",
       iconLabel: (
-        <RiskManagementIcon style={{ fontSize: "36px", color: "#60c4a2" }} />
+        <DashboardIcon style={{ fontSize: "36px", color: "#60c4a2" }} />
       ),
-      path: "/risk-management",
-      title: riskManagementLabel,
+      path: "/full-dashboard",
+      title: "Full Dashboard",
     },
     // {
     //   key: "watchlist",
@@ -41,22 +39,6 @@ export const navigationMenus = (navigationLabels) => {
     //   path: "/watch-list",
     //   title: watchListLabel,
     // },
-    {
-      key: "analytics",
-      label: analyticsLabel,
-      iconLabel: (
-        <ComingSoonIcon style={{ fontSize: "36px", color: "#60c4a2" }} />
-      ),
-      path: "/analytics",
-      title: analyticsLabel,
-    },
-    {
-      key: "Kanban",
-      label: KanbanLabel,
-      iconLabel: <BlogIcon style={{ fontSize: "36px", color: "#60c4a2" }} />,
-      path: "/watchlist",
-      title: KanbanLabel,
-    },
     {
       key: "feedback",
       label: feedbackLabel,

@@ -80,7 +80,8 @@ export const setColSize = (xl, lg, md, sm, xs) => {
 };
 
 export const getActiveUser = () => {
-  return getStorageItem("userSession").user;
+  const userSession = getStorageItem("userSession");
+  return userSession?.user || null;
 };
 
 export const setStorageItem = (key, value) => {

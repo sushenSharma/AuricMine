@@ -176,7 +176,7 @@ const BondInvestmentModal = ({ open, onClose, onSuccess }) => {
         break;
       case 1:
         if (!investmentAmount || investmentAmount < selectedBond?.minInvestment) {
-          newErrors.amount = `Minimum investment is $${selectedBond?.minInvestment?.toLocaleString()}`;
+          newErrors.amount = `Minimum investment is ₹${selectedBond?.minInvestment?.toLocaleString()}`;
         }
         break;
       case 2:
@@ -208,7 +208,7 @@ const BondInvestmentModal = ({ open, onClose, onSuccess }) => {
         key: process.env.REACT_APP_RP_KEY_ID,
         amount: orderData.amount,
         currency: orderData.currency,
-        name: "Iron Ore Investments",
+        name: "AuricMine",
         description: `${selectedBond.name} Investment`,
         order_id: orderData.id,
         prefill: {
@@ -245,29 +245,41 @@ const BondInvestmentModal = ({ open, onClose, onSuccess }) => {
 
   const createPaymentOrder = async () => {
     try {
+      // Call the real payments API
       const orderData = {
         amount: parseInt(investmentAmount) * 100, // Convert to paisa
-        currency: 'INR',
-        receipt: `bond_${Date.now()}`,
-        notes: {
-          bond_id: selectedBond.id,
-          bond_name: selectedBond.name,
-          investor_name: investorDetails.name,
-          user_id: userSession?.user?.id
-        }
+        loc: 'IND' // Required parameter for the API
       };
+
+      const response = await fetch(
+        process.env.REACT_APP_BE_BASE_URL + "/payments",
+        {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify(orderData),
+        }
+      );
+
+      if (!response.ok) {
+        throw new Error(`HTTP error! status: ${response.status}`);
+      }
+
+      const razorpayOrder = await response.json();
 
       // Store order in Supabase
       const { data, error } = await supabase
         .from('bond_investments')
         .insert({
-          user_id: userSession?.user?.id,
-          user_email: userSession?.user?.email,
+          user_id: userSession?.user?.id || 'anonymous',
+          user_email: userSession?.user?.email || 'anonymous@example.com',
           bond_id: selectedBond.id,
           bond_name: selectedBond.name,
           investment_amount: investmentAmount,
           investor_details: investorDetails,
           status: 'pending',
+          razorpay_order_id: razorpayOrder.id,
           created_at: new Date().toISOString()
         })
         .select()
@@ -276,15 +288,12 @@ const BondInvestmentModal = ({ open, onClose, onSuccess }) => {
       if (error) throw error;
 
       return {
-        id: `order_${data.id}`,
-        amount: orderData.amount,
-        currency: orderData.currency,
-        receipt: orderData.receipt,
+        ...razorpayOrder,
         database_id: data.id
       };
     } catch (error) {
       console.error('Error creating order:', error);
-      return null;
+      throw error;
     }
   };
 
@@ -309,7 +318,7 @@ const BondInvestmentModal = ({ open, onClose, onSuccess }) => {
       // Show success message
       await Swal.fire({
         title: 'Investment Successful!',
-        text: `Your investment of $${parseInt(investmentAmount).toLocaleString()} in ${selectedBond.name} has been confirmed.`,
+        text: `Your investment of ₹${parseInt(investmentAmount).toLocaleString()} in ${selectedBond.name} has been confirmed.`,
         icon: 'success',
         confirmButtonColor: '#4CAF50',
         confirmButtonText: 'View Dashboard'
@@ -382,7 +391,7 @@ const BondInvestmentModal = ({ open, onClose, onSuccess }) => {
                     <Grid item xs={6} sm={3}>
                       <Typography variant="caption" sx={{ color: '#bbb' }}>Min Investment</Typography>
                       <Typography variant="body2" sx={{ color: '#FFA500', fontWeight: 600 }}>
-                        ${bond.minInvestment.toLocaleString()}
+                        ₹{bond.minInvestment.toLocaleString()}
                       </Typography>
                     </Grid>
                     <Grid item xs={6} sm={3}>
@@ -423,7 +432,7 @@ const BondInvestmentModal = ({ open, onClose, onSuccess }) => {
       <Alert severity="info" sx={{ mb: 3 }}>
         <Typography variant="body2">
           Selected Bond: <strong>{selectedBond?.name}</strong><br/>
-          Minimum Investment: <strong>${selectedBond?.minInvestment?.toLocaleString()}</strong><br/>
+          Minimum Investment: <strong>₹{selectedBond?.minInvestment?.toLocaleString()}</strong><br/>
           Expected Returns: <strong>{selectedBond?.expectedReturns}</strong>
         </Typography>
       </Alert>
@@ -435,10 +444,10 @@ const BondInvestmentModal = ({ open, onClose, onSuccess }) => {
         value={investmentAmount}
         onChange={(e) => setInvestmentAmount(e.target.value)}
         InputProps={{
-          startAdornment: <InputAdornment position="start">$</InputAdornment>,
+          startAdornment: <InputAdornment position="start">₹</InputAdornment>,
         }}
         error={!!errors.amount}
-        helperText={errors.amount || `Minimum: $${selectedBond?.minInvestment?.toLocaleString()}`}
+        helperText={errors.amount || `Minimum: ₹${selectedBond?.minInvestment?.toLocaleString()}`}
         sx={{
           '& .MuiOutlinedInput-root': {
             color: '#fff',
@@ -456,12 +465,12 @@ const BondInvestmentModal = ({ open, onClose, onSuccess }) => {
           <Grid container spacing={2}>
             <Grid item xs={6}>
               <Typography variant="body2" sx={{ color: '#e0e0e0' }}>Investment Amount:</Typography>
-              <Typography variant="h6" sx={{ color: '#FFA500' }}>${parseInt(investmentAmount || 0).toLocaleString()}</Typography>
+              <Typography variant="h6" sx={{ color: '#FFA500' }}>₹{parseInt(investmentAmount || 0).toLocaleString()}</Typography>
             </Grid>
             <Grid item xs={6}>
               <Typography variant="body2" sx={{ color: '#e0e0e0' }}>Expected Annual Return:</Typography>
               <Typography variant="h6" sx={{ color: '#4CAF50' }}>
-                ${Math.round(parseInt(investmentAmount || 0) * 0.09).toLocaleString()}
+                ₹{Math.round(parseInt(investmentAmount || 0) * 0.09).toLocaleString()}
               </Typography>
             </Grid>
           </Grid>
@@ -574,7 +583,7 @@ const BondInvestmentModal = ({ open, onClose, onSuccess }) => {
             <Grid item xs={12} sm={6}>
               <Typography variant="body2" sx={{ color: '#bbb' }}>Investment Amount:</Typography>
               <Typography variant="h6" sx={{ color: '#4CAF50', fontWeight: 600 }}>
-                ${parseInt(investmentAmount).toLocaleString()}
+                ₹{parseInt(investmentAmount).toLocaleString()}
               </Typography>
             </Grid>
             <Grid item xs={12} sm={6}>
@@ -617,7 +626,7 @@ const BondInvestmentModal = ({ open, onClose, onSuccess }) => {
           }
         }}
       >
-        {loading ? 'Processing Payment...' : `Pay $${parseInt(investmentAmount).toLocaleString()}`}
+        {loading ? 'Processing Payment...' : `Pay ₹${parseInt(investmentAmount).toLocaleString()}`}
       </Button>
     </Box>
   );

@@ -49,8 +49,7 @@ const PaymentForm = ({ onSubmit: onSuccess }) => {
   };
 
   const onSubmit = (fieldData) => {
-    // payNow(fieldData);
-
+    payNow(fieldData);
     setLoading(false);
   };
 
@@ -58,6 +57,7 @@ const PaymentForm = ({ onSubmit: onSuccess }) => {
     // console.log("->fieldData"+JSON.stringify(fieldData))
     const data = {
       amount: fieldData.amount,
+      loc: 'IND' // Required parameter for the API
     };
     try {
       const response = await fetch(
@@ -109,7 +109,7 @@ const PaymentForm = ({ onSubmit: onSuccess }) => {
       key: process.env.REACT_APP_RP_KEY_ID,
       amount: orderData.amount, // Amount in paise
       currency: orderData.currency,
-      name: "Trading journal",
+      name: "AuricMine",
       description: "AI feature payment",
       order_id: orderData.id, // Generate order_id on server
       handler: async (response) => {

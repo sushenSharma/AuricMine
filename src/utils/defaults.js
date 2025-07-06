@@ -1,5 +1,5 @@
 export const defaults = {
-  brandName: "TradingJournal.ai",
+  brandName: "AuricMine",
 
   welcomeLabel: "Welcome:",
   signOutLabel: "Sign out",

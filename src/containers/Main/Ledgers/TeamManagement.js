@@ -350,7 +350,7 @@ const TeamManagement = ({ currentUser }) => {
                           </TableCell>
                           <TableCell>
                             <Typography sx={{ color: '#e0e0e0' }}>
-                              ${member.investment.toLocaleString()}
+                              ₹{member.investment.toLocaleString()}
                             </Typography>
                           </TableCell>
                           <TableCell>
@@ -365,7 +365,7 @@ const TeamManagement = ({ currentUser }) => {
                               </Typography>
                             </Box>
                             <Typography variant="caption" sx={{ color: '#bbb' }}>
-                              Target: ${member.monthlyTarget.toLocaleString()}
+                              Target: ₹{member.monthlyTarget.toLocaleString()}
                             </Typography>
                           </TableCell>
                           <TableCell>
@@ -416,7 +416,7 @@ const TeamManagement = ({ currentUser }) => {
                     <Grid item xs={6} md={2} key={index}>
                       <Box sx={{ textAlign: 'center' }}>
                         <Typography variant="h6" sx={{ color: '#FFA500', fontWeight: 'bold' }}>
-                          ${month.actual.toLocaleString()}
+                          ₹{month.actual.toLocaleString()}
                         </Typography>
                         <Typography variant="body2" sx={{ color: '#e0e0e0', mb: 1 }}>
                           {month.month} 2024
@@ -438,7 +438,7 @@ const TeamManagement = ({ currentUser }) => {
                           {month.achievement}% of target
                         </Typography>
                         <Typography variant="caption" sx={{ color: '#bbb', display: 'block' }}>
-                          Target: ${month.target.toLocaleString()}
+                          Target: ₹{month.target.toLocaleString()}
                         </Typography>
                       </Box>
                     </Grid>
@@ -486,7 +486,7 @@ const TeamManagement = ({ currentUser }) => {
                               Monthly Target
                             </Typography>
                             <Typography variant="body2" sx={{ color: '#FFA500' }}>
-                              ${member.monthlyTarget.toLocaleString()}
+                              ₹{member.monthlyTarget.toLocaleString()}
                             </Typography>
                           </Box>
                           <Box sx={{ display: 'flex', justifyContent: 'space-between', mb: 2 }}>
@@ -497,7 +497,7 @@ const TeamManagement = ({ currentUser }) => {
                               variant="body2" 
                               sx={{ color: member.monthlyActual >= member.monthlyTarget ? '#4CAF50' : '#F44336' }}
                             >
-                              ${member.monthlyActual.toLocaleString()}
+                              ₹{member.monthlyActual.toLocaleString()}
                             </Typography>
                           </Box>
                           <LinearProgress

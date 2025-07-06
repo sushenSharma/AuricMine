@@ -18,14 +18,12 @@ const Navigation = ({ open }) => {
   const navigate = useNavigate();
   const navigationLabels = useLabels([
     "homeLabel",
-    "riskManagementLabel",
+    "fullDashboardLabel",
     "watchListLabel",
-    "analyticsLabel",
-    "KanbanLabel",
     "feedbackLabel",
   ]);
 
-  const freeFeature = ["home", "feedback"];
+  const freeFeature = ["home", "feedback", "fullDashboard"];
 
   const features = getStorageItem(featuresKey);
   const handleNavigate = ({ key, path, title }) => {

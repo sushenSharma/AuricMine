@@ -13,7 +13,7 @@ const ThemeLayout = ({ children }) => {
         flexDirection: "column",
       }}
     >
-      <main className="main tradingjournal">{children}</main>
+      <main className="main auricmine">{children}</main>
     </div>
   );
 };

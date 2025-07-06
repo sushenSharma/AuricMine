@@ -308,7 +308,7 @@ const Ledgers = () => {
               <CardContent>
                 <MonetizationOn sx={{ color: '#FFA500', fontSize: '2rem', mb: 1 }} />
                 <Typography variant="h6" sx={{ color: '#FFA500', fontWeight: 'bold' }}>
-                  ${currentUser.totalInvestment.toLocaleString()}
+                  ₹{currentUser.totalInvestment.toLocaleString()}
                 </Typography>
                 <Typography variant="body2" sx={{ color: '#e0e0e0' }}>
                   Total Investment
@@ -328,7 +328,7 @@ const Ledgers = () => {
               <CardContent>
                 <TrendingUp sx={{ color: '#4CAF50', fontSize: '2rem', mb: 1 }} />
                 <Typography variant="h6" sx={{ color: '#4CAF50', fontWeight: 'bold' }}>
-                  +${currentUser.totalReturns.toLocaleString()}
+                  +₹{currentUser.totalReturns.toLocaleString()}
                 </Typography>
                 <Typography variant="body2" sx={{ color: '#e0e0e0' }}>
                   Total Returns
