@@ -1,28 +1,29 @@
-import { useState } from "react";
+import React, { useState } from "react";
 import { fieldData } from "./fields-data";
 import { getLabel } from "../../../hooks/use-labels";
 import {
   getSubmissionData,
   updatedFormData,
 } from "../../../hooks/form-helpers";
+import { useStripe, useElements, CardElement } from "@stripe/react-stripe-js";
+import { createPaymentIntent } from "../../../utils/stripe";
+import { supabase } from "../../../config/index_supabase.js";
 
 import FormFactory from "../../../components/FormFactory";
 import TitleDescription from "../../../components/TitleDescription";
 import LedgerButton from "../../../ui-kit/Buttons/LedgerButton";
-import "./styles.css";
 import Loader from "../../../components/Loader";
-import { useRazorpay } from "react-razorpay";
-import { supabase } from "../../../config/index_supabase.js";
-import { paymentStatusKey } from "../../../constants.js";
+import "./styles.css";
 
 const PaymentForm = ({ onSubmit: onSuccess }) => {
   const { fields } = fieldData();
+  const stripe = useStripe();
+  const elements = useElements();
 
   const [loading, setLoading] = useState(false);
   const [formFields, setFormFields] = useState(fields);
   const [errors, setErrors] = useState({});
-
-  const { error, isLoading, Razorpay } = useRazorpay();
+  const [error, setError] = useState(null);
 
   const onChangeHandler = (value, key) => {
     const { updateFormFields } = updatedFormData(formFields, value, key);
@@ -37,115 +38,112 @@ const PaymentForm = ({ onSubmit: onSuccess }) => {
   const onFinishHandler = () => {
     const { fieldData, required } = getSubmissionData(formFields);
 
+    // Add amount validation
+    if (fieldData.amount && (fieldData.amount < 50 || fieldData.amount > 500)) {
+      setErrors({ amount: "Amount must be between $50 and $500" });
+      return;
+    }
+
     if (Object.keys(required).length) {
       setErrors(required);
     } else {
       setLoading(true);
-      console.log("aa");
       setTimeout(() => {
         onSubmit(fieldData);
-      }, 2000);
+      }, 1000);
     }
   };
 
-  const onSubmit = (fieldData) => {
-    payNow(fieldData);
-    setLoading(false);
-  };
+  const onSubmit = async (fieldData) => {
+    if (!stripe || !elements) {
+      setError("Payment system is not loaded yet. Please try again.");
+      setLoading(false);
+      return;
+    }
 
-  const payNow = async (fieldData) => {
-    // console.log("->fieldData"+JSON.stringify(fieldData))
-    const data = {
-      amount: fieldData.amount,
-      loc: 'IND' // Required parameter for the API
-    };
+    setError(null);
+
     try {
-      const response = await fetch(
-        process.env.REACT_APP_BE_BASE_URL + "/payments",
+      const { clientSecret, paymentIntentId } = await createPaymentIntent(
+        fieldData.amount,
+        'usd',
         {
-          method: "POST",
-          headers: {
-            "Content-Type": "application/json",
-          },
-          body: JSON.stringify(data),
+          user_email: fieldData.MUID,
+          user_name: fieldData.name,
+          user_phone: fieldData.mobile,
         }
       );
 
-      if (response.ok) {
-        const result = await response.json();
-        console.log("Success:", result);
-        //Order created, storing in DB
-        const insertData = {
-          amount: result.amount,
-          attempts: result.attempts,
-          currency: result.currency,
-          entity: result.entity,
-          order_id: result.id,
-          receipt: result.receipt,
-          status: result.status,
-          user_id: fieldData.MUID,
-          user_email: fieldData.MUID,
-          user_phone: fieldData.mobile,
-        };
-        const { error: insertError } = await supabase
-          .from("payments")
-          .insert(insertData);
+      const insertData = {
+        amount: fieldData.amount * 100,
+        currency: 'usd',
+        payment_intent_id: paymentIntentId,
+        status: 'pending',
+        user_id: fieldData.MUID,
+        user_email: fieldData.MUID,
+        user_phone: fieldData.mobile,
+      };
 
-        if (insertError) {
-          throw insertError;
-        }
+      const { error: insertError } = await supabase
+        .from("stripe_payments")
+        .insert(insertData);
 
-        PaymentComponent(fieldData, result);
-      } else {
-        console.error("Error:", response.status, response.statusText);
+      if (insertError) {
+        console.warn("Failed to save payment record:", insertError);
       }
-    } catch (error) {
-      console.error("Error:", error.message);
+
+      const { error: paymentError, paymentIntent } = await stripe.confirmCardPayment(clientSecret, {
+        payment_method: {
+          card: elements.getElement(CardElement),
+          billing_details: {
+            name: fieldData.name,
+            email: fieldData.MUID,
+            phone: fieldData.mobile,
+          },
+        },
+      });
+
+      if (paymentError) {
+        setError(paymentError.message);
+        
+        await supabase
+          .from("stripe_payments")
+          .update({ status: 'failed', error_message: paymentError.message })
+          .eq("payment_intent_id", paymentIntentId);
+      } else if (paymentIntent.status === 'succeeded') {
+        await supabase
+          .from("stripe_payments")
+          .update({ 
+            status: 'succeeded', 
+            payment_method_id: paymentIntent.payment_method,
+          })
+          .eq("payment_intent_id", paymentIntentId);
+
+        alert(`Payment Successful! You paid $${fieldData.amount}`);
+        const { MUID } = fieldData;
+        onSuccess(MUID);
+      }
+    } catch (err) {
+      setError(err.message);
+    } finally {
+      setLoading(false);
     }
   };
 
-  const PaymentComponent = (fieldData, orderData) => {
-    const options = {
-      key: process.env.REACT_APP_RP_KEY_ID,
-      amount: orderData.amount, // Amount in paise
-      currency: orderData.currency,
-      name: "AuricMine",
-      description: "AI feature payment",
-      order_id: orderData.id, // Generate order_id on server
-      handler: async (response) => {
-        alert("Payment Successful!");
-        // console.log(response);
-
-        const updateData = {
-          payment_id: response.razorpay_payment_id,
-          status: paymentStatusKey,
-        };
-
-        const { error: updateError } = await supabase
-          .from("payments")
-          .update(updateData)
-          .eq("order_id", orderData.id);
-
-        if (updateError) {
-          throw updateError;
-        }
-
-        const { MUID } = fieldData;
-        onSuccess(MUID);
+  const cardElementOptions = {
+    style: {
+      base: {
+        fontSize: '16px',
+        color: '#424770',
+        fontFamily: '"Helvetica Neue", Helvetica, sans-serif',
+        '::placeholder': {
+          color: '#aab7c4',
+        },
       },
-
-      prefill: {
-        name: fieldData.name,
-        email: fieldData.MUID,
-        contact: fieldData.mobile,
+      invalid: {
+        color: '#9e2146',
       },
-      theme: {
-        color: "#4340f5",
-      },
-    };
-
-    const razorpayInstance = new Razorpay(options);
-    razorpayInstance.open();
+    },
   };
 
   return (
@@ -167,16 +165,26 @@ const PaymentForm = ({ onSubmit: onSuccess }) => {
           />
         </form>
 
+        <div className="card-element-container">
+          <CardElement options={cardElementOptions} />
+        </div>
+        
+        {error && (
+          <div className="stripe-error-message">
+            {error}
+          </div>
+        )}
+
         {loading && <Loader className="payment-gateway-loader" />}
 
         <div className="payment-form-btn-contianer">
           <LedgerButton
             type="primary"
-            label={getLabel("payWithLabel")}
+            label={loading ? "Processing..." : getLabel("payWithLabel")}
             size="md"
-            className="phonepe-button"
+            className="stripe-pay-button"
             onClick={onFinishHandler}
-            disable={loading}
+            disable={!stripe || loading}
           />
         </div>
       </div>

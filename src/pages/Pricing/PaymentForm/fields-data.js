@@ -46,15 +46,17 @@ export const fieldData = (isIndianUser) => {
       amount: {
         elementConfigs: {
           fieldLabel: "",
-          label: isIndianUser ? "Amount (₹)" : "Amount ($)",
+          label: "Amount ($)",
           type: "number",
-          placeholder: "Amount",
+          placeholder: "Amount (minimum $50, maximum $500)",
           className: "single-form-item",
           required: true,
           variant: "filled",
           requiredTxt: "Required!",
+          min: 50,
+          max: 500,
         },
-        value: isIndianUser ? indAmount : nonIndAmount,
+        value: 100,
       },
       
     },

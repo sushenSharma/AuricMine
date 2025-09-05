@@ -5,6 +5,7 @@ import { BrowserRouter, Route, Routes, Navigate } from "react-router-dom";
 
 import ThemeLayout from "../components/ThemeLayout";
 import Loader from "../components/Loader";
+import StripeProvider from "../components/StripeProvider";
 
 const AppContainer = () => {
   const routesList = appRoutes.map(
@@ -29,16 +30,18 @@ const AppContainer = () => {
   );
 
   return (
-    <ThemeLayout>
-      <BrowserRouter>
-        <Suspense fallback={<Loader />}>
-          <Routes>
-            {routesList}
-            <Route path="*" element={<Navigate to="/" />} />
-          </Routes>
-        </Suspense>
-      </BrowserRouter>
-    </ThemeLayout>
+    <StripeProvider>
+      <ThemeLayout>
+        <BrowserRouter>
+          <Suspense fallback={<Loader />}>
+            <Routes>
+              {routesList}
+              <Route path="*" element={<Navigate to="/" />} />
+            </Routes>
+          </Suspense>
+        </BrowserRouter>
+      </ThemeLayout>
+    </StripeProvider>
   );
 };
 

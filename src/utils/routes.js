@@ -1,7 +1,7 @@
 import { lazy } from "react";
 
 const AuthWrapper = lazy(() => import("../containers/AuthWrapper"));
-const Ledger = lazy(() => import("../containers/Main/Ledgers/SimplifiedHome"));
+const Ledger = lazy(() => import("../containers/Main/Ledgers/BondHomePage"));
 const FullLedger = lazy(() => import("../containers/Main/Ledgers"));
 const RiskManagement = lazy(() => import("../containers/Main/RiskManagement"));
 const Analytics = lazy(() => import("../containers/Main/Analytics"));
@@ -11,6 +11,7 @@ const LandingPage = lazy(() => import("../components/landing_Page"));
 const AboutUs = lazy(() => import("../pages/AboutUs"));
 const Services = lazy(() => import("../pages/Services"));
 const Feedback = lazy(() => import("../containers/Main/Feedback"));
+const MockInvestors = lazy(() => import("../containers/Main/MockInvestors"));
 
 export const appRoutes = [
   {
@@ -32,6 +33,11 @@ export const appRoutes = [
         key: "feedback",
         path: "/feedback",
         component: Feedback,
+      },
+      {
+        key: "mockInvestors",
+        path: "/admin/mock-investors",
+        component: MockInvestors,
       },
     ],
   },

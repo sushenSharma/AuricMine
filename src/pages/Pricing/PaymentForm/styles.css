@@ -83,3 +83,84 @@
   border: 5px solid #ffffff20;
   border-bottom: 5px solid #ffffff;
 }
+
+/* Stripe-specific styles */
+.stripe-payment-form {
+  max-width: 500px;
+  margin: 0 auto;
+}
+
+.card-element-container {
+  margin-bottom: 20px;
+  padding: 15px;
+  border: 1px solid #ddd;
+  border-radius: 8px;
+  background: #f9f9f9;
+}
+
+.stripe-error-message {
+  color: #e74c3c;
+  font-size: 14px;
+  margin-bottom: 15px;
+  padding: 10px;
+  background: #fdf2f2;
+  border: 1px solid #f5c6cb;
+  border-radius: 4px;
+}
+
+.payment-amount {
+  text-align: center;
+  margin-bottom: 20px;
+  font-size: 18px;
+  color: #333;
+}
+
+.stripe-pay-button {
+  background-color: #4340f5 !important;
+  color: #ffffff !important;
+  padding: 12px 16px !important;
+  border-radius: 10px !important;
+  font-weight: 600 !important;
+  text-transform: capitalize !important;
+}
+
+.stripe-pay-button:hover:not([disabled]) {
+  background-color: #3530d1 !important;
+}
+
+.stripe-pay-button[disabled] {
+  background-color: #ccc !important;
+  cursor: not-allowed !important;
+}
+
+/* Payment method selector styles */
+.payment-method-selector {
+  margin-bottom: 30px;
+  text-align: center;
+}
+
+.payment-method-buttons {
+  display: flex;
+  justify-content: center;
+  gap: 15px;
+  margin: 20px 0;
+}
+
+.payment-method-btn {
+  min-width: 120px;
+  padding: 10px 20px !important;
+  border-radius: 8px !important;
+  font-weight: 600 !important;
+  transition: all 0.3s ease !important;
+}
+
+.payment-method-btn.active {
+  background-color: #4340f5 !important;
+  color: white !important;
+}
+
+.payment-method-btn:not(.active) {
+  background-color: #f5f5f5 !important;
+  color: #666 !important;
+  border: 1px solid #ddd !important;
+}

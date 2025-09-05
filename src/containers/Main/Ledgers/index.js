@@ -35,11 +35,19 @@ import FinancialDashboard from "./FinancialDashboard";
 import TeamManagement from "./TeamManagement";
 import BondInvestmentModal from "./BondInvestmentModal";
 import "./styles.css";
+import { supabase } from "../../../config/index_supabase";
 
 const Ledgers = () => {
   const [activeTab, setActiveTab] = useState(0);
   const [refreshing, setRefreshing] = useState(false);
   const [showInvestmentModal, setShowInvestmentModal] = useState(false);
+  const [userStats, setUserStats] = useState({
+    totalInvestment: 0,
+    totalReturns: 0,
+    activeBonds: 0,
+    portfolioValue: 0,
+    loading: true
+  });
   const theme = useTheme();
   const isMobile = useMediaQuery(theme.breakpoints.down('md'));
   const { userSession } = useSelector(state => state.public);
@@ -154,6 +162,93 @@ const Ledgers = () => {
     return name.charAt(0).toUpperCase() + name.slice(1);
   };
 
+  // Function to fetch real user portfolio data
+  const fetchUserPortfolioData = async () => {
+    if (!userSession?.user) {
+      console.log('No user session found');
+      setUserStats({
+        totalInvestment: 0,
+        totalReturns: 0,
+        activeBonds: 0,
+        portfolioValue: 0,
+        loading: false
+      });
+      return;
+    }
+
+    try {
+      console.log('Fetching portfolio data for user:', userSession.user.id);
+      
+      // Fetch successful payments (investments) for the user
+      let { data: payments, error: paymentsError } = await supabase
+        .from('stripe_payments')
+        .select('*')
+        .eq('user_id', userSession.user.id)
+        .eq('status', 'succeeded');
+
+      if (paymentsError) {
+        console.error('Error fetching user payments:', paymentsError);
+        // Fallback to anonymous payments if user_id fails
+        const { data: anonymousPayments, error: anonymousError } = await supabase
+          .from('stripe_payments')
+          .select('*')
+          .eq('user_email', userSession.user.email)
+          .eq('status', 'succeeded');
+        
+        if (anonymousError) {
+          console.error('Error fetching anonymous payments:', anonymousError);
+          setUserStats(prev => ({ ...prev, loading: false }));
+          return;
+        }
+        
+        payments = anonymousPayments;
+      }
+
+      console.log('Found payments:', payments);
+
+      if (!payments || payments.length === 0) {
+        setUserStats({
+          totalInvestment: 0,
+          totalReturns: 0,
+          activeBonds: 0,
+          portfolioValue: 0,
+          loading: false
+        });
+        return;
+      }
+
+      // Calculate portfolio statistics from real payments
+      const totalInvested = payments.reduce((sum, payment) => sum + (payment.amount / 100), 0); // Convert from cents
+      const activeBonds = payments.length;
+      
+      // For now, assume 6-8% annual returns (average 7%) for calculation
+      // In the future, this should be calculated based on actual bond performance
+      const averageReturnRate = 0.07; // 7% annual return
+      const averageHoldingTime = 6; // Assume average 6 months holding
+      const estimatedReturns = totalInvested * averageReturnRate * (averageHoldingTime / 12);
+      const portfolioValue = totalInvested + estimatedReturns;
+
+      setUserStats({
+        totalInvestment: parseFloat(totalInvested.toFixed(2)),
+        totalReturns: parseFloat(estimatedReturns.toFixed(2)),
+        activeBonds: activeBonds,
+        portfolioValue: parseFloat(portfolioValue.toFixed(2)),
+        loading: false
+      });
+
+      console.log('Portfolio stats calculated:', {
+        totalInvested: totalInvested.toFixed(2),
+        totalReturns: estimatedReturns.toFixed(2),
+        activeBonds,
+        portfolioValue: portfolioValue.toFixed(2)
+      });
+
+    } catch (error) {
+      console.error('Error fetching portfolio data:', error);
+      setUserStats(prev => ({ ...prev, loading: false }));
+    }
+  };
+
   const currentUser = {
     name: getUserDisplayName(userSession?.user || userSession),
     role: "Senior Mine Director",
@@ -161,35 +256,41 @@ const Ledgers = () => {
     avatar: getUserInitials(userSession?.user || userSession),
     email: userSession?.user?.email || userSession?.email || "user@ironore.com",
     joinDate: "January 2023",
-    totalInvestment: 245000,
-    totalReturns: 18450,
-    activeBonds: 12,
-    teamSize: 24,
-    monthlyEarnings: 2850
+    totalInvestment: userStats.totalInvestment,
+    totalReturns: userStats.totalReturns,
+    activeBonds: userStats.activeBonds,
+    teamSize: 0, // No team functionality in current system
+    monthlyEarnings: userStats.totalReturns / 12 // Rough monthly estimate
   };
 
   const handleTabChange = (event, newValue) => {
     setActiveTab(newValue);
   };
 
-  const handleRefresh = () => {
+  const handleRefresh = async () => {
     setRefreshing(true);
-    setTimeout(() => setRefreshing(false), 2000);
+    await fetchUserPortfolioData();
+    setRefreshing(false);
   };
 
   const handleNewInvestment = () => {
     setShowInvestmentModal(true);
   };
 
-  const handleInvestmentSuccess = () => {
+  const handleInvestmentSuccess = async () => {
     // Refresh the dashboard data after successful investment
-    handleRefresh();
+    await fetchUserPortfolioData();
     // You can also dispatch actions to update the user's portfolio
   };
 
   const handleCloseInvestmentModal = () => {
     setShowInvestmentModal(false);
   };
+
+  // Load portfolio data when component mounts or user changes
+  useEffect(() => {
+    fetchUserPortfolioData();
+  }, [userSession?.user?.id]);
 
   const tabItems = [
     { label: "Dashboard", icon: <Dashboard /> },
@@ -308,7 +409,7 @@ const Ledgers = () => {
               <CardContent>
                 <MonetizationOn sx={{ color: '#FFA500', fontSize: '2rem', mb: 1 }} />
                 <Typography variant="h6" sx={{ color: '#FFA500', fontWeight: 'bold' }}>
-                  ₹{currentUser.totalInvestment.toLocaleString()}
+                  {userStats.loading ? '...' : `$${currentUser.totalInvestment.toLocaleString()}`}
                 </Typography>
                 <Typography variant="body2" sx={{ color: '#e0e0e0' }}>
                   Total Investment
@@ -328,7 +429,7 @@ const Ledgers = () => {
               <CardContent>
                 <TrendingUp sx={{ color: '#4CAF50', fontSize: '2rem', mb: 1 }} />
                 <Typography variant="h6" sx={{ color: '#4CAF50', fontWeight: 'bold' }}>
-                  +₹{currentUser.totalReturns.toLocaleString()}
+                  {userStats.loading ? '...' : `+$${currentUser.totalReturns.toLocaleString()}`}
                 </Typography>
                 <Typography variant="body2" sx={{ color: '#e0e0e0' }}>
                   Total Returns
@@ -348,7 +449,7 @@ const Ledgers = () => {
               <CardContent>
                 <Assessment sx={{ color: '#2196F3', fontSize: '2rem', mb: 1 }} />
                 <Typography variant="h6" sx={{ color: '#2196F3', fontWeight: 'bold' }}>
-                  {currentUser.activeBonds}
+                  {userStats.loading ? '...' : currentUser.activeBonds}
                 </Typography>
                 <Typography variant="body2" sx={{ color: '#e0e0e0' }}>
                   Active Bonds
@@ -368,7 +469,7 @@ const Ledgers = () => {
               <CardContent>
                 <People sx={{ color: '#9C27B0', fontSize: '2rem', mb: 1 }} />
                 <Typography variant="h6" sx={{ color: '#9C27B0', fontWeight: 'bold' }}>
-                  {currentUser.teamSize}
+                  {userStats.loading ? '...' : currentUser.teamSize}
                 </Typography>
                 <Typography variant="body2" sx={{ color: '#e0e0e0' }}>
                   Team Members

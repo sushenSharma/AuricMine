@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react';
+import { useStripe, useElements, CardElement } from '@stripe/react-stripe-js';
 import {
   Dialog,
   DialogTitle,
@@ -38,7 +39,7 @@ import {
   CheckCircle,
   PaymentOutlined
 } from '@mui/icons-material';
-import { useRazorpay } from 'react-razorpay';
+// import { useRazorpay } from 'react-razorpay';
 import { useSelector } from 'react-redux';
 import { supabase } from '../../../config/index_supabase';
 import Swal from 'sweetalert2';
@@ -55,86 +56,89 @@ const BondInvestmentModal = ({ open, onClose, onSuccess }) => {
   });
   const [loading, setLoading] = useState(false);
   const [errors, setErrors] = useState({});
+  const [clientSecret, setClientSecret] = useState('');
+  const [showSuccessNotification, setShowSuccessNotification] = useState(false);
 
+  const stripe = useStripe();
+  const elements = useElements();
   const theme = useTheme();
   const isMobile = useMediaQuery(theme.breakpoints.down('md'));
   const { userSession } = useSelector(state => state.public);
-  const { Razorpay } = useRazorpay();
 
   // Available bond types for investment
   const availableBonds = [
     {
       id: 'pilbara-premium',
-      name: 'Australia Pilbara Premium Iron Bond',
+      name: '🏆 Steady Income Champion',
       region: 'Australia',
-      type: 'Premium',
-      minInvestment: 50000,
-      expectedReturns: '8-10%',
-      maturityPeriod: '24 months',
-      riskLevel: 'Low',
-      description: 'High-grade iron ore mining operations in Australia\'s Pilbara region with proven reserves.',
+      type: 'Safe & Steady',
+      minInvestment: 300,
+      expectedReturns: '15-20%',
+      maturityPeriod: '18 months',
+      riskLevel: 'Ultra Safe',
+      description: '🛡️ The safest way to grow $300 into $360+ with Australia\'s most trusted mining operations. Get paid every 3 months!',
       features: [
-        'Quarterly dividend payments',
-        'Insurance coverage included',
-        'Direct access to mining reports',
-        'Exit options after 12 months'
+        '💵 Quarterly cash payments directly to your account',
+        '🔐 Full insurance coverage - Your money is 100% protected',
+        '📱 Real-time mining progress on your phone',
+        '🚪 Easy exit - Get your money back anytime after 1 year'
       ],
       color: '#4CAF50',
       icon: <Terrain />
     },
     {
       id: 'brazil-growth',
-      name: 'Brazil Minas Gerais Growth Bond',
+      name: '🌟 Wealth Builder Pro Bond',
       region: 'Brazil',
-      type: 'Growth',
-      minInvestment: 25000,
-      expectedReturns: '10-12%',
-      maturityPeriod: '18 months',
-      riskLevel: 'Medium',
-      description: 'Expanding iron ore operations in Brazil\'s premier mining region with sustainable practices.',
+      type: 'Popular Choice',
+      minInvestment: 200,
+      expectedReturns: '20-25%',
+      maturityPeriod: '12 months',
+      riskLevel: 'Medium Risk, High Reward',
+      description: '💎 Turn $200 into $250+ in just 1 year! Our most popular choice for serious wealth building. Limited spots available!',
       features: [
-        'Monthly progress updates',
-        'ESG compliance reporting',
-        'Growth participation bonus',
-        'Flexible investment terms'
+        '💰 25% annual returns - Beat inflation by 20%!',
+        '📊 Monthly profit updates sent to your phone',
+        '🎁 Bonus rewards for early investors',
+        '🔄 Flexible exit options anytime after 6 months'
       ],
       color: '#FF9800',
       icon: <TrendingUp />
     },
     {
       id: 'india-starter',
-      name: 'India Goa Starter Iron Bond',
+      name: '💰 Quick Cash Starter Bond',
       region: 'India',
-      type: 'Starter',
-      minInvestment: 10000,
-      expectedReturns: '6-8%',
-      maturityPeriod: '12 months',
-      riskLevel: 'Low',
-      description: 'Entry-level investment in established Indian iron ore mining with steady returns.',
+      type: 'Beginner-Friendly',
+      minInvestment: 1,
+      expectedReturns: '12-18%',
+      maturityPeriod: '6 months',
+      riskLevel: 'Safe & Secure',
+      description: '🚀 Start with just $1! Double your money in 6 months with our safest investment. Perfect for beginners who want guaranteed returns!',
       features: [
-        'Low minimum investment',
-        'Beginner-friendly terms',
-        'Regular performance updates',
-        'Local market expertise'
+        '💵 Start with just $1 - Anyone can afford it!',
+        '📈 Up to 18% returns - Triple bank interest!',
+        '🔒 100% Safe - Government backed security',
+        '⚡ Quick 6-month returns - See profits fast!'
       ],
       color: '#2196F3',
       icon: <Security />
     },
     {
       id: 'safrica-premium',
-      name: 'South Africa Premium Mining Bond',
+      name: '🔥 Million Maker Platinum',
       region: 'South Africa',
-      type: 'Premium',
-      minInvestment: 75000,
-      expectedReturns: '12-15%',
-      maturityPeriod: '36 months',
-      riskLevel: 'High',
-      description: 'High-yield investment in South African mining operations with premium return potential.',
+      type: 'High Earner',
+      minInvestment: 500,
+      expectedReturns: '30-40%',
+      maturityPeriod: '24 months',
+      riskLevel: 'Higher Risk, Maximum Reward',
+      description: '🚀 The ULTIMATE wealth multiplier! Turn $500 into $700+ in 2 years. For serious investors who want life-changing returns!',
       features: [
-        'Highest return potential',
-        'Professional risk management',
-        'Premium investor services',
-        'Advanced analytics access'
+        '💎 Up to 40% annual returns - The highest we offer!',
+        '🎯 Professional wealth managers handle everything',
+        '👑 VIP investor status with exclusive perks',
+        '📈 Advanced profit tracking and analytics dashboard'
       ],
       color: '#9C27B0',
       icon: <MonetizationOn />
@@ -176,7 +180,7 @@ const BondInvestmentModal = ({ open, onClose, onSuccess }) => {
         break;
       case 1:
         if (!investmentAmount || investmentAmount < selectedBond?.minInvestment) {
-          newErrors.amount = `Minimum investment is ₹${selectedBond?.minInvestment?.toLocaleString()}`;
+          newErrors.amount = `Minimum investment is $${selectedBond?.minInvestment?.toLocaleString()}`;
         }
         break;
       case 2:
@@ -203,34 +207,10 @@ const BondInvestmentModal = ({ open, onClose, onSuccess }) => {
         throw new Error('Failed to create payment order');
       }
 
-      // Initialize Razorpay payment
-      const options = {
-        key: process.env.REACT_APP_RP_KEY_ID,
-        amount: orderData.amount,
-        currency: orderData.currency,
-        name: "AuricMine",
-        description: `${selectedBond.name} Investment`,
-        order_id: orderData.id,
-        prefill: {
-          name: investorDetails.name,
-          email: userSession?.user?.email,
-          contact: investorDetails.phone
-        },
-        theme: {
-          color: "#FF4D4C"
-        },
-        handler: async (response) => {
-          await handlePaymentSuccess(response, orderData);
-        },
-        modal: {
-          ondismiss: () => {
-            setLoading(false);
-          }
-        }
-      };
-
-      const razorpayInstance = new Razorpay(options);
-      razorpayInstance.open();
+      // Store client secret for Stripe Elements
+      setClientSecret(orderData.clientSecret);
+      console.log('Payment Intent created:', orderData);
+      setLoading(false);
     } catch (error) {
       console.error('Payment initialization failed:', error);
       setLoading(false);
@@ -252,13 +232,22 @@ const BondInvestmentModal = ({ open, onClose, onSuccess }) => {
       };
 
       const response = await fetch(
-        process.env.REACT_APP_BE_BASE_URL + "/payments",
+        process.env.REACT_APP_BE_BASE_URL + "/super-action",
         {
           method: "POST",
           headers: {
             "Content-Type": "application/json",
+            'Authorization': `Bearer ${process.env.REACT_APP_SUPABASE_ANON_KEY}`,
           },
-          body: JSON.stringify(orderData),
+          body: JSON.stringify({
+            amount: parseInt(investmentAmount), // Amount in dollars
+            currency: 'usd',
+            metadata: {
+              bond_id: selectedBond.id,
+              bond_name: selectedBond.name,
+              user_email: userSession?.user?.email || 'anonymous@example.com'
+            }
+          }),
         }
       );
 
@@ -266,30 +255,49 @@ const BondInvestmentModal = ({ open, onClose, onSuccess }) => {
         throw new Error(`HTTP error! status: ${response.status}`);
       }
 
-      const razorpayOrder = await response.json();
+      const responseText = await response.text();
+      console.log('Raw response:', responseText);
+      
+      let stripePaymentIntent;
+      try {
+        stripePaymentIntent = JSON.parse(responseText);
+      } catch (parseError) {
+        console.error('Failed to parse response as JSON:', parseError);
+        throw new Error(`Invalid response from payment service: ${responseText}`);
+      }
 
-      // Store order in Supabase
+      console.log('Parsed payment intent:', stripePaymentIntent);
+
+      // Store order in Supabase using stripe_payments table
       const { data, error } = await supabase
-        .from('bond_investments')
+        .from('stripe_payments')
         .insert({
+          payment_intent_id: stripePaymentIntent.paymentIntentId,
+          amount: parseInt(investmentAmount) * 100, // Convert to cents for database
+          currency: 'usd',
+          status: 'pending',
           user_id: userSession?.user?.id || 'anonymous',
           user_email: userSession?.user?.email || 'anonymous@example.com',
-          bond_id: selectedBond.id,
-          bond_name: selectedBond.name,
-          investment_amount: investmentAmount,
-          investor_details: investorDetails,
-          status: 'pending',
-          razorpay_order_id: razorpayOrder.id,
-          created_at: new Date().toISOString()
+          user_phone: investorDetails.phone,
+          metadata: {
+            bond_id: selectedBond.id,
+            bond_name: selectedBond.name,
+            investment_amount: investmentAmount,
+            investor_details: investorDetails
+          }
         })
         .select()
         .single();
 
-      if (error) throw error;
+      if (error) {
+        console.warn('Failed to save to database:', error);
+        // Continue anyway since payment intent was created
+      }
 
       return {
-        ...razorpayOrder,
-        database_id: data.id
+        clientSecret: stripePaymentIntent.clientSecret,
+        paymentIntentId: stripePaymentIntent.paymentIntentId,
+        database_id: data?.id
       };
     } catch (error) {
       console.error('Error creating order:', error);
@@ -297,38 +305,91 @@ const BondInvestmentModal = ({ open, onClose, onSuccess }) => {
     }
   };
 
+  const handleStripePayment = async () => {
+    if (!stripe || !elements || !clientSecret) {
+      console.error('Missing required elements:', { stripe: !!stripe, elements: !!elements, clientSecret: !!clientSecret });
+      return;
+    }
+
+    console.log('Attempting payment with client secret:', clientSecret);
+    setLoading(true);
+
+    try {
+      const cardElement = elements.getElement(CardElement);
+      if (!cardElement) {
+        throw new Error('Card element not found');
+      }
+
+      const { error, paymentIntent } = await stripe.confirmCardPayment(clientSecret, {
+        payment_method: {
+          card: cardElement,
+          billing_details: {
+            name: investorDetails.name || 'Test User',
+            email: userSession?.user?.email || 'test@example.com',
+            phone: investorDetails.phone || '+1234567890',
+          },
+        },
+      });
+
+      if (error) {
+        console.error('Payment failed:', error);
+        Swal.fire({
+          title: 'Payment Failed',
+          text: error.message,
+          icon: 'error',
+          confirmButtonColor: '#FF4D4C'
+        });
+      } else if (paymentIntent.status === 'succeeded') {
+        await handlePaymentSuccess({ payment_method: paymentIntent.payment_method }, { paymentIntentId: paymentIntent.id });
+      }
+    } catch (err) {
+      console.error('Payment error:', err);
+      Swal.fire({
+        title: 'Payment Error',
+        text: 'An unexpected error occurred. Please try again.',
+        icon: 'error',
+        confirmButtonColor: '#FF4D4C'
+      });
+    } finally {
+      setLoading(false);
+    }
+  };
+
   const handlePaymentSuccess = async (paymentResponse, orderData) => {
+    console.log('Payment success handler called with:', { paymentResponse, orderData });
+    
     try {
       // Update investment status in database
       const { error } = await supabase
-        .from('bond_investments')
+        .from('stripe_payments')
         .update({
-          status: 'completed',
-          payment_id: paymentResponse.razorpay_payment_id,
-          razorpay_order_id: paymentResponse.razorpay_order_id,
-          razorpay_signature: paymentResponse.razorpay_signature,
-          completed_at: new Date().toISOString()
+          status: 'succeeded',
+          payment_method_id: paymentResponse.payment_method?.id || paymentResponse.payment_method,
+          updated_at: new Date().toISOString()
         })
-        .eq('id', orderData.database_id);
+        .eq('payment_intent_id', orderData.paymentIntentId);
 
-      if (error) throw error;
+      if (error) {
+        console.warn('Failed to update payment status:', error);
+      } else {
+        console.log('Payment status updated successfully');
+      }
 
       setLoading(false);
       
-      // Show success message
-      await Swal.fire({
-        title: 'Investment Successful!',
-        text: `Your investment of ₹${parseInt(investmentAmount).toLocaleString()} in ${selectedBond.name} has been confirmed.`,
-        icon: 'success',
-        confirmButtonColor: '#4CAF50',
-        confirmButtonText: 'View Dashboard'
-      });
+      // Show success notification
+      console.log('Showing success notification');
+      setShowSuccessNotification(true);
 
-      // Call success callback and close modal
-      if (onSuccess) onSuccess();
-      onClose();
+      // Auto-close modal after 3 seconds
+      setTimeout(() => {
+        console.log('Auto-closing modal');
+        setShowSuccessNotification(false);
+        if (onSuccess) onSuccess();
+        onClose();
+      }, 3000);
     } catch (error) {
-      console.error('Error updating payment status:', error);
+      console.error('Error in handlePaymentSuccess:', error);
       setLoading(false);
       Swal.fire({
         title: 'Payment Verification Failed',
@@ -391,7 +452,7 @@ const BondInvestmentModal = ({ open, onClose, onSuccess }) => {
                     <Grid item xs={6} sm={3}>
                       <Typography variant="caption" sx={{ color: '#bbb' }}>Min Investment</Typography>
                       <Typography variant="body2" sx={{ color: '#FFA500', fontWeight: 600 }}>
-                        ₹{bond.minInvestment.toLocaleString()}
+                        ${bond.minInvestment.toLocaleString()}
                       </Typography>
                     </Grid>
                     <Grid item xs={6} sm={3}>
@@ -432,7 +493,7 @@ const BondInvestmentModal = ({ open, onClose, onSuccess }) => {
       <Alert severity="info" sx={{ mb: 3 }}>
         <Typography variant="body2">
           Selected Bond: <strong>{selectedBond?.name}</strong><br/>
-          Minimum Investment: <strong>₹{selectedBond?.minInvestment?.toLocaleString()}</strong><br/>
+          Minimum Investment: <strong>${selectedBond?.minInvestment?.toLocaleString()}</strong><br/>
           Expected Returns: <strong>{selectedBond?.expectedReturns}</strong>
         </Typography>
       </Alert>
@@ -444,10 +505,10 @@ const BondInvestmentModal = ({ open, onClose, onSuccess }) => {
         value={investmentAmount}
         onChange={(e) => setInvestmentAmount(e.target.value)}
         InputProps={{
-          startAdornment: <InputAdornment position="start">₹</InputAdornment>,
+          startAdornment: <InputAdornment position="start">$</InputAdornment>,
         }}
         error={!!errors.amount}
-        helperText={errors.amount || `Minimum: ₹${selectedBond?.minInvestment?.toLocaleString()}`}
+        helperText={errors.amount || `Minimum: $${selectedBond?.minInvestment?.toLocaleString()}`}
         sx={{
           '& .MuiOutlinedInput-root': {
             color: '#fff',
@@ -465,12 +526,12 @@ const BondInvestmentModal = ({ open, onClose, onSuccess }) => {
           <Grid container spacing={2}>
             <Grid item xs={6}>
               <Typography variant="body2" sx={{ color: '#e0e0e0' }}>Investment Amount:</Typography>
-              <Typography variant="h6" sx={{ color: '#FFA500' }}>₹{parseInt(investmentAmount || 0).toLocaleString()}</Typography>
+              <Typography variant="h6" sx={{ color: '#FFA500' }}>${parseInt(investmentAmount || 0).toLocaleString()}</Typography>
             </Grid>
             <Grid item xs={6}>
               <Typography variant="body2" sx={{ color: '#e0e0e0' }}>Expected Annual Return:</Typography>
               <Typography variant="h6" sx={{ color: '#4CAF50' }}>
-                ₹{Math.round(parseInt(investmentAmount || 0) * 0.09).toLocaleString()}
+                ${Math.round(parseInt(investmentAmount || 0) * 0.09).toLocaleString()}
               </Typography>
             </Grid>
           </Grid>
@@ -583,7 +644,7 @@ const BondInvestmentModal = ({ open, onClose, onSuccess }) => {
             <Grid item xs={12} sm={6}>
               <Typography variant="body2" sx={{ color: '#bbb' }}>Investment Amount:</Typography>
               <Typography variant="h6" sx={{ color: '#4CAF50', fontWeight: 600 }}>
-                ₹{parseInt(investmentAmount).toLocaleString()}
+                ${parseInt(investmentAmount).toLocaleString()}
               </Typography>
             </Grid>
             <Grid item xs={12} sm={6}>
@@ -607,27 +668,79 @@ const BondInvestmentModal = ({ open, onClose, onSuccess }) => {
           </Grid>
         </CardContent>
       </Card>
-      
-      <Button
-        fullWidth
-        variant="contained"
-        onClick={handlePayment}
-        disabled={loading}
-        startIcon={loading ? <CircularProgress size={20} /> : <PaymentOutlined />}
-        sx={{
-          background: loading ? 'rgba(255, 77, 76, 0.5)' : 'linear-gradient(135deg, #FF4D4C 0%, #FFA500 100%)',
-          color: '#fff',
-          py: 2,
-          fontSize: '1.1rem',
-          fontWeight: 600,
-          textTransform: 'none',
-          '&:hover': {
-            background: loading ? 'rgba(255, 77, 76, 0.5)' : 'linear-gradient(135deg, #FFA500 0%, #FF4D4C 100%)'
-          }
-        }}
-      >
-        {loading ? 'Processing Payment...' : `Pay ₹${parseInt(investmentAmount).toLocaleString()}`}
-      </Button>
+
+      {!clientSecret ? (
+        <Button
+          fullWidth
+          variant="contained"
+          onClick={handlePayment}
+          disabled={loading}
+          startIcon={loading ? <CircularProgress size={20} /> : <PaymentOutlined />}
+          sx={{
+            background: loading ? 'rgba(255, 77, 76, 0.5)' : 'linear-gradient(135deg, #FF4D4C 0%, #FFA500 100%)',
+            color: '#fff',
+            py: 2,
+            fontSize: '1.1rem',
+            fontWeight: 600,
+            textTransform: 'none',
+            '&:hover': {
+              background: loading ? 'rgba(255, 77, 76, 0.5)' : 'linear-gradient(135deg, #FFA500 0%, #FF4D4C 100%)'
+            }
+          }}
+        >
+          {loading ? 'Creating Payment...' : 'Create Payment Intent'}
+        </Button>
+      ) : (
+        <Box>
+          <Typography variant="h6" sx={{ color: '#FFA500', mb: 2 }}>Payment Details</Typography>
+          <Box sx={{ 
+            bgcolor: 'rgba(255, 255, 255, 0.1)', 
+            p: 2, 
+            borderRadius: 2, 
+            mb: 3,
+            border: '1px solid rgba(255, 255, 255, 0.2)'
+          }}>
+            <CardElement
+              options={{
+                style: {
+                  base: {
+                    fontSize: '16px',
+                    color: '#ffffff',
+                    backgroundColor: 'transparent',
+                    '::placeholder': {
+                      color: '#aab7c4',
+                    },
+                  },
+                  invalid: {
+                    color: '#9e2146',
+                  },
+                },
+              }}
+            />
+          </Box>
+          
+          <Button
+            fullWidth
+            variant="contained"
+            onClick={handleStripePayment}
+            disabled={loading || !stripe || !elements}
+            startIcon={loading ? <CircularProgress size={20} /> : <PaymentOutlined />}
+            sx={{
+              background: loading ? 'rgba(255, 77, 76, 0.5)' : 'linear-gradient(135deg, #FF4D4C 0%, #FFA500 100%)',
+              color: '#fff',
+              py: 2,
+              fontSize: '1.1rem',
+              fontWeight: 600,
+              textTransform: 'none',
+              '&:hover': {
+                background: loading ? 'rgba(255, 77, 76, 0.5)' : 'linear-gradient(135deg, #FFA500 0%, #FF4D4C 100%)'
+              }
+            }}
+          >
+            {loading ? 'Processing Payment...' : `Pay $${parseInt(investmentAmount).toLocaleString()}`}
+          </Button>
+        </Box>
+      )}
     </Box>
   );
 
@@ -734,6 +847,75 @@ const BondInvestmentModal = ({ open, onClose, onSuccess }) => {
           )}
         </DialogActions>
       )}
+
+      {/* Success Notification Overlay */}
+      {showSuccessNotification && (
+        <Box
+          sx={{
+            position: 'fixed',
+            top: 0,
+            left: 0,
+            right: 0,
+            bottom: 0,
+            backgroundColor: 'rgba(0, 0, 0, 0.8)',
+            display: 'flex',
+            alignItems: 'center',
+            justifyContent: 'center',
+            zIndex: 9999,
+            animation: 'fadeIn 0.3s ease-in-out'
+          }}
+        >
+          <Box
+            sx={{
+              background: 'linear-gradient(135deg, #4CAF50 0%, #45A049 100%)',
+              borderRadius: '16px',
+              padding: '40px',
+              textAlign: 'center',
+              color: '#fff',
+              boxShadow: '0 20px 40px rgba(0,0,0,0.3)',
+              animation: 'slideIn 0.5s ease-out, pulse 2s infinite',
+              maxWidth: '400px',
+              margin: '20px'
+            }}
+          >
+            <CheckCircle sx={{ fontSize: 80, mb: 2, animation: 'bounce 1s ease-in-out' }} />
+            <Typography variant="h4" sx={{ fontWeight: 600, mb: 2 }}>
+              Investment Successful!
+            </Typography>
+            <Typography variant="body1" sx={{ mb: 1 }}>
+              Your investment of ${parseInt(investmentAmount).toLocaleString()} in
+            </Typography>
+            <Typography variant="h6" sx={{ color: '#FFE082', fontWeight: 500 }}>
+              {selectedBond?.name}
+            </Typography>
+            <Typography variant="body2" sx={{ mt: 2, opacity: 0.9 }}>
+              has been confirmed successfully.
+            </Typography>
+          </Box>
+        </Box>
+      )}
+
+      {/* CSS Animations */}
+      <style jsx>{`
+        @keyframes fadeIn {
+          from { opacity: 0; }
+          to { opacity: 1; }
+        }
+        @keyframes slideIn {
+          from { transform: translateY(-30px); opacity: 0; }
+          to { transform: translateY(0); opacity: 1; }
+        }
+        @keyframes bounce {
+          0%, 20%, 60%, 100% { transform: translateY(0); }
+          40% { transform: translateY(-20px); }
+          80% { transform: translateY(-10px); }
+        }
+        @keyframes pulse {
+          0% { transform: scale(1); }
+          50% { transform: scale(1.05); }
+          100% { transform: scale(1); }
+        }
+      `}</style>
     </Dialog>
   );
 };

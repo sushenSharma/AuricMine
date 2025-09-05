@@ -50,6 +50,18 @@ export const getFeatureData = async (userId) => {
       .select()
       .eq("user_id", userId);
 
+      // Handle case where features table doesn't exist or no data found
+      if (error || !data || data.length === 0) {
+        console.warn("Features table not found or no data, using defaults");
+        const date = new Date().toString();
+        return {
+          p_status: "free",
+          insight_c: false,
+          user_id: userId,
+          loc: date.includes("530") ? indLabel : nonIndLabel
+        };
+      }
+
       const date = new Date().toString();
 
       const features = {
@@ -62,6 +74,14 @@ export const getFeatureData = async (userId) => {
       // console.log(features);
       return features;
     } catch (error) {
-      console.error(error);
+      console.error("Error fetching features:", error);
+      // Return default values if there's an error
+      const date = new Date().toString();
+      return {
+        p_status: "free",
+        insight_c: false,
+        user_id: userId,
+        loc: date.includes("530") ? indLabel : nonIndLabel
+      };
     }
 };
